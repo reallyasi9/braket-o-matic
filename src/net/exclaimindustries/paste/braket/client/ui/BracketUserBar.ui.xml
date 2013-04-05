@@ -1,0 +1,71 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+	<ui:with field='res'
+		type='net.exclaimindustries.paste.braket.client.resources.Resources' />
+
+	<ui:style
+		type="net.exclaimindustries.paste.braket.client.ui.BracketUserBar.MyStyle">
+			.signInButton,.signOutButton {
+				float: right;
+				margin-left: 6px;
+			}
+			
+			.otherButton {
+				float: left;
+				margin-right: 6px;
+			}
+			
+			.bumpDown {
+				position: relative;
+				top: 14px;
+			}
+			
+			/* Greyish bar to hold user information */
+			.userBar {
+				vertical-align: middle;
+				height: 60px;
+				margin: 0px;
+				border-width: 0px;
+				border-bottom: solid 2px #222730;
+				padding-left: 12px;
+				padding-right: 12px;
+				background: rgb(227, 234, 237); /* Old browsers */
+				background: -moz-linear-gradient(left, rgb(227, 234, 237) 0%,
+					rgb(200, 215, 220) 100%); /* FF3.6+ */
+				background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgb(227,
+					234, 237)), color-stop(100%, rgb(200, 215, 220)));
+				/* Chrome,Safari4+ */
+				background: -webkit-linear-gradient(left, rgb(227, 234, 237) 0%,
+					rgb(200, 215, 220) 100%); /* Chrome10+,Safari5.1+ */
+				background: -o-linear-gradient(left, rgb(227, 234, 237) 0%,
+					rgb(200, 215, 220) 100%); /* Opera 11.10+ */
+				background: -ms-linear-gradient(left, rgb(227, 234, 237) 0%,
+					rgb(200, 215, 220) 100%); /* IE10+ */
+				background: linear-gradient(to right, rgb(227, 234, 237) 0%,
+					rgb(200, 215, 220) 100%); /* W3C */
+			}
+		</ui:style>
+	<g:FlowPanel ui:field="menuBar" styleName="{style.userBar}">
+		<g:Button ui:field="userLink" styleName="{res.style.blueButton}"
+			addStyleNames="{style.otherButton} {style.bumpDown}" visible="false">user
+			options</g:Button>
+		<g:Button ui:field="leaderboardLink" styleName="{res.style.blueButton}"
+			addStyleNames="{style.otherButton} {style.bumpDown}" visible="false">leaderboards</g:Button>
+		<g:Button ui:field="exciteoLink" styleName="{res.style.blueButton}"
+			addStyleNames="{style.otherButton} {style.bumpDown}" visible="false">excite-o-matic</g:Button>
+		<g:Button ui:field="rulesLink" styleName="{res.style.blueButton}"
+			addStyleNames="{style.otherButton} {style.bumpDown}">rules</g:Button>
+		<g:Button ui:field="helpLink" styleName="{res.style.blueButton}"
+			addStyleNames="{style.otherButton} {style.bumpDown}" visible="false">help</g:Button>
+		<g:Button ui:field="adminLink" styleName="{res.style.redButton}"
+			addStyleNames="{style.otherButton} {style.bumpDown}" visible="false">admin</g:Button>
+		<g:Button ui:field="doneEditing" styleName="{res.style.redButton}"
+			addStyleNames="{style.otherButton} {style.bumpDown}" visible="false">done
+			editing</g:Button>
+		<!-- Starts hidden to prevent flicker when logged in -->
+		<g:Button ui:field="loginLink" styleName="{res.style.redButton}"
+			addStyleNames="{style.signInButton} {style.bumpDown}" visible="false" />
+	</g:FlowPanel>
+</ui:UiBinder> 

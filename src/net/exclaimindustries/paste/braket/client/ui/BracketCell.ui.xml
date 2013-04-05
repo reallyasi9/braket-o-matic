@@ -1,0 +1,37 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'
+	xmlns:ei='urn:import:net.exclaimindustries.paste.braket.client.ui'>
+    <ui:style>
+		.bracket-tiebreaker-container
+		{
+			position:absolute;
+			visibility:hidden;
+			text-align:center;
+			width:100%;
+		}
+		.bracket-tiebreaker-label
+		{
+			font-size:24px;
+			font-weight:bold;
+		}
+		
+		.bracket-tiebreaker-input
+		{
+			width:96px;
+			text-align:center;
+			font-size:36px;
+		}
+		
+    </ui:style>
+	<g:FlowPanel ui:field="mainContainer">
+		<ei:BracketButton ui:field="buttonContainer"></ei:BracketButton>
+		
+		<g:FlowPanel styleName="{style.bracket-tiebreaker-container}" ui:field="tiebreakerContainer">
+			<g:Label styleName="{style.bracket-tiebreaker-label}">Tiebreaker:</g:Label>
+			<g:FlowPanel>
+				<g:IntegerBox ui:field="tiebreakerInput" styleName="{style.bracket-tiebreaker-input}" maxLength="3"></g:IntegerBox>
+			</g:FlowPanel>
+		</g:FlowPanel>
+	</g:FlowPanel>
+</ui:UiBinder>

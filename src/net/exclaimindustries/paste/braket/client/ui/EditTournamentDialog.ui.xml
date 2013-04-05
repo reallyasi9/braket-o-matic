@@ -1,0 +1,93 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:with field='res'
+		type='net.exclaimindustries.paste.braket.client.resources.Resources' />
+
+
+	<ui:style>
+		
+	</ui:style>
+
+	<g:FlowPanel>
+
+		<g:Grid addStyleNames="{res.style.formContainer}">
+			<g:row>
+				<g:customCell>
+					<g:Label addStyleNames="{res.style.formDescription}">Tournament name</g:Label>
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox addStyleNames="{res.style.formField}"
+						ui:field="name" />
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label addStyleNames="{res.style.formDescription}">Game mask (LSB = championship, LSB
+						on the
+						right)</g:Label>
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox addStyleNames="{res.style.formField}"
+						ui:field="gameMask" enabled="false">111111111111111111111111111111111111111111111111111111111111111</g:TextBox>
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label addStyleNames="{res.style.formDescription}">Start time</g:Label>
+				</g:customCell>
+				<g:customCell>
+					<g:FlowPanel ui:field="dateBoxHere" />
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label addStyleNames="{res.style.formDescription}">Buy-in value</g:Label>
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox addStyleNames="{res.style.formField}"
+						ui:field="buyIn">5</g:TextBox>
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label addStyleNames="{res.style.formDescription}">Round values (comma-delimeted)</g:Label>
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox addStyleNames="{res.style.formField}"
+						ui:field="roundValues">1,2,3,5,7,13</g:TextBox>
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label addStyleNames="{res.style.formDescription}">Place values (null in first
+						position
+						implies all remaining value to first place)</g:Label>
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox addStyleNames="{res.style.formField}"
+						ui:field="payOut">null,50,25,5</g:TextBox>
+				</g:customCell>
+			</g:row>
+
+			<g:row>
+				<g:customCell>
+					<g:Label addStyleNames="{res.style.formDescription}">Upset points</g:Label>
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox addStyleNames="{res.style.formField}"
+						ui:field="upset">1</g:TextBox>
+				</g:customCell>
+			</g:row>
+		</g:Grid>
+
+		<g:FlowPanel styleName="{res.style.buttonContainer}">
+			<g:Button ui:field="cancelButton" styleName="{res.style.blueButton}"
+				addStyleNames="{res.style.leftButton}">cancel</g:Button>
+			<g:Button ui:field="deleteButton" styleName="{res.style.blueButton}"
+				addStyleNames="{res.style.leftButton}">delete</g:Button>
+			<g:Button ui:field="saveButton" styleName="{res.style.redButton}"
+				addStyleNames="{res.style.rightButton}">save</g:Button>
+		</g:FlowPanel>
+	</g:FlowPanel>
+</ui:UiBinder> 

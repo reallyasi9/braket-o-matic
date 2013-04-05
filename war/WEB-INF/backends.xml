@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<backends>
+	<backend name="expect-o-matic">
+		<class>B1</class>
+		<options>
+			<!-- <fail-fast>true</fail-fast> -->
+			<dynamic>true</dynamic>
+		</options>
+	</backend>
+</backends>

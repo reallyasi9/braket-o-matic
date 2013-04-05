@@ -1,0 +1,11 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<g:HTMLPanel>
+		<div ui:field="outline" class="bracket-button-background">
+			<img ui:field="icon"></img>
+			<img ui:field="overlay" class="bracket-button-icon-overlay"></img>
+			<g:Label ui:field="seed"></g:Label>
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder> 
