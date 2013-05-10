@@ -17,6 +17,8 @@
 
 package net.exclaimindustries.paste.braket.server;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import net.exclaimindustries.paste.braket.client.BraketUser;
 import net.exclaimindustries.paste.braket.client.LoginService;
 
@@ -28,6 +30,8 @@ import com.googlecode.objectify.Key;
 
 public class LoginServiceImpl extends RemoteServiceServlet implements
         LoginService {
+	
+	static private final String passwordSalt = "Braket-o-Matic";
 
     /**
      * Generated
@@ -42,8 +46,12 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
         BraketUser braketUser;
         if (user != null) {
             // Look up the user's other information
+        	
+        	// For security purposes, hash the ID with some salt
+        	String userId = DigestUtils.shaHex(user.getUserId() + passwordSalt);
+        	
             Key<BraketUser> key =
-                    Key.create(BraketUser.class, user.getUserId());
+                    Key.create(BraketUser.class, userId);
             braketUser = OfyService.ofy().load().key(key).get();
 
             // If that returns null, then make a user and write it
