@@ -21,6 +21,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> {
@@ -68,6 +69,14 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
 	public void onModuleLoad() {
 
 		// TODO Check for initial configuration conditions
+		
+		
+		// Check the history token
+		String token = History.getToken();
+		if (token.length() == 0) {
+			// Default token
+			token = HistoryToken.ABOUT;
+		}
 
 		// TODO Determine if the user is logged in and update content as needed
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
@@ -88,6 +97,11 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
 
 				});
 
+		// Add self as a listener
+		History.addValueChangeHandler(this);
+
+		// Fire the history event
+		History.fireCurrentHistoryState();
 	}
 
 }
