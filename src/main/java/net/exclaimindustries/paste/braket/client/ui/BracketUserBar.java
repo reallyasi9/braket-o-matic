@@ -114,10 +114,10 @@ public class BracketUserBar extends Composite {
             userLink.setVisible(true);
             leaderboardLink.setVisible(true);
             exciteoLink.setVisible(true);
-            if (BraketEntryPoint.currTournament == null
-                    || BraketEntryPoint.currTournament.isScheduled()) {
-                helpLink.setVisible(true);
-            }
+            // if (BraketEntryPoint.currTournament == null
+            // || BraketEntryPoint.currTournament.isScheduled()) {
+            // helpLink.setVisible(true);
+            // }
             if (user.isAdmin()) {
                 adminLink.setVisible(true);
             }
@@ -128,8 +128,8 @@ public class BracketUserBar extends Composite {
 
     public void startEditing() {
         doneEditing.setVisible(true);
-        BraketEntryPoint
-                .displayToast("Click the 'done editing' button when you are finished");
+        // BraketEntryPoint
+        // .displayToast("Click the 'done editing' button when you are finished");
     }
 
     @UiHandler("loginLink")
@@ -150,7 +150,7 @@ public class BracketUserBar extends Composite {
 
     @UiHandler("userLink")
     void userClick(ClickEvent event) {
-        BraketEntryPoint.doUserPopup();
+        // BraketEntryPoint.doUserPopup();
     }
 
     @UiHandler("leaderboardLink")
@@ -167,17 +167,17 @@ public class BracketUserBar extends Composite {
 
     @UiHandler("rulesLink")
     void rulesClick(ClickEvent event) {
-        BraketEntryPoint.doRulesPopup();
+        // BraketEntryPoint.doRulesPopup();
     }
 
     @UiHandler("adminLink")
     void adminClick(ClickEvent event) {
-        BraketEntryPoint.doAdminPopup();
+        // BraketEntryPoint.doAdminPopup();
     }
 
     @UiHandler("helpLink")
     void helpClick(ClickEvent event) {
-        BraketEntryPoint.doHelpPopup();
+        // BraketEntryPoint.doHelpPopup();
     }
 
     @UiHandler("doneEditing")

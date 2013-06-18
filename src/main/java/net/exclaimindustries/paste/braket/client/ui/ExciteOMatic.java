@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.exclaimindustries.paste.braket.client.BraketEntryPoint;
 import net.exclaimindustries.paste.braket.client.BraketGame;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
 import net.exclaimindustries.paste.braket.client.BraketUser;
@@ -83,15 +82,15 @@ public class ExciteOMatic extends ScrollPanel {
 
                     @Override
                     public void onFailure(Throwable caught) {
-                        BraketEntryPoint.displayException(caught);
+//                        BraketEntryPoint.displayException(caught);
                     }
 
                     @Override
                     public void onSuccess(Map<Long, Double> result) {
                         panel.clear();
                         if (!result.containsKey(Long.valueOf(0l))) {
-                            BraketEntryPoint
-                                    .displayToast("Expect-o-Matic is hashing results.  Try again in a few minutes.");
+//                            BraketEntryPoint
+//                                    .displayToast("Expect-o-Matic is hashing results.  Try again in a few minutes.");
                             return;
                         }
                         double totalValue = result.get(Long.valueOf(0l));

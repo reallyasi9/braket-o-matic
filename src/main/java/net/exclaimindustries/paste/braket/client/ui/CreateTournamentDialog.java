@@ -19,7 +19,6 @@ package net.exclaimindustries.paste.braket.client.ui;
 import java.math.BigInteger;
 import java.util.LinkedList;
 
-import net.exclaimindustries.paste.braket.client.BraketEntryPoint;
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
 
@@ -31,7 +30,6 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -136,8 +134,7 @@ public class CreateTournamentDialog extends DialogBox {
             tournament.setGameMask(gm);
 
             // Parse the payouts
-            Splitter splitter =
-                    Splitter.on(',').trimResults().omitEmptyStrings();
+            Splitter splitter = Splitter.on(',').trimResults().omitEmptyStrings();
             Iterable<String> poSplit = splitter.split(payOut.getText());
 
             LinkedList<Double> po = new LinkedList<Double>();
@@ -161,39 +158,39 @@ public class CreateTournamentDialog extends DialogBox {
 
             tournament.setStartTime(dateBox.getValue());
 
-            BraketEntryPoint.tournaService.storeTournament(tournament,
-                    new AsyncCallback<Long>() {
-
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            BraketEntryPoint.displayException(caught);
-                        }
-
-                        @Override
-                        public void onSuccess(Long result) {
-
-                            BraketEntryPoint
-                                    .displayToast("Tournament successfully created.");
-
-                            hide();
-                            resetValues();
-                        }
-
-                    });
+            // BraketEntryPoint.tournaService.storeTournament(tournament,
+            // new AsyncCallback<Long>() {
+            //
+            // @Override
+            // public void onFailure(Throwable caught) {
+            // BraketEntryPoint.displayException(caught);
+            // }
+            //
+            // @Override
+            // public void onSuccess(Long result) {
+            //
+            // BraketEntryPoint
+            // .displayToast("Tournament successfully created.");
+            //
+            // hide();
+            // resetValues();
+            // }
+            //
+            // });
         } catch (Throwable caught) {
-            BraketEntryPoint.displayException(caught);
+            // BraketEntryPoint.displayException(caught);
         }
     }
 
-    private void resetValues() {
-        dateBox.getTextBox().setText("");
-        name.setText("");
-        gameMask.setText("111111111111111111111111111111111111111111111111111111111111111");
-        buyIn.setText("5");
-        payOut.setText("null, 50, 25, 5");
-        roundValues.setText("1, 2, 3, 5, 7, 13");
-        upset.setValue("1");
-        saveButton.setEnabled(true);
-    }
+    // private void resetValues() {
+    // dateBox.getTextBox().setText("");
+    // name.setText("");
+    // gameMask.setText("111111111111111111111111111111111111111111111111111111111111111");
+    // buyIn.setText("5");
+    // payOut.setText("null, 50, 25, 5");
+    // roundValues.setText("1, 2, 3, 5, 7, 13");
+    // upset.setValue("1");
+    // saveButton.setEnabled(true);
+    // }
 
 }

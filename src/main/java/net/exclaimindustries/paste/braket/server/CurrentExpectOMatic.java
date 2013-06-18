@@ -3,6 +3,7 @@ package net.exclaimindustries.paste.braket.server;
 import net.exclaimindustries.paste.braket.server.backends.ExpectoValues;
 
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.LoadResult;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -49,12 +50,12 @@ public class CurrentExpectOMatic {
 
     public static Ref<ExpectoValues> getCurrentExpectOMatic() {
         Key<CurrentExpectOMatic> key = Key.create(CurrentExpectOMatic.class, 1);
-        Ref<CurrentExpectOMatic> t =
+        LoadResult<CurrentExpectOMatic> t =
                 OfyService.ofy().load().group(LoadExpectOMatic.class).key(key);
-        if (t == null || t.get() == null) {
+        if (t == null || t.now() == null) {
             return null;
         }
-        return t.get().getExpectOMaticRef();
+        return t.now().getExpectOMaticRef();
     }
 
 }

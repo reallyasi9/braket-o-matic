@@ -3,7 +3,6 @@ package net.exclaimindustries.paste.braket.client.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.exclaimindustries.paste.braket.client.BraketEntryPoint;
 import net.exclaimindustries.paste.braket.client.BraketGame;
 import net.exclaimindustries.paste.braket.client.BraketSelection;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
@@ -13,7 +12,6 @@ import net.exclaimindustries.paste.braket.client.ui.BracketDrawable.Direction;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -475,14 +473,14 @@ public class BracketContainer extends ScrollPanel {
      * @return true if editable by this user, false if not
      */
     boolean canUserEditThis() {
-        if (mSelection == null
-                || BraketEntryPoint.thisUser == null
-                || (!BraketEntryPoint.thisUser.isAdmin() && !(BraketEntryPoint.thisUser
-                        .getId().equals(mSelection.getUserId())))) {
+        //if (mSelection == null
+        //        || BraketEntryPoint.thisUser == null
+        //        || (!BraketEntryPoint.thisUser.isAdmin() && !(BraketEntryPoint.thisUser
+        //                .getId().equals(mSelection.getUserId())))) {
             return false;
-        } else {
-            return true;
-        }
+        //} else {
+        //    return true;
+        //}
     }
 
     /**
@@ -492,11 +490,11 @@ public class BracketContainer extends ScrollPanel {
      * @return true if that thing I said, false if not
      */
     boolean isTournamentEditableRightNow() {
-        if (BraketEntryPoint.thisUser.isAdmin() || mTournament.isScheduled()) {
+        //if (BraketEntryPoint.thisUser.isAdmin() || mTournament.isScheduled()) {
             return true;
-        } else {
-            return false;
-        }
+        //} else {
+            //return false;
+        //}
     }
 
     void pickTeam(int index, BraketTeam pick) {
@@ -518,28 +516,28 @@ public class BracketContainer extends ScrollPanel {
                         (pick != null ? pick.getIndex() : -1));
 
         if (changed) {
-            final BraketTeam pickFinal = pick;
+            //final BraketTeam pickFinal = pick;
 
-            BraketEntryPoint.selectService.storeSelection(mSelection,
-                    new AsyncCallback<Long>() {
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            BraketEntryPoint.displayException(caught);
-                        }
-
-                        @Override
-                        public void onSuccess(Long result) {
-                            if (pickFinal != null)
-                                BraketEntryPoint
-                                        .displayToast(pickFinal.getName()
-                                                .getSchoolName() + " picked!");
-                            else
-                                BraketEntryPoint
-                                        .displayToast("Selection cleared!");
-
-                            refetchData();
-                        }
-                    });
+//            BraketEntryPoint.selectService.storeSelection(mSelection,
+//                    new AsyncCallback<Long>() {
+//                        @Override
+//                        public void onFailure(Throwable caught) {
+//                            BraketEntryPoint.displayException(caught);
+//                        }
+//
+//                        @Override
+//                        public void onSuccess(Long result) {
+//                            if (pickFinal != null)
+//                                BraketEntryPoint
+//                                        .displayToast(pickFinal.getName()
+//                                                .getSchoolName() + " picked!");
+//                            else
+//                                BraketEntryPoint
+//                                        .displayToast("Selection cleared!");
+//
+//                            refetchData();
+//                        }
+//                    });
         }
     }
 
@@ -559,29 +557,29 @@ public class BracketContainer extends ScrollPanel {
                 || !(mSelection.getTieBreaker().equals(value))) {
             mSelection.setTieBreaker(value);
 
-            final Integer valFinal = value;
+            //final Integer valFinal = value;
 
-            BraketEntryPoint.selectService.storeSelection(mSelection,
-                    new AsyncCallback<Long>() {
-
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            BraketEntryPoint.displayException(caught);
-
-                        }
-
-                        @Override
-                        public void onSuccess(Long result) {
-                            BraketEntryPoint
-                                    .displayToast("Tiebreaker updated to "
-                                            + valFinal.toString() + "!");
-                        }
-
-                        // We don't need to update anything, as the textbox
-                        // already
-                        // holds the data needed.
-
-                    });
+//            BraketEntryPoint.selectService.storeSelection(mSelection,
+//                    new AsyncCallback<Long>() {
+//
+//                        @Override
+//                        public void onFailure(Throwable caught) {
+//                            BraketEntryPoint.displayException(caught);
+//
+//                        }
+//
+//                        @Override
+//                        public void onSuccess(Long result) {
+//                            BraketEntryPoint
+//                                    .displayToast("Tiebreaker updated to "
+//                                            + valFinal.toString() + "!");
+//                        }
+//
+//                        // We don't need to update anything, as the textbox
+//                        // already
+//                        // holds the data needed.
+//
+//                    });
         }
     }
 }

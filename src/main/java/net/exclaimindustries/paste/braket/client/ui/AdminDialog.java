@@ -101,30 +101,30 @@ public class AdminDialog extends DialogBox {
     @UiHandler("createTournamentButton")
     void createTournament(ClickEvent e) {
         hide();
-        BraketEntryPoint.doNewTournamentPopup();
+        //BraketEntryPoint.doNewTournamentPopup();
     }
 
     @UiHandler("changeTournamentButton")
     void changeTournament(ClickEvent e) {
         hide();
-        BraketEntryPoint.doChangeTournamentPopup();
+        //BraketEntryPoint.doChangeTournamentPopup();
     }
 
     @UiHandler("modifyTournamentButton")
     void modifyTournament(ClickEvent e) {
         hide();
-        BraketEntryPoint.doEditTournamentPopup();
+        //BraketEntryPoint.doEditTournamentPopup();
     }
 
     @UiHandler("rulesButton")
     void rules(ClickEvent e) {
         hide();
-        BraketEntryPoint.doEditRulesPopup();
+        //BraketEntryPoint.doEditRulesPopup();
     }
 
     @UiHandler("downloadTeamsButton")
     void downloadTeams(ClickEvent e) {
-        BraketEntryPoint.doDownloadTeamsPopup();
+        //BraketEntryPoint.doDownloadTeamsPopup();
         hide();
     }
 
@@ -156,12 +156,12 @@ public class AdminDialog extends DialogBox {
 
             @Override
             public void onFailure(Throwable caught) {
-                BraketEntryPoint.displayException(caught);
+                //BraketEntryPoint.displayException(caught);
             }
 
             @Override
             public void onSuccess(Void result) {
-                BraketEntryPoint.displayToast("Expect-o-Matic signal sent!");
+                //BraketEntryPoint.displayToast("Expect-o-Matic signal sent!");
             }
 
         });

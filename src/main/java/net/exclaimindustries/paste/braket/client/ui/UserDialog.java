@@ -16,7 +16,6 @@
  */
 package net.exclaimindustries.paste.braket.client.ui;
 
-import net.exclaimindustries.paste.braket.client.BraketEntryPoint;
 import net.exclaimindustries.paste.braket.client.BraketUser;
 import net.exclaimindustries.paste.braket.client.UserName;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
@@ -28,7 +27,6 @@ import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Label;
@@ -106,25 +104,25 @@ public class UserDialog extends DialogBox {
     }
 
     protected void saveUser() {
-        BraketEntryPoint.userService.storeUser(user,
-                new AsyncCallback<String>() {
-
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        BraketEntryPoint.displayException(caught);
-                    }
-
-                    @Override
-                    public void onSuccess(String result) {
-                        // The user ID shouldn't change with this operation, so
-                        // just
-                        // close the window.
-                        hide();
-                        BraketEntryPoint
-                                .displayToast("User successfully updated");
-                    }
-
-                });
+//        BraketEntryPoint.userService.storeUser(user,
+//                new AsyncCallback<String>() {
+//
+//                    @Override
+//                    public void onFailure(Throwable caught) {
+//                        BraketEntryPoint.displayException(caught);
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(String result) {
+//                        // The user ID shouldn't change with this operation, so
+//                        // just
+//                        // close the window.
+//                        hide();
+//                        BraketEntryPoint
+//                                .displayToast("User successfully updated");
+//                    }
+//
+//                });
     }
 
     @UiHandler("firstName")

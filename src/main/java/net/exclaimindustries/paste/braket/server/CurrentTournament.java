@@ -52,7 +52,7 @@ public class CurrentTournament {
         Key<CurrentTournament> key = Key.create(CurrentTournament.class, 1);
         CurrentTournament t =
                 OfyService.ofy().load().group(LoadTournament.class).key(key)
-                        .get();
+                        .now();
         if (t == null) {
             return null;
         }

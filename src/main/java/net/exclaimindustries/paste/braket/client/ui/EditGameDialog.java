@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import net.exclaimindustries.paste.braket.client.BraketEntryPoint;
 import net.exclaimindustries.paste.braket.client.BraketGame;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
 import net.exclaimindustries.paste.braket.client.TeamService;
@@ -43,8 +42,7 @@ public class EditGameDialog extends SimpleLayoutPanel {
     }
 
     private final static Resources RES = GWT.create(Resources.class);
-    private final static TeamServiceAsync TEAM_SERV = GWT
-            .create(TeamService.class);
+    private final static TeamServiceAsync TEAM_SERV = GWT.create(TeamService.class);
     private final static HashMap<Long, BraketTeam> TEAMS =
             new HashMap<Long, BraketTeam>();
     private final static HashMap<String, Long> IDS_BY_NAME =
@@ -78,7 +76,7 @@ public class EditGameDialog extends SimpleLayoutPanel {
 
             @Override
             public void onFailure(Throwable caught) {
-                BraketEntryPoint.displayException(caught);
+                // BraketEntryPoint.displayException(caught);
             }
 
             @Override
@@ -125,19 +123,16 @@ public class EditGameDialog extends SimpleLayoutPanel {
                 }, new FieldUpdater<BraketGame, String>() {
 
                     @Override
-                    public void update(int index, BraketGame object,
-                            String value) {
+                    public void update(int index, BraketGame object, String value) {
                         object.setIndex(Integer.valueOf(value));
                         doGameUpdate(index, object);
                     }
                 });
-        columnSortHandler.setComparator(indexColumn,
-                new Comparator<BraketGame>() {
-                    public int compare(BraketGame o1, BraketGame o2) {
-                        return Integer.valueOf(o1.getIndex()).compareTo(
-                                o2.getIndex());
-                    }
-                });
+        columnSortHandler.setComparator(indexColumn, new Comparator<BraketGame>() {
+            public int compare(BraketGame o1, BraketGame o2) {
+                return Integer.valueOf(o1.getIndex()).compareTo(o2.getIndex());
+            }
+        });
         indexColumn.setSortable(true);
         dataGrid.setColumnWidth(indexColumn, 5, Unit.EM);
 
@@ -173,26 +168,24 @@ public class EditGameDialog extends SimpleLayoutPanel {
 
         // Top score
         Column<BraketGame, String> topScoreColumn =
-                addColumn(new EditTextCell(), "top score",
-                        new GetValue<String>() {
+                addColumn(new EditTextCell(), "top score", new GetValue<String>() {
 
-                            @Override
-                            public String getValue(BraketGame game) {
-                                if (game.getTopScore() == null) {
-                                    return "";
-                                }
-                                return Integer.toString(game.getTopScore());
-                            }
+                    @Override
+                    public String getValue(BraketGame game) {
+                        if (game.getTopScore() == null) {
+                            return "";
+                        }
+                        return Integer.toString(game.getTopScore());
+                    }
 
-                        }, new FieldUpdater<BraketGame, String>() {
+                }, new FieldUpdater<BraketGame, String>() {
 
-                            @Override
-                            public void update(int index, BraketGame object,
-                                    String value) {
-                                object.setTopScore(Integer.valueOf(value));
-                                doGameUpdate(index, object);
-                            }
-                        });
+                    @Override
+                    public void update(int index, BraketGame object, String value) {
+                        object.setTopScore(Integer.valueOf(value));
+                        doGameUpdate(index, object);
+                    }
+                });
         dataGrid.setColumnWidth(topScoreColumn, 7, Unit.EM);
 
         // Bottom team
@@ -216,8 +209,7 @@ public class EditGameDialog extends SimpleLayoutPanel {
                                 if (value.equals("none")) {
                                     object.setBottomTeamId(null);
                                 } else {
-                                    object.setBottomTeamId(IDS_BY_NAME
-                                            .get(value));
+                                    object.setBottomTeamId(IDS_BY_NAME.get(value));
                                 }
 
                                 doGameUpdate(index, object);
@@ -283,23 +275,21 @@ public class EditGameDialog extends SimpleLayoutPanel {
 
         // Location
         Column<BraketGame, String> locationColumn =
-                addColumn(new EditTextCell(), "location",
-                        new GetValue<String>() {
+                addColumn(new EditTextCell(), "location", new GetValue<String>() {
 
-                            @Override
-                            public String getValue(BraketGame game) {
-                                return game.getLocation();
-                            }
+                    @Override
+                    public String getValue(BraketGame game) {
+                        return game.getLocation();
+                    }
 
-                        }, new FieldUpdater<BraketGame, String>() {
+                }, new FieldUpdater<BraketGame, String>() {
 
-                            @Override
-                            public void update(int index, BraketGame object,
-                                    String value) {
-                                object.setLocation(value);
-                                doGameUpdate(index, object);
-                            }
-                        });
+                    @Override
+                    public void update(int index, BraketGame object, String value) {
+                        object.setLocation(value);
+                        doGameUpdate(index, object);
+                    }
+                });
         dataGrid.setColumnWidth(locationColumn, 14, Unit.EM);
 
         // Status
@@ -314,8 +304,7 @@ public class EditGameDialog extends SimpleLayoutPanel {
                 }, new FieldUpdater<BraketGame, String>() {
 
                     @Override
-                    public void update(int index, BraketGame object,
-                            String value) {
+                    public void update(int index, BraketGame object, String value) {
                         object.setGameStatus(value);
                         doGameUpdate(index, object);
                     }
@@ -347,26 +336,24 @@ public class EditGameDialog extends SimpleLayoutPanel {
 
         // ESPN ID
         Column<BraketGame, String> espnColumn =
-                addColumn(new EditTextCell(), "ESPN ID",
-                        new GetValue<String>() {
+                addColumn(new EditTextCell(), "ESPN ID", new GetValue<String>() {
 
-                            @Override
-                            public String getValue(BraketGame game) {
-                                if (game.getEspnId() == null) {
-                                    return "";
-                                }
-                                return Long.toString(game.getEspnId());
-                            }
+                    @Override
+                    public String getValue(BraketGame game) {
+                        if (game.getEspnId() == null) {
+                            return "";
+                        }
+                        return Long.toString(game.getEspnId());
+                    }
 
-                        }, new FieldUpdater<BraketGame, String>() {
+                }, new FieldUpdater<BraketGame, String>() {
 
-                            @Override
-                            public void update(int index, BraketGame object,
-                                    String value) {
-                                object.setEspnId(Long.valueOf(value));
-                                doGameUpdate(index, object);
-                            }
-                        });
+                    @Override
+                    public void update(int index, BraketGame object, String value) {
+                        object.setEspnId(Long.valueOf(value));
+                        doGameUpdate(index, object);
+                    }
+                });
         dataGrid.setColumnWidth(espnColumn, 7, Unit.EM);
 
         dataGrid.addColumnSortHandler(columnSortHandler);
@@ -377,44 +364,45 @@ public class EditGameDialog extends SimpleLayoutPanel {
 
     public void reset() {
         // Do not trust pusher robot.
-        BraketEntryPoint.gameService
-                .getGames(new AsyncCallback<List<BraketGame>>() {
-
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        BraketEntryPoint.displayException(caught);
-                    }
-
-                    @Override
-                    public void onSuccess(final List<BraketGame> resGames) {
-
-                        dataGrid.setPageSize(resGames.size());
-                        dataProvider.getList().clear();
-                        dataProvider.getList().addAll(resGames);
-                        dataProvider.refresh();
-
-                    }
-                });
+        // BraketEntryPoint.gameService
+        // .getGames(new AsyncCallback<List<BraketGame>>() {
+        //
+        // @Override
+        // public void onFailure(Throwable caught) {
+        // BraketEntryPoint.displayException(caught);
+        // }
+        //
+        // @Override
+        // public void onSuccess(final List<BraketGame> resGames) {
+        //
+        // dataGrid.setPageSize(resGames.size());
+        // dataProvider.getList().clear();
+        // dataProvider.getList().addAll(resGames);
+        // dataProvider.refresh();
+        //
+        // }
+        // });
 
     }
 
     private void doGameUpdate(final int index, final BraketGame game) {
 
-        BraketEntryPoint.gameService.storeGame(game, new AsyncCallback<Long>() {
-
-            @Override
-            public void onFailure(Throwable caught) {
-                BraketEntryPoint.displayException(caught);
-            }
-
-            @Override
-            public void onSuccess(Long result) {
-
-                BraketEntryPoint.displayToast("Game updated.");
-                dataProvider.getList().set(index, game);
-            }
-
-        });
+        // BraketEntryPoint.gameService.storeGame(game, new
+        // AsyncCallback<Long>() {
+        //
+        // @Override
+        // public void onFailure(Throwable caught) {
+        // BraketEntryPoint.displayException(caught);
+        // }
+        //
+        // @Override
+        // public void onSuccess(Long result) {
+        //
+        // BraketEntryPoint.displayToast("Game updated.");
+        // dataProvider.getList().set(index, game);
+        // }
+        //
+        // });
     }
 
     /**
@@ -439,9 +427,8 @@ public class EditGameDialog extends SimpleLayoutPanel {
      * @param getter
      *            the value getter for the cell
      */
-    private <C> Column<BraketGame, C> addColumn(Cell<C> cell,
-            String headerText, final GetValue<C> getter,
-            FieldUpdater<BraketGame, C> fieldUpdater) {
+    private <C> Column<BraketGame, C> addColumn(Cell<C> cell, String headerText,
+            final GetValue<C> getter, FieldUpdater<BraketGame, C> fieldUpdater) {
         Column<BraketGame, C> column = new Column<BraketGame, C>(cell) {
             @Override
             public C getValue(BraketGame object) {

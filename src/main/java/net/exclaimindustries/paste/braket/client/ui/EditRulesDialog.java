@@ -16,7 +16,6 @@
  */
 package net.exclaimindustries.paste.braket.client.ui;
 
-import net.exclaimindustries.paste.braket.client.BraketEntryPoint;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
 
 import com.google.gwt.core.client.GWT;
@@ -24,7 +23,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -89,44 +87,44 @@ public class EditRulesDialog extends DialogBox {
     /**
      * 
      */
-    public void reset() {
-        if (BraketEntryPoint.currTournament == null) {
-            rta.setHTML("");
-        } else {
-            rta.setHTML(BraketEntryPoint.currTournament.getRules());
-        }
-        saveButton.setEnabled(true);
-    }
+    // public void reset() {
+    // if (BraketEntryPoint.currTournament == null) {
+    // rta.setHTML("");
+    // } else {
+    // rta.setHTML(BraketEntryPoint.currTournament.getRules());
+    // }
+    // saveButton.setEnabled(true);
+    // }
 
     @UiHandler("saveButton")
     void saveMe(ClickEvent event) {
 
-        if (BraketEntryPoint.currTournament == null) {
-            BraketEntryPoint.displayToast("Current tournament is not set");
-            return;
-        }
-        
+        // if (BraketEntryPoint.currTournament == null) {
+        // BraketEntryPoint.displayToast("Current tournament is not set");
+        // return;
+        // }
+
         saveButton.setEnabled(false);
 
-        final String rules = rta.getHTML();
+        // final String rules = rta.getHTML();
 
-        BraketEntryPoint.tournaService.setRules(rules,
-                new AsyncCallback<Void>() {
-
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        BraketEntryPoint.displayException(caught);
-                    }
-
-                    @Override
-                    public void onSuccess(Void result) {
-                        BraketEntryPoint.currTournament.setRules(rules);
-                        hide();
-                        BraketEntryPoint.displayToast("Rules updated.");
-                        saveButton.setEnabled(true);
-                    }
-
-                });
+        // BraketEntryPoint.tournaService.setRules(rules,
+        // new AsyncCallback<Void>() {
+        //
+        // @Override
+        // public void onFailure(Throwable caught) {
+        // BraketEntryPoint.displayException(caught);
+        // }
+        //
+        // @Override
+        // public void onSuccess(Void result) {
+        // BraketEntryPoint.currTournament.setRules(rules);
+        // hide();
+        // BraketEntryPoint.displayToast("Rules updated.");
+        // saveButton.setEnabled(true);
+        // }
+        //
+        // });
     }
 
     @UiHandler("cancelButton")

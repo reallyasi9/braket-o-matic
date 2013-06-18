@@ -16,7 +16,6 @@
  */
 package net.exclaimindustries.paste.braket.client.ui;
 
-import net.exclaimindustries.paste.braket.client.BraketEntryPoint;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
 
 import com.google.gwt.core.client.GWT;
@@ -27,7 +26,6 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -67,9 +65,9 @@ public class RulesDialog extends DialogBox {
 
     public void reset() {
         rules.clear();
-        if (BraketEntryPoint.currTournament != null) {
-            rules.add(new HTMLPanel(BraketEntryPoint.currTournament.getRules()));
-        }
+//        if (BraketEntryPoint.currTournament != null) {
+//            rules.add(new HTMLPanel(BraketEntryPoint.currTournament.getRules()));
+//        }
     }
 
     @UiHandler("closeButton")

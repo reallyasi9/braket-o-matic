@@ -230,7 +230,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
         }
 
         Key<CurrentTournament> key = Key.create(CurrentTournament.class, 1);
-        CurrentTournament current = OfyService.ofy().load().key(key).get();
+        CurrentTournament current = OfyService.ofy().load().key(key).now();
         if (current == null) {
             current = new CurrentTournament();
         }
@@ -283,7 +283,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
                 BraketGame game =
                         OfyService.ofy().load().type(BraketGame.class)
                                 .parent(tournament)
-                                .id(tournament.getGame(startingGame)).get();
+                                .id(tournament.getGame(startingGame)).now();
                 if (game != null) {
                     game.setTeamId(team.getIndex() % 2, team.getId());
                     OfyService.ofy().save().entity(game);
@@ -336,7 +336,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
                 BraketGame game =
                         OfyService.ofy().load().type(BraketGame.class)
                                 .parent(tournament)
-                                .id(tournament.getGame(startingGame)).get();
+                                .id(tournament.getGame(startingGame)).now();
                 if (game != null) {
                     game.setTeamId(team.getIndex() % 2, team.getId());
                     OfyService.ofy().save().entity(game);
@@ -397,7 +397,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
                     int startingGame = (team.getIndex() / 2) + 31;
                     BraketGame game =
                             OfyService.ofy().load().type(BraketGame.class)
-                                    .id(tournament.getGame(startingGame)).get();
+                                    .id(tournament.getGame(startingGame)).now();
                     if (game != null) {
                         game.setTeamId(team.getIndex() % 2, team.getId());
                         games.add(game);
@@ -453,7 +453,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
                     int startingGame = (team.getIndex() / 2) + 31;
                     BraketGame game =
                             OfyService.ofy().load().type(BraketGame.class)
-                                    .id(tournament.getGame(startingGame)).get();
+                                    .id(tournament.getGame(startingGame)).now();
                     if (game != null) {
                         game.setTeamId(team.getIndex() % 2, team.getId());
                         games.add(game);
@@ -768,7 +768,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
                                     parentGameId);
 
                     BraketGame parentGame =
-                            OfyService.ofy().load().key(parentKey).get();
+                            OfyService.ofy().load().key(parentKey).now();
 
                     parentGame.setTeamId((thisGameIndex + 1) % 2, thisWinnerId);
 

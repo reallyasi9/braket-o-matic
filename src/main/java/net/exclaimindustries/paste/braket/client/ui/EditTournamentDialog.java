@@ -19,11 +19,8 @@ package net.exclaimindustries.paste.braket.client.ui;
 import java.math.BigInteger;
 import java.util.LinkedList;
 
-import net.exclaimindustries.paste.braket.client.BraketEntryPoint;
-import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
 
-import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -32,8 +29,6 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -117,37 +112,38 @@ public class EditTournamentDialog extends DialogBox {
 
     @UiHandler("deleteButton")
     void deleteMe(ClickEvent event) {
-        if (BraketEntryPoint.currTournament == null) {
-            BraketEntryPoint.displayToast("No tournament to delete.");
-            return;
-        }
+        // if (BraketEntryPoint.currTournament == null) {
+        // BraketEntryPoint.displayToast("No tournament to delete.");
+        // return;
+        // }
 
-        if (Window
-                .confirm("Woah.  WOAH!\n\nAre you sure you want to delete the current tournament?  Bad things might happen!")) {
-            // All right. It's your tournament. I tried to warn you.
-            BraketEntryPoint.tournaService.deleteTournament(
-                    BraketEntryPoint.currTournament, new AsyncCallback<Void>() {
-
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            BraketEntryPoint.displayException(caught);
-                        }
-
-                        @Override
-                        public void onSuccess(Void result) {
-
-                            BraketEntryPoint
-                                    .displayToast("Tournament successfully deleted.");
-
-                            BraketEntryPoint.currTournament = null;
-                            BraketEntryPoint.bracketContainer.clearContainer();
-                            hide();
-                            resetValues();
-                            //BraketEntryPoint.doBraketDisplay();
-                        }
-
-                    });
-        }
+        // if (Window
+        // .confirm("Woah.  WOAH!\n\nAre you sure you want to delete the current tournament?  Bad things might happen!"))
+        // {
+        // // All right. It's your tournament. I tried to warn you.
+        // BraketEntryPoint.tournaService.deleteTournament(
+        // BraketEntryPoint.currTournament, new AsyncCallback<Void>() {
+        //
+        // @Override
+        // public void onFailure(Throwable caught) {
+        // BraketEntryPoint.displayException(caught);
+        // }
+        //
+        // @Override
+        // public void onSuccess(Void result) {
+        //
+        // BraketEntryPoint
+        // .displayToast("Tournament successfully deleted.");
+        //
+        // BraketEntryPoint.currTournament = null;
+        // BraketEntryPoint.bracketContainer.clearContainer();
+        // hide();
+        // resetValues();
+        // //BraketEntryPoint.doBraketDisplay();
+        // }
+        //
+        // });
+        // }
     }
 
     @UiHandler("saveButton")
@@ -156,11 +152,12 @@ public class EditTournamentDialog extends DialogBox {
         try {
             saveButton.setEnabled(false);
 
-            final BraketTournament tournament = BraketEntryPoint.currTournament;
+            // final BraketTournament tournament =
+            // BraketEntryPoint.currTournament;
             // Easy stuff first
-            tournament.setName(name.getText());
-            tournament.setUpsetValue(Double.valueOf(upset.getText()));
-            tournament.setBuyInValue(Double.valueOf(buyIn.getText()));
+            // tournament.setName(name.getText());
+            // tournament.setUpsetValue(Double.valueOf(upset.getText()));
+            // tournament.setBuyInValue(Double.valueOf(buyIn.getText()));
 
             // Parse the game mask
             String gmString = gameMask.getText();
@@ -170,11 +167,10 @@ public class EditTournamentDialog extends DialogBox {
                     gm = gm.setBit(i);
                 }
             }
-            tournament.setGameMask(gm);
+            // tournament.setGameMask(gm);
 
             // Parse the payouts
-            Splitter splitter =
-                    Splitter.on(',').trimResults().omitEmptyStrings();
+            Splitter splitter = Splitter.on(',').trimResults().omitEmptyStrings();
             Iterable<String> poSplit = splitter.split(payOut.getText());
 
             LinkedList<Double> po = new LinkedList<Double>();
@@ -185,7 +181,7 @@ public class EditTournamentDialog extends DialogBox {
                     po.add(Double.valueOf(poValue));
                 }
             }
-            tournament.setPayOutValues(po);
+            // tournament.setPayOutValues(po);
 
             // Parse the round values
             Iterable<String> rvSplit = splitter.split(roundValues.getText());
@@ -194,64 +190,64 @@ public class EditTournamentDialog extends DialogBox {
             for (String rvValue : rvSplit) {
                 rv.add(Double.valueOf(rvValue));
             }
-            tournament.setRoundValues(rv);
+            // tournament.setRoundValues(rv);
 
-            tournament.setStartTime(dateBox.getValue());
+            // tournament.setStartTime(dateBox.getValue());
 
-            BraketEntryPoint.tournaService.storeTournament(tournament,
-                    new AsyncCallback<Long>() {
-
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            BraketEntryPoint.displayException(caught);
-                        }
-
-                        @Override
-                        public void onSuccess(Long result) {
-
-                            BraketEntryPoint
-                                    .displayToast("Tournament successfully modified.");
-
-                            hide();
-                            resetValues();
-                            //BraketEntryPoint.doBraketDisplay();
-                        }
-
-                    });
+            // BraketEntryPoint.tournaService.storeTournament(tournament,
+            // new AsyncCallback<Long>() {
+            //
+            // @Override
+            // public void onFailure(Throwable caught) {
+            // BraketEntryPoint.displayException(caught);
+            // }
+            //
+            // @Override
+            // public void onSuccess(Long result) {
+            //
+            // BraketEntryPoint
+            // .displayToast("Tournament successfully modified.");
+            //
+            // hide();
+            // resetValues();
+            // //BraketEntryPoint.doBraketDisplay();
+            // }
+            //
+            // });
         } catch (Throwable caught) {
-            BraketEntryPoint.displayException(caught);
+            // BraketEntryPoint.displayException(caught);
         }
     }
 
     public void resetValues() {
         saveButton.setEnabled(true);
-        if (BraketEntryPoint.currTournament == null) {
-            dateBox.getTextBox().setText("");
-            name.setText("");
-            gameMask.setText("");
-            buyIn.setText("");
-            payOut.setText("");
-            roundValues.setText("");
-            upset.setValue("");
-        } else {
-            dateBox.getTextBox().setText(
-                    DateTimeFormat.getFormat(
-                            DateTimeFormat.PredefinedFormat.RFC_2822).format(
-                            BraketEntryPoint.currTournament.getStartTime()));
-            name.setText(BraketEntryPoint.currTournament.getName());
-            gameMask.setText(BraketEntryPoint.currTournament.getGameMask()
-                    .toString(2));
-            buyIn.setText(BraketEntryPoint.currTournament.getBuyInValue()
-                    .toString());
-            Joiner joiner = Joiner.on(", ").useForNull("null");
-            payOut.setText(joiner.join(BraketEntryPoint.currTournament
-                    .getPayOutValues()));
-            roundValues.setText(joiner.join(BraketEntryPoint.currTournament
-                    .getRoundValues()));
-            upset.setValue(Double.toString(BraketEntryPoint.currTournament
-                    .getUpsetValue()));
-            saveButton.setEnabled(true);
-        }
+        // if (BraketEntryPoint.currTournament == null) {
+        // dateBox.getTextBox().setText("");
+        // name.setText("");
+        // gameMask.setText("");
+        // buyIn.setText("");
+        // payOut.setText("");
+        // roundValues.setText("");
+        // upset.setValue("");
+        // } else {
+        // dateBox.getTextBox().setText(
+        // DateTimeFormat.getFormat(
+        // DateTimeFormat.PredefinedFormat.RFC_2822).format(
+        // BraketEntryPoint.currTournament.getStartTime()));
+        // name.setText(BraketEntryPoint.currTournament.getName());
+        // gameMask.setText(BraketEntryPoint.currTournament.getGameMask()
+        // .toString(2));
+        // buyIn.setText(BraketEntryPoint.currTournament.getBuyInValue()
+        // .toString());
+        // Joiner joiner = Joiner.on(", ").useForNull("null");
+        // payOut.setText(joiner.join(BraketEntryPoint.currTournament
+        // .getPayOutValues()));
+        // roundValues.setText(joiner.join(BraketEntryPoint.currTournament
+        // .getRoundValues()));
+        // upset.setValue(Double.toString(BraketEntryPoint.currTournament
+        // .getUpsetValue()));
+        // saveButton.setEnabled(true);
+        // }
 
     }
 

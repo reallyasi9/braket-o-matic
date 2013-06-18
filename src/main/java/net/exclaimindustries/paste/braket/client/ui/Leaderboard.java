@@ -19,7 +19,6 @@ package net.exclaimindustries.paste.braket.client.ui;
 import java.util.Collection;
 import java.util.Comparator;
 
-import net.exclaimindustries.paste.braket.client.BraketEntryPoint;
 import net.exclaimindustries.paste.braket.client.LeaderboardService;
 import net.exclaimindustries.paste.braket.client.LeaderboardServiceAsync;
 import net.exclaimindustries.paste.braket.client.UserName;
@@ -189,8 +188,8 @@ public class Leaderboard extends SimpleLayoutPanel {
 
                             @Override
                             public void execute(SelectionInfo object) {
-                                BraketEntryPoint.doBraketDisplay(object
-                                        .getSelection());
+//                                BraketEntryPoint.doBraketDisplay(object
+//                                        .getSelection());
                             }
                         }), "", new GetValue<SelectionInfo>() {
                     @Override
@@ -218,7 +217,7 @@ public class Leaderboard extends SimpleLayoutPanel {
 
                     @Override
                     public void onFailure(Throwable caught) {
-                        BraketEntryPoint.displayException(caught);
+//                        BraketEntryPoint.displayException(caught);
                     }
 
                     @Override

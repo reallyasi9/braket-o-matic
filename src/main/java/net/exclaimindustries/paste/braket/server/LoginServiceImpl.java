@@ -44,7 +44,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
             // Look up the user's other information
             Key<BraketUser> key =
                     Key.create(BraketUser.class, user.getUserId());
-            braketUser = OfyService.ofy().load().key(key).get();
+            braketUser = OfyService.ofy().load().key(key).now();
 
             // If that returns null, then make a user and write it
             if (braketUser == null) {

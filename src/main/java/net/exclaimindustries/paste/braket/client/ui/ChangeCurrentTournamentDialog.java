@@ -16,21 +16,13 @@
  */
 package net.exclaimindustries.paste.braket.client.ui;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import net.exclaimindustries.paste.braket.client.BraketEntryPoint;
-import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Label;
@@ -50,7 +42,7 @@ public class ChangeCurrentTournamentDialog extends DialogBox {
             UiBinder<Widget, ChangeCurrentTournamentDialog> {
     }
 
-    private List<BraketTournament> tournaments;
+    // private List<BraketTournament> tournaments;
 
     private final static Resources res = GWT.create(Resources.class);
 
@@ -84,80 +76,80 @@ public class ChangeCurrentTournamentDialog extends DialogBox {
 
     public void updateTournamentList() {
 
-        tournaments = new ArrayList<BraketTournament>();
+        // tournaments = new ArrayList<BraketTournament>();
         listBox.clear();
 
-        if (BraketEntryPoint.currTournament != null) {
-            name.setText(BraketEntryPoint.currTournament.getName());
-        } else {
-            name.setText("(no current tournament)");
-        }
+        // if (BraketEntryPoint.currTournament != null) {
+        // name.setText(BraketEntryPoint.currTournament.getName());
+        // } else {
+        name.setText("(no current tournament)");
+        // }
 
-        BraketEntryPoint.tournaService
-                .getTournaments(new AsyncCallback<Collection<BraketTournament>>() {
-
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        BraketEntryPoint.displayException(caught);
-                    }
-
-                    @Override
-                    public void onSuccess(Collection<BraketTournament> result) {
-
-                        int i = 0;
-                        for (BraketTournament tournament : result) {
-
-                            tournaments.add(tournament);
-
-                            StringBuilder sb = new StringBuilder();
-                            sb.append(tournament.getName());
-                            sb.append(" (starts ");
-                            sb.append(DateTimeFormat.getFormat(
-                                    DateTimeFormat.PredefinedFormat.RFC_2822)
-                                    .format(tournament.getStartTime()));
-                            sb.append(")");
-
-                            listBox.addItem(sb.toString());
-
-                            if (BraketEntryPoint.currTournament != null
-                                    && tournament.getId() == BraketEntryPoint.currTournament
-                                            .getId()) {
-                                listBox.setSelectedIndex(i);
-                            }
-
-                            ++i;
-                        }
-
-                        saveButton.setEnabled(true);
-                    }
-
-                });
+        // BraketEntryPoint.tournaService
+        // .getTournaments(new AsyncCallback<Collection<BraketTournament>>() {
+        //
+        // @Override
+        // public void onFailure(Throwable caught) {
+        // BraketEntryPoint.displayException(caught);
+        // }
+        //
+        // @Override
+        // public void onSuccess(Collection<BraketTournament> result) {
+        //
+        // int i = 0;
+        // for (BraketTournament tournament : result) {
+        //
+        // tournaments.add(tournament);
+        //
+        // StringBuilder sb = new StringBuilder();
+        // sb.append(tournament.getName());
+        // sb.append(" (starts ");
+        // sb.append(DateTimeFormat.getFormat(
+        // DateTimeFormat.PredefinedFormat.RFC_2822)
+        // .format(tournament.getStartTime()));
+        // sb.append(")");
+        //
+        // listBox.addItem(sb.toString());
+        //
+        // if (BraketEntryPoint.currTournament != null
+        // && tournament.getId() == BraketEntryPoint.currTournament
+        // .getId()) {
+        // listBox.setSelectedIndex(i);
+        // }
+        //
+        // ++i;
+        // }
+        //
+        // saveButton.setEnabled(true);
+        // }
+        //
+        // });
     }
 
     @UiHandler("saveButton")
     void saveMe(ClickEvent event) {
 
-        final BraketTournament selected =
-                tournaments.get(listBox.getSelectedIndex());
+        // final BraketTournament selected =
+        // tournaments.get(listBox.getSelectedIndex());
 
-        BraketEntryPoint.tournaService.setCurrentTournament(selected,
-                new AsyncCallback<Void>() {
-
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        BraketEntryPoint.displayException(caught);
-                    }
-
-                    @Override
-                    public void onSuccess(Void result) {
-                        BraketEntryPoint.currTournament = selected;
-                        name.setText(BraketEntryPoint.currTournament.getName());
-                        hide();
-                        BraketEntryPoint
-                                .displayToast("New tournament selected.  Please reload page to ensure everything is working correctly.");
-                    }
-
-                });
+        // BraketEntryPoint.tournaService.setCurrentTournament(selected,
+        // new AsyncCallback<Void>() {
+        //
+        // @Override
+        // public void onFailure(Throwable caught) {
+        // BraketEntryPoint.displayException(caught);
+        // }
+        //
+        // @Override
+        // public void onSuccess(Void result) {
+        // BraketEntryPoint.currTournament = selected;
+        // name.setText(BraketEntryPoint.currTournament.getName());
+        // hide();
+        // BraketEntryPoint
+        // .displayToast("New tournament selected.  Please reload page to ensure everything is working correctly.");
+        // }
+        //
+        // });
     }
 
     @UiHandler("cancelButton")

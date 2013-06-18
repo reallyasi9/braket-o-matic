@@ -170,7 +170,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
         }
 
         BraketSelection selection = OfyService.ofy().load()
-                .type(BraketSelection.class).id(selectionId).get();
+                .type(BraketSelection.class).id(selectionId).now();
 
         if (selection == null) {
             return null;
@@ -215,7 +215,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
         }
 
         BraketSelection selection = OfyService.ofy().load()
-                .type(BraketSelection.class).id(selectionId).get();
+                .type(BraketSelection.class).id(selectionId).now();
 
         if (selection == null) {
             return null;
@@ -353,7 +353,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
         }
 
         BraketSelection selection = OfyService.ofy().load()
-                .type(BraketSelection.class).id(selectionId).get();
+                .type(BraketSelection.class).id(selectionId).now();
 
         if (selection == null || !selection.isRegistered()) {
             return null;
@@ -457,14 +457,14 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
                 if (selection.isRegistered()) {
                     BraketTournament tournament = OfyService.ofy().load()
                             .type(BraketTournament.class)
-                            .id(selection.getTournamentId()).get();
+                            .id(selection.getTournamentId()).now();
                     if (tournament != null) {
                         tournament.removeRegistration(selection.getUserId());
                         OfyService.ofy().save().entity(tournament);
 
                         BraketUser user = OfyService.ofy().load()
                                 .type(BraketUser.class)
-                                .id(selection.getUserId()).get();
+                                .id(selection.getUserId()).now();
 
                         if (user != null) {
                             user.removeSelection(selection.getTournamentId());
@@ -504,14 +504,14 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
                     if (selection.isRegistered()) {
                         BraketTournament tournament = OfyService.ofy().load()
                                 .type(BraketTournament.class)
-                                .id(selection.getTournamentId()).get();
+                                .id(selection.getTournamentId()).now();
                         if (tournament != null) {
                             tournament.removeRegistration(selection.getUserId());
                             OfyService.ofy().save().entity(tournament);
 
                             BraketUser user = OfyService.ofy().load()
                                     .type(BraketUser.class)
-                                    .id(selection.getUserId()).get();
+                                    .id(selection.getUserId()).now();
 
                             if (user != null) {
                                 user.removeSelection(selection
@@ -564,7 +564,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
                     OfyService.ofy().save().entity(user);
                 } else {
                     selection = OfyService.ofy().load()
-                            .type(BraketSelection.class).id(selectionId).get();
+                            .type(BraketSelection.class).id(selectionId).now();
                 }
 
                 return selection;

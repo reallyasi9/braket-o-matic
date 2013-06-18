@@ -117,7 +117,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements
 
                     selectionId = user.getSelections().get(tournamentId);
                     BraketSelection selection = OfyService.ofy().load()
-                            .type(BraketSelection.class).id(selectionId).get();
+                            .type(BraketSelection.class).id(selectionId).now();
                     selection.setRegistered(true);
                     OfyService.ofy().save().entity(selection);
 
@@ -164,7 +164,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements
 
                     BraketSelection selection = OfyService.ofy().load()
                             .type(BraketSelection.class)
-                            .id(user.getSelection(tournamentId)).get();
+                            .id(user.getSelection(tournamentId)).now();
                     selection.setRegistered(false);
                     OfyService.ofy().save().entities(selection, tournament);
                 }
@@ -196,7 +196,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements
                             .entrySet()) {
                         BraketTournament tournament = OfyService.ofy().load()
                                 .type(BraketTournament.class)
-                                .id(entry.getKey()).get();
+                                .id(entry.getKey()).now();
                         tournament.removeRegistration(userId);
                         OfyService.ofy().save().entity(tournament);
                     }
@@ -230,7 +230,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements
                 for (Entry<Long, Long> entry : user.getSelections().entrySet()) {
                     BraketTournament tournament = OfyService.ofy().load()
                             .type(BraketTournament.class).id(entry.getKey())
-                            .get();
+                            .now();
                     tournament.removeRegistration(userId);
                     OfyService.ofy().save().entity(tournament);
                 }

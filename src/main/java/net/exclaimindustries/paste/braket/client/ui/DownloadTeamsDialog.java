@@ -16,10 +16,8 @@
  */
 package net.exclaimindustries.paste.braket.client.ui;
 
-import java.util.Collection;
 import java.util.LinkedList;
 
-import net.exclaimindustries.paste.braket.client.BraketEntryPoint;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
 import net.exclaimindustries.paste.braket.client.Color;
 import net.exclaimindustries.paste.braket.client.TeamName;
@@ -32,7 +30,6 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Image;
@@ -136,38 +133,39 @@ public class DownloadTeamsDialog extends DialogBox {
         saveButton.setEnabled(false);
     }
 
-    private void updateForm() {
-        espnIdFixed.setText(Long.toString(downloadedTeam.getId()));
-        teamImage.setUrl(downloadedTeam.getPicture());
-        teamImage.setVisible(true);
-        schoolName.setText(downloadedTeam.getName().getSchoolName());
-        schoolName.setEnabled(true);
-        abbreviation.setText(downloadedTeam.getName().getAbbreviation());
-        abbreviation.setEnabled(true);
-        teamName.setText(downloadedTeam.getName().getTeamName());
-        teamName.setEnabled(true);
-        // Seed doesn't come with the download
-        seed.setText(Integer.toString(downloadedTeam.getSeed()));
-        seed.setEnabled(true);
-        // Index doesn't come with download
-        // Force fill in order
-        if (BraketEntryPoint.currTournament.getTeams().size() < BraketEntryPoint.currTournament
-                .getNumberOfTeams()) {
-            index.setText(Integer.toString(BraketEntryPoint.currTournament
-                    .getTeams().size()));
-            index.setEnabled(false);
-        } else {
-            index.setText("0");
-            index.setEnabled(true);
-        }
-        wpct.setText(Double.toString(downloadedTeam.getWinPercentage()));
-        wpct.setEnabled(true);
-        kenpom.setText(Double.toString(downloadedTeam.getKenpomScore()));
-        kenpom.setEnabled(true);
-        color.setText(downloadedTeam.getColor().getHexValue());
-        color.setEnabled(true);
-        saveButton.setEnabled(true);
-    }
+    // private void updateForm() {
+    // espnIdFixed.setText(Long.toString(downloadedTeam.getId()));
+    // teamImage.setUrl(downloadedTeam.getPicture());
+    // teamImage.setVisible(true);
+    // schoolName.setText(downloadedTeam.getName().getSchoolName());
+    // schoolName.setEnabled(true);
+    // abbreviation.setText(downloadedTeam.getName().getAbbreviation());
+    // abbreviation.setEnabled(true);
+    // teamName.setText(downloadedTeam.getName().getTeamName());
+    // teamName.setEnabled(true);
+    // // Seed doesn't come with the download
+    // seed.setText(Integer.toString(downloadedTeam.getSeed()));
+    // seed.setEnabled(true);
+    // // Index doesn't come with download
+    // // Force fill in order
+    // if (BraketEntryPoint.currTournament.getTeams().size() <
+    // BraketEntryPoint.currTournament
+    // .getNumberOfTeams()) {
+    // index.setText(Integer.toString(BraketEntryPoint.currTournament
+    // .getTeams().size()));
+    // index.setEnabled(false);
+    // } else {
+    // index.setText("0");
+    // index.setEnabled(true);
+    // }
+    // wpct.setText(Double.toString(downloadedTeam.getWinPercentage()));
+    // wpct.setEnabled(true);
+    // kenpom.setText(Double.toString(downloadedTeam.getKenpomScore()));
+    // kenpom.setEnabled(true);
+    // color.setText(downloadedTeam.getColor().getHexValue());
+    // color.setEnabled(true);
+    // saveButton.setEnabled(true);
+    // }
 
     private void saveFormData() {
         try {
@@ -180,11 +178,10 @@ public class DownloadTeamsDialog extends DialogBox {
             downloadedTeam.setIndex(Integer.valueOf(index.getText()));
             downloadedTeam.setWinPercentage(Double.valueOf(wpct.getText()));
             downloadedTeam.setKenpomScore(Double.valueOf(kenpom.getText()));
-            downloadedTeam.setColor(new Color(Integer.valueOf(color.getText(),
-                    16)));
+            downloadedTeam.setColor(new Color(Integer.valueOf(color.getText(), 16)));
             color.setText(downloadedTeam.getColor().getHexValue());
         } catch (Throwable caught) {
-            BraketEntryPoint.displayException(caught);
+            // BraketEntryPoint.displayException(caught);
         }
     }
 
@@ -193,8 +190,8 @@ public class DownloadTeamsDialog extends DialogBox {
         doDownload();
     }
 
-    @UiHandler({ "schoolName", "teamName", "abbreviation", "seed", "index",
-            "wpct", "kenpom", "color" })
+    @UiHandler({ "schoolName", "teamName", "abbreviation", "seed", "index", "wpct",
+            "kenpom", "color" })
     void saveEnter(KeyUpEvent e) {
         if (e.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
             doSave();
@@ -206,33 +203,33 @@ public class DownloadTeamsDialog extends DialogBox {
         try {
             teamIds.add(Long.valueOf(espnId.getText()));
         } catch (Throwable caught) {
-            BraketEntryPoint.displayException(caught);
+            // BraketEntryPoint.displayException(caught);
         }
         reset();
-        BraketEntryPoint.teamService.downloadTeams(teamIds,
-                new AsyncCallback<Collection<BraketTeam>>() {
-
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        BraketEntryPoint.displayException(caught);
-                    }
-
-                    @Override
-                    public void onSuccess(Collection<BraketTeam> result) {
-                        if (result.isEmpty()) {
-                            BraketEntryPoint
-                                    .displayToast("Unable to download team");
-                            return;
-                        }
-                        downloadedTeam = result.iterator().next();
-                        BraketEntryPoint
-                                .displayToast("Team downloaded successfully.");
-                        updateForm();
-                        seed.selectAll();
-                        seed.setFocus(true);
-                    }
-
-                });
+        // BraketEntryPoint.teamService.downloadTeams(teamIds,
+        // new AsyncCallback<Collection<BraketTeam>>() {
+        //
+        // @Override
+        // public void onFailure(Throwable caught) {
+        // BraketEntryPoint.displayException(caught);
+        // }
+        //
+        // @Override
+        // public void onSuccess(Collection<BraketTeam> result) {
+        // if (result.isEmpty()) {
+        // BraketEntryPoint
+        // .displayToast("Unable to download team");
+        // return;
+        // }
+        // downloadedTeam = result.iterator().next();
+        // BraketEntryPoint
+        // .displayToast("Team downloaded successfully.");
+        // updateForm();
+        // seed.selectAll();
+        // seed.setFocus(true);
+        // }
+        //
+        // });
     }
 
     @UiHandler("espnId")
@@ -251,28 +248,28 @@ public class DownloadTeamsDialog extends DialogBox {
         saveButton.setEnabled(false);
         saveFormData();
 
-        BraketEntryPoint.tournaService.addTeam(downloadedTeam,
-                new AsyncCallback<Long>() {
-
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        BraketEntryPoint.displayException(caught);
-                    }
-
-                    @Override
-                    public void onSuccess(Long result) {
-
-                        BraketEntryPoint
-                                .displayToast("Team saved to the tournament.");
-
-                        BraketEntryPoint.currTournament.addTeam(downloadedTeam);
-
-                        reset();
-                        // Keep the dialog open
-                        espnId.setFocus(true);
-                    }
-
-                });
+        // BraketEntryPoint.tournaService.addTeam(downloadedTeam,
+        // new AsyncCallback<Long>() {
+        //
+        // @Override
+        // public void onFailure(Throwable caught) {
+        // BraketEntryPoint.displayException(caught);
+        // }
+        //
+        // @Override
+        // public void onSuccess(Long result) {
+        //
+        // BraketEntryPoint
+        // .displayToast("Team saved to the tournament.");
+        //
+        // BraketEntryPoint.currTournament.addTeam(downloadedTeam);
+        //
+        // reset();
+        // // Keep the dialog open
+        // espnId.setFocus(true);
+        // }
+        //
+        // });
     }
 
     @UiHandler("cancelButton")
