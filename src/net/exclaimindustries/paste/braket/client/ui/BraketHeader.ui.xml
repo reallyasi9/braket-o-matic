@@ -1,0 +1,24 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.left {
+			float: left;
+		}
+		
+		.right {
+			float: right;
+		}
+	</ui:style>
+	<g:LayoutPanel>
+		<g:layer>
+			<g:Label>braket | o | matic</g:Label>
+		</g:layer>
+		<g:layer left='1em' right='1em' bottom='1em' height='2em'>
+			<g:FlowPanel>
+				<g:Label styleName="{style.left}">view buttons here</g:Label>
+				<g:Label styleName="{style.right}">user buttons here</g:Label>
+			</g:FlowPanel>
+		</g:layer>
+	</g:LayoutPanel>
+</ui:UiBinder> 

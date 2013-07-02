@@ -17,9 +17,16 @@
 
 package net.exclaimindustries.paste.braket.client;
 
+import net.exclaimindustries.paste.braket.client.ui.BraketHeader;
+
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 
@@ -64,8 +71,19 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
 
     @Override
     public void onModuleLoad() {
-        // TODO Auto-generated method stub
+        // Everything has a header and a footer
+        DockLayoutPanel dlp = new DockLayoutPanel(Unit.EM);
+        dlp.addNorth(new BraketHeader(), 8);
+        dlp.addSouth(new HTMLPanel("footer"), 1.5);
+        dlp.add(new HTMLPanel("content"));
+        
+        RootLayoutPanel.get().add(dlp);
+        
 
+        // Handle history token
+        History.addValueChangeHandler(this);
+        History.fireCurrentHistoryState();
+        
     }
 
 }
