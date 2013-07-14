@@ -16,7 +16,6 @@
  */
 package net.exclaimindustries.paste.braket.client.ui;
 
-import net.exclaimindustries.paste.braket.client.BraketEntryPoint;
 import net.exclaimindustries.paste.braket.client.ExpectedValueService;
 import net.exclaimindustries.paste.braket.client.ExpectedValueServiceAsync;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
@@ -131,21 +130,21 @@ public class AdminDialog extends DialogBox {
     @UiHandler("modifyTeamsButton")
     void modifyTeams(ClickEvent e) {
         hide();
-        History.newItem(BraketEntryPoint.HistoryToken.EDIT_TEAMS);
+        //History.newItem(BraketEntryPoint.HistoryToken.EDIT_TEAMS);
         History.fireCurrentHistoryState();
     }
 
     @UiHandler("modifyGamesButton")
     void modifyGames(ClickEvent e) {
         hide();
-        History.newItem(BraketEntryPoint.HistoryToken.EDIT_GAMES);
+        //History.newItem(BraketEntryPoint.HistoryToken.EDIT_GAMES);
         History.fireCurrentHistoryState();
     }
 
     @UiHandler("modifyUsersButton")
     void modifyUsers(ClickEvent e) {
         hide();
-        History.newItem(BraketEntryPoint.HistoryToken.EDIT_USERS);
+        //History.newItem(BraketEntryPoint.HistoryToken.EDIT_USERS);
         History.fireCurrentHistoryState();
     }
 

@@ -16,7 +16,6 @@
  */
 package net.exclaimindustries.paste.braket.client.ui;
 
-import net.exclaimindustries.paste.braket.client.BraketEntryPoint;
 import net.exclaimindustries.paste.braket.client.BraketUser;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
 
@@ -155,13 +154,13 @@ public class BracketUserBar extends Composite {
 
     @UiHandler("leaderboardLink")
     void leaderboardClick(ClickEvent event) {
-        History.newItem(BraketEntryPoint.HistoryToken.LEADERBOARD);
+        //History.newItem(BraketEntryPoint.HistoryToken.LEADERBOARD);
         History.fireCurrentHistoryState();
     }
 
     @UiHandler("exciteoLink")
     void exciteoClick(ClickEvent event) {
-        History.newItem(BraketEntryPoint.HistoryToken.EXCITE_O_MATIC);
+        //History.newItem(BraketEntryPoint.HistoryToken.EXCITE_O_MATIC);
         History.fireCurrentHistoryState();
     }
 

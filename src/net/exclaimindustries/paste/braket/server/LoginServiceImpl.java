@@ -17,8 +17,12 @@
 
 package net.exclaimindustries.paste.braket.server;
 
+import java.security.NoSuchAlgorithmException;
+
 import net.exclaimindustries.paste.braket.client.BraketUser;
 import net.exclaimindustries.paste.braket.client.LoginService;
+
+import org.apache.commons.codec.digest.DigestUtils;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
@@ -26,8 +30,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.googlecode.objectify.Key;
 
-public class LoginServiceImpl extends RemoteServiceServlet implements
-        LoginService {
+public class LoginServiceImpl extends RemoteServiceServlet implements LoginService {
 
     /**
      * Generated
@@ -35,20 +38,24 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
     private static final long serialVersionUID = 1L;
 
     @Override
-    public BraketUser signIn(String requestUri) {
+    public BraketUser signIn(String requestUri) throws NoSuchAlgorithmException {
         UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser();
 
         BraketUser braketUser;
         if (user != null) {
-            // Look up the user's other information
-            Key<BraketUser> key =
-                    Key.create(BraketUser.class, user.getUserId());
+            // Look up the user's information
+
+            // The user's ID should be protected
+            String userId = DigestUtils.shaHex(user.getUserId() + "//braket-o-matic");
+
+            // Load from the datastore
+            Key<BraketUser> key = Key.create(BraketUser.class, userId);
             braketUser = OfyService.ofy().load().key(key).now();
 
             // If that returns null, then make a user and write it
             if (braketUser == null) {
-                braketUser = new BraketUser(user);
+                braketUser = new BraketUser(user, userId);
                 OfyService.ofy().save().entity(braketUser);
             }
 

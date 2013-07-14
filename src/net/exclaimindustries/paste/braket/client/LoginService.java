@@ -17,6 +17,8 @@
 
 package net.exclaimindustries.paste.braket.client;
 
+import java.security.NoSuchAlgorithmException;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -28,14 +30,17 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("login")
 public interface LoginService extends RemoteService {
 
-	/**
-	 * Signs a user in using Google's user service.
-	 * 
-	 * @param requestUri
-	 *            The URI whence the request originated, so that a reasonable
-	 *            login/logout URL can be handed back.
-	 * @return The user represented by a BraketUser, whether or not the user is
-	 *         logged in.
-	 */
-	public BraketUser signIn(String requestUri);
+    /**
+     * Signs a user in using Google's user service.
+     * 
+     * @param requestUri
+     *            The URI whence the request originated, so that a reasonable
+     *            login/logout URL can be handed back.
+     * @return The user represented by a BraketUser, whether or not the user is
+     *         logged in.
+     * @throws NoSuchAlgorithmException
+     *             If, for whatever reason, you can't access the SHA1 hash
+     *             algorithm.
+     */
+    public BraketUser signIn(String requestUri) throws NoSuchAlgorithmException;
 }

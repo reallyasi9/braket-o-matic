@@ -17,6 +17,7 @@
 
 package net.exclaimindustries.paste.braket.client;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -111,9 +112,13 @@ public class BraketUser implements IsSerializable {
      *            <code>UserService</code>. @see <a href=
      *            "https://developers.google.com/appengine/docs/java/javadoc/com/google/appengine/api/users/UserService#getCurrentUser()"
      *            >UserService</a>.
+     * @throws NoSuchAlgorithmException
+     *             If for some reason you don't have access to the SAH1
+     *             algorithm.
      */
-    public BraketUser(User user) {
-        id = user.getUserId();
+    public BraketUser(User user, String userId) throws NoSuchAlgorithmException {
+        // ID needs to be protected
+        id = userId;
         userName.setNickname("Unidentified Doofus");
         email = user.getEmail();
     }
