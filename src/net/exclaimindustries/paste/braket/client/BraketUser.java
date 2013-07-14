@@ -21,7 +21,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.appengine.api.users.User;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
@@ -107,20 +106,18 @@ public class BraketUser implements IsSerializable {
     /**
      * Constructor from a Google AppEngine <code>User</code>.
      * 
-     * @param user
-     *            A <code>User</code> object acquired from Google's
-     *            <code>UserService</code>. @see <a href=
-     *            "https://developers.google.com/appengine/docs/java/javadoc/com/google/appengine/api/users/UserService#getCurrentUser()"
-     *            >UserService</a>.
+     * @param userId
+     *            A unique string identifying the user. It's suggested that the
+     *            raw user ID not be used, so a hashed version is best.
      * @throws NoSuchAlgorithmException
      *             If for some reason you don't have access to the SAH1
      *             algorithm.
      */
-    public BraketUser(User user, String userId) throws NoSuchAlgorithmException {
-        // ID needs to be protected
+    public BraketUser(String userId)
+            throws NoSuchAlgorithmException {
+        // ID needs to be protected, so it gets sent pre-hashed.
         id = userId;
         userName.setNickname("Unidentified Doofus");
-        email = user.getEmail();
     }
 
     public String getId() {

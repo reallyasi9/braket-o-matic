@@ -55,7 +55,8 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 
             // If that returns null, then make a user and write it
             if (braketUser == null) {
-                braketUser = new BraketUser(user, userId);
+                braketUser = new BraketUser(userId);
+                braketUser.setEmail(user.getEmail());
                 OfyService.ofy().save().entity(braketUser);
             }
 
