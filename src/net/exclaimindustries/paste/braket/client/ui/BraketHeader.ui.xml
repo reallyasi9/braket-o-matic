@@ -1,24 +1,41 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+	<ui:with field='res'
+		type='net.exclaimindustries.paste.braket.client.resources.Resources' />
+
 	<ui:style>
-		.left {
-			float: left;
-		}
-		
-		.right {
-			float: right;
+		.title {
+			font-family: 'Cantarell', sans-serif;
+			font-style: italic;
+			font-weight: bold;
+			font-size: 24pt;
+			left: 24pt;
+			top: 20pt;
+			color: #e3eaed;
+			text-shadow: 1pt 1pt #000000;
+			background: rgb(96, 108, 136); /* Old browsers */
+			background: -moz-radial-gradient(center, ellipse cover, rgba(96, 108, 136, 1)
+				0%, rgba(63, 76, 107, 1) 100%); /* FF3.6+ */
+			background: -webkit-gradient(radial, center center, 0px, center center, 100%,
+				color-stop(0%, rgba(96, 108, 136, 1)),
+				color-stop(100%, rgba(63, 76, 107, 1))); /* Chrome,Safari4+ */
+			background: -webkit-radial-gradient(center, ellipse cover, rgba(96, 108, 136, 1)
+				0%, rgba(63, 76, 107, 1) 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-radial-gradient(center, ellipse cover, rgba(96, 108, 136, 1)
+				0%, rgba(63, 76, 107, 1) 100%); /* Opera 12+ */
+			background: -ms-radial-gradient(center, ellipse cover, rgba(96, 108, 136, 1)
+				0%, rgba(63, 76, 107, 1) 100%); /* IE10+ */
+			background: radial-gradient(ellipse at center, rgba(96, 108, 136, 1) 0%,
+				rgba(63, 76, 107, 1) 100%); /* W3C */
 		}
 	</ui:style>
-	<g:LayoutPanel>
+
+	<g:LayoutPanel styleName="{style.title}">
 		<g:layer>
-			<g:Label>braket | o | matic</g:Label>
-		</g:layer>
-		<g:layer left='1em' right='1em' bottom='1em' height='2em'>
-			<g:FlowPanel>
-				<g:Label styleName="{style.left}">view buttons here</g:Label>
-				<g:Label styleName="{style.right}">user buttons here</g:Label>
-			</g:FlowPanel>
+			<g:Label ui:field="title">braket | o | matic</g:Label>
 		</g:layer>
 	</g:LayoutPanel>
+
 </ui:UiBinder> 

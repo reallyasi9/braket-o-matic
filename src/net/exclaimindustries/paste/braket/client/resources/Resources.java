@@ -16,6 +16,7 @@
  */
 package net.exclaimindustries.paste.braket.client.resources;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
@@ -25,6 +26,8 @@ import com.google.gwt.resources.client.ImageResource;
  * 
  */
 public interface Resources extends ClientBundle {
+
+    public static final Resources INSTANCE = GWT.create(Resources.class);
 
     public interface Style extends CssResource {
         String blueButton();
@@ -54,8 +57,8 @@ public interface Resources extends ClientBundle {
     @Source("style.css")
     Style style();
 
-    // @Source("g+-icon.svg")
-    // ImageResource gPlusIcon();
+    @Source("g+-icon.svg")
+    ImageResource gPlusIcon();
 
     @Source("backColors.gif")
     ImageResource backColors();
@@ -122,7 +125,7 @@ public interface Resources extends ClientBundle {
 
     @Source("underline.gif")
     ImageResource underline();
-    
+
     @Source("HelpImage.jpg")
     ImageResource help();
 

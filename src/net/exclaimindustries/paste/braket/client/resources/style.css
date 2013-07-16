@@ -1,3 +1,22 @@
+/* Fonts */
+@font-face {
+	font-family: 'Cantarell';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Cantarell Regular'), local('Cantarell-Regular'),
+		url(http://themes.googleusercontent.com/static/fonts/cantarell/v3/V86VyqXbc09Sss3BPsMj1z8E0i7KZn-EPnyo3HZu7kw.woff)
+		format('woff');
+}
+
+@font-face {
+	font-family: 'Cantarell';
+	font-style: italic;
+	font-weight: 400;
+	src: local('Cantarell Oblique'), local('Cantarell-Oblique'),
+		url(http://themes.googleusercontent.com/static/fonts/cantarell/v3/Qd6zZq_wf1596L3V_8MIs4bN6UDyHWBl620a-IRfuBk.woff)
+		format('woff');
+}
+
 /* Buttons */
 .redButton,.blueButton {
 	border: 2px solid;
