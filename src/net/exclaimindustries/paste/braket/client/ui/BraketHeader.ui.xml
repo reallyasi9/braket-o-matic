@@ -11,8 +11,6 @@
 			font-style: italic;
 			font-weight: bold;
 			font-size: 24pt;
-			left: 24pt;
-			top: 20pt;
 			color: #e3eaed;
 			text-shadow: 1pt 1pt #000000;
 			background: rgb(96, 108, 136); /* Old browsers */
@@ -30,11 +28,12 @@
 			background: radial-gradient(ellipse at center, rgba(96, 108, 136, 1) 0%,
 				rgba(63, 76, 107, 1) 100%); /* W3C */
 		}
+		
 	</ui:style>
 
 	<g:LayoutPanel styleName="{style.title}">
-		<g:layer>
-			<g:Label ui:field="title">braket | o | matic</g:Label>
+		<g:layer left='3pt' top='3pt' width='50%' height='100%'>
+			<g:HTML ui:field="svgContainer">braket | o | matic</g:HTML>
 		</g:layer>
 	</g:LayoutPanel>
 

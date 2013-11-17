@@ -16,6 +16,8 @@
  */
 package net.exclaimindustries.paste.braket.client.resources;
 
+import org.vectomatic.dom.svg.ui.ExternalSVGResource;
+
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
@@ -128,5 +130,8 @@ public interface Resources extends ClientBundle {
 
     @Source("HelpImage.jpg")
     ImageResource help();
+    
+    @Source("header.svg")
+    ExternalSVGResource headerSVG();
 
 }

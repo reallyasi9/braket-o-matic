@@ -47,6 +47,13 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
         public static final String EDIT_GAMES = "edit-games";
         public static final String EXCITE_O_MATIC = "excite-o-matic";
     }
+    
+    // Fixed sizes
+    private static class Dimensions {
+        public static final Unit UNITS = Unit.PT;
+        public static final double HEADER_HEIGHT = 50;
+        public static final double FOOTER_HEIGHT = 15;
+    }
 
     // Panels
     private BraketHeader braketHeader = new BraketHeader();
@@ -123,9 +130,9 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
         History.addValueChangeHandler(this);
 
         // Everything has a header and a footer
-        DockLayoutPanel dlp = new DockLayoutPanel(Unit.EM);
-        dlp.addNorth(braketHeader, 8);
-        dlp.addSouth(braketFooter, 1.5);
+        DockLayoutPanel dlp = new DockLayoutPanel(Dimensions.UNITS);
+        dlp.addNorth(braketHeader, Dimensions.HEADER_HEIGHT);
+        dlp.addSouth(braketFooter, Dimensions.FOOTER_HEIGHT);
         dlp.add(braketMain);
 
         RootLayoutPanel.get().add(dlp);

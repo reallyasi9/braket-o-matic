@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="31" width="242" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<defs>
+<filter id="filter3917" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="1" result="flood" flood-color="rgb(0,0,0)"/>
+<feComposite operator="in" result="composite1" in2="SourceGraphic" in="flood"/>
+<feOffset result="offset" dx="1.5" dy="1.5"/>
+<feComposite operator="over" result="composite2" in2="offset" in="SourceGraphic"/>
+</filter>
+</defs>
+<metadata>
+<rdf:RDF>
+<cc:Work rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+<dc:title/>
+</cc:Work>
+</rdf:RDF>
+</metadata>
+<text style="letter-spacing:0px;word-spacing:0px;" font-family="Cantarell" transform="matrix(0.3295983,0,0,0.3295983,2.5568727,2.5676435)" font-size="72.81591034px" font-style="normal" line-height="125%" filter="url(#filter3917)" font-stretch="normal" xml:space="preserve" font-variant="normal" y="62.450169" x="-1.8122206" font-weight="bold" fill="#e3eaed"><tspan font-size="72.81591034px" font-style="italic" y="62.450169" x="-1.8122206" font-weight="bold" fill="#e3eaed">&lt; braket | o | matic &gt;</tspan></text>
+</svg>
