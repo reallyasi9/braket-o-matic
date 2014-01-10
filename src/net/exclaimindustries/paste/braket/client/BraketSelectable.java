@@ -122,21 +122,21 @@ public abstract class BraketSelectable implements IsSerializable {
             // The only games that can possibly match are those that are valid
             // in both the selection and the tournament.
 
-//            LOG.info("Checking " + selection.gameWinners.toString(2)
-//                    + " against " + tempResult.toString(2));
+            // LOG.info("Checking " + selection.gameWinners.toString(2)
+            // + " against " + tempResult.toString(2));
             BigInteger maybe = selection.getValidGameMask().and(tempMask);
-//            LOG.info("from masks " + selection.getValidGameMask().toString(2)
-//                    + " and " + tempMask.toString(2) + " generated "
-//                    + maybe.toString(2));
+            // LOG.info("from masks " + selection.getValidGameMask().toString(2)
+            // + " and " + tempMask.toString(2) + " generated "
+            // + maybe.toString(2));
 
             int nBits = maybe.bitLength();
             // Loop through all these maybes and check...
             for (int i = 0; i < nBits; ++i) {
                 if (maybe.testBit(i) && isSelectionCorrect(selection, i)) {
-//                    LOG.info("game " + Integer.toString(i) + ": CORRECT");
+                    // LOG.info("game " + Integer.toString(i) + ": CORRECT");
                     result = result.setBit(i);
                 } else if (maybe.testBit(i)) {
-//                    LOG.info("game " + Integer.toString(i) + ": INCORRECT");
+                    // LOG.info("game " + Integer.toString(i) + ": INCORRECT");
                 }
             }
             return result;
@@ -145,52 +145,51 @@ public abstract class BraketSelectable implements IsSerializable {
         public boolean isSelectionCorrect(BraketSelectable selection, int game) {
             // Check the cached wrong selections
             if (wrong.testBit(game)) {
-//                LOG.info("Game " + Integer.toString(game)
-//                        + " already marked as INCORRECT");
+                // LOG.info("Game " + Integer.toString(game)
+                // + " already marked as INCORRECT");
                 return false;
             }
             // Check the cached correct selections
             if (correct.testBit(game)) {
-//                LOG.info("Game " + Integer.toString(game)
-//                        + " already marked as CORRECT");
+                // LOG.info("Game " + Integer.toString(game)
+                // + " already marked as CORRECT");
                 return true;
             }
 
             // Check if the selections for this game are the same
             if (selection.gameWinners.testBit(game) != tempResult.testBit(game)) {
                 wrong = wrong.setBit(game);
-//                LOG.info("Game " + Integer.toString(game)
-//                        + " INCORRECT because selections do not match");
+                // LOG.info("Game " + Integer.toString(game)
+                // + " INCORRECT because selections do not match");
                 return false;
             }
 
             // If I have no children, then this is a correct selection
             boolean bottomTeamSelected = selection.isBottomTeamSelected(game);
             if (!selection.hasChildGame(game, bottomTeamSelected)) {
-//                LOG.info("Game " + Integer.toString(game)
-//                        + " CORRECT because selections match and no children");
+                // LOG.info("Game " + Integer.toString(game)
+                // + " CORRECT because selections match and no children");
                 correct = correct.setBit(game);
                 return true;
             }
 
             // If I have children, recurse to the child
-            boolean childCorrect =
-                    isSelectionCorrect(selection, selection.getChildGameIndex(
-                            game, bottomTeamSelected));
+            boolean childCorrect = isSelectionCorrect(selection,
+                    selection.getChildGameIndex(game, bottomTeamSelected));
             if (childCorrect) {
                 correct = correct.setBit(game);
-//                LOG.info("Game "
-//                        + Integer.toString(game)
-//                        + " CORRECT because selections match and child "
-//                        + Integer.toString(selection.getChildGameIndex(game,
-//                                bottomTeamSelected)) + " is CORRECT");
+                // LOG.info("Game "
+                // + Integer.toString(game)
+                // + " CORRECT because selections match and child "
+                // + Integer.toString(selection.getChildGameIndex(game,
+                // bottomTeamSelected)) + " is CORRECT");
             } else {
                 wrong = wrong.setBit(game);
-//                LOG.info("Game "
-//                        + Integer.toString(game)
-//                        + " INCORRECT because selections match but child "
-//                        + Integer.toString(selection.getChildGameIndex(game,
-//                                bottomTeamSelected)) + " is INCORRECT");
+                // LOG.info("Game "
+                // + Integer.toString(game)
+                // + " INCORRECT because selections match but child "
+                // + Integer.toString(selection.getChildGameIndex(game,
+                // bottomTeamSelected)) + " is INCORRECT");
             }
             return childCorrect;
         }
@@ -312,8 +311,8 @@ public abstract class BraketSelectable implements IsSerializable {
      *         game.
      */
     public int getChildGameIndex(int gameIndex, boolean bottomTeamSelected) {
-        int childGame =
-                calculatePotentialChildIndex(gameIndex, bottomTeamSelected);
+        int childGame = calculatePotentialChildIndex(gameIndex,
+                bottomTeamSelected);
 
         if (!isValidGame(childGame)) {
             throw new IllegalArgumentException();

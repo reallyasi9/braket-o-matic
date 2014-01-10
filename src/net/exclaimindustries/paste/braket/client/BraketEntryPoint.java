@@ -51,7 +51,7 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
     // Fixed sizes
     private static class Dimensions {
         public static final Unit UNITS = Unit.PT;
-        public static final double HEADER_HEIGHT = 50;
+        public static final double HEADER_HEIGHT = 48;
         public static final double FOOTER_HEIGHT = 15;
     }
 
