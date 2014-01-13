@@ -1,0 +1,28 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:my="urn:import:net.exclaimindustries.paste.braket.client.ui">
+	<ui:style>
+	/* Add CSS here. See the GWT docs on UI Binder for more details */
+	.important {
+		font-weight: bold;
+	}
+	</ui:style>
+
+	<g:DockLayoutPanel unit="PT">
+		<g:north size="48">
+			<my:BraketHeader ui:field="header" />
+		</g:north>
+		<g:north size="32">
+			<my:BraketMenu ui:field="menu" />
+		</g:north>
+		<g:south size="16">
+			<g:FlowPanel>
+			 <g:Label>2014 [the admins]</g:Label>
+			</g:FlowPanel>
+		</g:south>
+		<g:center>
+			<g:HTMLPanel ui:field="mainPanel" />
+		</g:center>
+	</g:DockLayoutPanel>
+
+</ui:UiBinder> 

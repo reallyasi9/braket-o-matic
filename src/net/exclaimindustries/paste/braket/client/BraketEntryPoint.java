@@ -17,18 +17,15 @@
 
 package net.exclaimindustries.paste.braket.client;
 
-import net.exclaimindustries.paste.braket.client.ui.BraketHeader;
+import net.exclaimindustries.paste.braket.client.ui.BraketAppLayout;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.DockLayoutPanel;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
@@ -48,17 +45,8 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
         public static final String EXCITE_O_MATIC = "excite-o-matic";
     }
     
-    // Fixed sizes
-    private static class Dimensions {
-        public static final Unit UNITS = Unit.PT;
-        public static final double HEADER_HEIGHT = 48;
-        public static final double FOOTER_HEIGHT = 15;
-    }
-
     // Panels
-    private BraketHeader braketHeader = new BraketHeader();
-    private FlowPanel braketMain = new FlowPanel();
-    private FlowPanel braketFooter = new FlowPanel();
+    private BraketAppLayout layout = new BraketAppLayout();
 
     // RPC services
     private LoginServiceAsync loginServiceRPC = GWT.create(LoginService.class);
@@ -75,8 +63,8 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
         @Override
         public void onSuccess() {
             // TODO Auto-generated method stub
-            braketMain.clear();
-            braketMain.add(new Label("please log in"));
+            layout.getMainPanel().clear();
+            layout.getMainPanel().add(new Label("please log in"));
         }
 
     };
@@ -92,8 +80,8 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
         @Override
         public void onSuccess() {
             // TODO Auto-generated method stub
-            braketMain.clear();
-            braketMain.add(new HTMLPanel("braket goes here"));
+            layout.getMainPanel().clear();
+            layout.getMainPanel().add(new HTMLPanel("braket goes here"));
         }
 
     };
@@ -129,16 +117,9 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
 
         History.addValueChangeHandler(this);
 
-        // Everything has a header and a footer
-        DockLayoutPanel dlp = new DockLayoutPanel(Dimensions.UNITS);
-        dlp.addNorth(braketHeader, Dimensions.HEADER_HEIGHT);
-        dlp.addSouth(braketFooter, Dimensions.FOOTER_HEIGHT);
-        dlp.add(braketMain);
-
-        RootLayoutPanel.get().add(dlp);
+        RootLayoutPanel.get().add(layout);
         
-        braketMain.add(new Label("logging in..."));
-        braketFooter.add(new Label("footer"));
+        layout.getMainPanel().add(new Label("logging in..."));
 
         // TODO Determine whether or not you are logged in.
         loginServiceRPC.signIn(GWT.getHostPageBaseURL(),
