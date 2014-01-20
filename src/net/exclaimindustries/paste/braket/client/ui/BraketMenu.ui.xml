@@ -1,17 +1,37 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:import field="net.exclaimindustries.paste.braket.client.resources.UiConstants.HistoryToken.*" />
 	<ui:style>
-	/* Add CSS here. See the GWT docs on UI Binder for more details */
-	.important {
-		font-weight: bold;
+	.menu-button {
+		display: inline;
+		height: 32pt;
+		line-height: 32pt;
+		vertical-align: center;
+		margin-left: 8pt;
+		margin-right: 8pt;
+		cursor: pointer;
+	}
+	
+	.menu-button a:link,.menu-button a:hover,.menu-button a:active,.menu-button a:visited
+		{
+		text-decoration: none;
+	}
+	
+	.logout-button {
+		float: right;
+	}
+	
+	.panel {
+		height: 32pt;
 	}
 	</ui:style>
-	<g:FlowPanel>
-	<g:Button>Tournament Status</g:Button>
-	<g:Button>My Bracket</g:Button>
-	<g:Button>Leaderboards</g:Button>
-	<g:Button>Excite-o-Matic</g:Button>
-	<g:Button>Log Out</g:Button>
+	<g:FlowPanel styleName="{style.panel}">
+		<g:Hyperlink styleName="{style.menu-button}" targetHistoryToken="{TOURNAMENT_STATUS}">Tournament Status</g:Hyperlink>
+		<g:Hyperlink styleName="{style.menu-button}" targetHistoryToken="{MY_BRACKET}">My Bracket</g:Hyperlink>
+		<g:Hyperlink styleName="{style.menu-button}" targetHistoryToken="{LEADERBOARDS}">Leaderboards</g:Hyperlink>
+		<g:Hyperlink styleName="{style.menu-button}" targetHistoryToken="{EXCITE_O_MATIC}">Excite-o-Matic</g:Hyperlink>
+		<g:Anchor styleName="{style.menu-button}"
+			addStyleNames="{style.logout-button}">Log Out</g:Anchor>
 	</g:FlowPanel>
 </ui:UiBinder> 

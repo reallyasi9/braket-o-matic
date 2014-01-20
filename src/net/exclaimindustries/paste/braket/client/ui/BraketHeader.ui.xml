@@ -33,7 +33,7 @@
 
 	<g:LayoutPanel styleName="{style.title}">
 		<g:layer left='4pt' top='4pt' width='50%' height='100%'>
-			<g:HTML ui:field="svgContainer">braket | o | matic</g:HTML>
+			<g:HTML>braket | o | matic</g:HTML>
 		</g:layer>
 	</g:LayoutPanel>
 

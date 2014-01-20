@@ -17,6 +17,7 @@
 
 package net.exclaimindustries.paste.braket.client;
 
+import net.exclaimindustries.paste.braket.client.resources.UiConstants;
 import net.exclaimindustries.paste.braket.client.ui.BraketAppLayout;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -31,19 +32,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> {
-
-    // History tokens
-    private static class HistoryToken {
-        public static final String ABOUT = "about";
-        public static final String BRAKET = "braket";
-        public static final String ADMIN = "admin";
-        public static final String USER_OPTIONS = "user-options";
-        public static final String LEADERBOARD = "leaderboard";
-        public static final String EDIT_USERS = "edit-users";
-        public static final String EDIT_TEAMS = "edit-teams";
-        public static final String EDIT_GAMES = "edit-games";
-        public static final String EXCITE_O_MATIC = "excite-o-matic";
-    }
     
     // Panels
     private BraketAppLayout layout = new BraketAppLayout();
@@ -89,23 +77,23 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
     @Override
     public void onValueChange(ValueChangeEvent<String> event) {
         String eventString = event.getValue();
-        if (eventString.equals(HistoryToken.ABOUT)) {
+        if (eventString.equals(UiConstants.HistoryToken.ABOUT)) {
             // TODO
-        } else if (eventString.equals(HistoryToken.BRAKET)) {
+        } else if (eventString.equals(UiConstants.HistoryToken.MY_BRACKET)) {
             GWT.runAsync(braketDisplayCallback);
-        } else if (eventString.equals(HistoryToken.ADMIN)) {
+        } else if (eventString.equals(UiConstants.HistoryToken.ADMIN)) {
             // TODO
-        } else if (eventString.equals(HistoryToken.USER_OPTIONS)) {
+        } else if (eventString.equals(UiConstants.HistoryToken.USER_OPTIONS)) {
             // TODO
-        } else if (eventString.equals(HistoryToken.LEADERBOARD)) {
+        } else if (eventString.equals(UiConstants.HistoryToken.LEADERBOARDS)) {
             // TODO
-        } else if (eventString.equals(HistoryToken.EDIT_USERS)) {
+        } else if (eventString.equals(UiConstants.HistoryToken.EDIT_USERS)) {
             // TODO
-        } else if (eventString.equals(HistoryToken.EDIT_TEAMS)) {
+        } else if (eventString.equals(UiConstants.HistoryToken.EDIT_TEAMS)) {
             // TODO
-        } else if (eventString.equals(HistoryToken.EDIT_GAMES)) {
+        } else if (eventString.equals(UiConstants.HistoryToken.EDIT_GAMES)) {
             // TODO
-        } else if (eventString.equals(HistoryToken.EXCITE_O_MATIC)) {
+        } else if (eventString.equals(UiConstants.HistoryToken.EXCITE_O_MATIC)) {
             // TODO
         } else {
             // TODO

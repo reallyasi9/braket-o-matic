@@ -55,6 +55,8 @@ public interface Resources extends ClientBundle {
         String formContainer();
 
     }
+    
+    
 
     @Source("style.css")
     Style style();
