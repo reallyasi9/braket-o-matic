@@ -1,40 +1,54 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:my="urn:import:net.exclaimindustries.paste.braket.client.ui">
 
 	<ui:with field='res'
 		type='net.exclaimindustries.paste.braket.client.resources.Resources' />
+	<ui:import
+		field="net.exclaimindustries.paste.braket.client.resources.UiConstants.HistoryToken.*" />
 
 	<ui:style>
-		.title {
-			font-family: 'Cantarell', sans-serif;
-			font-style: italic;
-			font-weight: bold;
-			font-size: 24pt;
-			color: #e3eaed;
-			text-shadow: 1pt 1pt #000000;
-			background: rgb(96, 108, 136); /* Old browsers */
-			background: -moz-radial-gradient(center, ellipse cover, rgba(96, 108, 136, 1)
-				0%, rgba(63, 76, 107, 1) 100%); /* FF3.6+ */
-			background: -webkit-gradient(radial, center center, 0px, center center, 100%,
-				color-stop(0%, rgba(96, 108, 136, 1)),
-				color-stop(100%, rgba(63, 76, 107, 1))); /* Chrome,Safari4+ */
-			background: -webkit-radial-gradient(center, ellipse cover, rgba(96, 108, 136, 1)
-				0%, rgba(63, 76, 107, 1) 100%); /* Chrome10+,Safari5.1+ */
-			background: -o-radial-gradient(center, ellipse cover, rgba(96, 108, 136, 1)
-				0%, rgba(63, 76, 107, 1) 100%); /* Opera 12+ */
-			background: -ms-radial-gradient(center, ellipse cover, rgba(96, 108, 136, 1)
-				0%, rgba(63, 76, 107, 1) 100%); /* IE10+ */
-			background: radial-gradient(ellipse at center, rgba(96, 108, 136, 1) 0%,
-				rgba(63, 76, 107, 1) 100%); /* W3C */
-		}
-		
+	.bar {
+		font-family: 'Cantarell', sans-serif;
+		background: rgb(96, 108, 136); /* Old browsers */
+		background: -moz-radial-gradient(center, ellipse cover, rgba(96, 108, 136, 1)
+			0%, rgba(63, 76, 107, 1) 100%); /* FF3.6+ */
+		background: -webkit-gradient(radial, center center, 0px, center center, 100%,
+			color-stop(0%, rgba(96, 108, 136, 1)),
+			color-stop(100%, rgba(63, 76, 107, 1))); /* Chrome,Safari4+ */
+		background: -webkit-radial-gradient(center, ellipse cover, rgba(96, 108, 136, 1)
+			0%, rgba(63, 76, 107, 1) 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-radial-gradient(center, ellipse cover, rgba(96, 108, 136, 1)
+			0%, rgba(63, 76, 107, 1) 100%); /* Opera 12+ */
+		background: -ms-radial-gradient(center, ellipse cover, rgba(96, 108, 136, 1)
+			0%, rgba(63, 76, 107, 1) 100%); /* IE10+ */
+		background: radial-gradient(ellipse at center, rgba(96, 108, 136, 1) 0%,
+			rgba(63, 76, 107, 1) 100%); /* W3C */
+	}
+	
+	.title a:hover,.title a:active,.title a:visited,.title a {
+		text-decoration: none !important;
+		color: #e3eaed !important;
+	}
+	
+	.title {
+		font-style: italic;
+		font-weight: bold;
+		font-size: 24pt;
+		color: #e3eaed;
+		text-shadow: 1pt 1pt #000000;
+		display: inline-block;
+		height: 72pt;
+		line-height: 72pt;
+		vertical-align: center;
+		padding-left: 4pt;
+	}
 	</ui:style>
 
-	<g:LayoutPanel styleName="{style.title}">
-		<g:layer left='4pt' top='4pt' width='50%' height='100%'>
-			<g:HTML>braket | o | matic</g:HTML>
-		</g:layer>
-	</g:LayoutPanel>
+	<g:FlowPanel styleName="{style.bar}">
+		<g:Hyperlink styleName="{style.title}" targetHistoryToken="{TOURNAMENT_STATUS}">braket
+			| o | matic</g:Hyperlink>
+		<my:UserStatusPanel />
+	</g:FlowPanel>
 
 </ui:UiBinder> 

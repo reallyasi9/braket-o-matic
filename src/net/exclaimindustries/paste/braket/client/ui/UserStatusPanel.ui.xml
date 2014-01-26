@@ -1,0 +1,32 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+	<ui:style>
+	.box {
+		display: inline-block;
+		float: right;
+		background: #e3eaed;
+		color: #000000;
+		margin-right: 6pt;
+		margin-top: 6pt;
+		height: 60pt;
+		width: 100pt;
+	}
+	</ui:style>
+
+	<g:FlowPanel styleName="{style.box}">
+
+		<g:FlowPanel ui:field="name">
+			<g:Label ui:field="firstname">Nick</g:Label>
+			<g:Label ui:field="nickname">"Nickname"</g:Label>
+			<g:Label ui:field="lastname">Lastname</g:Label>
+		</g:FlowPanel>
+
+		<g:Label>Points: NN</g:Label>
+		<g:Label>(MM Possible)</g:Label>
+		<g:Label>Rank: XX</g:Label>
+		<g:Label>(of YY Competetors)</g:Label>
+	</g:FlowPanel>
+
+</ui:UiBinder> 
