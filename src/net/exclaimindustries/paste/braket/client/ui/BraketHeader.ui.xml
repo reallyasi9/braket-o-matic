@@ -48,7 +48,7 @@
 	<g:FlowPanel styleName="{style.bar}">
 		<g:Hyperlink styleName="{style.title}" targetHistoryToken="{TOURNAMENT_STATUS}">braket
 			| o | matic</g:Hyperlink>
-		<my:UserStatusPanel />
+		<my:UserStatusPanel ui:field="userStatusPanel" />
 	</g:FlowPanel>
 
 </ui:UiBinder> 

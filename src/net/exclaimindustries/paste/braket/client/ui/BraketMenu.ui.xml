@@ -56,7 +56,5 @@
 			targetHistoryToken="{LEADERBOARDS}">Leaderboards</g:Hyperlink>
 		<g:Hyperlink styleName="{style.menu-button}"
 			targetHistoryToken="{EXCITE_O_MATIC}">Excite-o-Matic</g:Hyperlink>
-		<g:Anchor styleName="{style.menu-button}" addStyleNames="{style.logout-button}">Log
-			Out</g:Anchor>
 	</g:FlowPanel>
 </ui:UiBinder> 

@@ -79,6 +79,10 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
         String eventString = event.getValue();
         if (eventString.equals(UiConstants.HistoryToken.ABOUT)) {
             // TODO
+        } else if (eventString.equals(UiConstants.HistoryToken.TOURNAMENT_STATUS)) {
+            // TODO
+            layout.getHeader().getUserStatusPanel().setRank(14, 54, 3);
+            layout.getHeader().getUserStatusPanel().setPoints(14, 123);
         } else if (eventString.equals(UiConstants.HistoryToken.MY_BRACKET)) {
             GWT.runAsync(braketDisplayCallback);
         } else if (eventString.equals(UiConstants.HistoryToken.ADMIN)) {
