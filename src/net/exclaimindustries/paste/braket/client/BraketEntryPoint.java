@@ -19,6 +19,7 @@ package net.exclaimindustries.paste.braket.client;
 
 import net.exclaimindustries.paste.braket.client.resources.UiConstants;
 import net.exclaimindustries.paste.braket.client.ui.BraketAppLayout;
+import net.exclaimindustries.paste.braket.client.ui.FadeAnimation;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -32,7 +33,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> {
-    
+
     // Panels
     private BraketAppLayout layout = new BraketAppLayout();
 
@@ -81,8 +82,8 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
             // TODO
         } else if (eventString.equals(UiConstants.HistoryToken.TOURNAMENT_STATUS)) {
             // TODO
-            layout.getHeader().getUserStatusPanel().setRank(14, 54, 3);
-            layout.getHeader().getUserStatusPanel().setPoints(14, 123);
+            BraketUser fakeUser = new BraketUser();
+            layout.getHeader().setUser(fakeUser);
         } else if (eventString.equals(UiConstants.HistoryToken.MY_BRACKET)) {
             GWT.runAsync(braketDisplayCallback);
         } else if (eventString.equals(UiConstants.HistoryToken.ADMIN)) {
@@ -99,6 +100,7 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
             // TODO
         } else if (eventString.equals(UiConstants.HistoryToken.EXCITE_O_MATIC)) {
             // TODO
+            layout.getHeader().removeUser();
         } else {
             // TODO
         }
@@ -110,7 +112,7 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
         History.addValueChangeHandler(this);
 
         RootLayoutPanel.get().add(layout);
-        
+
         layout.getMainPanel().add(new Label("logging in..."));
 
         // TODO Determine whether or not you are logged in.

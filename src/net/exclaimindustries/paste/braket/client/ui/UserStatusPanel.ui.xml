@@ -3,64 +3,67 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 
 	<ui:style>
-	.box {
-		display: inline-block;
-		float: right;
-		background: #e3eaed;
-		color: #000000;
-		margin-right: 6pt;
-		margin-top: 6pt;
-		height: 60pt;
-		width: 300pt;
-	}
-	
-	.face {
-		float: left;
-		height: 50pt;
-		width: 50pt;
-		margin: 5pt;
-	}
-	
-	.name-container,.rank-container,.points-container {
-		overflow: hidden;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		margin-right: 3pt;
-		margin-left: 3pt;
-	}
-	
-	.name-container {
-		height: 18pt;
-		line-height: 18pt;
-		vertical-align: top;
-		font-size: 14pt;
-		margin-top: 5pt;
-	}
-	
-	.points-container {
-		height: 16pt;
-		line-height: 16pt;
-		vertical-align: middle;
-		font-size: 11pt;
-		color: #666;
-	}
-	
-	.rank-container {
-		height: 16pt;
-		line-height: 16pt;
-		vertical-align: bottom;
-		font-size: 11pt;
-		margin-bottom: 5pt;
-		color: #666;
-	}
-	
-	.logout {
-		position: absolute;
-		right: 6pt;
-		bottom: 4pt;
-		height: 20pt;
-		width: 40pt;
-	}
+		.box {
+			display: inline-block;
+			float: right;
+			background: #e3eaed;
+			color: #000000;
+			margin-right: 6pt;
+			margin-top: 6pt;
+			height: 60pt;
+			width: 300pt;
+			/* Fade in */
+			opacity: 0;
+		}
+		
+		.face {
+			float: left;
+			height: 50pt;
+			width: 50pt;
+			margin: 5pt;
+		}
+		
+		.name-container,.rank-container,.points-container {
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			margin-right: 3pt;
+			margin-left: 3pt;
+		}
+		
+		.name-container {
+			height: 18pt;
+			line-height: 18pt;
+			vertical-align: top;
+			font-size: 14pt;
+			margin-top: 5pt;
+		}
+		
+		.points-container {
+			height: 16pt;
+			line-height: 16pt;
+			vertical-align: middle;
+			font-size: 11pt;
+			color: #666;
+			padding-left: 3pt;
+		}
+		
+		.rank-container {
+			height: 16pt;
+			line-height: 16pt;
+			vertical-align: bottom;
+			font-size: 11pt;
+			color: #666;
+			padding-left: 3pt;
+		}
+		
+		.logout {
+			position: absolute;
+			right: 6pt;
+			bottom: 4pt;
+			height: 20pt;
+			width: 40pt;
+		}
 	</ui:style>
 
 	<g:FlowPanel styleName="{style.box}">

@@ -113,8 +113,7 @@ public class BraketUser implements IsSerializable {
      *             If for some reason you don't have access to the SAH1
      *             algorithm.
      */
-    public BraketUser(String userId)
-            throws NoSuchAlgorithmException {
+    public BraketUser(String userId) throws NoSuchAlgorithmException {
         // ID needs to be protected, so it gets sent pre-hashed.
         id = userId;
         userName.setNickname("Unidentified Doofus");
