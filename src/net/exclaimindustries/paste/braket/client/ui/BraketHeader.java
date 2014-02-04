@@ -28,7 +28,7 @@ public class BraketHeader extends Composite {
 
     public void setUser(BraketUser user) {
         // Remove the previous user
-        removeUser();
+        //removeUser();
         userStatusPanel = new UserStatusPanel(user);
         panel.add(userStatusPanel);
         // Fade the panel in
@@ -37,6 +37,7 @@ public class BraketHeader extends Composite {
     }
 
     public void removeUser() {
+
         if (userStatusPanel != null) {
             FadeAnimation animation =
                     new FadeAnimation(userStatusPanel.getElement()) {

@@ -9,7 +9,7 @@ public class FadeAnimation extends Animation {
         FADE_IN, FADE_OUT
     }
 
-    private Element element;
+    protected Element element;
 
     private Operation currentOperation = Operation.FADE_IN;
 
@@ -37,6 +37,18 @@ public class FadeAnimation extends Animation {
             break;
         case FADE_OUT:
             element.getStyle().setOpacity(1. - interpolate(progress));
+            break;
+        }
+    }
+
+    @Override
+    protected void onCancel() {
+        switch (currentOperation) {
+        case FADE_IN:
+            element.getStyle().setOpacity(0.);
+            break;
+        case FADE_OUT:
+            element.getStyle().setOpacity(1.);
             break;
         }
     }

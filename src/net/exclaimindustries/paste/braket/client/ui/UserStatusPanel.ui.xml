@@ -81,7 +81,7 @@
 		<g:FlowPanel styleName="{style.rank-container}">
 			<g:InlineLabel ui:field="rankField" />
 		</g:FlowPanel>
-		<g:Anchor styleName="{style.logout}">Log Out</g:Anchor>
+		<g:Button styleName="{style.logout}" ui:field="logoutButton">Log Out</g:Button>
 	</g:FlowPanel>
 
 </ui:UiBinder> 

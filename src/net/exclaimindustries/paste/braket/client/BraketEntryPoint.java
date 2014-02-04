@@ -19,7 +19,6 @@ package net.exclaimindustries.paste.braket.client;
 
 import net.exclaimindustries.paste.braket.client.resources.UiConstants;
 import net.exclaimindustries.paste.braket.client.ui.BraketAppLayout;
-import net.exclaimindustries.paste.braket.client.ui.FadeAnimation;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -100,7 +99,6 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
             // TODO
         } else if (eventString.equals(UiConstants.HistoryToken.EXCITE_O_MATIC)) {
             // TODO
-            layout.getHeader().removeUser();
         } else {
             // TODO
         }
