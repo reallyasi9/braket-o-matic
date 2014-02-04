@@ -62,80 +62,80 @@ public interface Resources extends ClientBundle {
 
     @Source("style.css")
     Style style();
-    //
-    // @Source("g+-icon.svg")
-    // ImageResource gPlusIcon();
-    //
-    // @Source("backColors.gif")
-    // ImageResource backColors();
-    //
-    // @Source("bold.gif")
-    // ImageResource bold();
-    //
-    // @Source("createLink.gif")
-    // ImageResource createLink();
-    //
-    // @Source("fonts.gif")
-    // ImageResource fonts();
-    //
-    // @Source("fontSizes.gif")
-    // ImageResource fontSizes();
-    //
-    // @Source("foreColors.gif")
-    // ImageResource foreColors();
-    //
-    // @Source("hr.gif")
-    // ImageResource hr();
-    //
-    // @Source("indent.gif")
-    // ImageResource indent();
-    //
-    // @Source("insertImage.gif")
-    // ImageResource insertImage();
-    //
-    // @Source("italic.gif")
-    // ImageResource italic();
-    //
-    // @Source("justifyCenter.gif")
-    // ImageResource justifyCenter();
-    //
-    // @Source("justifyLeft.gif")
-    // ImageResource justifyLeft();
-    //
-    // @Source("justifyRight.gif")
-    // ImageResource justifyRight();
-    //
-    // @Source("ol.gif")
-    // ImageResource ol();
-    //
-    // @Source("outdent.gif")
-    // ImageResource outdent();
-    //
-    // @Source("removeFormat.gif")
-    // ImageResource removeFormat();
-    //
-    // @Source("removeLink.gif")
-    // ImageResource removeLink();
-    //
-    // @Source("strikeThrough.gif")
-    // ImageResource strikeThrough();
-    //
-    // @Source("subscript.gif")
-    // ImageResource subscript();
-    //
-    // @Source("superscript.gif")
-    // ImageResource superscript();
-    //
-    // @Source("ul.gif")
-    // ImageResource ul();
-    //
-    // @Source("underline.gif")
-    // ImageResource underline();
-    //
-    // @Source("HelpImage.jpg")
-    // ImageResource help();
-    //
-    // @Source("header.svg")
-    // ExternalSVGResource headerSVG();
+
+    @Source("g+-icon.svg")
+    ImageResource gPlusIcon();
+
+    @Source("backColors.gif")
+    ImageResource backColors();
+
+    @Source("bold.gif")
+    ImageResource bold();
+
+    @Source("createLink.gif")
+    ImageResource createLink();
+
+    @Source("fonts.gif")
+    ImageResource fonts();
+
+    @Source("fontSizes.gif")
+    ImageResource fontSizes();
+
+    @Source("foreColors.gif")
+    ImageResource foreColors();
+
+    @Source("hr.gif")
+    ImageResource hr();
+
+    @Source("indent.gif")
+    ImageResource indent();
+
+    @Source("insertImage.gif")
+    ImageResource insertImage();
+
+    @Source("italic.gif")
+    ImageResource italic();
+
+    @Source("justifyCenter.gif")
+    ImageResource justifyCenter();
+
+    @Source("justifyLeft.gif")
+    ImageResource justifyLeft();
+
+    @Source("justifyRight.gif")
+    ImageResource justifyRight();
+
+    @Source("ol.gif")
+    ImageResource ol();
+
+    @Source("outdent.gif")
+    ImageResource outdent();
+
+    @Source("removeFormat.gif")
+    ImageResource removeFormat();
+
+    @Source("removeLink.gif")
+    ImageResource removeLink();
+
+    @Source("strikeThrough.gif")
+    ImageResource strikeThrough();
+
+    @Source("subscript.gif")
+    ImageResource subscript();
+
+    @Source("superscript.gif")
+    ImageResource superscript();
+
+    @Source("ul.gif")
+    ImageResource ul();
+
+    @Source("underline.gif")
+    ImageResource underline();
+
+    @Source("HelpImage.jpg")
+    ImageResource help();
+
+    @Source("header.svg")
+    ExternalSVGResource headerSVG();
 
 }
