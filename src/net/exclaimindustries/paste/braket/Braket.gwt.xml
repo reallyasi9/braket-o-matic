@@ -17,26 +17,30 @@
 
 	<!-- Other module inherits -->
 	<inherits name="com.google.gwt.logging.Logging" />
-	<set-property name="gwt.logging.logLevel" value="INFO"/>
+	<set-property name="gwt.logging.logLevel" value="INFO" />
 	<set-property name="gwt.logging.popupHandler" value="DISABLED" />
 	<set-property name="gwt.logging.systemHandler" value="DISABLED" />
-	
-	<inherits name="com.google.gwt.i18n.I18N"/>
 
-    <inherits name="com.googlecode.objectify.Objectify" />
-    <inherits name="com.google.common.collect.Collect" />
-    <inherits name="com.google.common.base.Base" />	
-    <inherits name='org.vectomatic.libgwtsvg'/>
+	<inherits name="com.google.gwt.i18n.I18N" />
+
+	<inherits name="com.googlecode.objectify.Objectify" />
+	<inherits name="com.google.common.collect.Collect" />
+	<inherits name="com.google.common.base.Base" />
+	<inherits name='org.vectomatic.libgwtsvg' />
 
 	<!-- Specify the app entry point class. -->
-	<entry-point class='net.exclaimindustries.paste.braket.client.BraketEntryPoint' />
+	<entry-point
+		class='net.exclaimindustries.paste.braket.client.BraketEntryPoint' />
 
 	<!-- Specify the paths for translatable code -->
 	<source path='client' />
 	<source path='shared' />
-	
-	<!-- Set up SUper Dev Mode -->
-	<add-linker name="xsiframe"/>
-	<set-configuration-property name="devModeRedirectEnabled" value="true"/>
+
+	<!-- Set up Super Dev Mode -->
+	<add-linker name="xsiframe" />
+	<set-configuration-property name="devModeRedirectEnabled"
+		value="true" />
+	<!-- Do I need this? -->
+	<set-property name="compiler.useSourceMaps" value="true" />
 
 </module>
