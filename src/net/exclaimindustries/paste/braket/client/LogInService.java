@@ -28,7 +28,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  * @author paste
  */
 @RemoteServiceRelativePath("login")
-public interface SignInService extends RemoteService {
+public interface LogInService extends RemoteService {
 
     /**
      * Signs a user in using Google's user service.
@@ -42,5 +42,5 @@ public interface SignInService extends RemoteService {
      *             If, for whatever reason, you can't access the SHA1 hash
      *             algorithm.
      */
-    public BraketUser signIn(String requestUri) throws NoSuchAlgorithmException;
+    public BraketUser logIn(String requestUri) throws NoSuchAlgorithmException;
 }

@@ -9,20 +9,25 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
-public class UserSignInButton extends Composite {
+/**
+ * A Simple button for logging in.
+ * @author paste
+ *
+ */
+public class UserLogInButton extends Composite {
 
-    private static UserSignInButtonUiBinder uiBinder = GWT
-            .create(UserSignInButtonUiBinder.class);
+    private static UserLogInButtonUiBinder uiBinder = GWT
+            .create(UserLogInButtonUiBinder.class);
 
-    interface UserSignInButtonUiBinder extends UiBinder<Widget, UserSignInButton> {
+    interface UserLogInButtonUiBinder extends UiBinder<Widget, UserLogInButton> {
     }
 
     @UiField
-    Anchor signInAnchor;
+    Anchor logInAnchor;
 
-    public UserSignInButton(BraketUser user) {
+    public UserLogInButton(BraketUser user) {
         initWidget(uiBinder.createAndBindUi(this));
-        signInAnchor.setHref(user.getSignInLink());
+        logInAnchor.setHref(user.getLogInLink());
     }
 
 }

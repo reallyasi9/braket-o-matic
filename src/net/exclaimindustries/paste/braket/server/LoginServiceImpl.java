@@ -20,7 +20,7 @@ package net.exclaimindustries.paste.braket.server;
 import java.security.NoSuchAlgorithmException;
 
 import net.exclaimindustries.paste.braket.client.BraketUser;
-import net.exclaimindustries.paste.braket.client.SignInService;
+import net.exclaimindustries.paste.braket.client.LogInService;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -30,7 +30,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.googlecode.objectify.Key;
 
-public class LoginServiceImpl extends RemoteServiceServlet implements SignInService {
+public class LoginServiceImpl extends RemoteServiceServlet implements LogInService {
 
     /**
      * Generated
@@ -38,7 +38,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements SignInServ
     private static final long serialVersionUID = 1L;
 
     @Override
-    public BraketUser signIn(String requestUri) throws NoSuchAlgorithmException {
+    public BraketUser logIn(String requestUri) throws NoSuchAlgorithmException {
         UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser();
 
@@ -60,13 +60,13 @@ public class LoginServiceImpl extends RemoteServiceServlet implements SignInServ
                 OfyService.ofy().save().entity(braketUser);
             }
 
-            braketUser.setSignOutLink(userService.createLogoutURL(requestUri));
-            braketUser.setSignedIn(true);
+            braketUser.setLogOutLink(userService.createLogoutURL(requestUri));
+            braketUser.setLoggedIn(true);
             braketUser.setAdmin(userService.isUserAdmin());
         } else {
             // Not signed in, so don't do anything with the database.
             braketUser = new BraketUser();
-            braketUser.setSignInLink(userService.createLoginURL(requestUri));
+            braketUser.setLogInLink(userService.createLoginURL(requestUri));
         }
         return braketUser;
     }

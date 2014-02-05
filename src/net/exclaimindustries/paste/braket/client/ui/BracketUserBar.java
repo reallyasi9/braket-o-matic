@@ -94,8 +94,8 @@ public class BracketUserBar extends Composite {
     public void setUser(BraketUser user) {
         thisUser = user;
         // Can access @UiField after calling createAndBindUi
-        if (thisUser == null || !thisUser.isSignedIn()) {
-            loginLink.setHTML("sign in");
+        if (thisUser == null || !thisUser.isLoggedIn()) {
+            loginLink.setHTML("log in");
             loginLink.setStyleName(res.style().redButton());
             loginLink.addStyleName(style.signInButton());
             loginLink.addStyleName(style.bumpDown());
@@ -106,7 +106,7 @@ public class BracketUserBar extends Composite {
             helpLink.setVisible(false);
             adminLink.setVisible(false);
         } else {
-            loginLink.setHTML("sign out");
+            loginLink.setHTML("log out");
             loginLink.setStyleName(res.style().blueButton());
             loginLink.addStyleName(style.signOutButton());
             loginLink.addStyleName(style.bumpDown());
@@ -137,12 +137,12 @@ public class BracketUserBar extends Composite {
             // do nothing
             return;
         }
-        if (!thisUser.isSignedIn()) {
-            Window.Location.assign(thisUser.getSignInLink());
+        if (!thisUser.isLoggedIn()) {
+            Window.Location.assign(thisUser.getLogInLink());
         } else {
             if (Window
-                    .confirm("Choosing to sign out will sign you out out of all of Google's services (including, for example, Gmail).")) {
-                Window.Location.assign(thisUser.getSignOutLink());
+                    .confirm("Choosing to log out will log you out out of all of Google's services (including, for example, Gmail).")) {
+                Window.Location.assign(thisUser.getLogOutLink());
             }
         }
     }

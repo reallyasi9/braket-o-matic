@@ -29,22 +29,22 @@ public class UserStatusPanel extends Composite {
     InlineLabel rankField;
 
     @UiField
-    Anchor signOutAnchor;
+    Anchor logOutAnchor;
 
     interface UserStatusPanelUiBinder extends UiBinder<Widget, UserStatusPanel> {
     }
 
-    private String signOutLink;
+    private String logOutLink;
 
-    private HandlerRegistration signOutHandlerRegistration;
+    private HandlerRegistration logOutHandlerRegistration;
 
-    private ClickHandler signOutClickHandler = new ClickHandler() {
+    private ClickHandler logOutClickHandler = new ClickHandler() {
         @Override
         public void onClick(ClickEvent event) {
             // Disable multiple clicks
-            signOutHandlerRegistration.removeHandler();
-            // Load the sign-out link
-            Window.Location.assign(signOutLink);
+            logOutHandlerRegistration.removeHandler();
+            // Load the log-out link
+            Window.Location.assign(logOutLink);
         }
     };
 
@@ -53,9 +53,9 @@ public class UserStatusPanel extends Composite {
         setName(user.getName().getFullName("anonymous loser"));
         setPoints(0, 124);
         setRank(100, 100, 100);
-        signOutLink = user.getSignOutLink();
-        signOutHandlerRegistration =
-                signOutAnchor.addClickHandler(signOutClickHandler);
+        logOutLink = user.getLogOutLink();
+        logOutHandlerRegistration =
+                logOutAnchor.addClickHandler(logOutClickHandler);
     }
 
     public void setName(String name) {

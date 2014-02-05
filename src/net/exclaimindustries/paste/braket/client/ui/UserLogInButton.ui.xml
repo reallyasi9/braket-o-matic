@@ -46,6 +46,6 @@
 		}
 	</ui:style>
 	<g:FlowPanel styleName="{style.panel}">
-		<g:Anchor styleName="{style.button}" ui:field="signInAnchor">Sign In</g:Anchor>
+		<g:Anchor styleName="{style.button}" ui:field="logInAnchor">Log In</g:Anchor>
 	</g:FlowPanel>
 </ui:UiBinder> 

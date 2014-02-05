@@ -42,7 +42,7 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
     private BraketAppLayout layout = new BraketAppLayout();
 
     // Handlers
-    private UserSignInHandler userLoginHandler = new UserSignInHandler(layout);
+    private UserLogInHandler userLogInHandler = new UserLogInHandler(layout);
 
     // Callbacks?
     // TODO Put these into the handlers
@@ -69,7 +69,8 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
         if (eventString.equals(UiConstants.HistoryToken.ABOUT)) {
             // TODO
             logger.log(Level.INFO, "loading about page");
-        } else if (eventString.equals(UiConstants.HistoryToken.TOURNAMENT_STATUS)) {
+        } else if (eventString
+                .equals(UiConstants.HistoryToken.TOURNAMENT_STATUS)) {
             // TODO
             logger.log(Level.INFO, "loading tournament status page");
         } else if (eventString.equals(UiConstants.HistoryToken.MY_BRACKET)) {
@@ -112,10 +113,12 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
 
         layout.getMainPanel().add(new Label("logging in..."));
 
-        // Attempt to sign the user in and deal with the result.
-        // Either the user will not be signed in, in which case an "About" page will be displayed,
-        // or the user will be signed in, and the history token in the URL will be followed.
-        userLoginHandler.signIn();
+        // Attempt to log the user in and deal with the result.
+        // Either the user will not be logged in, in which case an "About" page
+        // will be displayed,
+        // or the user will be logged in, and the history token in the URL will
+        // be followed.
+        userLogInHandler.logIn();
 
     }
 

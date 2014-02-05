@@ -71,22 +71,22 @@ public class BraketUser implements IsSerializable {
     private String email = null;
 
     /**
-     * The sign-in link for the user.
+     * The log-in link for the user.
      */
     @Ignore
-    private String signInLink = null;
+    private String logInLink = null;
 
     /**
-     * The sign-out link for the user.
+     * The log-out link for the user.
      */
     @Ignore
-    private String signOutLink = null;
+    private String logOutLink = null;
 
     /**
-     * Whether or not this is a signed-in user.
+     * Whether or not this is a loged-in user.
      */
     @Ignore
-    private boolean isSignedIn = false;
+    private boolean isLoggedIn = false;
 
     /**
      * Whether or not the user is an admin. DO NOT TRUST THIS. This is intended
@@ -171,28 +171,28 @@ public class BraketUser implements IsSerializable {
         this.email = email;
     }
 
-    public String getSignInLink() {
-        return signInLink;
+    public String getLogInLink() {
+        return logInLink;
     }
 
-    public void setSignInLink(String signInLink) {
-        this.signInLink = signInLink;
+    public void setLogInLink(String logInLink) {
+        this.logInLink = logInLink;
     }
 
-    public String getSignOutLink() {
-        return signOutLink;
+    public String getLogOutLink() {
+        return logOutLink;
     }
 
-    public void setSignOutLink(String signOutLink) {
-        this.signOutLink = signOutLink;
+    public void setLogOutLink(String logOutLink) {
+        this.logOutLink = logOutLink;
     }
 
-    public boolean isSignedIn() {
-        return isSignedIn;
+    public boolean isLoggedIn() {
+        return isLoggedIn;
     }
 
-    public void setSignedIn(boolean isSignedIn) {
-        this.isSignedIn = isSignedIn;
+    public void setLoggedIn(boolean isLoggedIn) {
+        this.isLoggedIn = isLoggedIn;
     }
 
     public boolean isAdmin() {
@@ -208,8 +208,8 @@ public class BraketUser implements IsSerializable {
         StringBuilder builder = new StringBuilder();
         builder.append("BraketUser [id=").append(id).append(", userName=")
                 .append(userName).append(", picture=").append(picture)
-                .append(", email=").append(email).append(", isSignedIn=")
-                .append(isSignedIn).append("]");
+                .append(", email=").append(email).append(", isLoggedIn=")
+                .append(isLoggedIn).append("]");
         return builder.toString();
     }
 
