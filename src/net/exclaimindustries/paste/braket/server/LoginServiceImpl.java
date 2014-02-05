@@ -47,7 +47,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
             // Look up the user's information
 
             // The user's ID should be protected
-            String userId = DigestUtils.shaHex(user.getUserId() + "//braket-o-matic");
+            String userId = DigestUtils.sha1Hex(user.getUserId() + "//braket-o-matic");
 
             // Load from the datastore
             Key<BraketUser> key = Key.create(BraketUser.class, userId);

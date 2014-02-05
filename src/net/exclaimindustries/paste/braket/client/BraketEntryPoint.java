@@ -36,8 +36,8 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
     // Panels
     private BraketAppLayout layout = new BraketAppLayout();
 
-    // RPC services
-    private LoginServiceAsync loginServiceRPC = GWT.create(LoginService.class);
+    // Handlers
+    private UserLoginHandler userLoginHandler = new UserLoginHandler(layout);
 
     // Callbacks
     private RunAsyncCallback signUpDisplayCallback = new RunAsyncCallback() {
@@ -81,8 +81,7 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
             // TODO
         } else if (eventString.equals(UiConstants.HistoryToken.TOURNAMENT_STATUS)) {
             // TODO
-            BraketUser fakeUser = new BraketUser();
-            layout.getHeader().setUser(fakeUser);
+            userLoginHandler.signIn();
         } else if (eventString.equals(UiConstants.HistoryToken.MY_BRACKET)) {
             GWT.runAsync(braketDisplayCallback);
         } else if (eventString.equals(UiConstants.HistoryToken.ADMIN)) {
@@ -114,28 +113,28 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
         layout.getMainPanel().add(new Label("logging in..."));
 
         // TODO Determine whether or not you are logged in.
-        loginServiceRPC.signIn(GWT.getHostPageBaseURL(),
-                new AsyncCallback<BraketUser>() {
-
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        // TODO Auto-generated method stub
-
-                    }
-
-                    @Override
-                    public void onSuccess(BraketUser result) {
-                        if (result.isSignedIn()) {
-                            // TODO handle the history state
-                            // Handle history token
-                            History.fireCurrentHistoryState();
-                        } else {
-                            // TODO display the sign-in/sign-up screen
-                            GWT.runAsync(signUpDisplayCallback);
-                        }
-                    }
-
-                });
+        // loginServiceRPC.signIn(GWT.getHostPageBaseURL(),
+        // new AsyncCallback<BraketUser>() {
+        //
+        // @Override
+        // public void onFailure(Throwable caught) {
+        // // TODO Auto-generated method stub
+        //
+        // }
+        //
+        // @Override
+        // public void onSuccess(BraketUser result) {
+        // if (result.isSignedIn()) {
+        // // TODO handle the history state
+        // // Handle history token
+        // History.fireCurrentHistoryState();
+        // } else {
+        // // TODO display the sign-in/sign-up screen
+        // GWT.runAsync(signUpDisplayCallback);
+        // }
+        // }
+        //
+        // });
 
     }
 
