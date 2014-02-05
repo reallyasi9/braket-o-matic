@@ -57,12 +57,13 @@
 			padding-left: 3pt;
 		}
 		
-		.logout {
+		.signOut {
 			position: absolute;
-			right: 6pt;
+			right: 12pt;
 			bottom: 4pt;
 			height: 20pt;
 			width: 40pt;
+			cursor: pointer;
 		}
 	</ui:style>
 
@@ -81,7 +82,7 @@
 		<g:FlowPanel styleName="{style.rank-container}">
 			<g:InlineLabel ui:field="rankField" />
 		</g:FlowPanel>
-		<g:Anchor styleName="{style.logout}" ui:field="logoutAnchor">Log Out</g:Anchor>
+		<g:Anchor styleName="{style.signOut}" ui:field="signOutAnchor">Sign Out</g:Anchor>
 	</g:FlowPanel>
 
 </ui:UiBinder> 

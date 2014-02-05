@@ -28,7 +28,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  * @author paste
  */
 @RemoteServiceRelativePath("login")
-public interface LoginService extends RemoteService {
+public interface SignInService extends RemoteService {
 
     /**
      * Signs a user in using Google's user service.

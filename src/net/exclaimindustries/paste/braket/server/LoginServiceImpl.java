@@ -20,7 +20,7 @@ package net.exclaimindustries.paste.braket.server;
 import java.security.NoSuchAlgorithmException;
 
 import net.exclaimindustries.paste.braket.client.BraketUser;
-import net.exclaimindustries.paste.braket.client.LoginService;
+import net.exclaimindustries.paste.braket.client.SignInService;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -30,7 +30,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.googlecode.objectify.Key;
 
-public class LoginServiceImpl extends RemoteServiceServlet implements LoginService {
+public class LoginServiceImpl extends RemoteServiceServlet implements SignInService {
 
     /**
      * Generated

@@ -3,37 +3,64 @@ package net.exclaimindustries.paste.braket.client;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
 import net.exclaimindustries.paste.braket.client.ui.BraketAppLayout;
 import net.exclaimindustries.paste.braket.client.ui.FadeAnimation;
-import net.exclaimindustries.paste.braket.client.ui.UserLoginButton;
+import net.exclaimindustries.paste.braket.client.ui.UserSignInButton;
 import net.exclaimindustries.paste.braket.client.ui.UserStatusPanel;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+
 /**
- * A class that performs all the UI-based login actions, including handling
- * login/logout clicks, building and displaying the user status, and updating
+ * A class that performs all the UI-based signIn actions, including handling
+ * signIn/signOut clicks, building and displaying the user status, and updating
  * the UI when events that change the user status come down the pipe.
  * 
  * @author paste
  * 
  */
-public class UserLoginHandler {
+public class UserSignInHandler {
 
     private BraketAppLayout appLayout;
 
     private UserStatusPanel userStatusPanel;
 
-    private UserLoginButton userLoginButton;
+    private UserSignInButton userLoginButton;
 
     private BraketUser currentUser;
 
-    private LoginServiceAsync loginServiceRPC = GWT.create(LoginService.class);
+    private SignInServiceAsync signInServiceRPC = GWT.create(SignInService.class);
 
     private Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-    public UserLoginHandler(BraketAppLayout braketAppLayout) {
+    private AsyncCallback<BraketUser> signInAsyncCallback =
+            new AsyncCallback<BraketUser>() {
+
+                @Override
+                public void onFailure(Throwable caught) {
+                    handleFailure(caught);
+                }
+
+                @Override
+                public void onSuccess(BraketUser result) {
+                    currentUser = result;
+                    if (result.isSignedIn()) {
+                        logger.log(Level.INFO, "user [" + result.getId()
+                                + "] signed in");
+                        displayUserStatusPanel();
+                        // Take the user wherever he or she was going
+                        History.fireCurrentHistoryState();
+                    } else {
+                        logger.log(Level.INFO, "user not signed in");
+                        displaySignInButton();
+                    }
+                }
+
+            };
+
+    public UserSignInHandler(BraketAppLayout braketAppLayout) {
         appLayout = braketAppLayout;
         currentUser = new BraketUser();
     }
@@ -46,41 +73,20 @@ public class UserLoginHandler {
      */
     public void signIn() {
 
-        // Someone is already logged in!
+        // Someone is already signed in!
         if (currentUser.isSignedIn()) {
             throw new IllegalStateException("user already signed in");
         }
 
-        loginServiceRPC.signIn(GWT.getHostPageBaseURL(),
-                new AsyncCallback<BraketUser>() {
-
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        handleFailure(caught);
-                    }
-
-                    @Override
-                    public void onSuccess(BraketUser result) {
-                        currentUser = result;
-                        if (result.isSignedIn()) {
-                            logger.log(Level.INFO, "user [" + result.getId()
-                                    + "] logged in");
-                            displayUserStatusPanel();
-                        } else {
-                            logger.log(Level.INFO, "user not logged in");
-                            displaySignInButton();
-                        }
-                    }
-
-                });
+        signInServiceRPC.signIn(Window.Location.getHref(), signInAsyncCallback);
 
     }
 
     protected void displaySignInButton() {
         // TODO Auto-generated method stub
         // Make a sign in button
-        userLoginButton = new UserLoginButton(currentUser);
-        
+        userLoginButton = new UserSignInButton(currentUser);
+
         // Add it where it belongs
         appLayout.getHeader().getPanel().add(userLoginButton);
     }
@@ -95,7 +101,7 @@ public class UserLoginHandler {
 
         // Make a status panel
         userStatusPanel = new UserStatusPanel(currentUser);
-
+        
         // Add the panel to the header of the layout
         appLayout.getHeader().getPanel().add(userStatusPanel);
 
@@ -111,7 +117,7 @@ public class UserLoginHandler {
 
     public void signOut() {
 
-        // No one is logged in!
+        // No one is signed in!
         if (!currentUser.isSignedIn()) {
             throw new IllegalStateException("no user currently signed in");
         }
@@ -119,7 +125,7 @@ public class UserLoginHandler {
         // Remove the status panel
         removeUserStatusPanel();
 
-        // TODO Do the logging out, handle the response
+        // TODO Do the signing out, handle the response
 
     }
 
@@ -151,7 +157,7 @@ public class UserLoginHandler {
 
     protected void handleFailure(Throwable caught) {
         logger.log(Level.SEVERE,
-                "failure logging in: " + caught.getLocalizedMessage());
+                "failure signing in: " + caught.getLocalizedMessage());
         // TODO Do something else?
     }
 

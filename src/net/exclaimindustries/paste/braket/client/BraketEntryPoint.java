@@ -17,6 +17,9 @@
 
 package net.exclaimindustries.paste.braket.client;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import net.exclaimindustries.paste.braket.client.resources.UiConstants;
 import net.exclaimindustries.paste.braket.client.ui.BraketAppLayout;
 
@@ -26,37 +29,23 @@ import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 
-    // Panels
+    // Logger specific to this object
+    private Logger logger = Logger.getLogger(this.getClass().getSimpleName());
+
+    // Layout
     private BraketAppLayout layout = new BraketAppLayout();
 
     // Handlers
-    private UserLoginHandler userLoginHandler = new UserLoginHandler(layout);
+    private UserSignInHandler userLoginHandler = new UserSignInHandler(layout);
 
-    // Callbacks
-    private RunAsyncCallback signUpDisplayCallback = new RunAsyncCallback() {
-
-        @Override
-        public void onFailure(Throwable reason) {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onSuccess() {
-            // TODO Auto-generated method stub
-            layout.getMainPanel().clear();
-            layout.getMainPanel().add(new Label("please log in"));
-        }
-
-    };
-
+    // Callbacks?
+    // TODO Put these into the handlers
     private RunAsyncCallback braketDisplayCallback = new RunAsyncCallback() {
 
         @Override
@@ -79,26 +68,37 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
         String eventString = event.getValue();
         if (eventString.equals(UiConstants.HistoryToken.ABOUT)) {
             // TODO
+            logger.log(Level.INFO, "loading about page");
         } else if (eventString.equals(UiConstants.HistoryToken.TOURNAMENT_STATUS)) {
             // TODO
-            userLoginHandler.signIn();
+            logger.log(Level.INFO, "loading tournament status page");
         } else if (eventString.equals(UiConstants.HistoryToken.MY_BRACKET)) {
+            logger.log(Level.INFO, "loading user bracket page");
             GWT.runAsync(braketDisplayCallback);
         } else if (eventString.equals(UiConstants.HistoryToken.ADMIN)) {
+            logger.log(Level.INFO, "loading admin page");
             // TODO
         } else if (eventString.equals(UiConstants.HistoryToken.USER_OPTIONS)) {
+            logger.log(Level.INFO, "loading user options page");
             // TODO
         } else if (eventString.equals(UiConstants.HistoryToken.LEADERBOARDS)) {
+            logger.log(Level.INFO, "loading leaderboard page");
             // TODO
         } else if (eventString.equals(UiConstants.HistoryToken.EDIT_USERS)) {
+            logger.log(Level.INFO, "loading edit users dialog");
             // TODO
         } else if (eventString.equals(UiConstants.HistoryToken.EDIT_TEAMS)) {
+            logger.log(Level.INFO, "loading edit teams dialog");
             // TODO
         } else if (eventString.equals(UiConstants.HistoryToken.EDIT_GAMES)) {
+            logger.log(Level.INFO, "loading edit games dialog");
             // TODO
         } else if (eventString.equals(UiConstants.HistoryToken.EXCITE_O_MATIC)) {
+            logger.log(Level.INFO, "loading excite-o-matic");
             // TODO
         } else {
+            logger.log(Level.WARNING, "history event [" + eventString
+                    + "] not understood");
             // TODO
         }
     }
@@ -112,29 +112,10 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
 
         layout.getMainPanel().add(new Label("logging in..."));
 
-        // TODO Determine whether or not you are logged in.
-        // loginServiceRPC.signIn(GWT.getHostPageBaseURL(),
-        // new AsyncCallback<BraketUser>() {
-        //
-        // @Override
-        // public void onFailure(Throwable caught) {
-        // // TODO Auto-generated method stub
-        //
-        // }
-        //
-        // @Override
-        // public void onSuccess(BraketUser result) {
-        // if (result.isSignedIn()) {
-        // // TODO handle the history state
-        // // Handle history token
-        // History.fireCurrentHistoryState();
-        // } else {
-        // // TODO display the sign-in/sign-up screen
-        // GWT.runAsync(signUpDisplayCallback);
-        // }
-        // }
-        //
-        // });
+        // Attempt to sign the user in and deal with the result.
+        // Either the user will not be signed in, in which case an "About" page will be displayed,
+        // or the user will be signed in, and the history token in the URL will be followed.
+        userLoginHandler.signIn();
 
     }
 
