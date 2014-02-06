@@ -44,7 +44,9 @@ public class BraketAppLayout extends Composite {
             layoutPanel.remove(centerWidget);
         }
         layoutPanel.addNorth(menu, 32.);
-        layoutPanel.add(centerWidget);
+        if (centerWidget != null) {
+            layoutPanel.add(centerWidget);
+        }
     }
 
     public void setCenter(Widget widget) {
