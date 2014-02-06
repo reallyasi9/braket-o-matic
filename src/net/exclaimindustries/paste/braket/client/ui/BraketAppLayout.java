@@ -7,12 +7,13 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author paste
- *
+ * 
  */
 public class BraketAppLayout extends Composite {
 
@@ -22,40 +23,40 @@ public class BraketAppLayout extends Composite {
     interface BraketAppLayoutUiBinder extends UiBinder<Widget, BraketAppLayout> {
     }
 
-    /**
-     * Because this class has a default constructor, it can
-     * be used as a binder template. In other words, it can be used in other
-     * *.ui.xml files as follows:
-     * <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-     *   xmlns:g="urn:import:**user's package**">
-     *  <g:**UserClassName**>Hello!</g:**UserClassName>
-     * </ui:UiBinder>
-     * Note that depending on the widget that is used, it may be necessary to
-     * implement HasHTML instead of HasText.
-     */
     public BraketAppLayout() {
         initWidget(uiBinder.createAndBindUi(this));
     }
 
+    private Widget centerWidget;
+
+    @UiField
+    DockLayoutPanel layoutPanel;
+
     @UiField
     BraketHeader header;
-    
-    @UiField
-    BraketMenu menu;
-    
-    @UiField
-    HTMLPanel mainPanel;
-    
-    public BraketHeader getHeader() {
-        return header;
+
+    public DockLayoutPanel getLayoutPanel() {
+        return layoutPanel;
     }
-    
-    public BraketMenu getMenu() {
-        return menu;
+
+    public void addMenu(BraketMenu menu) {
+        if (centerWidget != null) {
+            layoutPanel.remove(centerWidget);
+        }
+        layoutPanel.addNorth(menu, 32.);
+        layoutPanel.add(centerWidget);
     }
-    
-    public HTMLPanel getMainPanel() {
-        return mainPanel;
+
+    public void setCenter(Widget widget) {
+        if (centerWidget != null) {
+            layoutPanel.remove(centerWidget);
+        }
+        layoutPanel.add(widget);
+        centerWidget = widget;
+    }
+
+    public void addToHeader(Widget widget) {
+        header.add(widget);
     }
 
 }

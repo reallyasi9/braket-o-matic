@@ -4,7 +4,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.exclaimindustries.paste.braket.client.ui.BraketAppLayout;
+import net.exclaimindustries.paste.braket.client.ui.BraketMenu;
 import net.exclaimindustries.paste.braket.client.ui.FadeAnimation;
+import net.exclaimindustries.paste.braket.client.ui.LogInPage;
 import net.exclaimindustries.paste.braket.client.ui.UserLogInButton;
 import net.exclaimindustries.paste.braket.client.ui.UserStatusPanel;
 
@@ -25,12 +27,6 @@ public class UserLogInHandler {
 
     private BraketAppLayout appLayout;
 
-    private UserStatusPanel userStatusPanel;
-
-    private UserLogInButton userLoginButton;
-
-    private BraketUser currentUser;
-
     private LogInServiceAsync logInServiceRPC = GWT.create(LogInService.class);
 
     private Logger logger = Logger.getLogger(this.getClass().getSimpleName());
@@ -45,16 +41,16 @@ public class UserLogInHandler {
 
                 @Override
                 public void onSuccess(BraketUser result) {
-                    currentUser = result;
                     if (result.isLoggedIn()) {
                         logger.log(Level.INFO, "user [" + result.getId()
                                 + "] logged in");
-                        displayUserStatusPanel();
+                        displayUserStatusPanel(result);
+                        displayMenu(result);
                         // Take the user wherever he or she was going
                         History.fireCurrentHistoryState();
                     } else {
                         logger.log(Level.INFO, "user not logged in");
-                        displaySignInButton();
+                        displaySignInButton(result);
                     }
                 }
 
@@ -62,97 +58,42 @@ public class UserLogInHandler {
 
     public UserLogInHandler(BraketAppLayout braketAppLayout) {
         appLayout = braketAppLayout;
-        currentUser = new BraketUser();
+    }
+
+    protected void displayMenu(BraketUser currentUser) {
+        appLayout.addMenu(new BraketMenu(currentUser));
     }
 
     /**
      * Attempt to log a user in.
-     * 
-     * @throws IllegalStateException
-     *             if a user is already logged in.
      */
     public void logIn() {
-
-        // Someone is already logged in!
-        if (currentUser.isLoggedIn()) {
-            throw new IllegalStateException("user already logged in");
-        }
-
         logInServiceRPC.logIn(Window.Location.getHref(), logInAsyncCallback);
-
     }
 
-    protected void displaySignInButton() {
-        // TODO Auto-generated method stub
-        // Make a log in button
-        userLoginButton = new UserLogInButton(currentUser);
+    protected void displaySignInButton(BraketUser currentUser) {
 
-        // Add it where it belongs
-        appLayout.getHeader().getPanel().add(userLoginButton);
+        // Add button where it belongs
+        appLayout.addToHeader(new UserLogInButton(currentUser));
+
+        // Make the log-in info stuff
+        appLayout.setCenter(new LogInPage());
     }
 
     /**
      * Make the UserStatusPanel and display it
      */
-    protected void displayUserStatusPanel() {
-
-        // Lock all ability to log in or out
-        lockControls();
+    protected void displayUserStatusPanel(BraketUser currentUser) {
 
         // Make a status panel
-        userStatusPanel = new UserStatusPanel(currentUser);
-        
+        UserStatusPanel userStatusPanel = new UserStatusPanel(currentUser);
+
         // Add the panel to the header of the layout
-        appLayout.getHeader().getPanel().add(userStatusPanel);
+        appLayout.addToHeader(userStatusPanel);
 
         // Fade the panel in
-        FadeAnimation animation = new FadeAnimation(userStatusPanel.getElement()) {
-            @Override
-            protected void onComplete() {
-                unlockControls();
-            }
-        };
+        FadeAnimation animation = new FadeAnimation(userStatusPanel.getElement());
         animation.fadeIn(500);
-    }
-
-    public void loggOut() {
-
-        // No one is logged in!
-        if (!currentUser.isLoggedIn()) {
-            throw new IllegalStateException("no user currently logged in");
-        }
-
-        // Remove the status panel
-        removeUserStatusPanel();
-
-        // TODO Do the logging out, handle the response
-
-    }
-
-    protected void removeUserStatusPanel() {
-        // Lock all ability to log in or out
-        lockControls();
-
-        // Add the panel to the header of the layout
-        appLayout.getHeader().getPanel().add(userStatusPanel);
-
-        // Fade the panel out
-        FadeAnimation animation = new FadeAnimation(userStatusPanel.getElement()) {
-            @Override
-            protected void onComplete() {
-                appLayout.getHeader().getPanel().remove(userStatusPanel);
-                unlockControls();
-            }
-        };
-        animation.fadeOut(500);
-    }
-
-    protected void lockControls() {
-
-    }
-
-    protected void unlockControls() {
-
     }
 
     protected void handleFailure(Throwable caught) {

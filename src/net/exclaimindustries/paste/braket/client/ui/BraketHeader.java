@@ -22,8 +22,8 @@ public class BraketHeader extends Composite {
         initWidget(uiBinder.createAndBindUi(this));
     }
 
-    public FlowPanel getPanel() {
-        return panel;
+    public void add(Widget widget) {
+        panel.add(widget);
     }
 
 }

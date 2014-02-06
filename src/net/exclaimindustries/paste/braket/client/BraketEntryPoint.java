@@ -57,8 +57,7 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
         @Override
         public void onSuccess() {
             // TODO Auto-generated method stub
-            layout.getMainPanel().clear();
-            layout.getMainPanel().add(new HTMLPanel("braket goes here"));
+            layout.setCenter(new HTMLPanel("braket goes here"));
         }
 
     };
@@ -69,8 +68,7 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
         if (eventString.equals(UiConstants.HistoryToken.ABOUT)) {
             // TODO
             logger.log(Level.INFO, "loading about page");
-        } else if (eventString
-                .equals(UiConstants.HistoryToken.TOURNAMENT_STATUS)) {
+        } else if (eventString.equals(UiConstants.HistoryToken.TOURNAMENT_STATUS)) {
             // TODO
             logger.log(Level.INFO, "loading tournament status page");
         } else if (eventString.equals(UiConstants.HistoryToken.MY_BRACKET)) {
@@ -110,8 +108,6 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
         History.addValueChangeHandler(this);
 
         RootLayoutPanel.get().add(layout);
-
-        layout.getMainPanel().add(new Label("logging in..."));
 
         // Attempt to log the user in and deal with the result.
         // Either the user will not be logged in, in which case an "About" page
