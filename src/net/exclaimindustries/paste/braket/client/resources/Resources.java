@@ -30,6 +30,11 @@ public interface Resources extends ClientBundle {
     public static final Resources INSTANCE = GWT.create(Resources.class);
 
     public interface Style extends CssResource {
+
+        String menuButton();
+        
+        String adminButton();
+
         String blueButton();
 
         String redButton();
@@ -58,8 +63,8 @@ public interface Resources extends ClientBundle {
     Style style();
 
     // Unrecognized image file format?
-//    @Source("g+-icon.svg")
-//    ImageResource gPlusIcon();
+    // @Source("g+-icon.svg")
+    // ImageResource gPlusIcon();
 
     @Source("backColors.gif")
     ImageResource backColors();
@@ -130,7 +135,7 @@ public interface Resources extends ClientBundle {
     @Source("HelpImage.jpg")
     ImageResource help();
 
-//    @Source("header.svg")
-//    ExternalSVGResource headerSVG();
+    // @Source("header.svg")
+    // ExternalSVGResource headerSVG();
 
 }

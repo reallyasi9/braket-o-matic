@@ -132,3 +132,27 @@
 .rightButton {
 	float: right;
 }
+
+.menuButton {
+	display: inline-block;
+	height: 32pt;
+	line-height: 32pt;
+	vertical-align: center;
+	padding-left: 8pt;
+	padding-right: 8pt;
+	cursor: pointer;
+	border-right: 1px solid #888888;
+	font-size: 14pt;
+}
+
+.menuButton a:link,.menuButton a:hover,.menuButton a:active,.menuButton a:visited,.logoutButton,.logoutButton:active,.logoutButton:hover,.logoutButton:visited
+	{
+	text-decoration: none;
+	color: #666666 !important;
+}
+
+.adminButton {
+	float: right;
+	border-left: 1px solid #888888;
+	border-right: 0px;
+}

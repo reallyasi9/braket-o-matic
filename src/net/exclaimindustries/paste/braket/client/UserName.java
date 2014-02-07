@@ -17,8 +17,7 @@
 
 package net.exclaimindustries.paste.braket.client;
 
-import java.io.Serializable;
-
+import com.google.gwt.user.client.rpc.IsSerializable;
 import com.googlecode.objectify.annotation.Embed;
 
 /**
@@ -28,12 +27,7 @@ import com.googlecode.objectify.annotation.Embed;
  * @author paste
  */
 @Embed
-public class UserName implements Serializable, Cloneable {
-
-	/**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+public class UserName implements IsSerializable, Cloneable {
 
     /**
 	 * The first (given) name of the user.

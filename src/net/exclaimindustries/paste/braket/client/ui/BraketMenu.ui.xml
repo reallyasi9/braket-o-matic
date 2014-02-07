@@ -6,30 +6,6 @@
 		field="net.exclaimindustries.paste.braket.client.resources.UiConstants.HistoryToken.*" />
 
 	<ui:style>
-	.menu-button {
-		display: inline-block;
-		height: 32pt;
-		line-height: 32pt;
-		vertical-align: center;
-		padding-left: 8pt;
-		padding-right: 8pt;
-		cursor: pointer;
-		border-right: 1px solid #888888;
-		font-size: 14pt;
-	}
-	
-	.menu-button a:link,.menu-button a:hover,.menu-button a:active,.menu-button a:visited,.logout-button,.logout-button:active,.logout-button:hover,.logout-button:visited
-		{
-		text-decoration: none;
-		color: #666666 !important;
-	}
-	
-	.logout-button {
-		float: right;
-		border-left: 1px solid #888888;
-		border-right: 0px;
-	}
-	
 	.panel {
 		background: #ffffff; /* Old browsers */
 		background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
@@ -47,14 +23,5 @@
 		overflow: overlay;
 	}
 	</ui:style>
-	<g:FlowPanel styleName="{style.panel}">
-		<g:Hyperlink styleName="{style.menu-button}"
-			targetHistoryToken="{TOURNAMENT_STATUS}">Tournament Status</g:Hyperlink>
-		<g:Hyperlink styleName="{style.menu-button}"
-			targetHistoryToken="{MY_BRACKET}">My Bracket</g:Hyperlink>
-		<g:Hyperlink styleName="{style.menu-button}"
-			targetHistoryToken="{LEADERBOARDS}">Leaderboards</g:Hyperlink>
-		<g:Hyperlink styleName="{style.menu-button}"
-			targetHistoryToken="{EXCITE_O_MATIC}">Excite-o-Matic</g:Hyperlink>
-	</g:FlowPanel>
+	<g:FlowPanel styleName="{style.panel}" ui:field="panel" />
 </ui:UiBinder> 

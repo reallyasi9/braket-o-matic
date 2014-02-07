@@ -23,45 +23,48 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  * @author paste
  * 
  */
-public class UserLogInHandler {
+public class UserLogInWrangler {
 
     private BraketAppLayout appLayout;
+
+    private BraketTournament tournament;
 
     private LogInServiceAsync logInServiceRPC = GWT.create(LogInService.class);
 
     private Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-    private AsyncCallback<BraketUser> logInAsyncCallback =
-            new AsyncCallback<BraketUser>() {
+    private AsyncCallback<BraketUser> logInAsyncCallback = new AsyncCallback<BraketUser>() {
 
-                @Override
-                public void onFailure(Throwable caught) {
-                    handleFailure(caught);
-                }
+        @Override
+        public void onFailure(Throwable caught) {
+            handleFailure(caught);
+        }
 
-                @Override
-                public void onSuccess(BraketUser result) {
-                    if (result.isLoggedIn()) {
-                        logger.log(Level.INFO, "user [" + result.getId()
-                                + "] logged in");
-                        displayUserStatusPanel(result);
-                        displayMenu(result);
-                        // Take the user wherever he or she was going
-                        History.fireCurrentHistoryState();
-                    } else {
-                        logger.log(Level.INFO, "user not logged in");
-                        displaySignInButton(result);
-                    }
-                }
+        @Override
+        public void onSuccess(BraketUser result) {
+            if (result.isLoggedIn()) {
+                logger.log(Level.INFO, "user [" + result.getId()
+                        + "] logged in");
+                displayUserStatusPanel(result);
+                displayMenu(result);
+                // Take the user wherever he or she was going
+                History.fireCurrentHistoryState();
+            } else {
+                logger.log(Level.INFO, "user not logged in");
+                displaySignInButton(result);
+            }
+        }
 
-            };
+    };
 
-    public UserLogInHandler(BraketAppLayout braketAppLayout) {
-        appLayout = braketAppLayout;
+    public UserLogInWrangler(BraketAppLayout braketAppLayout,
+            BraketTournament tournament) {
+        this.appLayout = braketAppLayout;
+        this.tournament = tournament;
     }
 
     protected void displayMenu(BraketUser currentUser) {
-        appLayout.addMenu(new BraketMenu(currentUser));
+        appLayout.addMenu(new BraketMenu(tournament, currentUser));
     }
 
     /**
@@ -92,7 +95,8 @@ public class UserLogInHandler {
         appLayout.addToHeader(userStatusPanel);
 
         // Fade the panel in
-        FadeAnimation animation = new FadeAnimation(userStatusPanel.getElement());
+        FadeAnimation animation = new FadeAnimation(
+                userStatusPanel.getElement());
         animation.fadeIn(500);
     }
 

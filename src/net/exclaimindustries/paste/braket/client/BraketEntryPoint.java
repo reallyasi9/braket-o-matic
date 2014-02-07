@@ -20,6 +20,7 @@ package net.exclaimindustries.paste.braket.client;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.exclaimindustries.paste.braket.client.TournamentService.TournamentCollection;
 import net.exclaimindustries.paste.braket.client.resources.UiConstants;
 import net.exclaimindustries.paste.braket.client.ui.BraketAppLayout;
 
@@ -29,6 +30,7 @@ import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
@@ -41,7 +43,10 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
     private BraketAppLayout layout = new BraketAppLayout();
 
     // Handlers
-    private UserLogInHandler userLogInHandler = new UserLogInHandler(layout);
+    private UserLogInWrangler userLogInHandler;
+
+    // Local tournament
+    private BraketTournament tournament;
 
     // Callbacks?
     // TODO Put these into the handlers
@@ -67,7 +72,8 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
         if (eventString.equals(UiConstants.HistoryToken.ABOUT)) {
             // TODO
             logger.log(Level.INFO, "loading about page");
-        } else if (eventString.equals(UiConstants.HistoryToken.TOURNAMENT_STATUS)) {
+        } else if (eventString
+                .equals(UiConstants.HistoryToken.TOURNAMENT_STATUS)) {
             // TODO
             logger.log(Level.INFO, "loading tournament status page");
         } else if (eventString.equals(UiConstants.HistoryToken.MY_BRACKET)) {
@@ -108,12 +114,38 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
 
         RootLayoutPanel.get().add(layout);
 
-        // Attempt to log the user in and deal with the result.
-        // Either the user will not be logged in, in which case an "About" page
-        // will be displayed,
-        // or the user will be logged in, and the history token in the URL will
-        // be followed.
-        userLogInHandler.logIn();
+        // Get the current tournament
+        TournamentServiceAsync tournamentService = GWT
+                .create(TournamentService.class);
+        tournamentService
+                .getCurrentTournament(new AsyncCallback<TournamentCollection>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        // TODO Auto-generated method stub
+                        logger.log(
+                                Level.SEVERE,
+                                "error getting current tournament: "
+                                        + caught.getLocalizedMessage());
+
+                    }
+
+                    @Override
+                    public void onSuccess(TournamentCollection result) {
+                        tournament = result.getTournament();
+
+                        // Attempt to log the user in and deal with the result.
+                        // Either the user will not be logged in, in which case
+                        // an "About" page
+                        // will be displayed,
+                        // or the user will be logged in, and the history token
+                        // in the URL will
+                        // be followed.
+                        userLogInHandler = new UserLogInWrangler(layout,
+                                tournament);
+                        userLogInHandler.logIn();
+                    }
+
+                });
 
     }
 
