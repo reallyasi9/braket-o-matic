@@ -27,26 +27,25 @@ import com.google.gwt.view.client.ProvidesKey;
 
 // This holds all the information about a given selection. It represents a
 // single row in the leaderboard table.
-public final class SelectionInfo implements Comparable<SelectionInfo>,
-        IsSerializable {
+public class SelectionInfo implements Comparable<SelectionInfo>, IsSerializable {
 
     // The user
-    private BraketUser user;
+    protected BraketUser user;
 
     // The user's selection
-    private BraketSelection selection;
+    protected BraketSelection selection;
 
     // The user's points
-    private double points;
+    protected double points;
 
     // The user's possible points
-    private double pointsPossible;
+    protected double pointsPossible;
 
     // The user's expected payout
-    private double expectedPayout;
+    protected double expectedPayout;
 
     // The user's payout history
-    private SortedMap<Date, Double> expectedPayoutHistory;
+    protected SortedMap<Date, Double> expectedPayoutHistory;
 
     /**
      * The key provider that provides the unique ID of a selection.
@@ -72,14 +71,13 @@ public final class SelectionInfo implements Comparable<SelectionInfo>,
     /**
      * @param user
      * @param selection
-     * @param rank
      * @param points
      * @param pointsPossible
      * @param expectedPayout
      * @param expectedPayoutHistory
      */
-    public SelectionInfo(BraketUser user, BraketSelection selection,
-            double points, double pointsPossible, double expectedPayout,
+    public SelectionInfo(BraketUser user, BraketSelection selection, double points,
+            double pointsPossible, double expectedPayout,
             SortedMap<Date, Double> expectedPayoutHistory) {
         this.user = user;
         this.selection = selection;
@@ -89,6 +87,15 @@ public final class SelectionInfo implements Comparable<SelectionInfo>,
         this.expectedPayoutHistory = expectedPayoutHistory;
     }
 
+    public SelectionInfo(SelectionInfo info) {
+        this.user = info.user;
+        this.selection = info.selection;
+        this.points = info.points;
+        this.pointsPossible = info.pointsPossible;
+        this.expectedPayout = info.expectedPayout;
+        this.expectedPayoutHistory = info.expectedPayoutHistory;
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -96,11 +103,19 @@ public final class SelectionInfo implements Comparable<SelectionInfo>,
      */
     @Override
     public int compareTo(SelectionInfo o) {
-        // compare by rank
+        // compare by number of points, then number of points possible, then
+        // expected payout
         if (o == null) {
             return -1;
         }
-        return Double.compare(points, o.points);
+        int comp = Double.compare(points, o.points);
+        if (comp == 0) {
+            comp = Double.compare(pointsPossible, o.pointsPossible);
+        }
+        if (comp == 0) {
+            comp = Double.compare(expectedPayout, o.expectedPayout);
+        }
+        return comp;
     }
 
     public BraketUser getUser() {

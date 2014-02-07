@@ -38,4 +38,16 @@ public interface LeaderboardService extends RemoteService {
      */
     public Collection<SelectionInfo> getLeaderboard();
 
+    /**
+     * Get The rank information for a particular user.
+     * 
+     * @param user
+     *            The user whose rank should be returned.
+     * 
+     * @return An object containing the user's SelectionInfo along with rank
+     *         information, or null if there is no definable rank for that user
+     *         (or instance, if the tournament hasn't yet begun).
+     */
+    public UserRanking getUserRanking(BraketUser user);
+
 }

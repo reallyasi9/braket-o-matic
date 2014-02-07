@@ -30,4 +30,6 @@ public interface LeaderboardServiceAsync {
 
     void getLeaderboard(AsyncCallback<Collection<SelectionInfo>> callback);
 
+    void getUserRanking(BraketUser user, AsyncCallback<UserRanking> callback);
+
 }

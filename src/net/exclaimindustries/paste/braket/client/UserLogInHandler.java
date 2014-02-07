@@ -102,5 +102,4 @@ public class UserLogInHandler {
         // TODO Do something else?
     }
 
-    // TODO Figure out how to listen for the score and rank updates
 }
