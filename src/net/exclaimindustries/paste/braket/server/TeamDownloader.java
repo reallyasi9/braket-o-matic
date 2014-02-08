@@ -26,7 +26,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.exclaimindustries.paste.braket.client.BraketTeam;
-import net.exclaimindustries.paste.braket.client.Color;
+import net.exclaimindustries.paste.braket.client.RGBColor;
 import net.exclaimindustries.paste.braket.client.TeamName;
 
 import org.jdom2.CDATA;
@@ -141,7 +141,7 @@ public class TeamDownloader {
         String location = digOutCDATA(teamElement, "teamLocation", ns);
         String nickname = digOutCDATA(teamElement, "teamNickname", ns);
         String teamNameString = teamElement.getChildText("teamName", ns);
-        String teamColorString = teamElement.getChildText("teamColor", ns);
+        String teamColorString = "#" + teamElement.getChildText("teamColor", ns);
         String teamLogoUrl = teamElement.getChildText("teamLogo", ns);
 
         TeamName teamName =
@@ -151,7 +151,7 @@ public class TeamDownloader {
 
         try {
             if (teamColorString != null) {
-                Color color = new Color(teamColorString);
+                RGBColor color = RGBColor.fromCSSString(teamColorString);
                 team.setColor(color);
             }
         } catch (Exception e) {

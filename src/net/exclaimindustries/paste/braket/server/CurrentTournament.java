@@ -51,8 +51,7 @@ public class CurrentTournament {
     public static Ref<BraketTournament> getCurrentTournament() {
         Key<CurrentTournament> key = Key.create(CurrentTournament.class, 1);
         CurrentTournament t =
-                OfyService.ofy().load().group(LoadTournament.class).key(key)
-                        .now();
+                OfyService.ofy().load().group(LoadTournament.class).key(key).now();
         if (t == null) {
             return null;
         }

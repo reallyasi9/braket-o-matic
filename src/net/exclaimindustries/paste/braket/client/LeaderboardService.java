@@ -18,7 +18,10 @@ package net.exclaimindustries.paste.braket.client;
 
 import java.util.Collection;
 
+import net.exclaimindustries.paste.braket.shared.NoCurrentTournamentException;
 import net.exclaimindustries.paste.braket.shared.SelectionInfo;
+import net.exclaimindustries.paste.braket.shared.TournamentNotStartedException;
+import net.exclaimindustries.paste.braket.shared.UserNotLoggedInException;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -35,8 +38,13 @@ public interface LeaderboardService extends RemoteService {
      * 
      * @return A collection of selection info for registered users of the
      *         current tournament that can be fed into the leaderboard.
+     * @throws NoCurrentTournamentException
+     * @throws UserNotLoggedInException
+     * @throws TournamentNotStartedException
      */
-    public Collection<SelectionInfo> getLeaderboard();
+    public Collection<SelectionInfo> getLeaderboard()
+            throws NoCurrentTournamentException, UserNotLoggedInException,
+            TournamentNotStartedException;
 
     /**
      * Get The rank information for a particular user.
@@ -47,7 +55,12 @@ public interface LeaderboardService extends RemoteService {
      * @return An object containing the user's SelectionInfo along with rank
      *         information, or null if there is no definable rank for that user
      *         (or instance, if the tournament hasn't yet begun).
+     * @throws NoCurrentTournamentException
+     * @throws UserNotLoggedInException
+     * @throws TournamentNotStartedException
      */
-    public UserRanking getUserRanking(BraketUser user);
+    public UserRanking getUserRanking(BraketUser user)
+            throws NoCurrentTournamentException, UserNotLoggedInException,
+            TournamentNotStartedException;
 
 }

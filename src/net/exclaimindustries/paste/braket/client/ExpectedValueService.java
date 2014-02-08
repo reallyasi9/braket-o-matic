@@ -20,6 +20,11 @@ import java.util.Date;
 import java.util.Map;
 import java.util.SortedMap;
 
+import net.exclaimindustries.paste.braket.shared.NoCurrentTournamentException;
+import net.exclaimindustries.paste.braket.shared.TournamentNotStartedException;
+import net.exclaimindustries.paste.braket.shared.UserNotAdminException;
+import net.exclaimindustries.paste.braket.shared.UserNotLoggedInException;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -38,8 +43,13 @@ public interface ExpectedValueService extends RemoteService {
      *         Id. Users without a value (because their selection does not
      *         produce any expected value with the simulations so far) will not
      *         be included in the map.
+     * @throws NoCurrentTournamentException
+     * @throws UserNotLoggedInException
+     * @throws TournamentNotStartedException
      */
-    public Map<String, Double> getExpectedValues();
+    public Map<String, Double> getExpectedValues()
+            throws NoCurrentTournamentException, UserNotLoggedInException,
+            TournamentNotStartedException;
 
     /**
      * Calculates the expected earnings for the two possible results of a given
@@ -50,8 +60,14 @@ public interface ExpectedValueService extends RemoteService {
      * @return A map of values with keys of team IDs and values representing the
      *         expected value of the user's selection for the current tournament
      *         assuming that team won its upcoming game.
+     * @throws NoCurrentTournamentException
+     * @throws UserNotLoggedInException
+     * @throws TournamentNotStartedException
+     * @throws UserNotAdminException
      */
-    public Map<Long, Double> getConditionalExpectedValues(String userId);
+    public Map<Long, Double> getConditionalExpectedValues(String userId)
+            throws NoCurrentTournamentException, UserNotLoggedInException,
+            TournamentNotStartedException, UserNotAdminException;
 
     /**
      * Get the history of expected values for all users.
@@ -63,15 +79,22 @@ public interface ExpectedValueService extends RemoteService {
      *         the outer map. Not all users will have values for all dates. The
      *         expected values are updated every time a game is completed. The
      *         keys of the second map are sorted in chronological order.
+     * @throws UserNotLoggedInException
+     * @throws TournamentNotStartedException
+     * @throws NoCurrentTournamentException
      */
-    public Map<String, SortedMap<Date, Double>> getExpectedValueHistories();
+    public Map<String, SortedMap<Date, Double>> getExpectedValueHistories()
+            throws UserNotLoggedInException, NoCurrentTournamentException,
+            TournamentNotStartedException;
 
     /**
      * Signal the Expect-o-Matic thread to begin.
      * 
-     * @throw SecurityException If the user is not logged in as an
-     *        administrator.
+     * @throws UserNotAdminException
+     * @throws UserNotLoggedInException
+     * @throws NoCurrentTournamentException
      */
-    public void startExpectOMatic();
+    public void startExpectOMatic() throws UserNotLoggedInException,
+            UserNotAdminException, NoCurrentTournamentException;
 
 }

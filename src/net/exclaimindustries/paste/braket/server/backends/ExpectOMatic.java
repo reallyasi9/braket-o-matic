@@ -68,8 +68,7 @@ public final class ExpectOMatic extends HttpServlet {
     /**
      * A simple logger
      */
-    private static final Logger LOG = Logger.getLogger(ExpectOMatic.class
-            .getName());
+    private static final Logger LOG = Logger.getLogger(ExpectOMatic.class.getName());
 
     /**
      * The Expect-o-Matic model, by Sasha
@@ -95,7 +94,8 @@ public final class ExpectOMatic extends HttpServlet {
      * A local copy of the users' selections, keyed by the id user who selected
      * it.
      */
-    private HashMap<String, BraketSelection> selections = new HashMap<String, BraketSelection>();
+    private HashMap<String, BraketSelection> selections =
+            new HashMap<String, BraketSelection>();
 
     /**
      * A local copy of the teams in the tournament, in tournament order
@@ -148,23 +148,21 @@ public final class ExpectOMatic extends HttpServlet {
                     semaphore.acquire();
 
                     // I need to know the games that are waiting on a decision.
-                    BigInteger gamesWaiting = tournament
-                            .getGamesWaitingOrPlaying();
+                    BigInteger gamesWaiting = tournament.getGamesWaitingOrPlaying();
 
                     if (expectoValues.getIterations() % 1000 == 0) {
                         LOG.info("Iteration "
-                                + Integer.toString(expectoValues
-                                        .getIterations()));
+                                + Integer.toString(expectoValues.getIterations()));
                     }
 
                     expectoValues.inc();
 
                     // Make a random outcome
-                    BigInteger outcome = new BigInteger(tournament
-                            .getGameMask().bitLength(), rng).and(
-                            gamesNotCompleted).or(
-                            tournament.getGameWinners().and(
-                                    tournament.getCompletionMask()));
+                    BigInteger outcome =
+                            new BigInteger(tournament.getGameMask().bitLength(), rng)
+                                    .and(gamesNotCompleted).or(
+                                            tournament.getGameWinners().and(
+                                                    tournament.getCompletionMask()));
 
                     // Calculate the users' scores
                     TreeMultimap<Double, String> userScores = getUserScores(outcome);
@@ -173,19 +171,18 @@ public final class ExpectOMatic extends HttpServlet {
                     Map<String, Double> userPayOuts = getUserPayOuts(userScores);
 
                     // Calculate the total selection probability
-                    double probability = getOutcomeProbability(outcome,
-                            gamesNotCompleted);
+                    double probability =
+                            getOutcomeProbability(outcome, gamesNotCompleted);
                     expectoValues.addToProbability(probability);
 
                     // By definition, the zero team ID is the full expecto
                     for (String userId : userPayOuts.keySet()) {
-                        double expectedPayout = userPayOuts.get(userId)
-                                * probability;
+                        double expectedPayout =
+                                userPayOuts.get(userId) * probability;
                         double oldValue = 0;
 
                         if (expectoValues.getValueTable().contains(userId, 0l)) {
-                            oldValue = expectoValues.getValueTable().get(
-                                    userId, 0l);
+                            oldValue = expectoValues.getValueTable().get(userId, 0l);
                         }
                         expectoValues.getValueTable().put(userId, 0l,
                                 expectedPayout + oldValue);
@@ -204,19 +201,23 @@ public final class ExpectOMatic extends HttpServlet {
                                 double olderValue = 0;
                                 Long teamId = null;
                                 if (outcome.testBit(i)) {
-                                    teamId = tournament.getTeam(tournament
-                                            .getBottomTeamIndex(i));
+                                    teamId =
+                                            tournament.getTeam(tournament
+                                                    .getBottomTeamIndex(i));
                                 } else {
-                                    teamId = tournament.getTeam(tournament
-                                            .getTopTeamIndex(i));
+                                    teamId =
+                                            tournament.getTeam(tournament
+                                                    .getTopTeamIndex(i));
                                 }
-                                if (expectoValues.getValueTable().contains(
-                                        userId, teamId)) {
-                                    olderValue = expectoValues.getValueTable()
-                                            .get(userId, teamId);
+                                if (expectoValues.getValueTable().contains(userId,
+                                        teamId)) {
+                                    olderValue =
+                                            expectoValues.getValueTable().get(
+                                                    userId, teamId);
                                 }
-                                double conditionalP = getOutcomeProbability(
-                                        outcome, gamesNotCompleted.clearBit(i));
+                                double conditionalP =
+                                        getOutcomeProbability(outcome,
+                                                gamesNotCompleted.clearBit(i));
                                 expectoValues.getValueTable().put(
                                         userId,
                                         teamId,
@@ -227,8 +228,7 @@ public final class ExpectOMatic extends HttpServlet {
                     }
 
                     // save myself every n iterations and continue
-                    if (expectoValues.getIterations()
-                            % ITERATIONS_BEFORE_PAUSING == 0) {
+                    if (expectoValues.getIterations() % ITERATIONS_BEFORE_PAUSING == 0) {
                         // Save, but don't wipe
                         saveExpectOMatic(false);
                     }
@@ -267,8 +267,9 @@ public final class ExpectOMatic extends HttpServlet {
          */
         public TreeMultimap<Double, String> getUserScores(BigInteger thisOutcome) {
 
-            TreeMultimap<Double, String> userScores = TreeMultimap.create(
-                    Ordering.natural().reverse(), Ordering.natural());
+            TreeMultimap<Double, String> userScores =
+                    TreeMultimap.create(Ordering.natural().reverse(),
+                            Ordering.natural());
 
             // A pseudo-tournament
             BraketTournament t = new BraketTournament();
@@ -313,8 +314,7 @@ public final class ExpectOMatic extends HttpServlet {
                 Collection<String> users = userScores.get(points);
                 double valueForThisPosition = 0;
                 int positionsPopped = 0;
-                while (remainingPayOuts.size() > 0
-                        && positionsPopped < users.size()) {
+                while (remainingPayOuts.size() > 0 && positionsPopped < users.size()) {
                     ++positionsPopped;
                     valueForThisPosition += remainingPayOuts.removeFirst();
                 }
@@ -472,32 +472,30 @@ public final class ExpectOMatic extends HttpServlet {
     private void initialize() {
 
         // Get the tournament
-        Ref<BraketTournament> tournRef = CurrentTournament
-                .getCurrentTournament();
+        Ref<BraketTournament> tournRef = CurrentTournament.getCurrentTournament();
         if (tournRef == null) {
             tournament = null;
             return;
-        } else {
-            tournament = tournRef.get();
         }
+        tournament = tournRef.get();
 
         // Cache the games not yet completed
-        gamesNotCompleted = tournament.getGameMask().andNot(
-                tournament.getCompletionMask());
+        gamesNotCompleted =
+                tournament.getGameMask().andNot(tournament.getCompletionMask());
 
         // Cache the teams
-        teams = new ArrayList<BraketTeam>(OfyService.ofy().load()
-                .type(BraketTeam.class).parent(tournament)
-                .ids(tournament.getTeams()).values());
+        teams =
+                new ArrayList<BraketTeam>(OfyService.ofy().load()
+                        .type(BraketTeam.class).parent(tournament)
+                        .ids(tournament.getTeams()).values());
 
-        new ArrayList<BraketGame>(OfyService.ofy().load()
-                .type(BraketGame.class).parent(tournament)
-                .ids(tournament.getGames()).values());
+        new ArrayList<BraketGame>(OfyService.ofy().load().type(BraketGame.class)
+                .parent(tournament).ids(tournament.getGames()).values());
 
         // Cache the registered users' selections
-        Collection<BraketSelection> nakedSelections = OfyService.ofy().load()
-                .type(BraketSelection.class)
-                .ids(tournament.getRegisteredSelections().values()).values();
+        Collection<BraketSelection> nakedSelections =
+                OfyService.ofy().load().type(BraketSelection.class)
+                        .ids(tournament.getRegisteredSelections().values()).values();
 
         selections.clear();
         for (BraketSelection selection : nakedSelections) {
@@ -508,8 +506,7 @@ public final class ExpectOMatic extends HttpServlet {
         payOuts = tournament.getPayOutValues();
 
         // Get the most recent ExpectOMatic results, if they exist
-        Ref<ExpectoValues> current = CurrentExpectOMatic
-                .getCurrentExpectOMatic();
+        Ref<ExpectoValues> current = CurrentExpectOMatic.getCurrentExpectOMatic();
         if (current != null) {
             expectoValues = current.get();
         } else {
@@ -531,8 +528,8 @@ public final class ExpectOMatic extends HttpServlet {
          */
 
         // Start a simulation thread
-        simulationThread = ThreadManager
-                .createBackgroundThread(new SimulationRunner());
+        simulationThread =
+                ThreadManager.createBackgroundThread(new SimulationRunner());
         simulationThread.start();
     }
 
@@ -580,11 +577,12 @@ public final class ExpectOMatic extends HttpServlet {
                 int first = outcomeAsSelection.getTopTeamIndex(iGame);
                 int second = outcomeAsSelection.getBottomTeamIndex(iGame);
                 if (outcomeAsSelection.isBottomTeamSelected(iGame)) {
-                    totalProbability *= getWinProbability(teams.get(first),
-                            teams.get(second));
+                    totalProbability *=
+                            getWinProbability(teams.get(first), teams.get(second));
                 } else {
-                    totalProbability *= (1 - getWinProbability(
-                            teams.get(first), teams.get(second)));
+                    totalProbability *=
+                            (1 - getWinProbability(teams.get(first),
+                                    teams.get(second)));
                 }
             }
         }
@@ -608,9 +606,9 @@ public final class ExpectOMatic extends HttpServlet {
         // From Sasha's calculations.
         double kpDiff = team1.getKenpomScore() - team2.getKenpomScore();
         double wpDiff = team1.getWinPercentage() - team2.getWinPercentage();
-        double denominator = fastExp(-modelConstant
-                - kenpomScoreDifferenceCoefficient * kpDiff
-                - winPercentDifferenceCoefficient * wpDiff) + 1;
+        double denominator =
+                fastExp(-modelConstant - kenpomScoreDifferenceCoefficient * kpDiff
+                        - winPercentDifferenceCoefficient * wpDiff) + 1;
         return 1. / denominator;
     }
 

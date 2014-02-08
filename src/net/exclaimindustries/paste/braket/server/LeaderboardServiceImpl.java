@@ -28,10 +28,11 @@ import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.BraketUser;
 import net.exclaimindustries.paste.braket.client.LeaderboardService;
 import net.exclaimindustries.paste.braket.client.UserRanking;
+import net.exclaimindustries.paste.braket.shared.NoCurrentTournamentException;
 import net.exclaimindustries.paste.braket.shared.SelectionInfo;
+import net.exclaimindustries.paste.braket.shared.TournamentNotStartedException;
+import net.exclaimindustries.paste.braket.shared.UserNotLoggedInException;
 
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.googlecode.objectify.Ref;
 
@@ -47,7 +48,9 @@ public class LeaderboardServiceImpl extends RemoteServiceServlet implements
      */
     private static final long serialVersionUID = 1L;
 
-    private Collection<SelectionInfo> getSelectionInfos(BraketTournament tournament) {
+    private Collection<SelectionInfo> getSelectionInfos(BraketTournament tournament)
+            throws NoCurrentTournamentException, UserNotLoggedInException,
+            TournamentNotStartedException {
         // FORCED CONSISTENCY CHECK (TRUST GAMES)
         // Collection<BraketGame> games =
         // OfyService.ofy().load().type(BraketGame.class)
@@ -126,19 +129,15 @@ public class LeaderboardServiceImpl extends RemoteServiceServlet implements
      * ()
      */
     @Override
-    public Collection<SelectionInfo> getLeaderboard() {
+    public Collection<SelectionInfo> getLeaderboard()
+            throws NoCurrentTournamentException, UserNotLoggedInException,
+            TournamentNotStartedException {
 
-        UserService us = UserServiceFactory.getUserService();
-        if (!us.isUserLoggedIn()) {
-            throw new SecurityException(
-                    "you need to be logged in to use this feature");
-        }
+        UserServiceHelper.assertLoggedIn();
+        TournamentServiceHelper.assertStarted();
 
         Ref<BraketTournament> tournamentRef =
                 CurrentTournament.getCurrentTournament();
-        if (tournamentRef == null) {
-            throw new NullPointerException("no current tournament defined");
-        }
 
         BraketTournament tournament = tournamentRef.get();
 
@@ -146,19 +145,14 @@ public class LeaderboardServiceImpl extends RemoteServiceServlet implements
     }
 
     @Override
-    public UserRanking getUserRanking(BraketUser user) {
+    public UserRanking getUserRanking(BraketUser user)
+            throws NoCurrentTournamentException, UserNotLoggedInException,
+            TournamentNotStartedException {
 
-        UserService us = UserServiceFactory.getUserService();
-        if (!us.isUserLoggedIn()) {
-            throw new SecurityException(
-                    "you need to be logged in to use this feature");
-        }
+        UserServiceHelper.assertLoggedIn();
 
         Ref<BraketTournament> tournamentRef =
                 CurrentTournament.getCurrentTournament();
-        if (tournamentRef == null) {
-            throw new NullPointerException("no current tournament defined");
-        }
 
         BraketTournament tournament = tournamentRef.get();
 

@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.exclaimindustries.paste.braket.client.BraketUser;
+import net.exclaimindustries.paste.braket.client.HSLColor;
 import net.exclaimindustries.paste.braket.client.LeaderboardService;
 import net.exclaimindustries.paste.braket.client.LeaderboardServiceAsync;
 import net.exclaimindustries.paste.braket.client.UserRanking;
@@ -64,6 +65,7 @@ public class UserStatusPanel extends Composite {
 
     private AsyncCallback<UserRanking> rankingCallback =
             new AsyncCallback<UserRanking>() {
+
                 @Override
                 public void onFailure(Throwable caught) {
                     logger.log(
@@ -72,6 +74,10 @@ public class UserStatusPanel extends Composite {
                                     + caught.getLocalizedMessage());
                     clearRank();
                     pointsField.setText("(an error occured while getting points!)");
+                    HighlightAnimation animation =
+                            new HighlightAnimation(pointsField.getElement(),
+                                    HSLColor.RED);
+                    animation.highlight(1000);
                     // TODO Do something else?
                 }
 

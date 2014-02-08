@@ -18,29 +18,28 @@
 package net.exclaimindustries.paste.braket.shared;
 
 /**
- * This exception notifies the recipient that a given tournament doesn't exist
- * in the object store.
+ * An exception that tells the recipient that the tournament has not yet
+ * started.
  * 
  * @author paste
  * 
  */
-public class TounamentUndefinedException extends Exception {
+public class TournamentNotStartedException extends Exception {
 
     private static final long serialVersionUID = 1L;
 
-    public TounamentUndefinedException() {
-        super();
+    public TournamentNotStartedException() {
     }
 
-    public TounamentUndefinedException(String message) {
+    public TournamentNotStartedException(String message) {
         super(message);
     }
 
-    public TounamentUndefinedException(Throwable cause) {
+    public TournamentNotStartedException(Throwable cause) {
         super(cause);
     }
 
-    public TounamentUndefinedException(String message, Throwable cause) {
+    public TournamentNotStartedException(String message, Throwable cause) {
         super(message, cause);
     }
 

@@ -21,10 +21,13 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.logging.Logger;
 
-import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.ExpectedValueService;
 import net.exclaimindustries.paste.braket.server.backends.ExpectOMatic;
 import net.exclaimindustries.paste.braket.server.backends.ExpectoValues;
+import net.exclaimindustries.paste.braket.shared.NoCurrentTournamentException;
+import net.exclaimindustries.paste.braket.shared.TournamentNotStartedException;
+import net.exclaimindustries.paste.braket.shared.UserNotAdminException;
+import net.exclaimindustries.paste.braket.shared.UserNotLoggedInException;
 
 import com.google.appengine.api.backends.BackendServiceFactory;
 import com.google.appengine.api.taskqueue.QueueFactory;
@@ -57,28 +60,15 @@ public class ExpectedValueServiceImpl extends RemoteServiceServlet implements
      * getExpectedValues()
      */
     @Override
-    public Map<String, Double> getExpectedValues() {
+    public Map<String, Double> getExpectedValues()
+            throws NoCurrentTournamentException, UserNotLoggedInException,
+            TournamentNotStartedException {
 
-        // Get the current tournament
-        Ref<BraketTournament> tournRef =
-                CurrentTournament.getCurrentTournament();
-        if (tournRef == null) {
-            throw new NullPointerException("no current tournament");
-        }
+        UserServiceHelper.assertLoggedIn();
 
-        UserService us = UserServiceFactory.getUserService();
+        TournamentServiceHelper.assertStarted();
 
-        if (!us.isUserLoggedIn()) {
-            throw new SecurityException(
-                    "this feature is only for signed-in users");
-        }
-
-        if (tournRef.get().isScheduled() && !us.isUserAdmin()) {
-            throw new SecurityException("tournament has not started yet");
-        }
-
-        Ref<ExpectoValues> current =
-                CurrentExpectOMatic.getCurrentExpectOMatic();
+        Ref<ExpectoValues> current = CurrentExpectOMatic.getCurrentExpectOMatic();
         if (current == null) {
             // nothing yet!
             return null;
@@ -94,33 +84,23 @@ public class ExpectedValueServiceImpl extends RemoteServiceServlet implements
      * getConditionalExpectedValue(java.lang.Long, int)
      */
     @Override
-    public Map<Long, Double> getConditionalExpectedValues(String userId) {
+    public Map<Long, Double> getConditionalExpectedValues(String userId)
+            throws NoCurrentTournamentException, UserNotLoggedInException,
+            TournamentNotStartedException, UserNotAdminException {
 
-        // Get the current tournament
-        Ref<BraketTournament> tournRef =
-                CurrentTournament.getCurrentTournament();
-        if (tournRef == null) {
-            throw new NullPointerException("no current tournament");
-        }
+        UserServiceHelper.assertLoggedIn();
 
+        TournamentServiceHelper.assertStarted();
+
+        // We can do the conditional expected values for other users, but only
+        // if this user is an admin
         UserService us = UserServiceFactory.getUserService();
 
-        if (!us.isUserLoggedIn()) {
-            throw new SecurityException(
-                    "this feature is only for logged-in users");
+        if (!us.getCurrentUser().getUserId().equals(userId)) {
+            UserServiceHelper.assertAdmin();
         }
 
-        if (tournRef.get().isScheduled() && !us.isUserAdmin()) {
-            throw new SecurityException("tournament has not started yet");
-        }
-
-        if (!us.getCurrentUser().getUserId().equals(userId)
-                && !us.isUserAdmin()) {
-            throw new SecurityException("admin privileges required");
-        }
-
-        Ref<ExpectoValues> current =
-                CurrentExpectOMatic.getCurrentExpectOMatic();
+        Ref<ExpectoValues> current = CurrentExpectOMatic.getCurrentExpectOMatic();
         if (current == null) {
             // nothing yet!
             return null;
@@ -137,25 +117,13 @@ public class ExpectedValueServiceImpl extends RemoteServiceServlet implements
      * getExpectedValueHistories()
      */
     @Override
-    public Map<String, SortedMap<Date, Double>> getExpectedValueHistories() {
+    public Map<String, SortedMap<Date, Double>> getExpectedValueHistories()
+            throws UserNotLoggedInException, NoCurrentTournamentException,
+            TournamentNotStartedException {
 
-        // Get the current tournament
-        Ref<BraketTournament> tournRef =
-                CurrentTournament.getCurrentTournament();
-        if (tournRef == null) {
-            throw new NullPointerException("no current tournament");
-        }
+        TournamentServiceHelper.assertStarted();
 
-        UserService us = UserServiceFactory.getUserService();
-
-        if (!us.isUserLoggedIn()) {
-            throw new SecurityException(
-                    "this feature is only for logged-in users");
-        }
-
-        if (tournRef.get().isScheduled() && !us.isUserAdmin()) {
-            throw new SecurityException("tournament has not started yet");
-        }
+        UserServiceHelper.assertLoggedIn();
 
         // FIXME Can't do this yet...
         // Need to be able to select all expectos, which requires an index
@@ -170,20 +138,11 @@ public class ExpectedValueServiceImpl extends RemoteServiceServlet implements
      * startExpectOMatic()
      */
     @Override
-    public void startExpectOMatic() {
-        // Get the current tournament
-        Ref<BraketTournament> tournRef =
-                CurrentTournament.getCurrentTournament();
-        if (tournRef == null) {
-            throw new NullPointerException("no current tournament");
-        }
+    public void startExpectOMatic() throws UserNotLoggedInException,
+            UserNotAdminException, NoCurrentTournamentException {
 
-        UserService us = UserServiceFactory.getUserService();
-
-        if (!us.isUserLoggedIn() || !us.isUserAdmin()) {
-            throw new SecurityException(
-                    "this feature is only for administrators");
-        }
+        TournamentServiceHelper.assertCurrent();
+        UserServiceHelper.assertAdmin();
 
         // Issue the request via queue
         LOG.info("Telling Expect-o-Matic to start");

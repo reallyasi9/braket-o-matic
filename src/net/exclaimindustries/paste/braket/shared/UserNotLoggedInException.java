@@ -18,29 +18,28 @@
 package net.exclaimindustries.paste.braket.shared;
 
 /**
- * This exception notifies the recipient that a given tournament doesn't exist
- * in the object store.
+ * Informs the recipient that a function cannot be performed because the user is
+ * not logged in.
  * 
  * @author paste
  * 
  */
-public class TounamentUndefinedException extends Exception {
+public class UserNotLoggedInException extends Exception {
 
     private static final long serialVersionUID = 1L;
 
-    public TounamentUndefinedException() {
-        super();
+    public UserNotLoggedInException() {
     }
 
-    public TounamentUndefinedException(String message) {
+    public UserNotLoggedInException(String message) {
         super(message);
     }
 
-    public TounamentUndefinedException(Throwable cause) {
+    public UserNotLoggedInException(Throwable cause) {
         super(cause);
     }
 
-    public TounamentUndefinedException(String message, Throwable cause) {
+    public UserNotLoggedInException(String message, Throwable cause) {
         super(message, cause);
     }
 

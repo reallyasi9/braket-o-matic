@@ -18,29 +18,28 @@
 package net.exclaimindustries.paste.braket.shared;
 
 /**
- * This exception notifies the recipient that a given tournament doesn't exist
- * in the object store.
+ * Informs the recipient that an action cannot be performed because the user is
+ * logged in, but does not have administrative privileges.
  * 
  * @author paste
  * 
  */
-public class TounamentUndefinedException extends Exception {
+public class UserNotAdminException extends Exception {
 
     private static final long serialVersionUID = 1L;
 
-    public TounamentUndefinedException() {
-        super();
+    public UserNotAdminException() {
     }
 
-    public TounamentUndefinedException(String message) {
+    public UserNotAdminException(String message) {
         super(message);
     }
 
-    public TounamentUndefinedException(Throwable cause) {
+    public UserNotAdminException(Throwable cause) {
         super(cause);
     }
 
-    public TounamentUndefinedException(String message, Throwable cause) {
+    public UserNotAdminException(String message, Throwable cause) {
         super(message, cause);
     }
 

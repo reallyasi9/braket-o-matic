@@ -20,6 +20,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.exclaimindustries.paste.braket.shared.NoCurrentTournamentException;
+import net.exclaimindustries.paste.braket.shared.UserNotAdminException;
+import net.exclaimindustries.paste.braket.shared.UserNotLoggedInException;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -67,8 +71,10 @@ public interface TournamentService extends RemoteService {
      * @return The currently running tournament, including all the games and
      *         teams. If no such tournament exists, this still returns, but the
      *         getTournament() method of the returned object will return null.
+     * @throws NoCurrentTournamentException
      */
-    public TournamentCollection getCurrentTournament();
+    public TournamentCollection getCurrentTournament()
+            throws NoCurrentTournamentException;
 
     /**
      * Sets the current tournament to the one given.
@@ -79,21 +85,27 @@ public interface TournamentService extends RemoteService {
      *            not (the Id is null), then the current tournament will no
      *            longer be associated with a valid tournament, and any RPC call
      *            to get the current tournament will return null.
+     * @throws UserNotAdminException
+     * @throws UserNotLoggedInException
      * 
      * @throws SecurityException
      *             If the user is not logged in as an administrator.
      */
-    public void setCurrentTournament(BraketTournament tournament);
+    public void setCurrentTournament(BraketTournament tournament)
+            throws UserNotLoggedInException, UserNotAdminException;
 
     /**
      * Fetches all the tournaments from the datastore.
      * 
      * @return A collection of all the tournaments in the datastore.
+     * @throws UserNotAdminException
+     * @throws UserNotLoggedInException
      * 
      * @throws SecurityException
      *             If the user is not logged in as an administrator.
      */
-    public Collection<BraketTournament> getTournaments();
+    public Collection<BraketTournament> getTournaments()
+            throws UserNotLoggedInException, UserNotAdminException;
 
     /**
      * Saves or updates the given collection of tournaments in the datastore.
@@ -105,11 +117,14 @@ public interface TournamentService extends RemoteService {
      * 
      * @return A map of the stored BraketTournaments, keyed by their (possibly
      *         new) datastore keys.
+     * @throws UserNotAdminException
+     * @throws UserNotLoggedInException
      * 
      * @throws SecurityException
      *             If the user is not logged in as an administrator.
      */
-    public void storeTournaments(Iterable<BraketTournament> tournaments);
+    public void storeTournaments(Iterable<BraketTournament> tournaments)
+            throws UserNotLoggedInException, UserNotAdminException;
 
     /**
      * Saves or updates a particular tournament in the datastore.
@@ -120,11 +135,14 @@ public interface TournamentService extends RemoteService {
      *            found, this method will update the tournament.
      * 
      * @return The (possibly new) datastore key for the stored tournament.
+     * @throws UserNotAdminException
+     * @throws UserNotLoggedInException
      * 
      * @throws SecurityException
      *             If the user is not logged in as an administrator.
      */
-    public Long storeTournament(BraketTournament tournament);
+    public Long storeTournament(BraketTournament tournament)
+            throws UserNotLoggedInException, UserNotAdminException;
 
     /**
      * Deletes a set of tournaments from the datastore.
@@ -132,11 +150,14 @@ public interface TournamentService extends RemoteService {
      * @param tournaments
      *            The tournaments to delete. Tournaments not found in the
      *            datastore will be ignored.
+     * @throws UserNotAdminException
+     * @throws UserNotLoggedInException
      * 
      * @throws SecurityException
      *             If the user is not logged in as an administrator.
      */
-    public void deleteTournaments(Iterable<BraketTournament> tournaments);
+    public void deleteTournaments(Iterable<BraketTournament> tournaments)
+            throws UserNotLoggedInException, UserNotAdminException;
 
     /**
      * Deletes a particular tournament from the datastore.
@@ -144,11 +165,14 @@ public interface TournamentService extends RemoteService {
      * @param tournament
      *            The tournament to delete. Will be ignored if it is not already
      *            in the datastore.
+     * @throws UserNotAdminException
+     * @throws UserNotLoggedInException
      * 
      * @throws SecurityException
      *             If the user is not logged in as an administrator.
      */
-    public void deleteTournament(BraketTournament tournament);
+    public void deleteTournament(BraketTournament tournament)
+            throws UserNotLoggedInException, UserNotAdminException;
 
     /**
      * Add a team to the current tournament. Will save the team to the datastore
@@ -157,6 +181,9 @@ public interface TournamentService extends RemoteService {
      * @param team
      *            The team to add to the datastore and the current tournament.
      * @return The Id of the (possibly new) team.
+     * @throws NoCurrentTournamentException
+     * @throws UserNotAdminException
+     * @throws UserNotLoggedInException
      * 
      * @throws SecurityException
      *             If the user is not logged in as an administrator.
@@ -165,7 +192,8 @@ public interface TournamentService extends RemoteService {
      * @throws IllegalArgumentException
      *             If the team's index is nonsensical.
      */
-    public Long addTeam(BraketTeam team);
+    public Long addTeam(BraketTeam team) throws NoCurrentTournamentException,
+            UserNotLoggedInException, UserNotAdminException;
 
     /**
      * Add a team to the given tournament. Will save the team to the datastore
@@ -176,13 +204,16 @@ public interface TournamentService extends RemoteService {
      * @param tournament
      *            The tournament to which the team should belong.
      * @return The Id of the (possibly new) team.
+     * @throws UserNotAdminException
+     * @throws UserNotLoggedInException
      * 
      * @throws SecurityException
      *             If the user is not logged in as an administrator.
      * @throws IllegalArgumentException
      *             If the team's index is nonsensical.
      */
-    public Long addTeam(BraketTeam team, BraketTournament tournament);
+    public Long addTeam(BraketTeam team, BraketTournament tournament)
+            throws UserNotLoggedInException, UserNotAdminException;
 
     /**
      * Add multiple teams to the current tournament. Will save the teams to the
@@ -190,6 +221,9 @@ public interface TournamentService extends RemoteService {
      * 
      * @param teams
      *            The teams to add to the datastore and the current tournament.
+     * @throws NoCurrentTournamentException
+     * @throws UserNotAdminException
+     * @throws UserNotLoggedInException
      * 
      * @throws SecurityException
      *             If the user is not logged in as an administrator.
@@ -198,7 +232,9 @@ public interface TournamentService extends RemoteService {
      * @throws IllegalArgumentException
      *             If any of the teams' index members are nonsensical.
      */
-    public void addTeams(Iterable<BraketTeam> teams);
+    public void addTeams(Iterable<BraketTeam> teams)
+            throws NoCurrentTournamentException, UserNotLoggedInException,
+            UserNotAdminException;
 
     /**
      * Add multiple teams to the given tournament. Will save the teams to the
@@ -208,14 +244,16 @@ public interface TournamentService extends RemoteService {
      *            The teams to add to the datastore and the given tournament.
      * @param tournament
      *            The tournament to which the teams should belong.
+     * @throws UserNotAdminException
+     * @throws UserNotLoggedInException
      * 
      * @throws SecurityException
      *             If the user is not logged in as an administrator.
      * @throws IllegalArgumentException
      *             If any of the teams' index members are nonsensical.
      */
-    public void
-            addTeams(Iterable<BraketTeam> teams, BraketTournament tournament);
+    public void addTeams(Iterable<BraketTeam> teams, BraketTournament tournament)
+            throws UserNotLoggedInException, UserNotAdminException;
 
     /**
      * Add a game to the current tournament. Will save the game to the datastore
@@ -224,6 +262,9 @@ public interface TournamentService extends RemoteService {
      * @param game
      *            The game to add to the datastore and the current tournament.
      * @return The Id of the (possibly new) game.
+     * @throws NoCurrentTournamentException
+     * @throws UserNotAdminException
+     * @throws UserNotLoggedInException
      * 
      * @throws SecurityException
      *             If the user is not logged in as an administrator.
@@ -232,7 +273,8 @@ public interface TournamentService extends RemoteService {
      * @throws IllegalArgumentException
      *             If the game's index is nonsensical.
      */
-    public Long addGame(BraketGame game);
+    public Long addGame(BraketGame game) throws NoCurrentTournamentException,
+            UserNotLoggedInException, UserNotAdminException;
 
     /**
      * Add a game to the given tournament. Will save the game to the datastore
@@ -243,13 +285,16 @@ public interface TournamentService extends RemoteService {
      * @param tournament
      *            The tournament to which the game should belong.
      * @return The Id of the (possibly new) game.
+     * @throws UserNotAdminException
+     * @throws UserNotLoggedInException
      * 
      * @throws SecurityException
      *             If the user is not logged in as an administrator.
      * @throws IllegalArgumentException
      *             If the game's index is nonsensical.
      */
-    public Long addGame(BraketGame game, BraketTournament tournament);
+    public Long addGame(BraketGame game, BraketTournament tournament)
+            throws UserNotLoggedInException, UserNotAdminException;
 
     /**
      * Add multiple games to the current tournament. Will save the games to the
@@ -257,6 +302,9 @@ public interface TournamentService extends RemoteService {
      * 
      * @param games
      *            The games to add to the datastore and the current tournament.
+     * @throws UserNotAdminException
+     * @throws UserNotLoggedInException
+     * @throws NoCurrentTournamentException
      * 
      * @throws SecurityException
      *             If the user is not logged in as an administrator.
@@ -265,7 +313,9 @@ public interface TournamentService extends RemoteService {
      * @throws IllegalArgumentException
      *             If any of the games' index members are nonsensical.
      */
-    public void addGames(Iterable<BraketGame> games);
+    public void addGames(Iterable<BraketGame> games)
+            throws UserNotLoggedInException, UserNotAdminException,
+            NoCurrentTournamentException;
 
     /**
      * Add multiple games to the given tournament. Will save the games to the
@@ -275,34 +325,45 @@ public interface TournamentService extends RemoteService {
      *            The games to add to the datastore and the given tournament.
      * @param tournament
      *            The tournament to which the games should belong.
+     * @throws UserNotAdminException
+     * @throws UserNotLoggedInException
      * 
      * @throws SecurityException
      *             If the user is not logged in as an administrator.
      * @throws IllegalArgumentException
      *             If any of the games' index members are nonsensical.
      */
-    public void
-            addGames(Iterable<BraketGame> games, BraketTournament tournament);
+    public void addGames(Iterable<BraketGame> games, BraketTournament tournament)
+            throws UserNotLoggedInException, UserNotAdminException;
 
     /**
      * Set the rules for the current tournament.
      * 
      * @param rules
      *            The rules to set.
+     * @throws UserNotAdminException
+     * @throws UserNotLoggedInException
+     * @throws NoCurrentTournamentException
      * 
      * @throws SecurityException
      *             If the user is not logged in as an administrator.
      */
-    public void setRules(String rules);
+    public void setRules(String rules) throws UserNotLoggedInException,
+            UserNotAdminException, NoCurrentTournamentException;
 
     /**
      * Update a given game and possibly propagate that game's winner forward.
      * 
      * @param game
      *            The game to update.
+     * @throws NoCurrentTournamentException
+     * @throws UserNotAdminException
+     * @throws UserNotLoggedInException
      * 
      * @throws SecurityException
      *             If the user is not logged in as an administrator.
      */
-    public void updateAndPropagateGame(BraketGame game);
+    public void updateAndPropagateGame(BraketGame game)
+            throws NoCurrentTournamentException, UserNotLoggedInException,
+            UserNotAdminException;
 }

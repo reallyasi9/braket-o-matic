@@ -26,9 +26,10 @@ import net.exclaimindustries.paste.braket.client.BraketGame;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.TournamentService;
+import net.exclaimindustries.paste.braket.shared.NoCurrentTournamentException;
+import net.exclaimindustries.paste.braket.shared.UserNotAdminException;
+import net.exclaimindustries.paste.braket.shared.UserNotLoggedInException;
 
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
@@ -42,8 +43,8 @@ import com.googlecode.objectify.Work;
 public class TournamentServiceImpl extends RemoteServiceServlet implements
         TournamentService {
 
-//    private static Logger LOG = Logger.getLogger(TournamentServiceImpl.class
-//            .toString());
+    // private static Logger LOG = Logger.getLogger(TournamentServiceImpl.class
+    // .toString());
 
     /**
      * Generated
@@ -57,25 +58,25 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
      * getCurrentTournament()
      */
     @Override
-    public TournamentCollection getCurrentTournament() {
-        Ref<BraketTournament> tournament =
-                CurrentTournament.getCurrentTournament();
-        if (tournament == null) {
-            return new TournamentCollection(null, new ArrayList<BraketGame>(),
-                    new ArrayList<BraketTeam>());
-        }
+    public TournamentCollection getCurrentTournament()
+            throws NoCurrentTournamentException {
+
+        TournamentServiceHelper.assertCurrent();
+
+        Ref<BraketTournament> tournament = CurrentTournament.getCurrentTournament();
+
         BraketTournament t = tournament.get();
 
         // Get games
         List<BraketGame> games =
                 new ArrayList<BraketGame>(OfyService.ofy().load()
-                        .type(BraketGame.class).parent(tournament)
-                        .ids(t.getGames()).values());
+                        .type(BraketGame.class).parent(tournament).ids(t.getGames())
+                        .values());
 
         List<BraketTeam> teams =
                 new ArrayList<BraketTeam>(OfyService.ofy().load()
-                        .type(BraketTeam.class).parent(tournament)
-                        .ids(t.getTeams()).values());
+                        .type(BraketTeam.class).parent(tournament).ids(t.getTeams())
+                        .values());
 
         return new TournamentCollection(t, games, teams);
     }
@@ -88,11 +89,10 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
      * ()
      */
     @Override
-    public Collection<BraketTournament> getTournaments() {
-        UserService us = UserServiceFactory.getUserService();
-        if (!us.isUserLoggedIn() || !us.isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
+    public Collection<BraketTournament> getTournaments()
+            throws UserNotLoggedInException, UserNotAdminException {
+
+        UserServiceHelper.assertAdmin();
 
         List<BraketTournament> tournamentList =
                 OfyService.ofy().load().type(BraketTournament.class).list();
@@ -108,13 +108,11 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
      * (java.util.Collection)
      */
     @Override
-    public void storeTournaments(Iterable<BraketTournament> tournaments) {
-        UserService us = UserServiceFactory.getUserService();
+    public void storeTournaments(Iterable<BraketTournament> tournaments)
+            throws UserNotLoggedInException, UserNotAdminException {
         // TODO get rid of this.
 
-        if (!us.isUserLoggedIn() || !us.isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
+        UserServiceHelper.assertAdmin();
         OfyService.ofy().save().entities(tournaments).now();
     }
 
@@ -126,11 +124,9 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
      * (net.exclaimindustries.paste.braket.client.BraketTournament)
      */
     @Override
-    public Long storeTournament(BraketTournament tournament) {
-        UserService us = UserServiceFactory.getUserService();
-        if (!us.isUserLoggedIn() || !us.isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
+    public Long storeTournament(BraketTournament tournament)
+            throws UserNotLoggedInException, UserNotAdminException {
+        UserServiceHelper.assertAdmin();
 
         // If this is a new tournament, make all the games to go with it.
         if (tournament.getId() == null) {
@@ -191,11 +187,9 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
      * (java.util.Collection)
      */
     @Override
-    public void deleteTournaments(Iterable<BraketTournament> tournaments) {
-        UserService us = UserServiceFactory.getUserService();
-        if (!us.isUserLoggedIn() || !us.isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
+    public void deleteTournaments(Iterable<BraketTournament> tournaments)
+            throws UserNotLoggedInException, UserNotAdminException {
+        UserServiceHelper.assertAdmin();
         OfyService.ofy().delete().entities(tournaments);
     }
 
@@ -207,11 +201,9 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
      * (net.exclaimindustries.paste.braket.client.BraketTournament)
      */
     @Override
-    public void deleteTournament(BraketTournament tournament) {
-        UserService us = UserServiceFactory.getUserService();
-        if (!us.isUserLoggedIn() || !us.isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
+    public void deleteTournament(BraketTournament tournament)
+            throws UserNotLoggedInException, UserNotAdminException {
+        UserServiceHelper.assertAdmin();
         OfyService.ofy().delete().entity(tournament);
     }
 
@@ -223,11 +215,9 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
      * (net.exclaimindustries.paste.braket.client.BraketTournament)
      */
     @Override
-    public void setCurrentTournament(BraketTournament tournament) {
-        UserService us = UserServiceFactory.getUserService();
-        if (!us.isUserLoggedIn() || !us.isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
+    public void setCurrentTournament(BraketTournament tournament)
+            throws UserNotLoggedInException, UserNotAdminException {
+        UserServiceHelper.assertAdmin();
 
         Key<CurrentTournament> key = Key.create(CurrentTournament.class, 1);
         CurrentTournament current = OfyService.ofy().load().key(key).now();
@@ -246,14 +236,12 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
      * .exclaimindustries.paste.braket.client.BraketTeam)
      */
     @Override
-    public Long addTeam(final BraketTeam team) {
+    public Long addTeam(final BraketTeam team) throws NoCurrentTournamentException,
+            UserNotLoggedInException, UserNotAdminException {
 
         // FIXME Consolidate with addTeam(BraketTeam, BraketTournament), and
         // probably addTeams(*).
-        UserService us = UserServiceFactory.getUserService();
-        if (!us.isUserLoggedIn() || !us.isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
+        UserServiceHelper.assertAdmin();
 
         if (team.getIndex() < 0) {
             throw new IllegalArgumentException(
@@ -307,12 +295,9 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
      * net.exclaimindustries.paste.braket.client.BraketTournament)
      */
     @Override
-    public Long
-            addTeam(final BraketTeam team, final BraketTournament tournament) {
-        UserService us = UserServiceFactory.getUserService();
-        if (!us.isUserLoggedIn() || !us.isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
+    public Long addTeam(final BraketTeam team, final BraketTournament tournament)
+            throws UserNotLoggedInException, UserNotAdminException {
+        UserServiceHelper.assertAdmin();
 
         if (team.getIndex() < 0) {
             throw new IllegalArgumentException(
@@ -359,11 +344,10 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
      * java.lang.Iterable)
      */
     @Override
-    public void addTeams(final Iterable<BraketTeam> teams) {
-        UserService us = UserServiceFactory.getUserService();
-        if (!us.isUserLoggedIn() || !us.isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
+    public void addTeams(final Iterable<BraketTeam> teams)
+            throws NoCurrentTournamentException, UserNotLoggedInException,
+            UserNotAdminException {
+        UserServiceHelper.assertAdmin();
 
         final Ref<BraketTournament> currentRef =
                 CurrentTournament.getCurrentTournament();
@@ -421,12 +405,10 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
      */
     @Override
     public void addTeams(final Iterable<BraketTeam> teams,
-            final BraketTournament tournament) {
+            final BraketTournament tournament) throws UserNotLoggedInException,
+            UserNotAdminException {
 
-        UserService us = UserServiceFactory.getUserService();
-        if (!us.isUserLoggedIn() || !us.isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
+        UserServiceHelper.assertAdmin();
 
         for (BraketTeam team : teams) {
             if (team.getIndex() < 0) {
@@ -475,11 +457,9 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
      * .exclaimindustries.paste.braket.client.BraketGame)
      */
     @Override
-    public Long addGame(final BraketGame game) {
-        UserService us = UserServiceFactory.getUserService();
-        if (!us.isUserLoggedIn() || !us.isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
+    public Long addGame(final BraketGame game) throws NoCurrentTournamentException,
+            UserNotLoggedInException, UserNotAdminException {
+        UserServiceHelper.assertAdmin();
 
         if (game.getIndex() < 0) {
             throw new IllegalArgumentException(
@@ -519,12 +499,9 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
      * net.exclaimindustries.paste.braket.client.BraketTournament)
      */
     @Override
-    public Long
-            addGame(final BraketGame game, final BraketTournament tournament) {
-        UserService us = UserServiceFactory.getUserService();
-        if (!us.isUserLoggedIn() || !us.isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
+    public Long addGame(final BraketGame game, final BraketTournament tournament)
+            throws UserNotLoggedInException, UserNotAdminException {
+        UserServiceHelper.assertAdmin();
 
         if (game.getIndex() < 0) {
             throw new IllegalArgumentException(
@@ -557,12 +534,11 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
      * java.lang.Iterable)
      */
     @Override
-    public void addGames(final Iterable<BraketGame> games) {
+    public void addGames(final Iterable<BraketGame> games)
+            throws UserNotLoggedInException, UserNotAdminException,
+            NoCurrentTournamentException {
 
-        UserService us = UserServiceFactory.getUserService();
-        if (!us.isUserLoggedIn() || !us.isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
+        UserServiceHelper.assertAdmin();
 
         final Ref<BraketTournament> currentRef =
                 CurrentTournament.getCurrentTournament();
@@ -607,11 +583,9 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
      */
     @Override
     public void addGames(final Iterable<BraketGame> games,
-            final BraketTournament tournament) {
-        UserService us = UserServiceFactory.getUserService();
-        if (!us.isUserLoggedIn() || !us.isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
+            final BraketTournament tournament) throws UserNotLoggedInException,
+            UserNotAdminException {
+        UserServiceHelper.assertAdmin();
 
         for (BraketGame game : games) {
             if (game.getIndex() < 0) {
@@ -647,14 +621,11 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
      * java.lang.String)
      */
     @Override
-    public void setRules(String rules) {
-        UserService us = UserServiceFactory.getUserService();
-        if (!us.isUserLoggedIn() || !us.isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
+    public void setRules(String rules) throws UserNotLoggedInException,
+            UserNotAdminException, NoCurrentTournamentException {
+        UserServiceHelper.assertAdmin();
 
-        Ref<BraketTournament> currentRef =
-                CurrentTournament.getCurrentTournament();
+        Ref<BraketTournament> currentRef = CurrentTournament.getCurrentTournament();
         if (currentRef == null) {
             throw new NullPointerException("current tournament is not set");
         }
@@ -672,11 +643,10 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
      * (net.exclaimindustries.paste.braket.client.BraketGame)
      */
     @Override
-    public void updateAndPropagateGame(final BraketGame game) {
-        UserService us = UserServiceFactory.getUserService();
-        if (!us.isUserLoggedIn() || !us.isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
+    public void updateAndPropagateGame(final BraketGame game)
+            throws NoCurrentTournamentException, UserNotLoggedInException,
+            UserNotAdminException {
+        UserServiceHelper.assertAdmin();
 
         if (game.getIndex() < 0) {
             throw new IllegalArgumentException(
@@ -701,35 +671,35 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
         // FORCE OVERRIDE
         // FORCE OVERRIDE
         // FORCE OVERRIDE
-//        List<Integer> list =
-//                Arrays.asList(17, 18, 19, 20, 22, 24, 25, 26, 28, 29, 30, 33,
-//                        40, 41, 42, 44, 45, 51, 54, 56, 57);
-//        BigInteger forceOverride = BigInteger.ZERO;
-//        BigInteger forceMask = BigInteger.ZERO;
-//        BigInteger maskyMask = BigInteger.ZERO;
-//        for (Integer i : list) {
-//            forceOverride = forceOverride.setBit(i);
-//        }
-//        for (int i = 62; i >= 15; --i) {
-//            forceMask = forceMask.setBit(i);
-//        }
-//        for (int i = 0; i < 63; ++i) {
-//            maskyMask = maskyMask.setBit(i);
-//        }
-//        LOG.warning("OVERRIDE FORCING " + forceOverride.toString(2) + " and "
-//                + forceMask.toString(2));
-//        tournament.setGameWinners(forceOverride);
-//
-//        tournament.setGameMask(maskyMask);
-//        tournament.setCompletionMask(forceMask);
-//        OfyService.ofy().save().entity(tournament).now();
-//        LOG.warning("OVERRIDE NOW     "
-//                + tournament.getGameWinners().toString(2) + " and "
-//                + tournament.getGameMask().toString(2));
-//
-//        // FORCE GAME UPDATE
+        // List<Integer> list =
+        // Arrays.asList(17, 18, 19, 20, 22, 24, 25, 26, 28, 29, 30, 33,
+        // 40, 41, 42, 44, 45, 51, 54, 56, 57);
+        // BigInteger forceOverride = BigInteger.ZERO;
+        // BigInteger forceMask = BigInteger.ZERO;
+        // BigInteger maskyMask = BigInteger.ZERO;
+        // for (Integer i : list) {
+        // forceOverride = forceOverride.setBit(i);
+        // }
+        // for (int i = 62; i >= 15; --i) {
+        // forceMask = forceMask.setBit(i);
+        // }
+        // for (int i = 0; i < 63; ++i) {
+        // maskyMask = maskyMask.setBit(i);
+        // }
+        // LOG.warning("OVERRIDE FORCING " + forceOverride.toString(2) + " and "
+        // + forceMask.toString(2));
+        // tournament.setGameWinners(forceOverride);
+        //
+        // tournament.setGameMask(maskyMask);
+        // tournament.setCompletionMask(forceMask);
+        // OfyService.ofy().save().entity(tournament).now();
+        // LOG.warning("OVERRIDE NOW     "
+        // + tournament.getGameWinners().toString(2) + " and "
+        // + tournament.getGameMask().toString(2));
+        //
+        // // FORCE GAME UPDATE
 
-//        return;
+        // return;
 
         OfyService.ofy().transact(new VoidWork() {
 
