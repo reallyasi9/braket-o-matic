@@ -4,7 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.exclaimindustries.paste.braket.client.BraketUser;
-import net.exclaimindustries.paste.braket.client.HSLColor;
+import net.exclaimindustries.paste.braket.client.HSLAColor;
 import net.exclaimindustries.paste.braket.client.LeaderboardService;
 import net.exclaimindustries.paste.braket.client.LeaderboardServiceAsync;
 import net.exclaimindustries.paste.braket.client.UserRanking;
@@ -76,7 +76,7 @@ public class UserStatusPanel extends Composite {
                     pointsField.setText("(an error occured while getting points!)");
                     HighlightAnimation animation =
                             new HighlightAnimation(pointsField.getElement(),
-                                    HSLColor.RED);
+                                    HSLAColor.PINK);
                     animation.highlight(1000);
                     // TODO Do something else?
                 }

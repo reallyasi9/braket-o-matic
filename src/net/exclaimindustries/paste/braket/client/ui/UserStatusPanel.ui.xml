@@ -12,8 +12,8 @@
 			margin-top: 6pt;
 			height: 60pt;
 			width: 300pt;
-			/* Fade in */
-			opacity: 0;
+			/* Fade in? */
+			/*opacity: 0;*/
 		}
 		
 		.face {

@@ -19,7 +19,7 @@ package net.exclaimindustries.paste.braket.client.ui;
 import java.util.LinkedList;
 
 import net.exclaimindustries.paste.braket.client.BraketTeam;
-import net.exclaimindustries.paste.braket.client.RGBColor;
+import net.exclaimindustries.paste.braket.client.RGBAColor;
 import net.exclaimindustries.paste.braket.client.TeamName;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
 
@@ -178,7 +178,7 @@ public class DownloadTeamsDialog extends DialogBox {
             downloadedTeam.setIndex(Integer.valueOf(index.getText()));
             downloadedTeam.setWinPercentage(Double.valueOf(wpct.getText()));
             downloadedTeam.setKenpomScore(Double.valueOf(kenpom.getText()));
-            downloadedTeam.setColor(new RGBColor(Integer.valueOf(color.getText(), 16)));
+            downloadedTeam.setColor(new RGBAColor(Integer.valueOf(color.getText(), 16)));
             color.setText(downloadedTeam.getColor().getHexValue());
         } catch (Throwable caught) {
             // BraketEntryPoint.displayException(caught);

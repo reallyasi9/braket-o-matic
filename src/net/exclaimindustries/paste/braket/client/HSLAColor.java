@@ -9,20 +9,21 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * @author paste
  * 
  */
-public final class HSLColor implements IsSerializable {
-    public final static HSLColor WHITE = new HSLColor(0, 0, 1);
-    public final static HSLColor LIGHT_GRAY = new HSLColor(0, 0, .75);
-    public final static HSLColor GRAY = new HSLColor(0, 0, .5);
-    public final static HSLColor DARK_GRAY = new HSLColor(0, 0, .25);
-    public final static HSLColor BLACK = new HSLColor(0, 0, 0);
-    public final static HSLColor RED = new HSLColor(0, 1, .5);
-    public final static HSLColor PINK = new HSLColor(0, 1, .84);
-    public final static HSLColor ORANGE = new HSLColor(39, 1, .5);
-    public final static HSLColor YELLOW = new HSLColor(60, 1, .5);
-    public final static HSLColor GREEN = new HSLColor(120, 1, .5);
-    public final static HSLColor MAGENTA = new HSLColor(300, 1, .5);
-    public final static HSLColor CYAN = new HSLColor(180, 1, .5);
-    public final static HSLColor BLUE = new HSLColor(240, 1, .5);
+public final class HSLAColor implements IsSerializable {
+    public final static HSLAColor WHITE = new HSLAColor(0, 0, 1, 1);
+    public final static HSLAColor LIGHT_GRAY = new HSLAColor(0, 0, .75, 1);
+    public final static HSLAColor GRAY = new HSLAColor(0, 0, .5, 1);
+    public final static HSLAColor DARK_GRAY = new HSLAColor(0, 0, .25, 1);
+    public final static HSLAColor BLACK = new HSLAColor(0, 0, 0, 1);
+    public final static HSLAColor RED = new HSLAColor(0, 1, .5, 1);
+    public final static HSLAColor PINK = new HSLAColor(0, 1, .84, 1);
+    public final static HSLAColor ORANGE = new HSLAColor(39, 1, .5, 1);
+    public final static HSLAColor YELLOW = new HSLAColor(60, 1, .5, 1);
+    public final static HSLAColor GREEN = new HSLAColor(120, 1, .5, 1);
+    public final static HSLAColor MAGENTA = new HSLAColor(300, 1, .5, 1);
+    public final static HSLAColor CYAN = new HSLAColor(180, 1, .5, 1);
+    public final static HSLAColor BLUE = new HSLAColor(240, 1, .5, 1);
+    public final static HSLAColor HIGHLIGHTER_YELLOW = new HSLAColor(60, 1, .8, 1);
 
     /**
      * The hue [0,360)
@@ -40,6 +41,11 @@ public final class HSLColor implements IsSerializable {
     double lightness;
 
     /**
+     * The opacity [0,1]
+     */
+    double alpha;
+
+    /**
      * Constructor with HSL values.
      * 
      * @param h
@@ -49,20 +55,22 @@ public final class HSLColor implements IsSerializable {
      * @param l
      *            The lightness value, from 0 to 1.
      */
-    public HSLColor(double h, double s, double l) {
+    public HSLAColor(double h, double s, double l, double a) {
         hue = h % 360.;
-        saturation = (s < 0.) ? 0. : (s > 1) ? 1. : s;
-        lightness = (l < 0.) ? 0. : (l > 1) ? 1. : l;
+        saturation = (s < 0.) ? 0. : (s > 1.) ? 1. : s;
+        lightness = (l < 0.) ? 0. : (l > 1.) ? 1. : l;
+        alpha = (a < 0.) ? 0. : (a > 1.) ? 1. : a;
     }
 
     /**
      * Default constructor (defaults to black)
      */
-    public HSLColor() {
+    public HSLAColor() {
         super();
         hue = 0;
         saturation = 0;
         lightness = 0;
+        alpha = 1;
     }
 
     public double getHue() {
@@ -77,16 +85,21 @@ public final class HSLColor implements IsSerializable {
         return lightness;
     }
 
-    public String toString() {
-        return "hsl(" + getHue() + "," + (getSaturation() * 100) + "%,"
-                + (getLightness() * 100) + "%)";
+    public double getAlpha() {
+        return alpha;
     }
 
-    public static HSLColor fromRGB(RGBColor rgb) {
+    public String toString() {
+        return "hsla(" + getHue() + "," + (getSaturation() * 100) + "%,"
+                + (getLightness() * 100) + "%," + getAlpha() + ")";
+    }
+
+    public static HSLAColor fromRGBA(RGBAColor rgb) {
         // Get r, g, b in decimal
         double r = (double) rgb.getRed() / 255.;
         double g = (double) rgb.getGreen() / 255.;
         double b = (double) rgb.getBlue() / 255.;
+        double a = rgb.getAlpha();
 
         // Calculate chroma
         double max = Math.max(r, Math.max(g, b));
@@ -104,6 +117,6 @@ public final class HSLColor implements IsSerializable {
         // Calculate saturation
         double s = (c == 0.) ? 0. : c / (1 - Math.abs(2. * l - 1.));
 
-        return new HSLColor(h, s, l);
+        return new HSLAColor(h, s, l, a);
     }
 }

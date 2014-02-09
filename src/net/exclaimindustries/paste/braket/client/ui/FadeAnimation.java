@@ -33,10 +33,10 @@ public class FadeAnimation extends Animation {
     protected void onUpdate(double progress) {
         switch (currentOperation) {
         case FADE_IN:
-            element.getStyle().setOpacity(interpolate(progress));
+            element.getStyle().setOpacity(progress);
             break;
         case FADE_OUT:
-            element.getStyle().setOpacity(1. - interpolate(progress));
+            element.getStyle().setOpacity(1. - progress);
             break;
         }
     }

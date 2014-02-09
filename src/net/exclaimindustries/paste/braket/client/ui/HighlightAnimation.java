@@ -1,7 +1,7 @@
 package net.exclaimindustries.paste.braket.client.ui;
 
-import net.exclaimindustries.paste.braket.client.HSLColor;
-import net.exclaimindustries.paste.braket.client.RGBColor;
+import net.exclaimindustries.paste.braket.client.HSLAColor;
+import net.exclaimindustries.paste.braket.client.RGBAColor;
 import net.exclaimindustries.paste.braket.shared.ParseException;
 
 import com.google.gwt.animation.client.Animation;
@@ -11,9 +11,9 @@ public class HighlightAnimation extends Animation {
 
     protected Element element;
 
-    protected HSLColor highlightColor;
+    protected HSLAColor highlightColor;
 
-    protected HSLColor targetColor;
+    protected HSLAColor targetColor;
 
     protected String originalColor;
 
@@ -21,12 +21,12 @@ public class HighlightAnimation extends Animation {
 
     protected double originalOpacity;
 
-    public HighlightAnimation(Element ele, RGBColor color) {
+    public HighlightAnimation(Element ele, RGBAColor color) {
         element = ele;
-        highlightColor = HSLColor.fromRGB(color);
+        highlightColor = HSLAColor.fromRGBA(color);
     }
 
-    public HighlightAnimation(Element ele, HSLColor color) {
+    public HighlightAnimation(Element ele, HSLAColor color) {
         element = ele;
         highlightColor = color;
     }
@@ -39,7 +39,7 @@ public class HighlightAnimation extends Animation {
      */
     public HighlightAnimation(Element ele) {
         element = ele;
-        highlightColor = new HSLColor(60, 1, .8);
+        highlightColor = new HSLAColor(60, 1, .8, 1);
     }
 
     public void highlight(int durationMilliSec) {
@@ -48,34 +48,35 @@ public class HighlightAnimation extends Animation {
         originalBackgroundImage = element.getStyle().getBackgroundImage();
         // I hope this works...
         try {
-            targetColor = HSLColor.fromRGB(RGBColor.fromCSSString(originalColor));
+            targetColor = HSLAColor.fromRGBA(RGBAColor.fromCSSString(originalColor));
         } catch (ParseException e) {
-            // Target color can't be parsed, so make it white?
-            targetColor = HSLColor.WHITE;
+            // Target color can't be parsed, so instead, use opacity
+            targetColor =
+                    new HSLAColor(highlightColor.getHue(),
+                            highlightColor.getSaturation(),
+                            highlightColor.getLightness(), 0);
         }
         element.getStyle().setBackgroundImage("none");
-        element.getStyle().setBackgroundColor(
-                RGBColor.fromHSL(highlightColor).getHexValue());
         run(durationMilliSec);
     }
 
     @Override
     protected void onUpdate(double progress) {
-        // Interpolate between highlight and target
-        double p1 = interpolate(progress);
         // The distance between the hues is the shortest distance on the circle
-        double dh = targetColor.getHue() - highlightColor.getHue();
+        double dh = highlightColor.getHue() - targetColor.getHue();
         if (Math.abs(dh) > 180) {
             dh = -Math.signum(dh) * (360 - Math.abs(dh));
         }
-        double ds = targetColor.getSaturation() - highlightColor.getSaturation();
-        double dl = targetColor.getLightness() - highlightColor.getLightness();
+        double ds = highlightColor.getSaturation() - targetColor.getSaturation();
+        double dl = highlightColor.getLightness() - targetColor.getLightness();
+        double da = highlightColor.getAlpha() - targetColor.getAlpha();
 
-        double h = highlightColor.getHue() + p1 * dh;
-        double s = highlightColor.getSaturation() + p1 * ds;
-        double l = highlightColor.getLightness() + p1 * dl;
+        double h = targetColor.getHue() + progress * dh;
+        double s = targetColor.getSaturation() + progress * ds;
+        double l = targetColor.getLightness() + progress * dl;
+        double a = targetColor.getAlpha() + progress * da;
 
-        HSLColor currentColor = new HSLColor(h, s, l);
+        HSLAColor currentColor = new HSLAColor(h, s, l, a);
         element.getStyle().setBackgroundColor(currentColor.toString());
     }
 
@@ -88,6 +89,20 @@ public class HighlightAnimation extends Animation {
     @Override
     protected void onCancel() {
         onComplete();
+    }
+
+    @Override
+    protected double interpolate(double x) {
+        // Start at 0, ping up to 1 quickly, then fall back to 0 slowly.
+        double q = 0.25;
+        double r = 0.5;
+        if (x < q) {
+            return 1 - Math.cos(Math.PI * x / (2 * q));
+        } else if (x < r) {
+            return 1;
+        } else {
+            return Math.cos(Math.PI * (x - r) / (2 * (1 - r)));
+        }
     }
 
 }

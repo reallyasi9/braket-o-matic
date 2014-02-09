@@ -31,21 +31,21 @@ import com.googlecode.objectify.annotation.Embed;
  * 
  */
 @Embed
-public final class RGBColor implements IsSerializable {
+public final class RGBAColor implements IsSerializable {
 
-    public final static RGBColor WHITE = new RGBColor(255, 255, 255);
-    public final static RGBColor LIGHT_GRAY = new RGBColor(192, 192, 192);
-    public final static RGBColor GRAY = new RGBColor(128, 128, 128);
-    public final static RGBColor DARK_GRAY = new RGBColor(64, 64, 64);
-    public final static RGBColor BLACK = new RGBColor(0, 0, 0);
-    public final static RGBColor RED = new RGBColor(255, 0, 0);
-    public final static RGBColor PINK = new RGBColor(255, 175, 175);
-    public final static RGBColor ORANGE = new RGBColor(255, 165, 0);
-    public final static RGBColor YELLOW = new RGBColor(255, 255, 0);
-    public final static RGBColor GREEN = new RGBColor(0, 255, 0);
-    public final static RGBColor MAGENTA = new RGBColor(255, 0, 255);
-    public final static RGBColor CYAN = new RGBColor(0, 255, 255);
-    public final static RGBColor BLUE = new RGBColor(0, 0, 255);
+    public final static RGBAColor WHITE = new RGBAColor(255, 255, 255, 1);
+    public final static RGBAColor LIGHT_GRAY = new RGBAColor(192, 192, 192, 1);
+    public final static RGBAColor GRAY = new RGBAColor(128, 128, 128, 1);
+    public final static RGBAColor DARK_GRAY = new RGBAColor(64, 64, 64, 1);
+    public final static RGBAColor BLACK = new RGBAColor(0, 0, 0, 1);
+    public final static RGBAColor RED = new RGBAColor(255, 0, 0, 1);
+    public final static RGBAColor PINK = new RGBAColor(255, 175, 175, 1);
+    public final static RGBAColor ORANGE = new RGBAColor(255, 165, 0, 1);
+    public final static RGBAColor YELLOW = new RGBAColor(255, 255, 0, 1);
+    public final static RGBAColor GREEN = new RGBAColor(0, 255, 0, 1);
+    public final static RGBAColor MAGENTA = new RGBAColor(255, 0, 255, 1);
+    public final static RGBAColor CYAN = new RGBAColor(0, 255, 255, 1);
+    public final static RGBAColor BLUE = new RGBAColor(0, 0, 255, 1);
 
     protected final static RegExp hexPattern =
             RegExp.compile(
@@ -53,8 +53,9 @@ public final class RGBColor implements IsSerializable {
                     "i");
     protected final static RegExp rgbPattern = RegExp.compile(
             "^rgb\\(([0-9]{1,3}),([0-9]{1,3}),([0-9]{1,3})\\)$", "i");
+    
     protected final static RegExp rgbaPattern = RegExp.compile(
-            "^rgba\\(([0-9]{1,3}),([0-9]{1,3}),([0-9]{1,3})\\)$", "i");
+            "^rgba\\(([0-9]{1,3}),([0-9]{1,3}),([0-9]{1,3}),([0-9\\.]+)\\)$", "i");
 
     /**
      * The red color [0,255]
@@ -72,6 +73,11 @@ public final class RGBColor implements IsSerializable {
     private int blue;
 
     /**
+     * The opacity [0,1]
+     */
+    private double alpha;
+
+    /**
      * Constructor with RGB values.
      * 
      * @param r
@@ -80,11 +86,14 @@ public final class RGBColor implements IsSerializable {
      *            The green value, from 0 to 255.
      * @param b
      *            The blue value, from 0 to 255.
+     * @param a
+     *            The alpha value, from 0 to 1.
      */
-    public RGBColor(int r, int g, int b) {
-        red = r;
-        green = g;
-        blue = b;
+    public RGBAColor(int r, int g, int b, double a) {
+        red = (r < 0) ? 0 : (r > 255) ? 255 : r;
+        green = (g < 0) ? 0 : (g > 255) ? 255 : g;
+        blue = (b < 0) ? 0 : (b > 255) ? 255 : b;
+        alpha = (a < 0) ? 0 : (a > 1) ? 1 : a;
     }
 
     /**
@@ -96,33 +105,38 @@ public final class RGBColor implements IsSerializable {
      *            The green value, from 0 to 1.
      * @param db
      *            The blue value, from 0 to 1.
+     * @param a
+     *            The alpha value, from 0 to 1.
      */
-    public RGBColor(double dr, double dg, double db) {
+    public RGBAColor(double dr, double dg, double db, double a) {
         red = (int) ((dr > 1) ? 255 : (dr < 0) ? 0 : dr * 255);
         green = (int) ((dg > 1) ? 255 : (dg < 0) ? 0 : dg * 255);
         blue = (int) ((db > 1) ? 255 : (db < 0) ? 0 : db * 255);
+        alpha = (a < 0) ? 0 : (a > 1) ? 1 : a;
     }
 
     /**
-     * Constructor with single RGB value.
+     * Constructor with single RGBA value.
      * 
      * @param color
      *            RGB value stored as a single 24-bit integer.
      */
-    public RGBColor(int color) {
+    public RGBAColor(int color) {
         red = (color >> 16) & 0xff;
         green = (color >> 8) & 0xff;
         blue = color & 0xff;
+        alpha = 1;
     }
 
     /**
      * Default constructor (defaults to black)
      */
-    public RGBColor() {
+    public RGBAColor() {
         super();
         red = 0;
         green = 0;
         blue = 0;
+        alpha = 1;
     }
 
     public int getRed() {
@@ -135,6 +149,10 @@ public final class RGBColor implements IsSerializable {
 
     public int getBlue() {
         return blue;
+    }
+
+    public double getAlpha() {
+        return alpha;
     }
 
     public int getInt() {
@@ -171,14 +189,16 @@ public final class RGBColor implements IsSerializable {
     }
 
     public String toString() {
-        return "rgb(" + getRed() + "," + getGreen() + "," + getBlue() + ")";
+        return "rgba(" + getRed() + "," + getGreen() + "," + getBlue() + ","
+                + getAlpha() + ")";
     }
 
-    public static RGBColor fromHSL(HSLColor hsl) {
+    public static RGBAColor fromHSL(HSLAColor hsl) {
 
         double h = hsl.getHue();
         double s = hsl.getSaturation();
         double l = hsl.getLightness();
+        double a = hsl.getAlpha();
 
         double c = (1 - Math.abs(2. * l - 1)) * s;
         double hp = h / 60.;
@@ -210,10 +230,10 @@ public final class RGBColor implements IsSerializable {
             b += x;
         }
 
-        return new RGBColor(r, g, b);
+        return new RGBAColor(r, g, b, a);
     }
 
-    public static RGBColor fromCSSString(String css) throws ParseException {
+    public static RGBAColor fromCSSString(String css) throws ParseException {
         // Is this a hex string starting with a '#'?
 
         if (hexPattern.test(css)) {
@@ -221,7 +241,7 @@ public final class RGBColor implements IsSerializable {
             int r = Integer.valueOf(hexMatcher.getGroup(1), 16);
             int g = Integer.valueOf(hexMatcher.getGroup(2), 16);
             int b = Integer.valueOf(hexMatcher.getGroup(3), 16);
-            return new RGBColor(r, g, b);
+            return new RGBAColor(r, g, b, 1);
         }
 
         if (rgbPattern.test(css)) {
@@ -229,7 +249,7 @@ public final class RGBColor implements IsSerializable {
             int r = Integer.valueOf(rgbMatcher.getGroup(1), 10);
             int g = Integer.valueOf(rgbMatcher.getGroup(2), 10);
             int b = Integer.valueOf(rgbMatcher.getGroup(3), 10);
-            return new RGBColor(r, g, b);
+            return new RGBAColor(r, g, b, 1);
         }
 
         if (rgbaPattern.test(css)) {
@@ -237,9 +257,10 @@ public final class RGBColor implements IsSerializable {
             int r = Integer.valueOf(rgbaMatcher.getGroup(1), 10);
             int g = Integer.valueOf(rgbaMatcher.getGroup(2), 10);
             int b = Integer.valueOf(rgbaMatcher.getGroup(3), 10);
-            return new RGBColor(r, g, b);
+            int a = Integer.valueOf(rgbaMatcher.getGroup(4), 10);
+            return new RGBAColor(r, g, b, a);
         }
 
-        throw new ParseException("unable to parse string [" + css + "] to RGB value");
+        throw new ParseException("unable to parse string [" + css + "] to RGBA value");
     }
 }

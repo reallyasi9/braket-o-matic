@@ -69,7 +69,7 @@ public final class BraketTeam implements IsSerializable {
     /**
      * A single color that represents the team. Typically light.
      */
-    private RGBColor color = new RGBColor(0xcccccc);
+    private RGBAColor color = new RGBAColor(0xcccccc);
 
     /**
      * The team's KenPom Pythagorean score.
@@ -142,12 +142,12 @@ public final class BraketTeam implements IsSerializable {
         this.picture = picture;
     }
 
-    public RGBColor getColor() {
+    public RGBAColor getColor() {
         // Color is immutable
         return color;
     }
 
-    public void setColor(RGBColor color) {
+    public void setColor(RGBAColor color) {
         // Color is immutable
         this.color = color;
     }

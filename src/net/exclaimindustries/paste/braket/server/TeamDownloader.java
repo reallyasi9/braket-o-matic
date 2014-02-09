@@ -26,7 +26,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.exclaimindustries.paste.braket.client.BraketTeam;
-import net.exclaimindustries.paste.braket.client.RGBColor;
+import net.exclaimindustries.paste.braket.client.RGBAColor;
 import net.exclaimindustries.paste.braket.client.TeamName;
 
 import org.jdom2.CDATA;
@@ -151,7 +151,7 @@ public class TeamDownloader {
 
         try {
             if (teamColorString != null) {
-                RGBColor color = RGBColor.fromCSSString(teamColorString);
+                RGBAColor color = RGBAColor.fromCSSString(teamColorString);
                 team.setColor(color);
             }
         } catch (Exception e) {
