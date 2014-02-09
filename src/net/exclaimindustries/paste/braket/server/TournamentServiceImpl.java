@@ -58,12 +58,13 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
      * getCurrentTournament()
      */
     @Override
-    public TournamentCollection getCurrentTournament()
-            throws NoCurrentTournamentException {
-
-        TournamentServiceHelper.assertCurrent();
+    public TournamentCollection getCurrentTournament() {
 
         Ref<BraketTournament> tournament = CurrentTournament.getCurrentTournament();
+        
+        if (tournament == null) {
+            return new TournamentCollection();
+        }
 
         BraketTournament t = tournament.get();
 
@@ -92,7 +93,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
     public Collection<BraketTournament> getTournaments()
             throws UserNotLoggedInException, UserNotAdminException {
 
-        UserServiceHelper.assertAdmin();
+        LogInServiceHelper.assertAdmin();
 
         List<BraketTournament> tournamentList =
                 OfyService.ofy().load().type(BraketTournament.class).list();
@@ -112,7 +113,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
             throws UserNotLoggedInException, UserNotAdminException {
         // TODO get rid of this.
 
-        UserServiceHelper.assertAdmin();
+        LogInServiceHelper.assertAdmin();
         OfyService.ofy().save().entities(tournaments).now();
     }
 
@@ -126,7 +127,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
     @Override
     public Long storeTournament(BraketTournament tournament)
             throws UserNotLoggedInException, UserNotAdminException {
-        UserServiceHelper.assertAdmin();
+        LogInServiceHelper.assertAdmin();
 
         // If this is a new tournament, make all the games to go with it.
         if (tournament.getId() == null) {
@@ -189,7 +190,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
     @Override
     public void deleteTournaments(Iterable<BraketTournament> tournaments)
             throws UserNotLoggedInException, UserNotAdminException {
-        UserServiceHelper.assertAdmin();
+        LogInServiceHelper.assertAdmin();
         OfyService.ofy().delete().entities(tournaments);
     }
 
@@ -203,7 +204,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
     @Override
     public void deleteTournament(BraketTournament tournament)
             throws UserNotLoggedInException, UserNotAdminException {
-        UserServiceHelper.assertAdmin();
+        LogInServiceHelper.assertAdmin();
         OfyService.ofy().delete().entity(tournament);
     }
 
@@ -217,7 +218,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
     @Override
     public void setCurrentTournament(BraketTournament tournament)
             throws UserNotLoggedInException, UserNotAdminException {
-        UserServiceHelper.assertAdmin();
+        LogInServiceHelper.assertAdmin();
 
         Key<CurrentTournament> key = Key.create(CurrentTournament.class, 1);
         CurrentTournament current = OfyService.ofy().load().key(key).now();
@@ -241,7 +242,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
 
         // FIXME Consolidate with addTeam(BraketTeam, BraketTournament), and
         // probably addTeams(*).
-        UserServiceHelper.assertAdmin();
+        LogInServiceHelper.assertAdmin();
 
         if (team.getIndex() < 0) {
             throw new IllegalArgumentException(
@@ -297,7 +298,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
     @Override
     public Long addTeam(final BraketTeam team, final BraketTournament tournament)
             throws UserNotLoggedInException, UserNotAdminException {
-        UserServiceHelper.assertAdmin();
+        LogInServiceHelper.assertAdmin();
 
         if (team.getIndex() < 0) {
             throw new IllegalArgumentException(
@@ -347,7 +348,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
     public void addTeams(final Iterable<BraketTeam> teams)
             throws NoCurrentTournamentException, UserNotLoggedInException,
             UserNotAdminException {
-        UserServiceHelper.assertAdmin();
+        LogInServiceHelper.assertAdmin();
 
         final Ref<BraketTournament> currentRef =
                 CurrentTournament.getCurrentTournament();
@@ -408,7 +409,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
             final BraketTournament tournament) throws UserNotLoggedInException,
             UserNotAdminException {
 
-        UserServiceHelper.assertAdmin();
+        LogInServiceHelper.assertAdmin();
 
         for (BraketTeam team : teams) {
             if (team.getIndex() < 0) {
@@ -459,7 +460,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
     @Override
     public Long addGame(final BraketGame game) throws NoCurrentTournamentException,
             UserNotLoggedInException, UserNotAdminException {
-        UserServiceHelper.assertAdmin();
+        LogInServiceHelper.assertAdmin();
 
         if (game.getIndex() < 0) {
             throw new IllegalArgumentException(
@@ -501,7 +502,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
     @Override
     public Long addGame(final BraketGame game, final BraketTournament tournament)
             throws UserNotLoggedInException, UserNotAdminException {
-        UserServiceHelper.assertAdmin();
+        LogInServiceHelper.assertAdmin();
 
         if (game.getIndex() < 0) {
             throw new IllegalArgumentException(
@@ -538,7 +539,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
             throws UserNotLoggedInException, UserNotAdminException,
             NoCurrentTournamentException {
 
-        UserServiceHelper.assertAdmin();
+        LogInServiceHelper.assertAdmin();
 
         final Ref<BraketTournament> currentRef =
                 CurrentTournament.getCurrentTournament();
@@ -585,7 +586,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
     public void addGames(final Iterable<BraketGame> games,
             final BraketTournament tournament) throws UserNotLoggedInException,
             UserNotAdminException {
-        UserServiceHelper.assertAdmin();
+        LogInServiceHelper.assertAdmin();
 
         for (BraketGame game : games) {
             if (game.getIndex() < 0) {
@@ -623,7 +624,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
     @Override
     public void setRules(String rules) throws UserNotLoggedInException,
             UserNotAdminException, NoCurrentTournamentException {
-        UserServiceHelper.assertAdmin();
+        LogInServiceHelper.assertAdmin();
 
         Ref<BraketTournament> currentRef = CurrentTournament.getCurrentTournament();
         if (currentRef == null) {
@@ -646,7 +647,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
     public void updateAndPropagateGame(final BraketGame game)
             throws NoCurrentTournamentException, UserNotLoggedInException,
             UserNotAdminException {
-        UserServiceHelper.assertAdmin();
+        LogInServiceHelper.assertAdmin();
 
         if (game.getIndex() < 0) {
             throw new IllegalArgumentException(

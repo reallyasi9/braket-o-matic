@@ -19,6 +19,7 @@ package net.exclaimindustries.paste.braket.client.resources;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.Shared;
 import com.google.gwt.resources.client.ImageResource;
 
 /**
@@ -29,11 +30,8 @@ public interface Resources extends ClientBundle {
 
     public static final Resources INSTANCE = GWT.create(Resources.class);
 
+    @Shared
     public interface Style extends CssResource {
-
-        String menuButton();
-        
-        String adminButton();
 
         String blueButton();
 

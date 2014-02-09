@@ -133,7 +133,7 @@ public class LeaderboardServiceImpl extends RemoteServiceServlet implements
             throws NoCurrentTournamentException, UserNotLoggedInException,
             TournamentNotStartedException {
 
-        UserServiceHelper.assertLoggedIn();
+        LogInServiceHelper.assertLoggedIn();
         TournamentServiceHelper.assertStarted();
 
         Ref<BraketTournament> tournamentRef =
@@ -146,10 +146,16 @@ public class LeaderboardServiceImpl extends RemoteServiceServlet implements
 
     @Override
     public UserRanking getUserRanking(BraketUser user)
-            throws NoCurrentTournamentException, UserNotLoggedInException,
-            TournamentNotStartedException {
+            throws NoCurrentTournamentException, UserNotLoggedInException {
 
-        UserServiceHelper.assertLoggedIn();
+        LogInServiceHelper.assertLoggedIn();
+
+        // Return null if the tournament exists but has not yet started.
+        try {
+            TournamentServiceHelper.assertStarted();
+        } catch (TournamentNotStartedException e) {
+            return null;
+        }
 
         Ref<BraketTournament> tournamentRef =
                 CurrentTournament.getCurrentTournament();
@@ -162,7 +168,13 @@ public class LeaderboardServiceImpl extends RemoteServiceServlet implements
         }
 
         // Get all the users' info from the leaderboard
-        Collection<SelectionInfo> infos = getSelectionInfos(tournament);
+        Collection<SelectionInfo> infos;
+        try {
+            infos = getSelectionInfos(tournament);
+        } catch (TournamentNotStartedException e) {
+            // I already checked for this earlier.
+            return null;
+        }
 
         int participants = infos.size();
 

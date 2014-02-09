@@ -71,10 +71,8 @@ public interface TournamentService extends RemoteService {
      * @return The currently running tournament, including all the games and
      *         teams. If no such tournament exists, this still returns, but the
      *         getTournament() method of the returned object will return null.
-     * @throws NoCurrentTournamentException
      */
-    public TournamentCollection getCurrentTournament()
-            throws NoCurrentTournamentException;
+    public TournamentCollection getCurrentTournament();
 
     /**
      * Sets the current tournament to the one given.

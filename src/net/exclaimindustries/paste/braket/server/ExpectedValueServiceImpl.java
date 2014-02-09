@@ -64,7 +64,7 @@ public class ExpectedValueServiceImpl extends RemoteServiceServlet implements
             throws NoCurrentTournamentException, UserNotLoggedInException,
             TournamentNotStartedException {
 
-        UserServiceHelper.assertLoggedIn();
+        LogInServiceHelper.assertLoggedIn();
 
         TournamentServiceHelper.assertStarted();
 
@@ -88,7 +88,7 @@ public class ExpectedValueServiceImpl extends RemoteServiceServlet implements
             throws NoCurrentTournamentException, UserNotLoggedInException,
             TournamentNotStartedException, UserNotAdminException {
 
-        UserServiceHelper.assertLoggedIn();
+        LogInServiceHelper.assertLoggedIn();
 
         TournamentServiceHelper.assertStarted();
 
@@ -97,7 +97,7 @@ public class ExpectedValueServiceImpl extends RemoteServiceServlet implements
         UserService us = UserServiceFactory.getUserService();
 
         if (!us.getCurrentUser().getUserId().equals(userId)) {
-            UserServiceHelper.assertAdmin();
+            LogInServiceHelper.assertAdmin();
         }
 
         Ref<ExpectoValues> current = CurrentExpectOMatic.getCurrentExpectOMatic();
@@ -123,7 +123,7 @@ public class ExpectedValueServiceImpl extends RemoteServiceServlet implements
 
         TournamentServiceHelper.assertStarted();
 
-        UserServiceHelper.assertLoggedIn();
+        LogInServiceHelper.assertLoggedIn();
 
         // FIXME Can't do this yet...
         // Need to be able to select all expectos, which requires an index
@@ -142,7 +142,7 @@ public class ExpectedValueServiceImpl extends RemoteServiceServlet implements
             UserNotAdminException, NoCurrentTournamentException {
 
         TournamentServiceHelper.assertCurrent();
-        UserServiceHelper.assertAdmin();
+        LogInServiceHelper.assertAdmin();
 
         // Issue the request via queue
         LOG.info("Telling Expect-o-Matic to start");

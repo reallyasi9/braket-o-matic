@@ -9,6 +9,7 @@ import net.exclaimindustries.paste.braket.client.resources.Resources;
 import net.exclaimindustries.paste.braket.client.resources.UiConstants.HistoryToken;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -22,11 +23,20 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class BraketMenu extends Composite {
 
+    interface Style extends CssResource {
+        String menuButton();
+
+        String adminButton();
+    }
+
     private static BraketMenuUiBinder uiBinder = GWT
             .create(BraketMenuUiBinder.class);
 
     @UiField
     FlowPanel panel;
+
+    @UiField
+    Style style;
 
     interface BraketMenuUiBinder extends UiBinder<Widget, BraketMenu> {
     }
@@ -34,38 +44,40 @@ public class BraketMenu extends Composite {
     public BraketMenu(BraketTournament tournament, BraketUser user) {
         initWidget(uiBinder.createAndBindUi(this));
 
-        // Add a braket button
-        Hyperlink myBracket = new Hyperlink(HistoryToken.MY_BRACKET,
-                "My Bracket");
-        myBracket.setStyleName(Resources.INSTANCE.style().menuButton());
-        panel.add(myBracket);
+        // If the tournament is null, then only show an admin button
+        if (tournament != null) {
+            // Add a braket button
+            Hyperlink myBracket =
+                    new Hyperlink("My Bracket", HistoryToken.MY_BRACKET);
+            myBracket.setStyleName(style.menuButton());
+            panel.add(myBracket);
 
-        if (tournament.isOngoing()) {
-            // Add the tournament status option
-            Hyperlink tournamentStatus = new Hyperlink(
-                    HistoryToken.TOURNAMENT_STATUS, "Tournament Status");
-            tournamentStatus.setStyleName(Resources.INSTANCE.style()
-                    .menuButton());
-            panel.add(tournamentStatus);
+            if (tournament.isOngoing()) {
+                // Add the tournament status option
+                Hyperlink tournamentStatus =
+                        new Hyperlink("Tournament Status",
+                                HistoryToken.TOURNAMENT_STATUS);
+                tournamentStatus.setStyleName(style.menuButton());
+                panel.add(tournamentStatus);
 
-            // Add a leaderboard button
-            Hyperlink leaderboards = new Hyperlink(HistoryToken.LEADERBOARDS,
-                    "Leaderboards");
-            leaderboards.setStyleName(Resources.INSTANCE.style().menuButton());
-            panel.add(leaderboards);
+                // Add a leaderboard button
+                Hyperlink leaderboards =
+                        new Hyperlink("Leaderboards", HistoryToken.LEADERBOARDS);
+                leaderboards.setStyleName(style.menuButton());
+                panel.add(leaderboards);
 
-            // Add an excite-o-matic button
-            Hyperlink exciteo = new Hyperlink(HistoryToken.EXCITE_O_MATIC,
-                    "Excite-o-Matic");
-            exciteo.setStyleName(Resources.INSTANCE.style().menuButton());
-            panel.add(exciteo);
+                // Add an excite-o-matic button
+                Hyperlink exciteo =
+                        new Hyperlink("Excite-o-Matic", HistoryToken.EXCITE_O_MATIC);
+                exciteo.setStyleName(style.menuButton());
+                panel.add(exciteo);
+            }
         }
 
         if (user.isAdmin()) {
-            Hyperlink admin = new Hyperlink(HistoryToken.ADMIN,
-                    "Administration");
-            admin.setStyleName(Resources.INSTANCE.style().menuButton());
-            admin.addStyleName(Resources.INSTANCE.style().adminButton());
+            Hyperlink admin = new Hyperlink("Administration", HistoryToken.ADMIN);
+            admin.setStyleName(style.menuButton());
+            admin.addStyleName(style.adminButton());
             panel.add(admin);
         }
     }

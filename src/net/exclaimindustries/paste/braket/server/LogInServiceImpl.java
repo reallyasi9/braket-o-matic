@@ -30,7 +30,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.googlecode.objectify.Key;
 
-public class LoginServiceImpl extends RemoteServiceServlet implements LogInService {
+public class LogInServiceImpl extends RemoteServiceServlet implements LogInService {
 
     /**
      * Generated

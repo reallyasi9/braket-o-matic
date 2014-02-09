@@ -6,7 +6,7 @@
 	<!-- Servlets -->
 	<servlet>
 		<servlet-name>loginServlet</servlet-name>
-		<servlet-class>net.exclaimindustries.paste.braket.server.LoginServiceImpl</servlet-class>
+		<servlet-class>net.exclaimindustries.paste.braket.server.LogInServiceImpl</servlet-class>
 	</servlet>
 
 	<servlet-mapping>

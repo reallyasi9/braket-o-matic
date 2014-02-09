@@ -17,7 +17,6 @@
 
 package net.exclaimindustries.paste.braket.client;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -109,11 +108,8 @@ public class BraketUser implements IsSerializable {
      * @param userId
      *            A unique string identifying the user. It's suggested that the
      *            raw user ID not be used, so a hashed version is best.
-     * @throws NoSuchAlgorithmException
-     *             If for some reason you don't have access to the SAH1
-     *             algorithm.
      */
-    public BraketUser(String userId) throws NoSuchAlgorithmException {
+    public BraketUser(String userId) {
         // ID needs to be protected, so it gets sent pre-hashed.
         id = userId;
         userName.setNickname("Unidentified Doofus");
@@ -209,7 +205,7 @@ public class BraketUser implements IsSerializable {
         builder.append("BraketUser [id=").append(id).append(", userName=")
                 .append(userName).append(", picture=").append(picture)
                 .append(", email=").append(email).append(", isLoggedIn=")
-                .append(isLoggedIn).append("]");
+                .append(isLoggedIn).append(", isAdmin=").append(isAdmin).append("]");
         return builder.toString();
     }
 

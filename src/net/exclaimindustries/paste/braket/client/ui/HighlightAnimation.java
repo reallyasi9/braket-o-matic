@@ -91,10 +91,20 @@ public class HighlightAnimation extends Animation {
         onComplete();
     }
 
+    /**
+     * An interpolation function that pings up to 1 quickly, then falls to 0
+     * slowly afterward.
+     * 
+     * @param x
+     *            The fraction of the animation that has been completed,
+     *            increasing from 0 to 1 linearly in time.
+     * @return A filtered number from 0 to 1.
+     */
     @Override
     protected double interpolate(double x) {
-        // Start at 0, ping up to 1 quickly, then fall back to 0 slowly.
+        // The point in time when the output should hit 1.
         double q = 0.25;
+        // The point in time when the output should start falling.
         double r = 0.5;
         if (x < q) {
             return 1 - Math.cos(Math.PI * x / (2 * q));

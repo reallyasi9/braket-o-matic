@@ -24,7 +24,6 @@ import net.exclaimindustries.paste.braket.client.TournamentService.TournamentCol
 import net.exclaimindustries.paste.braket.client.resources.UiConstants;
 import net.exclaimindustries.paste.braket.client.ui.BraketAppLayout;
 import net.exclaimindustries.paste.braket.client.ui.BraketMenu;
-import net.exclaimindustries.paste.braket.client.ui.FadeAnimation;
 import net.exclaimindustries.paste.braket.client.ui.LogInPage;
 import net.exclaimindustries.paste.braket.client.ui.UserLogInButton;
 import net.exclaimindustries.paste.braket.client.ui.UserStatusPanel;
@@ -177,6 +176,7 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
      * After getting the current tournament and current user, build the menu.
      */
     private void displayMenu() {
+        // The current tournament might be null.
         layout.addMenu(new BraketMenu(currentTournamentCollection.getTournament(),
                 currentUser));
     }
