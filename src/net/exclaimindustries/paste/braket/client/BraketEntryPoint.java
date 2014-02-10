@@ -22,9 +22,11 @@ import java.util.logging.Logger;
 
 import net.exclaimindustries.paste.braket.client.TournamentService.TournamentCollection;
 import net.exclaimindustries.paste.braket.client.resources.UiConstants;
+import net.exclaimindustries.paste.braket.client.ui.BraketAdminLayout;
 import net.exclaimindustries.paste.braket.client.ui.BraketAppLayout;
 import net.exclaimindustries.paste.braket.client.ui.BraketMenu;
 import net.exclaimindustries.paste.braket.client.ui.LogInPage;
+import net.exclaimindustries.paste.braket.client.ui.Toast;
 import net.exclaimindustries.paste.braket.client.ui.UserLogInButton;
 import net.exclaimindustries.paste.braket.client.ui.UserStatusPanel;
 
@@ -73,72 +75,89 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
 
     };
 
-    private AsyncCallback<BraketUser> userLogInCallback =
-            new AsyncCallback<BraketUser>() {
+    private AsyncCallback<BraketUser> userLogInCallback = new AsyncCallback<BraketUser>() {
 
-                @Override
-                public void onFailure(Throwable caught) {
-                    // This is bad. Login should never fail.
-                    logger.log(Level.SEVERE,
-                            "login failed: " + caught.getLocalizedMessage());
-                    Window.Location.assign(GWT.getHostPageBaseURL() + ERROR_500);
-                }
+        @Override
+        public void onFailure(Throwable caught) {
+            // This is bad. Login should never fail.
+            logger.log(Level.SEVERE,
+                    "login failed: " + caught.getLocalizedMessage());
+            Window.Location.assign(GWT.getHostPageBaseURL() + ERROR_500);
+        }
 
-                @Override
-                public void onSuccess(BraketUser result) {
-                    // TODO Auto-generated method stub
-                    currentUser = result;
-                    if (currentUser.isLoggedIn()) {
-                        logger.log(Level.INFO, "user [" + currentUser.getId()
-                                + "] logged in");
-                        // Make a status panel
-                        displayUserStatusPanel();
+        @Override
+        public void onSuccess(BraketUser result) {
+            // TODO Auto-generated method stub
+            currentUser = result;
 
-                        // Attempt to make the menu panel
-                        getCurrentTournament();
+            // Fire the history event while everything else is loading
+            History.fireCurrentHistoryState();
 
-                    } else {
-                        // Note that, if not logged in, there is no current
-                        // tournament!
-                        logger.log(Level.INFO, "user not logged in");
-                        displaySignInButton();
-                    }
-                }
+            if (currentUser.isLoggedIn()) {
+                logger.log(Level.INFO, "user [" + currentUser.getId()
+                        + "] logged in");
 
-            };
+                // Make a status panel
+                displayUserStatusPanel();
 
-    private AsyncCallback<TournamentCollection> currentTournamentCallback =
-            new AsyncCallback<TournamentCollection>() {
+                // Attempt to make the menu panel
+                getCurrentTournament();
 
-                @Override
-                public void onFailure(Throwable caught) {
-                    logger.log(Level.SEVERE, "getting current tournament failed: "
-                            + caught.getLocalizedMessage());
-                    // TODO deal with this?
-                }
+            } else {
+                // Note that, if not logged in, there is no current
+                // tournament!
+                logger.log(Level.INFO, "user not logged in");
+                displaySignInButton();
+            }
 
-                @Override
-                public void onSuccess(TournamentCollection result) {
-                    currentTournamentCollection = result;
+        }
 
-                    // Make the menu, given we now know if the tournament has
-                    // started or not.
-                    displayMenu();
-                }
+    };
 
-            };
+    private AsyncCallback<TournamentCollection> currentTournamentCallback = new AsyncCallback<TournamentCollection>() {
+
+        @Override
+        public void onFailure(Throwable caught) {
+            logger.log(Level.SEVERE, "getting current tournament failed: "
+                    + caught.getLocalizedMessage());
+            // TODO deal with this?
+        }
+
+        @Override
+        public void onSuccess(TournamentCollection result) {
+            currentTournamentCollection = result;
+
+            // Make the menu, given we now know if the tournament has
+            // started or not.
+            displayMenu();
+        }
+
+    };
 
     /**
      * Process the incoming history token and route the user appropriately
      */
     @Override
     public void onValueChange(ValueChangeEvent<String> event) {
+
+        // If you're not logged in, all you get is the log-in page
+
+        if (currentUser == null || !currentUser.isLoggedIn()) {
+            // Make the log-in info stuff
+            logger.log(Level.INFO, "user not logged in: displaying login info");
+            layout.setCenter(new LogInPage());
+            return;
+        }
+
         String eventString = event.getValue();
+        logger.log(Level.INFO, "received history event string [" + eventString
+                + "]");
         if (eventString.equals(UiConstants.HistoryToken.ABOUT)) {
             // TODO
             logger.log(Level.INFO, "loading about page");
         } else if (eventString.isEmpty()
-                || eventString.equals(UiConstants.HistoryToken.TOURNAMENT_STATUS)) {
+                || eventString
+                        .equals(UiConstants.HistoryToken.TOURNAMENT_STATUS)) {
             // TODO
             logger.log(Level.INFO, "loading tournament status page");
         } else if (eventString.equals(UiConstants.HistoryToken.MY_BRACKET)) {
@@ -146,7 +165,12 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
             GWT.runAsync(braketDisplayCallback);
         } else if (eventString.equals(UiConstants.HistoryToken.ADMIN)) {
             logger.log(Level.INFO, "loading admin page");
-            // TODO
+            // TODO Make sure the user is logged in as an admin
+            if (!currentUser.isAdmin()) {
+                Toast.showErrorToast("You need to be an administrator to use this function");
+            } else {
+                layout.setCenter(new BraketAdminLayout());
+            }
         } else if (eventString.equals(UiConstants.HistoryToken.USER_OPTIONS)) {
             logger.log(Level.INFO, "loading user options page");
             // TODO
@@ -177,8 +201,8 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
      */
     private void displayMenu() {
         // The current tournament might be null.
-        layout.addMenu(new BraketMenu(currentTournamentCollection.getTournament(),
-                currentUser));
+        layout.addMenu(new BraketMenu(currentTournamentCollection
+                .getTournament(), currentUser));
     }
 
     /**
@@ -188,8 +212,8 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
     private void getCurrentTournament() {
 
         // Get the tournament and attempt to build the menu
-        TournamentServiceAsync tournamentServiceRPC =
-                GWT.create(TournamentService.class);
+        TournamentServiceAsync tournamentServiceRPC = GWT
+                .create(TournamentService.class);
         tournamentServiceRPC.getCurrentTournament(currentTournamentCallback);
 
     }
@@ -219,8 +243,6 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
         // Add button where it belongs
         layout.addToHeader(new UserLogInButton(currentUser));
 
-        // Make the log-in info stuff
-        layout.setCenter(new LogInPage());
     }
 
     /**
@@ -239,7 +261,7 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
         LogInServiceAsync logInServiceRPC = GWT.create(LogInService.class);
         logInServiceRPC.logIn(Window.Location.getHref(), userLogInCallback);
 
-        // Fire the history event while everything else is loading
-        History.fireCurrentHistoryState();
+        // The history event cannot be fired until after the user is logged in
+        // (or not)
     }
 }

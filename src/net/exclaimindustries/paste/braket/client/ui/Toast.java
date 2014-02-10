@@ -37,8 +37,13 @@ public class Toast extends PopupPanel implements HasText {
     interface ToastUiBinder extends UiBinder<Widget, Toast> {
     }
 
-    interface MyStyle extends CssResource {
+    interface Style extends CssResource {
+
         String toastPopup();
+
+        String messageToast();
+
+        String errorToast();
     }
 
     @UiField
@@ -48,12 +53,36 @@ public class Toast extends PopupPanel implements HasText {
     FlowPanel toast;
 
     @UiField
-    MyStyle style;
+    Style style;
 
-    public Toast() {
+    private Toast() {
         super(true, false);
         setWidget(uiBinder.createAndBindUi(this));
         setStyleName(style.toastPopup());
+    }
+
+    private void setErrorStyle() {
+        toast.setStyleName(style.errorToast());
+    }
+
+    private void setMessageStyle() {
+        toast.setStyleName(style.messageToast());
+    }
+
+    public static Toast showErrorToast(String message) {
+        Toast errorToast = new Toast();
+        errorToast.setErrorStyle();
+        errorToast.setText(message);
+        errorToast.show();
+        return errorToast;
+    }
+
+    public static Toast showMessageToast(String message) {
+        Toast messageToast = new Toast();
+        messageToast.setMessageStyle();
+        messageToast.setText(message);
+        messageToast.show();
+        return messageToast;
     }
 
     /*

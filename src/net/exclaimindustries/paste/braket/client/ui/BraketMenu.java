@@ -5,7 +5,6 @@ package net.exclaimindustries.paste.braket.client.ui;
 
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.BraketUser;
-import net.exclaimindustries.paste.braket.client.resources.Resources;
 import net.exclaimindustries.paste.braket.client.resources.UiConstants.HistoryToken;
 
 import com.google.gwt.core.client.GWT;
