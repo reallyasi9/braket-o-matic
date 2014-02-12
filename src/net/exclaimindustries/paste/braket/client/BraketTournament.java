@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import com.google.gwt.view.client.ProvidesKey;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.EntitySubclass;
 import com.googlecode.objectify.annotation.OnSave;
@@ -39,6 +40,16 @@ import com.googlecode.objectify.annotation.Serialize;
 @EntitySubclass(index = true)
 @Cache
 public class BraketTournament extends BraketSelectable {
+
+    /**
+     * A Key Provider so that BraketTournaments can be placed in DataGrids.
+     */
+    public static final ProvidesKey<BraketTournament> KEY_PROVIDER = new ProvidesKey<BraketTournament>() {
+        @Override
+        public Object getKey(BraketTournament item) {
+            return (item == null) ? null : item.getId();
+        }
+    };
 
     /**
      * The name of this tournament.
@@ -99,8 +110,7 @@ public class BraketTournament extends BraketSelectable {
      * The selections that are registered to this tournament.
      */
     @Serialize
-    private HashMap<String, Long> registeredSelections =
-            new HashMap<String, Long>();
+    private HashMap<String, Long> registeredSelections = new HashMap<String, Long>();
 
     /**
      * The games in this tournament. These are stored in "tournament order",
@@ -418,9 +428,8 @@ public class BraketTournament extends BraketSelectable {
         int nRounds = getNumberOfRounds();
         for (int iRound = 0; iRound < nRounds; ++iRound) {
             BigInteger roundMask = RoundOffset.getRoundMask(iRound);
-            value +=
-                    correctSelection.and(roundMask).bitCount()
-                            * roundValues.get(iRound);
+            value += correctSelection.and(roundMask).bitCount()
+                    * roundValues.get(iRound);
         }
 
         // Calculate upset bonus
@@ -496,16 +505,14 @@ public class BraketTournament extends BraketSelectable {
     private int getNumberOfTeamsInSubtournament(int game) {
         int teams = 0;
         if (hasChildGame(game, false)) {
-            teams +=
-                    getNumberOfTeamsInSubtournament(getChildGameIndex(game,
-                            false));
+            teams += getNumberOfTeamsInSubtournament(getChildGameIndex(game,
+                    false));
         } else {
             ++teams;
         }
         if (hasChildGame(game, true)) {
-            teams +=
-                    getNumberOfTeamsInSubtournament(getChildGameIndex(game,
-                            true));
+            teams += getNumberOfTeamsInSubtournament(getChildGameIndex(game,
+                    true));
         } else {
             ++teams;
         }
@@ -565,8 +572,8 @@ public class BraketTournament extends BraketSelectable {
                             "This tournament is corrupt!  There's a hole around game "
                                     + curGame + "!");
 
-                curGame =
-                        getChildGameIndex(curGame, gameWinners.testBit(curGame));
+                curGame = getChildGameIndex(curGame,
+                        gameWinners.testBit(curGame));
             }
         } catch (IllegalArgumentException iae) {
             // Got it! Moving along...
@@ -584,9 +591,8 @@ public class BraketTournament extends BraketSelectable {
     public double getPossibleValue(BraketSelection selection) {
         // Assume that all remaining games match the selection's, then calculate
         // the value of that tournament against the selection.
-        BigInteger bestPossibleOutcome =
-                completionMask.and(gameWinners).or(
-                        selection.getSelection().andNot(completionMask));
+        BigInteger bestPossibleOutcome = completionMask.and(gameWinners).or(
+                selection.getSelection().andNot(completionMask));
 
         // Make a new pseudo-tournament with this as the outcome
         BraketTournament t = new BraketTournament();

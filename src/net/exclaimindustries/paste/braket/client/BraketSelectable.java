@@ -19,6 +19,7 @@ package net.exclaimindustries.paste.braket.client;
 import java.math.BigInteger;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
+import com.google.gwt.view.client.ProvidesKey;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -423,4 +424,5 @@ public abstract class BraketSelectable implements IsSerializable {
      *         offset from the LSB is valid.
      */
     public abstract BigInteger getValidGameMask();
+
 }
