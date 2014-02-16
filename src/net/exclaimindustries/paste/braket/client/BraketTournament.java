@@ -28,6 +28,7 @@ import java.util.List;
 import com.google.gwt.view.client.ProvidesKey;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.EntitySubclass;
+import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.OnSave;
 import com.googlecode.objectify.annotation.Serialize;
 
@@ -59,6 +60,7 @@ public class BraketTournament extends BraketSelectable {
     /**
      * The date and time when the tournament begins.
      */
+    @Index
     private Date startTime = new Date();
 
     /**

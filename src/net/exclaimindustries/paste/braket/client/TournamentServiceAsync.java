@@ -17,6 +17,7 @@
 package net.exclaimindustries.paste.braket.client;
 
 import java.util.Collection;
+import java.util.List;
 
 import net.exclaimindustries.paste.braket.client.TournamentService.TournamentCollection;
 
@@ -70,5 +71,8 @@ public interface TournamentServiceAsync {
     void setRules(String rules, AsyncCallback<Void> callback);
 
     void updateAndPropagateGame(BraketGame game, AsyncCallback<Void> callback);
+
+    void getTournaments(String orderCondition, int offset, int limit,
+            AsyncCallback<List<BraketTournament>> callback);
 
 }

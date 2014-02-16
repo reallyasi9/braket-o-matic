@@ -5,20 +5,26 @@ import java.util.Date;
 import java.util.List;
 
 import net.exclaimindustries.paste.braket.client.BraketTournament;
+import net.exclaimindustries.paste.braket.client.TournamentService;
+import net.exclaimindustries.paste.braket.client.TournamentServiceAsync;
 
-import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.DateCell;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.NumberCell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.i18n.shared.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.AsyncDataProvider;
+import com.google.gwt.view.client.HasData;
 
 public class TournamentAdminTab extends Composite {
 
@@ -32,50 +38,123 @@ public class TournamentAdminTab extends Composite {
     @UiField(provided = true)
     DataGrid<BraketTournament> dataGrid;
 
+    private TournamentServiceAsync tournamentService = GWT
+            .create(TournamentService.class);
+
+    private final AsyncDataProvider<BraketTournament> dataProvider =
+            new AsyncDataProvider<BraketTournament>(BraketTournament.KEY_PROVIDER) {
+
+                private String sortCondition = "startTime";
+
+                public void setSortCondition(String condition) {
+                    sortCondition = condition;
+                }
+
+                @Override
+                protected void onRangeChanged(HasData<BraketTournament> display) {
+                    final int offset = display.getVisibleRange().getStart();
+                    int limit = display.getVisibleRange().getLength();
+                    // RPC call to get more tournaments
+                    tournamentService.getTournaments(sortCondition, offset, limit,
+                            new AsyncCallback<List<BraketTournament>>() {
+
+                                @Override
+                                public void onFailure(Throwable caught) {
+                                    // TODO Auto-generated method stub
+
+                                }
+
+                                @Override
+                                public void onSuccess(List<BraketTournament> result) {
+                                    updateRowData(offset, result);
+                                }
+
+                            });
+                }
+
+            };
+
     /**
      * The list of pending changes.
      */
-    private List<PendingChange<?, ?>> pendingChanges = new ArrayList<PendingChange<?, ?>>();
+    private List<PendingChange<?, ?>> pendingChanges =
+            new ArrayList<PendingChange<?, ?>>();
 
     public TournamentAdminTab() {
 
-        dataGrid = new DataGrid<BraketTournament>(20,
-                BraketTournament.KEY_PROVIDER);
-
-        initWidget(uiBinder.createAndBindUi(this));
+        dataGrid = new DataGrid<BraketTournament>(20, BraketTournament.KEY_PROVIDER);
 
         // Create columns
         // Name of the tournament
-        addColumn(new TextCell(), "Name",
-                new GetValue<BraketTournament, String>() {
+        Column<BraketTournament, String> nameColumn =
+                new Column<BraketTournament, String>(new TextCell()) {
                     @Override
-                    public String getValue(BraketTournament row) {
-                        return row.getName();
+                    public String getValue(BraketTournament object) {
+                        return object.getName();
                     }
-                }, new FieldUpdater<BraketTournament, String>() {
+                };
+        nameColumn.setFieldUpdater(new FieldUpdater<BraketTournament, String>() {
+            @Override
+            public void update(int index, BraketTournament object, String value) {
+                pendingChanges.add(new PendingChange<BraketTournament, String>(
+                        object, value) {
                     @Override
-                    public void update(int index, BraketTournament object,
-                            String value) {
-                        pendingChanges.add(new NameChange(object, value));
+                    protected void doCommit(BraketTournament cell, String value) {
+                        cell.setName(value);
                     }
                 });
+            }
+        });
+        dataGrid.addColumn(nameColumn, "Name");
 
         // Date and time the tournament begins
-        DateTimeFormat dateFormat = DateTimeFormat
-                .getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
-        addColumn(new DateCell(dateFormat), "Start Time",
-                new GetValue<BraketTournament, Date>() {
+        Column<BraketTournament, Date> startTimeColumn =
+                new Column<BraketTournament, Date>(new DateCell(
+                        DateTimeFormat.getFormat(PredefinedFormat.RFC_2822))) {
                     @Override
-                    public Date getValue(BraketTournament row) {
-                        return row.getStartTime();
+                    public Date getValue(BraketTournament object) {
+                        return object.getStartTime();
                     }
-                }, new FieldUpdater<BraketTournament, Date>() {
+                };
+        startTimeColumn.setFieldUpdater(new FieldUpdater<BraketTournament, Date>() {
+            @Override
+            public void update(int index, BraketTournament object, Date value) {
+                pendingChanges.add(new PendingChange<BraketTournament, Date>(object,
+                        value) {
                     @Override
-                    public void update(int index, BraketTournament object,
-                            Date value) {
-                        pendingChanges.add(new DateChange(object, value));
+                    protected void doCommit(BraketTournament cell, Date value) {
+                        cell.setStartTime(value);
                     }
                 });
+            }
+        });
+        dataGrid.addColumn(startTimeColumn, "Starting Time");
+        startTimeColumn.setSortable(true);
+
+        // Buy-in Value
+        Column<BraketTournament, Number> buyInColumn =
+                new Column<BraketTournament, Number>(new NumberCell(
+                        NumberFormat.getCurrencyFormat())) {
+                    @Override
+                    public Number getValue(BraketTournament object) {
+                        return object.getBuyInValue();
+                    }
+                };
+        buyInColumn.setFieldUpdater(new FieldUpdater<BraketTournament, Number>() {
+            @Override
+            public void update(int index, BraketTournament object, Number value) {
+                pendingChanges.add(new PendingChange<BraketTournament, Number>(
+                        object, value) {
+                    @Override
+                    protected void doCommit(BraketTournament cell, Number value) {
+                        cell.setBuyInValue((Double) value);
+                    }
+                });
+            }
+        });
+        dataGrid.addColumn(buyInColumn, "Buy-In");
+
+        initWidget(uiBinder.createAndBindUi(this));
     }
 
     /*
@@ -83,18 +162,6 @@ public class TournamentAdminTab extends Composite {
      * http://gwt.googleusercontent
      * .com/samples/Showcase/Showcase.html#!CwCellSampler
      */
-
-    /**
-     * Get a cell value from a record.
-     * 
-     * @param <DataType>
-     *            the datatype stored in the table row
-     * @param <C>
-     *            the cell type
-     */
-    private static interface GetValue<DataType, C> {
-        C getValue(DataType row);
-    }
 
     /**
      * A pending change to a column. Changes aren't committed immediately to
@@ -130,66 +197,6 @@ public class TournamentAdminTab extends Composite {
          *            the new value
          */
         protected abstract void doCommit(DataType cell, T value);
-    }
-
-    /**
-     * Update the name of the tournament
-     */
-    private static class NameChange extends
-            PendingChange<BraketTournament, String> {
-        public NameChange(BraketTournament cell, String value) {
-            super(cell, value);
-        }
-
-        @Override
-        protected void doCommit(BraketTournament cell, String value) {
-            cell.setName(value);
-        }
-    }
-
-    /**
-     * Update the start time of the tournament
-     */
-    private static class DateChange extends
-            PendingChange<BraketTournament, Date> {
-        public DateChange(BraketTournament cell, Date value) {
-            super(cell, value);
-        }
-
-        @Override
-        protected void doCommit(BraketTournament cell, Date value) {
-            cell.setStartTime(value);
-        }
-    }
-
-    /**
-     * Add a column with a header.
-     * 
-     * @param <C>
-     *            the cell type
-     * @param cell
-     *            the cell used to render the column
-     * @param headerText
-     *            the header string
-     * @param getter
-     *            the value getter for the cell
-     */
-    private <C> Column<BraketTournament, C> addColumn(Cell<C> cell,
-            String headerText, final GetValue<BraketTournament, C> getter,
-            FieldUpdater<BraketTournament, C> fieldUpdater) {
-        Column<BraketTournament, C> column = new Column<BraketTournament, C>(
-                cell) {
-            @Override
-            public C getValue(BraketTournament object) {
-                return getter.getValue(object);
-            }
-        };
-        column.setFieldUpdater(fieldUpdater);
-        // if (cell instanceof AbstractEditableCell<?, ?>) {
-        // editableCells.add((AbstractEditableCell<?, ?>) cell);
-        // }
-        dataGrid.addColumn(column, headerText);
-        return column;
     }
 
 }

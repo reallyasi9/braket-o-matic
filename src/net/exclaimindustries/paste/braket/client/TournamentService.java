@@ -106,6 +106,23 @@ public interface TournamentService extends RemoteService {
             throws UserNotLoggedInException, UserNotAdminException;
 
     /**
+     * Fetches some number of tournaments by order from the datastore.
+     * 
+     * @param orderCondition
+     *            The (named) index to use when ordering, prepended optionally
+     *            by a minus sign to signify reverse ordering.
+     * @param offset
+     *            Return results starting at the nth offset.
+     * @param limit
+     *            Only return this many results.
+     * @return <code>limit</code> (or fewer) Tournaments sorted by the
+     *         <code>sortCondition</code> condition, starting at offset
+     *         <code>offset</code>.
+     */
+    public List<BraketTournament> getTournaments(String orderCondition, int offset,
+            int limit) throws UserNotLoggedInException, UserNotAdminException;
+
+    /**
      * Saves or updates the given collection of tournaments in the datastore.
      * 
      * @param tournaments

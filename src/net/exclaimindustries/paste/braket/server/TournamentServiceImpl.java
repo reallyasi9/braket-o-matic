@@ -61,7 +61,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
     public TournamentCollection getCurrentTournament() {
 
         Ref<BraketTournament> tournament = CurrentTournament.getCurrentTournament();
-        
+
         if (tournament == null) {
             return new TournamentCollection();
         }
@@ -763,5 +763,17 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
             }
 
         });
+    }
+
+    @Override
+    public List<BraketTournament> getTournaments(String orderCondition, int offset,
+            int limit) throws UserNotLoggedInException, UserNotAdminException {
+        LogInServiceHelper.assertAdmin();
+
+        List<BraketTournament> tournamentList =
+                OfyService.ofy().load().type(BraketTournament.class)
+                        .order(orderCondition).offset(offset).limit(limit).list();
+
+        return new ArrayList<BraketTournament>(tournamentList);
     }
 }
