@@ -17,6 +17,8 @@
 
 package net.exclaimindustries.paste.braket.shared;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 /**
  * This exception notifies the recipient that most functions of the braket will
  * fail because no tournament is ongoing.
@@ -24,23 +26,24 @@ package net.exclaimindustries.paste.braket.shared;
  * @author paste
  * 
  */
-public class NoCurrentTournamentException extends Exception {
+public class NoCurrentTournamentException extends Exception implements
+		IsSerializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public NoCurrentTournamentException() {
-    }
+	public NoCurrentTournamentException() {
+	}
 
-    public NoCurrentTournamentException(String message) {
-        super(message);
-    }
+	public NoCurrentTournamentException(String message) {
+		super(message);
+	}
 
-    public NoCurrentTournamentException(Throwable cause) {
-        super(cause);
-    }
+	public NoCurrentTournamentException(Throwable cause) {
+		super(cause);
+	}
 
-    public NoCurrentTournamentException(String message, Throwable cause) {
-        super(message, cause);
-    }
+	public NoCurrentTournamentException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
 }
