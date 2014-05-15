@@ -5,10 +5,30 @@
 	
 	</ui:style>
 	<g:TabLayoutPanel ui:field="panel" barUnit="PT"
-		barHeight="20">
+		barHeight="24">
 		<g:tab>
 			<g:header>Tournament</g:header>
 			<my:TournamentAdminTab />
+		</g:tab>
+		<g:tab>
+			<g:header>Teams</g:header>
+			<!-- my:TeamAdminTab / -->
+			<g:Label>Hello</g:Label>
+		</g:tab>
+		<g:tab>
+			<g:header>Games</g:header>
+			<!-- my:GameAdminTab / -->
+			<g:Label>Hola</g:Label>
+		</g:tab>
+		<g:tab>
+			<g:header>Users</g:header>
+			<!-- my:UserAdminTab / -->
+			<g:Label>Salut</g:Label>
+		</g:tab>
+		<g:tab>
+			<g:header>Backends</g:header>
+			<!-- my:BackendAdminTab / -->
+			<g:Label>Konnichi-wa</g:Label>
 		</g:tab>
 	</g:TabLayoutPanel>
 </ui:UiBinder> 
