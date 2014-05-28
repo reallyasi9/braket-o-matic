@@ -43,225 +43,251 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 
-    // Error pages
-    private static String ERROR_500 = "500.html";
+	// Error pages
+	private static String ERROR_500 = "500.html";
 
-    // Logger specific to this object
-    private Logger logger = Logger.getLogger(this.getClass().getSimpleName());
+	// Logger specific to this object
+	private Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-    // Layout
-    private BraketAppLayout layout = new BraketAppLayout();
+	// Layout
+	private BraketAppLayout layout = new BraketAppLayout();
 
-    // Local cached values
-    private BraketUser currentUser;
-    private TournamentCollection currentTournamentCollection;
+	// Local cached values
+	private BraketUser currentUser;
+	private TournamentCollection currentTournamentCollection;
 
-    // Async services
+	// Async services
 
-    // Callbacks
-    private RunAsyncCallback braketDisplayCallback = new RunAsyncCallback() {
+	// Callbacks
+	/**
+	 * A callback that creates the braket display after a user has logged in.
+	 * TODO: Add the UI elements required for the display
+	 */
+	private RunAsyncCallback braketDisplayCallback = new RunAsyncCallback() {
 
-        @Override
-        public void onFailure(Throwable reason) {
-            // TODO Auto-generated method stub
+		@Override
+		public void onFailure(Throwable reason) {
+			// TODO Auto-generated method stub
 
-        }
+		}
 
-        @Override
-        public void onSuccess() {
-            // TODO Auto-generated method stub
-            layout.setCenter(new HTMLPanel("braket goes here"));
-        }
+		@Override
+		public void onSuccess() {
+			// TODO Auto-generated method stub
+			layout.setCenter(new HTMLPanel("braket goes here"));
+		}
 
-    };
+	};
 
-    private AsyncCallback<BraketUser> userLogInCallback = new AsyncCallback<BraketUser>() {
+	/**
+	 * A callback called immediately after the user goes through the log-in
+	 * process.
+	 */
+	private AsyncCallback<BraketUser> userLogInCallback = new AsyncCallback<BraketUser>() {
 
-        @Override
-        public void onFailure(Throwable caught) {
-            // This is bad. Login should never fail.
-            logger.log(Level.SEVERE,
-                    "login failed: " + caught.getLocalizedMessage());
-            Window.Location.assign(GWT.getHostPageBaseURL() + ERROR_500);
-        }
+		/**
+		 * Failure means a server error happend (not that the user failed to log
+		 * in).
+		 */
+		@Override
+		public void onFailure(Throwable caught) {
+			// This is bad. Login should never fail.
+			logger.log(Level.SEVERE,
+					"login failed: " + caught.getLocalizedMessage());
+			Window.Location.assign(GWT.getHostPageBaseURL() + ERROR_500);
+		}
 
-        @Override
-        public void onSuccess(BraketUser result) {
-            // TODO Auto-generated method stub
-            currentUser = result;
+		/**
+		 * Success means that the user returned from Google's log-in page and a
+		 * BraketUser object representing the result has been created.
+		 * 
+		 * @param result
+		 *            An object representing the result of the log-in operation.
+		 *            The method <code>result.isLoggedIn()</code> can be queried
+		 *            to determine whether or not a recognized user is logged
+		 *            in.
+		 */
+		@Override
+		public void onSuccess(BraketUser result) {
+			// TODO Auto-generated method stub
+			currentUser = result;
 
-            // Fire the history event while everything else is loading
-            History.fireCurrentHistoryState();
+			// Fire the history event while everything else is loading
+			History.fireCurrentHistoryState();
 
-            if (currentUser.isLoggedIn()) {
-                logger.log(Level.INFO, "user [" + currentUser.getId()
-                        + "] logged in");
+			if (currentUser.isLoggedIn()) {
+				logger.log(Level.INFO, "user [" + currentUser.getId()
+						+ "] logged in");
 
-                // Make a status panel
-                displayUserStatusPanel();
+				// Make a status panel
+				displayUserStatusPanel();
 
-                // Attempt to make the menu panel
-                getCurrentTournament();
+				// Attempt to make the menu panel
+				getCurrentTournament();
 
-            } else {
-                // Note that, if not logged in, there is no current
-                // tournament!
-                logger.log(Level.INFO, "user not logged in");
-                displaySignInButton();
-            }
+			} else {
+				// Note that, if not logged in, there is no current
+				// tournament!
+				logger.log(Level.INFO, "user not logged in");
+				displaySignInButton();
+			}
 
-        }
+		}
 
-    };
+	};
 
-    private AsyncCallback<TournamentCollection> currentTournamentCallback = new AsyncCallback<TournamentCollection>() {
+	private AsyncCallback<TournamentCollection> currentTournamentCallback = new AsyncCallback<TournamentCollection>() {
 
-        @Override
-        public void onFailure(Throwable caught) {
-            logger.log(Level.SEVERE, "getting current tournament failed: "
-                    + caught.getLocalizedMessage());
-            // TODO deal with this?
-        }
+		@Override
+		public void onFailure(Throwable caught) {
+			logger.log(Level.SEVERE, "getting current tournament failed: "
+					+ caught.getLocalizedMessage());
+			// TODO deal with this?
+		}
 
-        @Override
-        public void onSuccess(TournamentCollection result) {
-            currentTournamentCollection = result;
+		@Override
+		public void onSuccess(TournamentCollection result) {
+			currentTournamentCollection = result;
 
-            // Make the menu, given we now know if the tournament has
-            // started or not.
-            displayMenu();
-        }
+			// Make the menu, given we now know if the tournament has
+			// started or not.
+			displayMenu();
+		}
 
-    };
+	};
 
-    /**
-     * Process the incoming history token and route the user appropriately
-     */
-    @Override
-    public void onValueChange(ValueChangeEvent<String> event) {
+	/**
+	 * Process the incoming history token and route the user appropriately.
+	 * These actions should only result in asynchronous loads. Other things
+	 * happen after the call to <code>History.fireCurrentHistoryState()</code>
+	 * that, if circumvented with a synchronous load here, might result in bad
+	 * behavior of the site.
+	 */
+	@Override
+	public void onValueChange(ValueChangeEvent<String> event) {
 
-        // If you're not logged in, all you get is the log-in page
+		// If you're not logged in, all you get is the log-in page
 
-        if (currentUser == null || !currentUser.isLoggedIn()) {
-            // Make the log-in info stuff
-            logger.log(Level.INFO, "user not logged in: displaying login info");
-            layout.setCenter(new LogInPage());
-            return;
-        }
+		if (currentUser == null || !currentUser.isLoggedIn()) {
+			// Make the log-in info stuff
+			logger.log(Level.INFO, "user not logged in: displaying login info");
+			layout.setCenter(new LogInPage());
+			return;
+		}
 
-        String eventString = event.getValue();
-        logger.log(Level.INFO, "received history event string [" + eventString
-                + "]");
-        if (eventString.equals(UiConstants.HistoryToken.ABOUT)) {
-            // TODO
-            logger.log(Level.INFO, "loading about page");
-        } else if (eventString.isEmpty()
-                || eventString
-                        .equals(UiConstants.HistoryToken.TOURNAMENT_STATUS)) {
-            // TODO
-            logger.log(Level.INFO, "loading tournament status page");
-        } else if (eventString.equals(UiConstants.HistoryToken.MY_BRACKET)) {
-            logger.log(Level.INFO, "loading user bracket page");
-            GWT.runAsync(braketDisplayCallback);
-        } else if (eventString.equals(UiConstants.HistoryToken.ADMIN)) {
-            logger.log(Level.INFO, "loading admin page");
-            // TODO Make sure the user is logged in as an admin
-            if (!currentUser.isAdmin()) {
-                Toast.showErrorToast("You need to be an administrator to use this function");
-            } else {
-                layout.setCenter(new BraketAdminLayout());
-            }
-        } else if (eventString.equals(UiConstants.HistoryToken.USER_OPTIONS)) {
-            logger.log(Level.INFO, "loading user options page");
-            // TODO
-        } else if (eventString.equals(UiConstants.HistoryToken.LEADERBOARDS)) {
-            logger.log(Level.INFO, "loading leaderboard page");
-            // TODO
-        } else if (eventString.equals(UiConstants.HistoryToken.EDIT_USERS)) {
-            logger.log(Level.INFO, "loading edit users dialog");
-            // TODO
-        } else if (eventString.equals(UiConstants.HistoryToken.EDIT_TEAMS)) {
-            logger.log(Level.INFO, "loading edit teams dialog");
-            // TODO
-        } else if (eventString.equals(UiConstants.HistoryToken.EDIT_GAMES)) {
-            logger.log(Level.INFO, "loading edit games dialog");
-            // TODO
-        } else if (eventString.equals(UiConstants.HistoryToken.EXCITE_O_MATIC)) {
-            logger.log(Level.INFO, "loading excite-o-matic");
-            // TODO
-        } else {
-            logger.log(Level.WARNING, "history event [" + eventString
-                    + "] not understood");
-            // TODO
-        }
-    }
+		String eventString = event.getValue();
+		logger.log(Level.INFO, "received history event string [" + eventString
+				+ "]");
+		if (eventString.equals(UiConstants.HistoryToken.ABOUT)) {
+			// TODO Make an "About" page
+			logger.log(Level.INFO, "loading about page");
+		} else if (eventString.isEmpty()
+				|| eventString
+						.equals(UiConstants.HistoryToken.TOURNAMENT_STATUS)) {
+			// TODO Make a "Tournament Statue" page
+			logger.log(Level.INFO, "loading tournament status page");
+		} else if (eventString.equals(UiConstants.HistoryToken.MY_BRACKET)) {
+			logger.log(Level.INFO, "loading user bracket page");
+			GWT.runAsync(braketDisplayCallback);
+		} else if (eventString.equals(UiConstants.HistoryToken.ADMIN)) {
+			logger.log(Level.INFO, "loading admin page");
+			// Make sure the user is logged in as an admin
+			if (!currentUser.isAdmin()) {
+				Toast.showErrorToast("You need to be an administrator to use this function");
+			} else {
+				layout.setCenter(new BraketAdminLayout());
+			}
+		} else if (eventString.equals(UiConstants.HistoryToken.USER_OPTIONS)) {
+			logger.log(Level.INFO, "loading user options page");
+			// TODO Make a "User Options" page
+		} else if (eventString.equals(UiConstants.HistoryToken.LEADERBOARDS)) {
+			logger.log(Level.INFO, "loading leaderboard page");
+			// TODO Make a "Leaderboard" page.
+		} else if (eventString.equals(UiConstants.HistoryToken.EDIT_USERS)) {
+			logger.log(Level.INFO, "loading edit users dialog");
+			// TODO Make an "Edit Users" page (perhaps a tab in Admin?)
+		} else if (eventString.equals(UiConstants.HistoryToken.EDIT_TEAMS)) {
+			logger.log(Level.INFO, "loading edit teams dialog");
+			// TODO Make an "Edit Teams" page (perhaps a tab in Admin?)
+		} else if (eventString.equals(UiConstants.HistoryToken.EDIT_GAMES)) {
+			logger.log(Level.INFO, "loading edit games dialog");
+			// TODO Make an "Edit Games" page (perhaps a tab in Admin?)
+		} else if (eventString.equals(UiConstants.HistoryToken.EXCITE_O_MATIC)) {
+			logger.log(Level.INFO, "loading excite-o-matic");
+			// TODO Make an "Excite-o-Matic" page
+		} else {
+			logger.log(Level.WARNING, "history event [" + eventString
+					+ "] not understood");
+			// TODO Reconsider whether doing nothing here is the right way to end.
+		}
+	}
 
-    /**
-     * After getting the current tournament and current user, build the menu.
-     */
-    private void displayMenu() {
-        // The current tournament might be null.
-        layout.addMenu(new BraketMenu(currentTournamentCollection
-                .getTournament(), currentUser));
-    }
+	/**
+	 * After getting the current tournament and current user, build the menu.
+	 */
+	private void displayMenu() {
+		// The current tournament might be null.
+		layout.addMenu(new BraketMenu(currentTournamentCollection
+				.getTournament(), currentUser));
+	}
 
-    /**
-     * Asynchronously get the current tournament information and use it to build
-     * the rest of the UI
-     */
-    private void getCurrentTournament() {
+	/**
+	 * Asynchronously get the current tournament information and use it to build
+	 * the rest of the UI
+	 */
+	private void getCurrentTournament() {
 
-        // Get the tournament and attempt to build the menu
-        TournamentServiceAsync tournamentServiceRPC = GWT
-                .create(TournamentService.class);
-        tournamentServiceRPC.getCurrentTournament(currentTournamentCallback);
+		// Get the tournament and attempt to build the menu
+		TournamentServiceAsync tournamentServiceRPC = GWT
+				.create(TournamentService.class);
+		tournamentServiceRPC.getCurrentTournament(currentTournamentCallback);
 
-    }
+	}
 
-    /**
-     * Make the UserStatusPanel and display it
-     */
-    private void displayUserStatusPanel() {
+	/**
+	 * Make the UserStatusPanel and display it
+	 */
+	private void displayUserStatusPanel() {
 
-        // Make a status panel
-        UserStatusPanel userStatusPanel = new UserStatusPanel(currentUser);
+		// Make a status panel
+		UserStatusPanel userStatusPanel = new UserStatusPanel(currentUser);
 
-        // Add the panel to the header of the layout
-        layout.addToHeader(userStatusPanel);
+		// Add the panel to the header of the layout
+		layout.addToHeader(userStatusPanel);
 
-        // Fade the panel in
-        // FadeAnimation animation = new
-        // FadeAnimation(userStatusPanel.getElement());
-        // animation.fadeIn(500);
-    }
+		// Fade the panel in
+		// FadeAnimation animation = new
+		// FadeAnimation(userStatusPanel.getElement());
+		// animation.fadeIn(500);
+	}
 
-    /**
-     * Make a login button and display it.
-     */
-    private void displaySignInButton() {
+	/**
+	 * Make a login button and display it.
+	 */
+	private void displaySignInButton() {
 
-        // Add button where it belongs
-        layout.addToHeader(new UserLogInButton(currentUser));
+		// Add button where it belongs
+		layout.addToHeader(new UserLogInButton(currentUser));
 
-    }
+	}
 
-    /**
-     * Initialize the module and get ready for fun!
-     */
-    @Override
-    public void onModuleLoad() {
+	/**
+	 * Initialize the module and get ready for fun!
+	 */
+	@Override
+	public void onModuleLoad() {
 
-        // Register myself as a history listener
-        History.addValueChangeHandler(this);
+		// Register myself as a history listener
+		History.addValueChangeHandler(this);
 
-        // Add the application layout to the root panel
-        RootLayoutPanel.get().add(layout);
+		// Add the application layout to the root panel
+		RootLayoutPanel.get().add(layout);
 
-        // Attempt login and get the current user
-        LogInServiceAsync logInServiceRPC = GWT.create(LogInService.class);
-        logInServiceRPC.logIn(Window.Location.getHref(), userLogInCallback);
+		// Attempt login and get the current user
+		LogInServiceAsync logInServiceRPC = GWT.create(LogInService.class);
+		logInServiceRPC.logIn(Window.Location.getHref(), userLogInCallback);
 
-        // The history event cannot be fired until after the user is logged in
-        // (or not)
-    }
+		// The history event cannot be fired until after the user is logged in
+		// (or not)
+	}
 }
