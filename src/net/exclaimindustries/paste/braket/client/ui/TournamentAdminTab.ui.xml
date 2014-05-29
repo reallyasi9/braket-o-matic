@@ -4,6 +4,7 @@
 	<ui:style>
 	
 	</ui:style>
+	
 	<g:FlowPanel>
 		<c:DataGrid ui:field="dataGrid" />
 	</g:FlowPanel>

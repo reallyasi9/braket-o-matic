@@ -86,8 +86,8 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
 	private AsyncCallback<BraketUser> userLogInCallback = new AsyncCallback<BraketUser>() {
 
 		/**
-		 * Failure means a server error happend (not that the user failed to log
-		 * in).
+		 * Failure means a server error happened (not that the user failed to
+		 * log in).
 		 */
 		@Override
 		public void onFailure(Throwable caught) {
@@ -176,20 +176,36 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
 		}
 
 		String eventString = event.getValue();
-		logger.log(Level.INFO, "received history event string [" + eventString
-				+ "]");
-		if (eventString.equals(UiConstants.HistoryToken.ABOUT)) {
+
+		// Yay Java 1.7!
+		switch (eventString) {
+
+		case UiConstants.HistoryToken.ABOUT:
 			// TODO Make an "About" page
 			logger.log(Level.INFO, "loading about page");
-		} else if (eventString.isEmpty()
-				|| eventString
-						.equals(UiConstants.HistoryToken.TOURNAMENT_STATUS)) {
-			// TODO Make a "Tournament Statue" page
-			logger.log(Level.INFO, "loading tournament status page");
-		} else if (eventString.equals(UiConstants.HistoryToken.MY_BRACKET)) {
+			break;
+
+		case UiConstants.HistoryToken.MY_BRACKET:
 			logger.log(Level.INFO, "loading user bracket page");
 			GWT.runAsync(braketDisplayCallback);
-		} else if (eventString.equals(UiConstants.HistoryToken.ADMIN)) {
+			break;
+
+		case UiConstants.HistoryToken.USER_OPTIONS:
+			logger.log(Level.INFO, "loading user options page");
+			// TODO Make a "User Options" page
+			break;
+
+		case UiConstants.HistoryToken.LEADERBOARDS:
+			logger.log(Level.INFO, "loading leaderboard page");
+			// TODO Make a "Leaderboard" page.
+			break;
+
+		case UiConstants.HistoryToken.EXCITE_O_MATIC:
+			logger.log(Level.INFO, "loading excite-o-matic");
+			// TODO Make an "Excite-o-Matic" page
+			break;
+
+		case UiConstants.HistoryToken.ADMIN:
 			logger.log(Level.INFO, "loading admin page");
 			// Make sure the user is logged in as an admin
 			if (!currentUser.isAdmin()) {
@@ -197,29 +213,21 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
 			} else {
 				layout.setCenter(new BraketAdminLayout());
 			}
-		} else if (eventString.equals(UiConstants.HistoryToken.USER_OPTIONS)) {
-			logger.log(Level.INFO, "loading user options page");
-			// TODO Make a "User Options" page
-		} else if (eventString.equals(UiConstants.HistoryToken.LEADERBOARDS)) {
-			logger.log(Level.INFO, "loading leaderboard page");
-			// TODO Make a "Leaderboard" page.
-		} else if (eventString.equals(UiConstants.HistoryToken.EDIT_USERS)) {
-			logger.log(Level.INFO, "loading edit users dialog");
-			// TODO Make an "Edit Users" page (perhaps a tab in Admin?)
-		} else if (eventString.equals(UiConstants.HistoryToken.EDIT_TEAMS)) {
-			logger.log(Level.INFO, "loading edit teams dialog");
-			// TODO Make an "Edit Teams" page (perhaps a tab in Admin?)
-		} else if (eventString.equals(UiConstants.HistoryToken.EDIT_GAMES)) {
-			logger.log(Level.INFO, "loading edit games dialog");
-			// TODO Make an "Edit Games" page (perhaps a tab in Admin?)
-		} else if (eventString.equals(UiConstants.HistoryToken.EXCITE_O_MATIC)) {
-			logger.log(Level.INFO, "loading excite-o-matic");
-			// TODO Make an "Excite-o-Matic" page
-		} else {
-			logger.log(Level.WARNING, "history event [" + eventString
-					+ "] not understood");
-			// TODO Reconsider whether doing nothing here is the right way to end.
+			break;
+
+		case UiConstants.HistoryToken.TOURNAMENT_STATUS:
+			// TODO Make a "Tournament Statue" page
+			logger.log(Level.INFO, "loading tournament status page");
+			break;
+
+		default:
+			Toast.showErrorToast("History token [" + eventString
+					+ "] not recognized");
+			logger.log(Level.WARNING, "History token [" + eventString
+					+ "] not recognized");
+			break;
 		}
+
 	}
 
 	/**

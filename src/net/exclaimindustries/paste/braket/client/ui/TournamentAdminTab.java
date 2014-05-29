@@ -28,175 +28,203 @@ import com.google.gwt.view.client.HasData;
 
 public class TournamentAdminTab extends Composite {
 
-    private static TournamentAdminTabUiBinder uiBinder = GWT
-            .create(TournamentAdminTabUiBinder.class);
+	/**
+	 * UIBinder boilerplate
+	 */
+	private static TournamentAdminTabUiBinder uiBinder = GWT
+			.create(TournamentAdminTabUiBinder.class);
 
-    interface TournamentAdminTabUiBinder extends
-            UiBinder<Widget, TournamentAdminTab> {
-    }
+	/**
+	 * UIBinder boilerplate
+	 */
+	interface TournamentAdminTabUiBinder extends
+			UiBinder<Widget, TournamentAdminTab> {
+	}
 
-    @UiField(provided = true)
-    DataGrid<BraketTournament> dataGrid;
+	/**
+	 * Container for Tournament data
+	 */
+	@UiField(provided = true)
+	DataGrid<BraketTournament> dataGrid;
 
-    private TournamentServiceAsync tournamentService = GWT
-            .create(TournamentService.class);
+	/**
+	 * Service for reading and editing Tournament data
+	 */
+	private TournamentServiceAsync tournamentService = GWT
+			.create(TournamentService.class);
 
-    private final AsyncDataProvider<BraketTournament> dataProvider =
-            new AsyncDataProvider<BraketTournament>(BraketTournament.KEY_PROVIDER) {
+	/**
+	 * Provider for BraketTournaments to handle sort requests, offsets, and the
+	 * like.
+	 */
+	private final AsyncDataProvider<BraketTournament> dataProvider = new AsyncDataProvider<BraketTournament>(
+			BraketTournament.KEY_PROVIDER) {
 
-                private String sortCondition = "startTime";
+		private BraketTournament.IndexName sortCondition = BraketTournament.IndexName
+				.valueOf("startTime");
 
-                public void setSortCondition(String condition) {
-                    sortCondition = condition;
-                }
+		public void setSortCondition(String condition) {
+			sortCondition = BraketTournament.IndexName.valueOf(condition);
+		}
 
-                @Override
-                protected void onRangeChanged(HasData<BraketTournament> display) {
-                    final int offset = display.getVisibleRange().getStart();
-                    int limit = display.getVisibleRange().getLength();
-                    // RPC call to get more tournaments
-                    tournamentService.getTournaments(sortCondition, offset, limit,
-                            new AsyncCallback<List<BraketTournament>>() {
+		@Override
+		protected void onRangeChanged(HasData<BraketTournament> display) {
+			final int offset = display.getVisibleRange().getStart();
+			int limit = display.getVisibleRange().getLength();
+			// RPC call to get more tournaments
+			tournamentService.getTournaments(sortCondition, offset, limit,
+					new AsyncCallback<List<BraketTournament>>() {
 
-                                @Override
-                                public void onFailure(Throwable caught) {
-                                    // TODO Auto-generated method stub
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
 
-                                }
+						}
 
-                                @Override
-                                public void onSuccess(List<BraketTournament> result) {
-                                    updateRowData(offset, result);
-                                }
+						@Override
+						public void onSuccess(List<BraketTournament> result) {
+							updateRowData(offset, result);
+						}
 
-                            });
-                }
+					});
+		}
 
-            };
+	};
 
-    /**
-     * The list of pending changes.
-     */
-    private List<PendingChange<?, ?>> pendingChanges =
-            new ArrayList<PendingChange<?, ?>>();
+	/**
+	 * The list of pending changes.
+	 */
+	private List<PendingChange<?, ?>> pendingChanges = new ArrayList<PendingChange<?, ?>>();
 
-    public TournamentAdminTab() {
+	public TournamentAdminTab() {
 
-        dataGrid = new DataGrid<BraketTournament>(20, BraketTournament.KEY_PROVIDER);
+		dataGrid = new DataGrid<BraketTournament>(20,
+				BraketTournament.KEY_PROVIDER);
 
-        // Create columns
-        // Name of the tournament
-        Column<BraketTournament, String> nameColumn =
-                new Column<BraketTournament, String>(new TextCell()) {
-                    @Override
-                    public String getValue(BraketTournament object) {
-                        return object.getName();
-                    }
-                };
-        nameColumn.setFieldUpdater(new FieldUpdater<BraketTournament, String>() {
-            @Override
-            public void update(int index, BraketTournament object, String value) {
-                pendingChanges.add(new PendingChange<BraketTournament, String>(
-                        object, value) {
-                    @Override
-                    protected void doCommit(BraketTournament cell, String value) {
-                        cell.setName(value);
-                    }
-                });
-            }
-        });
-        dataGrid.addColumn(nameColumn, "Name");
+		// Create columns
+		// Name of the tournament
+		Column<BraketTournament, String> nameColumn = new Column<BraketTournament, String>(
+				new TextCell()) {
+			@Override
+			public String getValue(BraketTournament object) {
+				return object.getName();
+			}
+		};
+		nameColumn
+				.setFieldUpdater(new FieldUpdater<BraketTournament, String>() {
+					@Override
+					public void update(int index, BraketTournament object,
+							String value) {
+						pendingChanges
+								.add(new PendingChange<BraketTournament, String>(
+										object, value) {
+									@Override
+									protected void doCommit(
+											BraketTournament cell, String value) {
+										cell.setName(value);
+									}
+								});
+					}
+				});
+		dataGrid.addColumn(nameColumn, "Name");
 
-        // Date and time the tournament begins
-        Column<BraketTournament, Date> startTimeColumn =
-                new Column<BraketTournament, Date>(new DateCell(
-                        DateTimeFormat.getFormat(PredefinedFormat.RFC_2822))) {
-                    @Override
-                    public Date getValue(BraketTournament object) {
-                        return object.getStartTime();
-                    }
-                };
-        startTimeColumn.setFieldUpdater(new FieldUpdater<BraketTournament, Date>() {
-            @Override
-            public void update(int index, BraketTournament object, Date value) {
-                pendingChanges.add(new PendingChange<BraketTournament, Date>(object,
-                        value) {
-                    @Override
-                    protected void doCommit(BraketTournament cell, Date value) {
-                        cell.setStartTime(value);
-                    }
-                });
-            }
-        });
-        dataGrid.addColumn(startTimeColumn, "Starting Time");
-        startTimeColumn.setSortable(true);
+		// Date and time the tournament begins
+		Column<BraketTournament, Date> startTimeColumn = new Column<BraketTournament, Date>(
+				new DateCell(
+						DateTimeFormat.getFormat(PredefinedFormat.RFC_2822))) {
+			@Override
+			public Date getValue(BraketTournament object) {
+				return object.getStartTime();
+			}
+		};
+		startTimeColumn
+				.setFieldUpdater(new FieldUpdater<BraketTournament, Date>() {
+					@Override
+					public void update(int index, BraketTournament object,
+							Date value) {
+						pendingChanges
+								.add(new PendingChange<BraketTournament, Date>(
+										object, value) {
+									@Override
+									protected void doCommit(
+											BraketTournament cell, Date value) {
+										cell.setStartTime(value);
+									}
+								});
+					}
+				});
+		dataGrid.addColumn(startTimeColumn, "Starting Time");
+		startTimeColumn.setSortable(true);
 
-        // Buy-in Value
-        Column<BraketTournament, Number> buyInColumn =
-                new Column<BraketTournament, Number>(new NumberCell(
-                        NumberFormat.getCurrencyFormat())) {
-                    @Override
-                    public Number getValue(BraketTournament object) {
-                        return object.getBuyInValue();
-                    }
-                };
-        buyInColumn.setFieldUpdater(new FieldUpdater<BraketTournament, Number>() {
-            @Override
-            public void update(int index, BraketTournament object, Number value) {
-                pendingChanges.add(new PendingChange<BraketTournament, Number>(
-                        object, value) {
-                    @Override
-                    protected void doCommit(BraketTournament cell, Number value) {
-                        cell.setBuyInValue((Double) value);
-                    }
-                });
-            }
-        });
-        dataGrid.addColumn(buyInColumn, "Buy-In");
+		// Buy-in Value
+		Column<BraketTournament, Number> buyInColumn = new Column<BraketTournament, Number>(
+				new NumberCell(NumberFormat.getCurrencyFormat())) {
+			@Override
+			public Number getValue(BraketTournament object) {
+				return object.getBuyInValue();
+			}
+		};
+		buyInColumn
+				.setFieldUpdater(new FieldUpdater<BraketTournament, Number>() {
+					@Override
+					public void update(int index, BraketTournament object,
+							Number value) {
+						pendingChanges
+								.add(new PendingChange<BraketTournament, Number>(
+										object, value) {
+									@Override
+									protected void doCommit(
+											BraketTournament cell, Number value) {
+										cell.setBuyInValue((Double) value);
+									}
+								});
+					}
+				});
+		dataGrid.addColumn(buyInColumn, "Buy-In");
 
-        initWidget(uiBinder.createAndBindUi(this));
-    }
+		initWidget(uiBinder.createAndBindUi(this));
+	}
 
-    /*
-     * The following is from the GWT CellSampler showcase
-     * http://gwt.googleusercontent
-     * .com/samples/Showcase/Showcase.html#!CwCellSampler
-     */
+	/*
+	 * The following is from the GWT CellSampler showcase
+	 * http://gwt.googleusercontent
+	 * .com/samples/Showcase/Showcase.html#!CwCellSampler
+	 */
 
-    /**
-     * A pending change to a column. Changes aren't committed immediately to
-     * illustrate that cells can remember their pending changes.
-     * 
-     * @param <DataType>
-     *            the type stored in the table row
-     * @param <T>
-     *            the data type being changed
-     */
-    private abstract static class PendingChange<DataType, T> {
-        private final DataType cell;
-        private final T value;
+	/**
+	 * A pending change to a column. Changes aren't committed immediately to
+	 * illustrate that cells can remember their pending changes.
+	 * 
+	 * @param <DataType>
+	 *            the type stored in the table row
+	 * @param <T>
+	 *            the data type being changed
+	 */
+	private abstract static class PendingChange<DataType, T> {
+		private final DataType cell;
+		private final T value;
 
-        public PendingChange(DataType cell, T value) {
-            this.cell = cell;
-            this.value = value;
-        }
+		public PendingChange(DataType cell, T value) {
+			this.cell = cell;
+			this.value = value;
+		}
 
-        /**
-         * Commit the change to the cell.
-         */
-        public void commit() {
-            doCommit(cell, value);
-        }
+		/**
+		 * Commit the change to the cell.
+		 */
+		public void commit() {
+			doCommit(cell, value);
+		}
 
-        /**
-         * Update the appropriate field in the {@link ContactInfo}.
-         * 
-         * @param cell
-         *            the cell to update
-         * @param value
-         *            the new value
-         */
-        protected abstract void doCommit(DataType cell, T value);
-    }
+		/**
+		 * Update the appropriate field in the {@link ContactInfo}.
+		 * 
+		 * @param cell
+		 *            the cell to update
+		 * @param value
+		 *            the new value
+		 */
+		protected abstract void doCommit(DataType cell, T value);
+	}
 
 }
