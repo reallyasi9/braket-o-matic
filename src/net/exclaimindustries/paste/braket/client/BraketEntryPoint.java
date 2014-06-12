@@ -216,7 +216,8 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
 			break;
 
 		case UiConstants.HistoryToken.TOURNAMENT_STATUS:
-			// TODO Make a "Tournament Statue" page
+		case "":
+			// TODO Make a "Tournament Status" page
 			logger.log(Level.INFO, "loading tournament status page");
 			break;
 
