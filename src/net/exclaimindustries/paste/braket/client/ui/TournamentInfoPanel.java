@@ -1,5 +1,7 @@
 package net.exclaimindustries.paste.braket.client.ui;
 
+import java.util.Date;
+
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.TournamentService;
 import net.exclaimindustries.paste.braket.client.TournamentServiceAsync;
@@ -16,6 +18,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
+import com.summatech.gwt.client.HourMinutePicker;
 
 public class TournamentInfoPanel extends Composite {
 
@@ -31,15 +34,15 @@ public class TournamentInfoPanel extends Composite {
 
   @UiField
   DateBox startDateBox;
-  
-  //@UiField
-  //TimeBox startTimeBox;
+
+  @UiField(provided = true)
+  HourMinutePicker startTimeBox;
 
   @UiField
   Button createButton;
 
-  // @UiField
-  // Button updateButton;
+  @UiField
+  Button updateButton;
 
   private BraketTournament tournament;
 
@@ -50,13 +53,14 @@ public class TournamentInfoPanel extends Composite {
       .create(TournamentService.class);
 
   public TournamentInfoPanel() {
+    startTimeBox = new HourMinutePicker(HourMinutePicker.PickerFormat._24_HOUR);
     initWidget(uiBinder.createAndBindUi(this));
-    
+
     DateTimeFormat dateFormat = DateTimeFormat.getFormat("yyyy.MM.dd");
     startDateBox.setFormat(new DateBox.DefaultFormat(dateFormat));
 
     // Initialize the tournament to null.
-    setTournament(null);
+    setSelectedTournament(null);
 
     // Define buttons
     createButton.addClickHandler(new ClickHandler() {
@@ -64,7 +68,7 @@ public class TournamentInfoPanel extends Composite {
       @Override
       public void onClick(ClickEvent event) {
         tournament = new BraketTournament();
-        tournament.setName(nameBox.getText());
+        updateTournamentFromInput();
         // TODO more stuff here
         tournamentService.storeTournament(tournament,
             new AsyncCallback<Long>() {
@@ -72,13 +76,42 @@ public class TournamentInfoPanel extends Composite {
               @Override
               public void onFailure(Throwable caught) {
                 // TODO Auto-generated method stub
-                
+
               }
 
               @Override
               public void onSuccess(Long result) {
+                // TODO add to list
                 tournament.setId(result);
-                setTournament(tournament);
+                setSelectedTournament(tournament);
+              }
+
+            });
+      }
+
+    });
+    
+    updateButton.addClickHandler(new ClickHandler() {
+
+      @Override
+      public void onClick(ClickEvent event) {
+        if (tournament == null) {
+          return;
+        }
+        updateTournamentFromInput();
+        // TODO more stuff here
+        tournamentService.storeTournament(tournament,
+            new AsyncCallback<Long>() {
+
+              @Override
+              public void onFailure(Throwable caught) {
+                // TODO Auto-generated method stub
+
+              }
+
+              @Override
+              public void onSuccess(Long result) {
+                // Notify that things went well?
               }
 
             });
@@ -87,12 +120,35 @@ public class TournamentInfoPanel extends Composite {
     });
   }
 
-  public void setTournament(BraketTournament tourn) {
+  public void setSelectedTournament(BraketTournament tourn) {
     this.tournament = tourn;
-    // updateButton.setEnabled(tourn != null);
-    if (tourn != null) {
-      nameBox.setText(tourn.getName());
-      startDateBox.setValue(tourn.getStartTime());
+    updateButton.setEnabled(tourn != null);
+    if (tournament != null) {
+      updateInputFromTournament();
+    }
+  }
+
+  private void updateTournamentFromInput() {
+    if (tournament != null) {
+      tournament.setName(nameBox.getText());
+      Date startDate = startDateBox.getValue();
+      Long startDateTimeMillisec = startDate.getTime() + startTimeBox.getMinutes() * 60000;
+      Date startDateTime = new Date(startDateTimeMillisec);
+      tournament.setStartTime(startDateTime);
+    }
+  }
+
+  private void updateInputFromTournament() {
+    if (tournament != null) {
+      nameBox.setText(tournament.getName());
+      Date startDate = tournament.getStartTime();
+      // Have to use string manipulation because GWT does not emulate Calendar client-side
+      DateTimeFormat dtfHourMinute = DateTimeFormat.getFormat("HH:mm");
+      String hmStrings[] = dtfHourMinute.format(startDate).split(":");
+      int hours = Integer.parseInt(hmStrings[0]);
+      int minutes = Integer.parseInt(hmStrings[1]);
+      startDateBox.setValue(startDate);
+      startTimeBox.setTime("", hours, minutes);
     }
   }
 

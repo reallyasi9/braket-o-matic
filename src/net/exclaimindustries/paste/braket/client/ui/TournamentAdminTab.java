@@ -175,7 +175,7 @@ public class TournamentAdminTab extends Composite {
     selectionModel
         .addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
           public void onSelectionChange(SelectionChangeEvent event) {
-            tournamentInfoPanel.setTournament(selectionModel
+            tournamentInfoPanel.setSelectedTournament(selectionModel
                 .getSelectedObject());
           }
         });
