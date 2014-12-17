@@ -105,7 +105,7 @@ public class BraketTournament extends BraketSelectable {
 	/**
 	 * The value of an upset win
 	 */
-	private double upsetValue = 0;
+	private Double upsetValue = 0.;
 
 	/**
 	 * The seeds of the first round.
@@ -180,11 +180,11 @@ public class BraketTournament extends BraketSelectable {
 		this.gameMask = gameMask;
 	}
 
-	public double getUpsetValue() {
+	public Double getUpsetValue() {
 		return upsetValue;
 	}
 
-	public void setUpsetValue(double upsetValue) {
+	public void setUpsetValue(Double upsetValue) {
 		this.upsetValue = upsetValue;
 	}
 

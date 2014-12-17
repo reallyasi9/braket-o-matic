@@ -83,13 +83,17 @@ public interface TournamentService extends RemoteService {
 	 *            not (the Id is null), then the current tournament will no
 	 *            longer be associated with a valid tournament, and any RPC call
 	 *            to get the current tournament will return null.
+	 *            
+	 * @return The tournament that was passed (for proper atomic handling of
+	 *         async events)
+	 * 
 	 * @throws UserNotAdminException
 	 * @throws UserNotLoggedInException
 	 * 
 	 * @throws SecurityException
 	 *             If the user is not logged in as an administrator.
 	 */
-	public void setCurrentTournament(BraketTournament tournament)
+	public BraketTournament setCurrentTournament(BraketTournament tournament)
 			throws UserNotLoggedInException, UserNotAdminException;
 
 	/**

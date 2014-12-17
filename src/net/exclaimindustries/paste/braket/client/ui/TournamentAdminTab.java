@@ -67,7 +67,7 @@ public class TournamentAdminTab extends Composite {
     @Override
     public void render(Context context, BraketTournament value,
         SafeHtmlBuilder sb) {
-      // Value can be null, so do a null check..
+      // Value can be null, so do a null check.
       if (value == null) {
         return;
       }
@@ -148,7 +148,7 @@ public class TournamentAdminTab extends Composite {
   /**
    * An instance of the constants.
    */
-  private final MyConstants constants = GWT.create(MyConstants.class);
+  //private final MyConstants constants = GWT.create(MyConstants.class);
 
   public TournamentAdminTab() {
 

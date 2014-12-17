@@ -215,7 +215,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
 	 * (net.exclaimindustries.paste.braket.client.BraketTournament)
 	 */
 	@Override
-	public void setCurrentTournament(BraketTournament tournament)
+	public BraketTournament setCurrentTournament(BraketTournament tournament)
 			throws UserNotLoggedInException, UserNotAdminException {
 		LogInServiceHelper.assertAdmin();
 
@@ -226,6 +226,8 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
 		}
 		current.setTournament(tournament);
 		OfyService.ofy().save().entity(current).now();
+		
+		return tournament;
 	}
 
 	/*
