@@ -18,8 +18,9 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DoubleBox;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
@@ -48,16 +49,16 @@ public class TournamentInfoPanel extends Composite {
   HourMinutePicker startTimeBox;
 
   @UiField
-  CheckBox currentCheckBox;
+  Label currentLabel;
 
   @UiField
-  TextBox buyInBox;
+  DoubleBox buyInBox;
 
   // @UiField
   // TextBox payOutBox;
 
   @UiField
-  TextBox upsetBox;
+  DoubleBox upsetBox;
 
   @UiField
   Button createButton;
@@ -127,7 +128,7 @@ public class TournamentInfoPanel extends Composite {
       updateButton.setEnabled(false);
       createButton.setEnabled(false);
       selectButton.setEnabled(false);
-      
+
       tournament = new BraketTournament();
       updateTournamentFromInput();
 
@@ -154,7 +155,7 @@ public class TournamentInfoPanel extends Composite {
       tournamentService.storeTournament(tournament, storeTournamentCallback);
     }
   };
-  
+
   private ClickHandler selectCurrentTournamentHandler = new ClickHandler() {
 
     @Override
@@ -166,9 +167,10 @@ public class TournamentInfoPanel extends Composite {
         return;
       }
       selectButton.setEnabled(false);
-      tournamentService.setCurrentTournament(tournament, updateCurrentTournamentCallback);
+      tournamentService.setCurrentTournament(tournament,
+          updateCurrentTournamentCallback);
     }
-    
+
   };
 
   private AsyncCallback<TournamentCollection> getCurrentTournamentCallback = new AsyncCallback<TournamentCollection>() {
@@ -186,7 +188,7 @@ public class TournamentInfoPanel extends Composite {
 
     }
   };
-  
+
   private ChangeHandler changeHandler = new ChangeHandler() {
 
     @Override
@@ -196,7 +198,7 @@ public class TournamentInfoPanel extends Composite {
       }
       createButton.setEnabled(true);
     }
-    
+
   };
 
   // Methods ------------------------------------------------------------------
@@ -212,7 +214,7 @@ public class TournamentInfoPanel extends Composite {
 
     DateTimeFormat dateFormat = DateTimeFormat.getFormat("yyyy.MM.dd");
     startDateBox.setFormat(new DateBox.DefaultFormat(dateFormat));
-    
+
     nameBox.addChangeHandler(changeHandler);
     startDateBox.getTextBox().addChangeHandler(changeHandler);
     startTimeBox.addHandler(changeHandler, ChangeEvent.getType());
@@ -226,7 +228,7 @@ public class TournamentInfoPanel extends Composite {
     createButton.addClickHandler(createTournamentHandler);
 
     updateButton.addClickHandler(updateTournamentHandler);
-    
+
     selectButton.addClickHandler(selectCurrentTournamentHandler);
 
     // Lookup the current tournament
@@ -271,15 +273,16 @@ public class TournamentInfoPanel extends Composite {
       startDateBox.setValue(startDate);
       startTimeBox.setTime("", hours, minutes);
 
-      buyInBox.setValue(tournament.getBuyInValue().toString());
+      buyInBox.setValue(tournament.getBuyInValue());
 
-      upsetBox.setValue(tournament.getUpsetValue().toString());
+      upsetBox.setValue(tournament.getUpsetValue());
 
       if (currentTournament != null) {
-        currentCheckBox.setValue(tournament.getId() == currentTournament
-            .getId());
+        currentLabel
+            .setText(tournament.getId() == currentTournament.getId() ? "Yes"
+                : "No");
       } else {
-        currentCheckBox.setValue(false);
+        currentLabel.setText("No");
       }
     }
   }

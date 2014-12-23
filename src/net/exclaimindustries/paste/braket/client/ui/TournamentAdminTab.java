@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.TournamentService;
+import net.exclaimindustries.paste.braket.client.TournamentService.TournamentCollection;
 import net.exclaimindustries.paste.braket.client.TournamentServiceAsync;
 
 import com.google.gwt.cell.client.AbstractCell;
@@ -74,8 +75,15 @@ public class TournamentAdminTab extends Composite {
 
       sb.appendHtmlConstant("<table>");
 
+      // Add whether or not this is the current tournament
+      sb.appendHtmlConstant("<tr><td rowspan='2'>");
+      if (currentTournament != null && value.getId() == currentTournament.getId()) {
+        sb.appendHtmlConstant("&gt;");
+      }
+      sb.appendHtmlConstant("</td>");
+
       // Add the tournament name
-      sb.appendHtmlConstant("<tr><td>");
+      sb.appendHtmlConstant("<td>");
       sb.appendEscaped(value.getName());
 
       // Add the start time
@@ -91,6 +99,11 @@ public class TournamentAdminTab extends Composite {
    */
   private TournamentServiceAsync tournamentService = GWT
       .create(TournamentService.class);
+
+  /**
+   * Current tournament
+   */
+  static private BraketTournament currentTournament;
 
   /**
    * Provider for BraketTournaments to handle sort requests, offsets, and the
@@ -145,15 +158,34 @@ public class TournamentAdminTab extends Composite {
     String myDataGridEmpty();
   }
 
+  // Callbacks ////////////////////////////////////////////////////////////////
+
   /**
    * An instance of the constants.
    */
-  //private final MyConstants constants = GWT.create(MyConstants.class);
+  // private final MyConstants constants = GWT.create(MyConstants.class);
 
   public TournamentAdminTab() {
 
     // Initialize the widget
     initWidget(uiBinder.createAndBindUi(this));
+
+    tournamentService
+        .getCurrentTournament(new AsyncCallback<TournamentCollection>() {
+
+          @Override
+          public void onFailure(Throwable caught) {
+            // TODO Auto-generated method stub
+
+          }
+
+          @Override
+          public void onSuccess(TournamentCollection result) {
+            // TODO Auto-generated method stub
+            currentTournament = result.getTournament();
+          }
+
+        });
 
     // Initial TournamentCell
     TournamentCell tournamentCell = new TournamentCell();
