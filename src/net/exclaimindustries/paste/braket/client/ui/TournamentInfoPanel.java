@@ -1,7 +1,8 @@
 package net.exclaimindustries.paste.braket.client.ui;
 
+import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.List;
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.TournamentService;
 import net.exclaimindustries.paste.braket.client.TournamentService.TournamentCollection;
@@ -24,6 +25,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
+import com.google.gwt.view.client.AsyncDataProvider;
 import com.summatech.gwt.client.HourMinutePicker;
 
 public class TournamentInfoPanel extends Composite {
@@ -41,6 +43,9 @@ public class TournamentInfoPanel extends Composite {
 
   @UiField
   TextBox nameBox;
+  
+  @UiField
+  Label nameStatus;
 
   @UiField
   DateBox startDateBox;
@@ -75,6 +80,8 @@ public class TournamentInfoPanel extends Composite {
 
   private BraketTournament currentTournament;
 
+  private AsyncDataProvider<BraketTournament> dataProvider;
+  
   /**
    * Service for reading and editing Tournament data
    */
@@ -97,6 +104,10 @@ public class TournamentInfoPanel extends Composite {
     public void onSuccess(Long result) {
       // TODO add to list
       tournament.setId(result);
+      dataProvider.getKey(tournament);
+      List<BraketTournament> tournaments = new ArrayList<BraketTournament>();
+      tournaments.add(tournament);
+      dataProvider.updateRowData(Integer.MAX_VALUE, tournaments);
       setSelectedTournament(tournament);
       selectButton.setEnabled(true);
     }
@@ -132,9 +143,22 @@ public class TournamentInfoPanel extends Composite {
       tournament = new BraketTournament();
       updateTournamentFromInput();
 
-      // TODO more stuff here (like validation?)
-
-      tournamentService.storeTournament(tournament, storeTournamentCallback);
+      // Validate first
+      // TODO use a real validation engine
+      nameStatus.setText("");
+      boolean invalid = false;
+      if (tournament.getName().isEmpty()) {
+        nameStatus.setText("Tournament name cannot be empty");
+        invalid = true;
+      }
+      
+      if (!invalid) {
+        tournamentService.storeTournament(tournament, storeTournamentCallback);
+      } else {
+        updateButton.setEnabled(true);
+        createButton.setEnabled(true);
+        selectButton.setEnabled(true);
+      }
     }
   };
 
@@ -208,7 +232,9 @@ public class TournamentInfoPanel extends Composite {
    * 
    * Builds the UI and
    */
-  public TournamentInfoPanel() {
+  public TournamentInfoPanel(AsyncDataProvider<BraketTournament> dp) {
+    dataProvider = dp;
+    
     startTimeBox = new HourMinutePicker(HourMinutePicker.PickerFormat._24_HOUR);
     initWidget(uiBinder.createAndBindUi(this));
 

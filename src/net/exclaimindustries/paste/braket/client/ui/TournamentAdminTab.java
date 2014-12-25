@@ -49,7 +49,7 @@ public class TournamentAdminTab extends Composite {
   /**
    * Form for editing tournaments
    */
-  @UiField
+  @UiField(provided = true)
   TournamentInfoPanel tournamentInfoPanel;
 
   /**
@@ -167,6 +167,8 @@ public class TournamentAdminTab extends Composite {
 
   public TournamentAdminTab() {
 
+    tournamentInfoPanel = new TournamentInfoPanel(dataProvider);
+    
     // Initialize the widget
     initWidget(uiBinder.createAndBindUi(this));
 
@@ -181,7 +183,6 @@ public class TournamentAdminTab extends Composite {
 
           @Override
           public void onSuccess(TournamentCollection result) {
-            // TODO Auto-generated method stub
             currentTournament = result.getTournament();
           }
 
