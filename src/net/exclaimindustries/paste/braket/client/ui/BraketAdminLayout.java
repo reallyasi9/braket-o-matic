@@ -7,14 +7,15 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class BraketAdminLayout extends Composite {
 
-    private static AdminLayoutUiBinder uiBinder = GWT
-            .create(AdminLayoutUiBinder.class);
+  interface BraketAdminLayoutUiBinder extends
+      UiBinder<Widget, BraketAdminLayout> {
+  }
 
-    interface AdminLayoutUiBinder extends UiBinder<Widget, BraketAdminLayout> {
-    }
+  private static BraketAdminLayoutUiBinder uiBinder = GWT
+      .create(BraketAdminLayoutUiBinder.class);
 
-    public BraketAdminLayout() {
-        initWidget(uiBinder.createAndBindUi(this));
-    }
+  public BraketAdminLayout() {
+    initWidget(uiBinder.createAndBindUi(this));
+  }
 
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="main/webapp/" kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/jdom-2.0.2.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/lib-gwt-svg-0.5.7.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/objectify-4.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-timepicker-0.21.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/guava-gwt-18.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/guava-18.0.jar"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry kind="output" path="war/WEB-INF/classes"/>
+</classpath>
