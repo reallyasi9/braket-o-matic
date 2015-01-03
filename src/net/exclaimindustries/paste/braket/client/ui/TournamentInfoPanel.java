@@ -370,7 +370,7 @@ public class TournamentInfoPanel extends Composite {
 
       upsetBox.setValue(tournament.getUpsetValue());
 
-      List<Double> payOuts = tournament.getPayOutValues();
+      List<Double> payOuts = tournament.getRawPayOutValues();
       payOutValuesRemainderCheckBox.setValue(payOuts.get(0) == null);
       payOutValuesBox.setValue(Joiner.on(", ").skipNulls().join(payOuts));
 
