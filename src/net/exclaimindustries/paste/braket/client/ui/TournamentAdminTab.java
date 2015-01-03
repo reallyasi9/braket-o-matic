@@ -77,7 +77,8 @@ public class TournamentAdminTab extends Composite {
 
       // Add whether or not this is the current tournament
       sb.appendHtmlConstant("<tr><td rowspan='2'>");
-      if (currentTournament != null && value.getId() == currentTournament.getId()) {
+      if (currentTournament != null
+          && value.getId() == currentTournament.getId()) {
         sb.appendHtmlConstant("&gt;");
       }
       sb.appendHtmlConstant("</td>");
@@ -212,90 +213,6 @@ public class TournamentAdminTab extends Composite {
                 .getSelectedObject());
           }
         });
-
-    // dataGrid = new DataGrid<BraketTournament>(BraketTournament.KEY_PROVIDER);
-    // dataGrid.setWidth("100%");
-    //
-    // // The header and footer are static
-    // dataGrid.setAutoHeaderRefreshDisabled(true);
-    // dataGrid.setAutoFooterRefreshDisabled(true);
-    //
-    // // Set the message to display when the table is empty.
-    // dataGrid.setEmptyTableWidget(new Label(constants.myDataGridEmpty()));
-    //
-    // // Create columns
-    // // Name of the tournament
-    // Column<BraketTournament, String> nameColumn = new
-    // Column<BraketTournament, String>(
-    // new TextCell()) {
-    // @Override
-    // public String getValue(BraketTournament object) {
-    // return object.getName();
-    // }
-    // };
-    // nameColumn.setFieldUpdater(new FieldUpdater<BraketTournament, String>() {
-    // @Override
-    // public void update(int index, BraketTournament object, String value) {
-    // pendingChanges.add(new PendingChange<BraketTournament, String>(object,
-    // value) {
-    // @Override
-    // protected void doCommit(BraketTournament cell, String value) {
-    // cell.setName(value);
-    // }
-    // });
-    // }
-    // });
-    // dataGrid.addColumn(nameColumn, constants.myDataGridColumnName());
-    //
-    // // Date and time the tournament begins
-    // Column<BraketTournament, Date> startTimeColumn = new
-    // Column<BraketTournament, Date>(
-    // new DateCell(DateTimeFormat.getFormat(PredefinedFormat.RFC_2822))) {
-    // @Override
-    // public Date getValue(BraketTournament object) {
-    // return object.getStartTime();
-    // }
-    // };
-    // startTimeColumn.setFieldUpdater(new FieldUpdater<BraketTournament,
-    // Date>() {
-    // @Override
-    // public void update(int index, BraketTournament object, Date value) {
-    // pendingChanges.add(new PendingChange<BraketTournament, Date>(object,
-    // value) {
-    // @Override
-    // protected void doCommit(BraketTournament cell, Date value) {
-    // cell.setStartTime(value);
-    // }
-    // });
-    // }
-    // });
-    // dataGrid.addColumn(startTimeColumn,
-    // constants.myDataGridColumnStartingTime());
-    // startTimeColumn.setSortable(true);
-    //
-    // // Buy-in Value
-    // Column<BraketTournament, Number> buyInColumn = new
-    // Column<BraketTournament, Number>(
-    // new NumberCell(NumberFormat.getCurrencyFormat())) {
-    // @Override
-    // public Number getValue(BraketTournament object) {
-    // return object.getBuyInValue();
-    // }
-    // };
-    // buyInColumn.setFieldUpdater(new FieldUpdater<BraketTournament, Number>()
-    // {
-    // @Override
-    // public void update(int index, BraketTournament object, Number value) {
-    // pendingChanges.add(new PendingChange<BraketTournament, Number>(object,
-    // value) {
-    // @Override
-    // protected void doCommit(BraketTournament cell, Number value) {
-    // cell.setBuyInValue((Double) value);
-    // }
-    // });
-    // }
-    // });
-    // dataGrid.addColumn(buyInColumn, constants.myDataGridColumnBuyIn());
 
     // Put the initial data into the list
     dataProvider.addDataDisplay(cellList);

@@ -243,6 +243,10 @@ public class BraketTournament extends BraketSelectable {
     }
   }
 
+  public List<Double> getRawPayOutValues() {
+    return new ArrayList<Double>(payOutValues);
+  }
+
   public void setPayOutValues(List<Double> payOutValues) {
     // FishSticks is immutable
     this.payOutValues = new ArrayList<Double>(payOutValues);

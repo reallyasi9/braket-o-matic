@@ -9,13 +9,11 @@ import net.exclaimindustries.paste.braket.client.TournamentService;
 import net.exclaimindustries.paste.braket.client.TournamentService.TournamentCollection;
 import net.exclaimindustries.paste.braket.client.TournamentServiceAsync;
 
+import com.google.common.base.Joiner;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.thirdparty.guava.common.base.Joiner;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
@@ -141,10 +139,12 @@ public class TournamentInfoPanel extends Composite {
     public void onSuccess(Long result) {
       // TODO add to list
       tournament.setId(result);
+
       dataProvider.getKey(tournament);
       List<BraketTournament> tournaments = new ArrayList<BraketTournament>();
       tournaments.add(tournament);
       dataProvider.updateRowData(Integer.MAX_VALUE, tournaments);
+
       setSelectedTournament(tournament);
     }
   };
@@ -240,18 +240,6 @@ public class TournamentInfoPanel extends Composite {
 
   };
 
-  private ChangeHandler changeHandler = new ChangeHandler() {
-
-    @Override
-    public void onChange(ChangeEvent event) {
-      if (tournament != null) {
-        updateButton.setEnabled(true);
-      }
-      createButton.setEnabled(true);
-    }
-
-  };
-
   private ClickHandler payOutValuesRemainderHandler = new ClickHandler() {
 
     @Override
@@ -271,20 +259,23 @@ public class TournamentInfoPanel extends Composite {
    */
   public TournamentInfoPanel(AsyncDataProvider<BraketTournament> dp) {
     dataProvider = dp;
-
+    
     startTimeBox = new HourMinutePicker(HourMinutePicker.PickerFormat._24_HOUR);
+    
+    // Initialize the UI
+    initWidget(uiBinder.createAndBindUi(this));
 
     DateTimeFormat dateFormat = DateTimeFormat.getFormat("yyyy.MM.dd");
     startDateBox.setFormat(new DateBox.DefaultFormat(dateFormat));
 
     // Add a bunch of change handlers
-    nameBox.addChangeHandler(changeHandler);
-    startDateBox.getTextBox().addChangeHandler(changeHandler);
-    startTimeBox.addHandler(changeHandler, ChangeEvent.getType());
-    buyInBox.addChangeHandler(changeHandler);
-    upsetBox.addChangeHandler(changeHandler);
-    payOutValuesRemainderCheckBox.addHandler(changeHandler,
-        ChangeEvent.getType());
+//    nameBox.addChangeHandler(changeHandler);
+//    startDateBox.getTextBox().addChangeHandler(changeHandler);
+//    startTimeBox.addHandler(changeHandler, ChangeEvent.getType());
+//    buyInBox.addChangeHandler(changeHandler);
+//    upsetBox.addChangeHandler(changeHandler);
+//    payOutValuesRemainderCheckBox.addHandler(changeHandler,
+//        ChangeEvent.getType());
 
     // Initialize the tournament to null.
     setSelectedTournament(null);
@@ -298,9 +289,6 @@ public class TournamentInfoPanel extends Composite {
 
     // Lookup the current tournament
     tournamentService.getCurrentTournament(getCurrentTournamentCallback);
-
-    // Initialize the UI
-    initWidget(uiBinder.createAndBindUi(this));
   }
 
   protected boolean validateFields() {
@@ -382,15 +370,9 @@ public class TournamentInfoPanel extends Composite {
 
       upsetBox.setValue(tournament.getUpsetValue());
 
-      List<Double> payOuts = tournament.getPayOutValues();
-      if (payOuts.get(0) == null) {
-        payOutValuesRemainderCheckBox.setValue(true);
-        payOutValuesBox.setValue(Joiner.on(", ").join(
-            payOuts.subList(1, payOuts.size())));
-      } else {
-        payOutValuesRemainderCheckBox.setValue(false);
-        payOutValuesBox.setValue(Joiner.on(", ").join(payOuts));
-      }
+      List<Double> payOuts = tournament.getRawPayOutValues();
+      payOutValuesRemainderCheckBox.setValue(payOuts.get(0) == null);
+      payOutValuesBox.setValue(Joiner.on(", ").skipNulls().join(payOuts));
 
       if (currentTournament != null) {
         currentLabel

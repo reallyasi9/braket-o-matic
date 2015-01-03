@@ -43,8 +43,7 @@
         <td align="right">Active tournament:</td>
         <td align="left">
           <g:Label ui:field="currentLabel" />
-          <g:Button ui:field="selectButton" enabled="false">Make
-            active tournament</g:Button>
+          <g:Button ui:field="selectButton" enabled="false">Activate tournament</g:Button>
         </td>
         <td align="left">
           <g:Label ui:field="currentStatus" />
