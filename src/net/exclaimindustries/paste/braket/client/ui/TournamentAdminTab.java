@@ -79,7 +79,7 @@ public class TournamentAdminTab extends Composite {
       sb.appendHtmlConstant("<tr><td rowspan='2'>");
       if (currentTournament != null
           && value.getId() == currentTournament.getId()) {
-        sb.appendHtmlConstant("&gt;");
+        sb.appendHtmlConstant("***");
       }
       sb.appendHtmlConstant("</td>");
 
@@ -168,8 +168,14 @@ public class TournamentAdminTab extends Composite {
 
   public TournamentAdminTab() {
 
-    tournamentInfoPanel = new TournamentInfoPanel(dataProvider);
-    
+    // Initial TournamentCell
+    TournamentCell tournamentCell = new TournamentCell();
+
+    // CellList with a key provider
+    cellList = new CellList<BraketTournament>(tournamentCell,
+        BraketTournament.KEY_PROVIDER);
+    tournamentInfoPanel = new TournamentInfoPanel(cellList);
+
     // Initialize the widget
     initWidget(uiBinder.createAndBindUi(this));
 
@@ -189,12 +195,6 @@ public class TournamentAdminTab extends Composite {
 
         });
 
-    // Initial TournamentCell
-    TournamentCell tournamentCell = new TournamentCell();
-
-    // CellList with a key provider
-    cellList = new CellList<BraketTournament>(tournamentCell,
-        BraketTournament.KEY_PROVIDER);
     cellList.setPageSize(20);
 
     // Allow keyboard navigation

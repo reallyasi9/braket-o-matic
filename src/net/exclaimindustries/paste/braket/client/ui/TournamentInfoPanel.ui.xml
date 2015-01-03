@@ -42,7 +42,7 @@
       <tr>
         <td align="right">Active tournament:</td>
         <td align="left">
-          <g:Label ui:field="currentLabel" />
+          <g:InlineLabel ui:field="currentLabel" />
           <g:Button ui:field="selectButton" enabled="false">Activate tournament</g:Button>
         </td>
         <td align="left">
@@ -61,9 +61,9 @@
       <tr>
         <td align="right">Pay-out values:</td>
         <td align="left">
-          <g:TextBox ui:field="payOutValuesBox" />
-          <g:CheckBox ui:field="payOutValuesRemainderCheckBox" />
-          <g:Label ui:field="payOutValuesRemainderLabel">Pay out remainder to 1st place</g:Label>
+          <g:TextBox ui:field="payOutValuesBox" /><br />
+          <g:CheckBox ui:field="payOutValuesRemainderCheckBox" enabled="false"/>
+          <g:InlineLabel ui:field="payOutValuesRemainderLabel">Pay out remainder to 1st place</g:InlineLabel>
         </td>
         <td align="left">
           <g:Label ui:field="payOutValuesStatus" />
@@ -80,9 +80,9 @@
       </tr>
       <tr>
         <td align="center" colspan="3">
-          <g:Button ui:field="deleteButton">Delete tournament</g:Button>
+          <g:Button ui:field="deleteButton" enabled="false">Delete tournament</g:Button>
           <g:Button ui:field="createButton">Create tournament</g:Button>
-          <g:Button ui:field="updateButton">Update tournament</g:Button>
+          <g:Button ui:field="updateButton" enabled="false">Update tournament</g:Button>
         </td>
       </tr>
     </table>

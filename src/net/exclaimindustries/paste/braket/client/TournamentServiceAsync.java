@@ -45,7 +45,7 @@ public interface TournamentServiceAsync {
 	void deleteTournament(BraketTournament tournament,
 			AsyncCallback<Void> callback);
 
-	void setCurrentTournament(BraketTournament tournament,
+  void setCurrentTournament(BraketTournament tournament,
 			AsyncCallback<BraketTournament> callback);
 
 	void addTeam(BraketTeam team, AsyncCallback<Long> callback);
