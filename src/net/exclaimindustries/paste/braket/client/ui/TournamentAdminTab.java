@@ -1,6 +1,8 @@
 package net.exclaimindustries.paste.braket.client.ui;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.TournamentService;
@@ -39,6 +41,11 @@ public class TournamentAdminTab extends Composite {
    */
   private static TournamentAdminTabUiBinder uiBinder = GWT
       .create(TournamentAdminTabUiBinder.class);
+
+  /**
+   * Logging
+   */
+  private Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
   /**
    * Scrolling pager containing list of Tournaments
@@ -126,8 +133,11 @@ public class TournamentAdminTab extends Composite {
 
             @Override
             public void onFailure(Throwable caught) {
-              // TODO Auto-generated method stub
-
+              logger.log(Level.SEVERE, "failed to get tournament list: "
+                  + caught.getLocalizedMessage());
+              Toast
+                  .showErrorToast("Failed to load tournament list: see the log for more information.");
+              updateRowCount(0, true);
             }
 
             @Override
@@ -184,8 +194,11 @@ public class TournamentAdminTab extends Composite {
 
           @Override
           public void onFailure(Throwable caught) {
-            // TODO Auto-generated method stub
-
+            logger.log(Level.SEVERE, "failed to get current tournament: "
+                + caught.getLocalizedMessage());
+            Toast
+                .showErrorToast("Failed to get current tournament: see the log for more information.");
+            currentTournament = null;
           }
 
           @Override
@@ -218,5 +231,4 @@ public class TournamentAdminTab extends Composite {
     dataProvider.addDataDisplay(cellList);
     pagerPanel.setDisplay(cellList);
   }
-
 }

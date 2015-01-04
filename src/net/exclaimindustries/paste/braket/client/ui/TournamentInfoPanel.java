@@ -3,6 +3,8 @@ package net.exclaimindustries.paste.braket.client.ui;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.TournamentService;
@@ -109,6 +111,11 @@ public class TournamentInfoPanel extends Composite {
   private CellList<?> cellList;
 
   /**
+   * Logging
+   */
+  private Logger logger = Logger.getLogger(this.getClass().getSimpleName());
+
+  /**
    * Service for reading and editing Tournament data
    */
   private TournamentServiceAsync tournamentService = GWT
@@ -119,8 +126,11 @@ public class TournamentInfoPanel extends Composite {
   private AsyncCallback<TournamentCollection> getCurrentTournamentCallback = new AsyncCallback<TournamentCollection>() {
     @Override
     public void onFailure(Throwable caught) {
-      // TODO Auto-generated method stub
-
+      logger.log(Level.SEVERE,
+          "failed to get current tournament: " + caught.getLocalizedMessage());
+      Toast
+          .showErrorToast("Failed to get current tournament: see the log for more information.");
+      currentTournament = null;
     }
 
     @Override
@@ -133,7 +143,10 @@ public class TournamentInfoPanel extends Composite {
 
     @Override
     public void onFailure(Throwable caught) {
-      // TODO fail somehow
+      logger.log(Level.SEVERE,
+          "failed to save tournament: " + caught.getLocalizedMessage());
+      Toast
+          .showErrorToast("Failed to save tournament: see the log for more information.");
       setSelectedTournament(tournament);
     }
 
@@ -153,7 +166,10 @@ public class TournamentInfoPanel extends Composite {
   private AsyncCallback<BraketTournament> updateCurrentTournamentCallback = new AsyncCallback<BraketTournament>() {
     @Override
     public void onFailure(Throwable caught) {
-      // TODO Auto-generated method stub
+      logger.log(Level.SEVERE,
+          "failed to set active tournament: " + caught.getLocalizedMessage());
+      Toast
+          .showErrorToast("Failed to set active tournament: see the log for more information.");
     }
 
     @Override
@@ -171,13 +187,14 @@ public class TournamentInfoPanel extends Composite {
   private AsyncCallback<Void> deleteTournamentCallback = new AsyncCallback<Void>() {
     @Override
     public void onFailure(Throwable caught) {
-      // TODO Auto-generated method stub
-
+      logger.log(Level.SEVERE,
+          "failed to delete tournament: " + caught.getLocalizedMessage());
+      Toast
+          .showErrorToast("Failed to delete tournament: see the log for more information.");
     }
 
     @Override
     public void onSuccess(Void result) {
-      // TODO Take badge off the list?
       if (tournament.getId() == currentTournament.getId()) {
         currentTournament = null;
       }
@@ -245,7 +262,6 @@ public class TournamentInfoPanel extends Composite {
       if (tournament == null) {
         return;
       }
-      // TODO
       if (!Window
           .confirm("Deleting a tournament could result in permanently lost data.  THIS OPERATION CANNOT BE UNDONE.\n\nClick \"OK\" to proceed with deleting this tournament.")) {
         return;
