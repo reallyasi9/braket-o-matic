@@ -1,6 +1,8 @@
 package net.exclaimindustries.paste.braket.client.ui;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.TournamentService;
@@ -41,6 +43,11 @@ public class TournamentAdminTab extends Composite {
       .create(TournamentAdminTabUiBinder.class);
 
   /**
+   * Logging
+   */
+  private Logger logger = Logger.getLogger(this.getClass().getSimpleName());
+
+  /**
    * Scrolling pager containing list of Tournaments
    */
   @UiField
@@ -79,7 +86,7 @@ public class TournamentAdminTab extends Composite {
       sb.appendHtmlConstant("<tr><td rowspan='2'>");
       if (currentTournament != null
           && value.getId() == currentTournament.getId()) {
-        sb.appendHtmlConstant("&gt;");
+        sb.appendHtmlConstant("***");
       }
       sb.appendHtmlConstant("</td>");
 
@@ -126,8 +133,11 @@ public class TournamentAdminTab extends Composite {
 
             @Override
             public void onFailure(Throwable caught) {
-              // TODO Auto-generated method stub
-
+              logger.log(Level.SEVERE, "failed to get tournament list: "
+                  + caught.getLocalizedMessage());
+              Toast
+                  .showErrorToast("Failed to load tournament list: see the log for more information.");
+              updateRowCount(0, true);
             }
 
             @Override
@@ -168,8 +178,14 @@ public class TournamentAdminTab extends Composite {
 
   public TournamentAdminTab() {
 
-    tournamentInfoPanel = new TournamentInfoPanel(dataProvider);
-    
+    // Initial TournamentCell
+    TournamentCell tournamentCell = new TournamentCell();
+
+    // CellList with a key provider
+    cellList = new CellList<BraketTournament>(tournamentCell,
+        BraketTournament.KEY_PROVIDER);
+    tournamentInfoPanel = new TournamentInfoPanel(cellList);
+
     // Initialize the widget
     initWidget(uiBinder.createAndBindUi(this));
 
@@ -178,8 +194,11 @@ public class TournamentAdminTab extends Composite {
 
           @Override
           public void onFailure(Throwable caught) {
-            // TODO Auto-generated method stub
-
+            logger.log(Level.SEVERE, "failed to get current tournament: "
+                + caught.getLocalizedMessage());
+            Toast
+                .showErrorToast("Failed to get current tournament: see the log for more information.");
+            currentTournament = null;
           }
 
           @Override
@@ -189,12 +208,6 @@ public class TournamentAdminTab extends Composite {
 
         });
 
-    // Initial TournamentCell
-    TournamentCell tournamentCell = new TournamentCell();
-
-    // CellList with a key provider
-    cellList = new CellList<BraketTournament>(tournamentCell,
-        BraketTournament.KEY_PROVIDER);
     cellList.setPageSize(20);
 
     // Allow keyboard navigation
@@ -218,5 +231,4 @@ public class TournamentAdminTab extends Composite {
     dataProvider.addDataDisplay(cellList);
     pagerPanel.setDisplay(cellList);
   }
-
 }
