@@ -13,8 +13,7 @@
     </g:tab>
     <g:tab>
       <g:header>Teams</g:header>
-      <!-- my:TeamAdminTab / -->
-      <g:Label>Hello</g:Label>
+      <b:TeamAdminTab />
     </g:tab>
     <g:tab>
       <g:header>Games</g:header>

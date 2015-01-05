@@ -4,7 +4,7 @@
   xmlns:d="urn:import:com.google.gwt.user.datepicker.client"
   xmlns:s="urn:import:com.summatech.gwt.client">
   <ui:style>
-  
+  /** TODO: Style this properly **/
   </ui:style>
   <g:HTMLPanel>
     <table>
