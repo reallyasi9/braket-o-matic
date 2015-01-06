@@ -48,6 +48,12 @@ public abstract class BraketSelectable implements IsSerializable {
   @Id
   protected Long id = null;
 
+  /**
+   * The selected winning team IDs for each game in the tournament, keyed by
+   * game ID.
+   */
+  protected Map<Long, Long> gameWinners = new HashMap<Long, Long>();
+  
   public Long getId() {
     return id;
   }
@@ -56,51 +62,12 @@ public abstract class BraketSelectable implements IsSerializable {
     this.id = id;
   }
 
+  
   /**
-   * The selected winning team IDs for each game in the tournament, keyed by
-   * game ID.
+   * Set the winner of the selected game
    */
-  protected Map<Long, Long> gameWinners = new HashMap<Long, Long>();
 
-  /**
-   * @param selection
-   *          The selection against which this object is checked.
-   * @return A map with reporting whether the selected team for a given game is
-   *         correct (true), incorrect (false), or not yet determined (null),
-   *         keyed by game ID.
-   */
-  public Map<Long, Boolean> calculateMatchingWinners(Map<Long, BraketGame> games) {
 
-    Map<Long, Boolean> result = new HashMap<Long, Boolean>();
-
-    Set<Long> eliminatedTeams = new HashSet<Long>();
-
-    // Determine the eliminated teams first
-    for (BraketGame game : games.values()) {
-      if (game.isFinal()) {
-        eliminatedTeams.add(game.getLosingTeamId());
-      }
-    }
-
-    // Calculate the winners
-    for (Entry<Long, Long> winnerEntry : gameWinners.entrySet()) {
-      Long gameId = winnerEntry.getKey();
-      Long winningTeamId = winnerEntry.getValue();
-      if (winningTeamId == null) {
-        continue;
-      }
-      BraketGame game = games.get(gameId);
-      if (game.isFinal()) {
-        result.put(gameId, game.getWinningTeamId() == winningTeamId);
-      } else if (eliminatedTeams.contains(winningTeamId)) {
-        result.put(gameId, false);
-      } else {
-        result.put(gameId, null);
-      }
-    }
-
-    return result;
-  }
 
   /**
    * Get the index of the team that was selected to win a given game.
