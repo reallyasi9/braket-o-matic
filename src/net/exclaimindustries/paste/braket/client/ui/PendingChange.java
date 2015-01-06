@@ -1,20 +1,18 @@
 package net.exclaimindustries.paste.braket.client.ui;
 
-public abstract class PendingChange<TargetType, ValueType> {
+public abstract class PendingChange<TargetType> {
 
   private final TargetType target;
-  private final ValueType value;
 
-  public PendingChange(TargetType target, ValueType value) {
+  public PendingChange(TargetType target) {
     this.target = target;
-    this.value = value;
   }
 
   /**
    * Commit the change to the object.
    */
   public void commit() {
-    doCommit(target, value);
+    doCommit(target);
   }
 
   /**
@@ -25,6 +23,6 @@ public abstract class PendingChange<TargetType, ValueType> {
    * @param value
    *          the new value
    */
-  protected abstract void doCommit(TargetType target, ValueType value);
+  protected abstract void doCommit(TargetType target);
 
 }

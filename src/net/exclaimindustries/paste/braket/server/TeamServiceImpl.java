@@ -17,170 +17,126 @@
 package net.exclaimindustries.paste.braket.server;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import net.exclaimindustries.paste.braket.client.BraketTeam;
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.TeamService;
+import net.exclaimindustries.paste.braket.shared.UserNotAdminException;
+import net.exclaimindustries.paste.braket.shared.UserNotLoggedInException;
 
-import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.googlecode.objectify.Ref;
 
 /**
  * @author paste
  * 
  */
 public class TeamServiceImpl extends RemoteServiceServlet implements
-        TeamService {
+    TeamService {
 
-    /**
-     * Generated
-     */
-    private static final long serialVersionUID = 1L;
+  /**
+   * Generated
+   */
+  private static final long serialVersionUID = 1L;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.exclaimindustries.paste.braket.client.TeamService#getTeams()
-     */
-    @Override
-    public List<BraketTeam> getTeams() {
-        Ref<BraketTournament> tournamentRef =
-                CurrentTournament.getCurrentTournament();
-        if (tournamentRef == null) {
-            return null;
-        }
-        BraketTournament tournament = tournamentRef.get();
+  /*
+   * (non-Javadoc)
+   * 
+   * @see net.exclaimindustries.paste.braket.client.TeamService#getTeams()
+   */
+  @Override
+  public List<BraketTeam> getTeams() {
+    return OfyService.ofy().load().type(BraketTeam.class).list();
+  }
 
-        Collection<BraketTeam> teams =
-                OfyService.ofy().load().type(BraketTeam.class)
-                        .parent(tournament).ids(tournament.getTeams()).values();
+  /*
+   * (non-Javadoc)
+   * 
+   * @see net.exclaimindustries.paste.braket.client.TeamService#storeTeam(net.
+   * exclaimindustries.paste.braket.client.BraketTournament)
+   */
+  @Override
+  public Map<Long, BraketTeam> getTeams(BraketTournament tournament) {
+    return OfyService.ofy().load().type(BraketTeam.class)
+        .ids(tournament.getTeams());
+  }
 
-        // Can't guarantee the order returned from the datastore.
-        ArrayList<BraketTeam> returnTeams =
-                new ArrayList<BraketTeam>(tournament.getNumberOfTeams());
-        for (BraketTeam team : teams) {
-            if (returnTeams.size() <= team.getIndex()) {
-                while (returnTeams.size() < team.getIndex()) {
-                    returnTeams.add(null);
-                }
-                returnTeams.add(team);
-            } else {
-                returnTeams.set(team.getIndex(), team);
-            }
-        }
-        return returnTeams;
-    }
+  /*
+   * (non-Javadoc)
+   * 
+   * @see net.exclaimindustries.paste.braket.client.TeamService#storeTeam(net.
+   * exclaimindustries.paste.braket.client.BraketTeam)
+   */
+  @Override
+  public Long storeTeam(BraketTeam team) throws UserNotLoggedInException,
+      UserNotAdminException {
+    // Check to see if you are an administrator.
+    LogInServiceHelper.assertAdmin();
+    return OfyService.ofy().save().entity(team).now().getId();
+  }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.exclaimindustries.paste.braket.client.TeamService#storeTeam(net.
-     * exclaimindustries.paste.braket.client.BraketTeam)
-     */
-    @Override
-    public Long storeTeam(BraketTeam team) {
-        // Check to see if you are an administrator.
-        if (!UserServiceFactory.getUserService().isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
-        Ref<BraketTournament> tournamentRef =
-                CurrentTournament.getCurrentTournament();
-        if (tournamentRef == null) {
-            throw new NullPointerException(
-                    "need a current tournament to be set");
-        }
-        team.setTournamentKey(tournamentRef.getKey());
-        return OfyService.ofy().save().entity(team).now().getId();
-    }
+  /*
+   * (non-Javadoc)
+   * 
+   * @see net.exclaimindustries.paste.braket.client.TeamService#storeTeams(java
+   * .util.Collection)
+   */
+  @Override
+  public void storeTeams(Iterable<BraketTeam> teams)
+      throws UserNotLoggedInException, UserNotAdminException {
+    LogInServiceHelper.assertAdmin();
+    OfyService.ofy().save().entities(teams);
+  }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * net.exclaimindustries.paste.braket.client.TeamService#storeTeams(java
-     * .util.Collection)
-     */
-    @Override
-    public void storeTeams(Iterable<BraketTeam> teams) {
-        if (!UserServiceFactory.getUserService().isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
-        Ref<BraketTournament> tournamentRef =
-                CurrentTournament.getCurrentTournament();
-        if (tournamentRef == null) {
-            throw new NullPointerException(
-                    "need a current tournament to be set");
-        }
-        for (BraketTeam team : teams) {
-            team.setTournamentKey(tournamentRef.getKey());
-        }
-        OfyService.ofy().save().entities(teams);
-    }
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * net.exclaimindustries.paste.braket.client.TeamService#downloadTeams(java
+   * .util.Collection)
+   */
+  @Override
+  public Collection<BraketTeam> downloadTeams(Iterable<Long> teamIds)
+      throws IOException, UserNotLoggedInException, UserNotAdminException {
+    LogInServiceHelper.assertAdmin();
+    return TeamDownloader.downloadTeams(teamIds);
+  }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * net.exclaimindustries.paste.braket.client.TeamService#downloadTeams(java
-     * .util.Collection)
-     */
-    @Override
-    public Collection<BraketTeam> downloadTeams(Iterable<Long> teamIds)
-            throws IOException {
-        if (!UserServiceFactory.getUserService().isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
-        return TeamDownloader.downloadTeams(teamIds);
-    }
+  /*
+   * (non-Javadoc)
+   * 
+   * @see net.exclaimindustries.paste.braket.client.TeamService#deleteTeam(net.
+   * exclaimindustries.paste.braket.client.BraketTeam)
+   */
+  @Override
+  public void deleteTeam(BraketTeam team) throws UserNotLoggedInException,
+      UserNotAdminException {
+    LogInServiceHelper.assertAdmin();
+    OfyService.ofy().delete().entity(team);
+  }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * net.exclaimindustries.paste.braket.client.TeamService#deleteTeam(net.
-     * exclaimindustries.paste.braket.client.BraketTeam)
-     */
-    @Override
-    public void deleteTeam(BraketTeam team) {
-        if (!UserServiceFactory.getUserService().isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
-        Ref<BraketTournament> tournamentRef =
-                CurrentTournament.getCurrentTournament();
-        if (tournamentRef == null) {
-            throw new NullPointerException(
-                    "need a current tournament to be set");
-        }
-        team.setTournamentKey(tournamentRef.getKey());
-        OfyService.ofy().delete().entity(team);
-    }
+  /*
+   * (non-Javadoc)
+   * 
+   * @see net.exclaimindustries.paste.braket.client.TeamService#deleteTeams(java
+   * .util.Collection)
+   */
+  @Override
+  public void deleteTeams(Iterable<BraketTeam> teams)
+      throws UserNotLoggedInException, UserNotAdminException {
+    LogInServiceHelper.assertAdmin();
+    OfyService.ofy().delete().entities(teams);
+  }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * net.exclaimindustries.paste.braket.client.TeamService#deleteTeams(java
-     * .util.Collection)
-     */
-    @Override
-    public void deleteTeams(Iterable<BraketTeam> teams) {
-        if (!UserServiceFactory.getUserService().isUserAdmin()) {
-            throw new SecurityException("administration privileges required");
-        }
-        Ref<BraketTournament> tournamentRef =
-                CurrentTournament.getCurrentTournament();
-        if (tournamentRef == null) {
-            throw new NullPointerException(
-                    "need a current tournament to be set");
-        }
-        for (BraketTeam team : teams) {
-            team.setTournamentKey(tournamentRef.getKey());
-        }
-        OfyService.ofy().delete().entities(teams);
-    }
+  @Override
+  public List<BraketTeam> getTeams(BraketTeam.IndexName orderCondition,
+      int offset, int limit) throws UserNotLoggedInException,
+      UserNotAdminException {
+    LogInServiceHelper.assertAdmin();
+    return OfyService.ofy().load().type(BraketTeam.class)
+        .order(orderCondition.toString()).offset(offset).limit(limit).list();
+  }
 
 }

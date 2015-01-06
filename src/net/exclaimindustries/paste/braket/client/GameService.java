@@ -18,6 +18,9 @@ package net.exclaimindustries.paste.braket.client;
 
 import java.util.List;
 
+import net.exclaimindustries.paste.braket.shared.UserNotAdminException;
+import net.exclaimindustries.paste.braket.shared.UserNotLoggedInException;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -30,63 +33,103 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  */
 @RemoteServiceRelativePath("game")
 public interface GameService extends RemoteService {
-    /**
-     * Fetches the games from the currently active tournament.
-     * 
-     * @return The games from the currently running tournament, or null if no
-     *         such tournament exists. These games will be in so-called
-     *         "tournament order", with the first game in the list representing
-     *         the first game of the first round, and the last game representing
-     *         the championship game.
-     */
-    public List<BraketGame> getGames();
+  /**
+   * Fetches the games from the currently active tournament.
+   * 
+   * @return The games from the currently running tournament, or null if no such
+   *         tournament exists. These games will be in so-called
+   *         "tournament order", with the first game in the list representing
+   *         the first game of the first round, and the last game representing
+   *         the championship game.
+   */
+  public List<BraketGame> getGames();
 
-    /**
-     * Saves or updates the given collection of games in the datastore. This
-     * method will not update the tournament to which these games belong. Use
-     * TournamentService.addGames(Iterable<BraketGame>) instead.
-     * 
-     * @see TournamentService.addGame(BraketGame)
-     * 
-     * @param games
-     *            The collection of games to either save or update. Games that
-     *            already exist in the datastore will be updated, and games that
-     *            do not exist will be created.
-     * 
-     * @return A map of games keyed by their (possibly new) datastore keys.
-     * 
-     * @throws SecurityException
-     *             If the user is not logged in as an administrator.
-     * 
-     * @throws NullPointerException
-     *             If any game in the collection is not associated with a valid
-     *             <code>BraketTournament</code>.
-     */
-    public void storeGames(Iterable<BraketGame> games);
+  /**
+   * Saves or updates the given collection of games in the datastore. This
+   * method will not update the tournament to which these games belong. Use
+   * TournamentService.addGames(Iterable<BraketGame>) instead.
+   * 
+   * @see TournamentService.addGame(BraketGame)
+   * 
+   * @param games
+   *          The collection of games to either save or update. Games that
+   *          already exist in the datastore will be updated, and games that do
+   *          not exist will be created.
+   * 
+   * @return A map of games keyed by their (possibly new) datastore keys.
+   * 
+   * @throws SecurityException
+   *           If the user is not logged in as an administrator.
+   * 
+   * @throws NullPointerException
+   *           If any game in the collection is not associated with a valid
+   *           <code>BraketTournament</code>.
+   */
+  public void storeGames(Iterable<BraketGame> games)
+      throws UserNotLoggedInException, UserNotAdminException;
 
-    long storeGame(BraketGame game);
+  /**
+   * Saves or updates the given collection of games in the datastore. This
+   * method will not update the tournament to which these games belong. Use
+   * TournamentService.addGames(Iterable<BraketGame>) instead.
+   * 
+   * @see TournamentService.addGame(BraketGame)
+   * 
+   * @param games
+   *          The collection of games to either save or update. Games that
+   *          already exist in the datastore will be updated, and games that do
+   *          not exist will be created.
+   * 
+   * @return A map of games keyed by their (possibly new) datastore keys.
+   * 
+   * @throws SecurityException
+   *           If the user is not logged in as an administrator.
+   * 
+   * @throws NullPointerException
+   *           If any game in the collection is not associated with a valid
+   *           <code>BraketTournament</code>.
+   */
+  Long storeGame(BraketGame game) throws UserNotLoggedInException,
+      UserNotAdminException;
 
-    /**
-     * Deletes a set of games from the datastore.
-     * 
-     * @param games
-     *            The games to delete. Games not found in the datastore will be
-     *            ignored.
-     * 
-     * @throws SecurityException
-     *             If the user is not logged in as an administrator.
-     */
-    public void deleteGames(Iterable<BraketGame> games);
+  /**
+   * Deletes a set of games from the datastore.
+   * 
+   * @param games
+   *          The games to delete. Games not found in the datastore will be
+   *          ignored.
+   * 
+   * @throws SecurityException
+   *           If the user is not logged in as an administrator.
+   */
+  public void deleteGames(Iterable<BraketGame> games)
+      throws UserNotLoggedInException, UserNotAdminException;
 
-    /**
-     * Deletes a particular game from the datastore.
-     * 
-     * @param game
-     *            The game to delete. Will be ignored if it is not already in
-     *            the datastore.
-     * 
-     * @throws SecurityException
-     *             If the user is not logged in as an administrator.
-     */
-    public void deleteGame(BraketGame game);
+  /**
+   * Deletes a particular game from the datastore.
+   * 
+   * @param game
+   *          The game to delete. Will be ignored if it is not already in the
+   *          datastore.
+   * 
+   */
+  public void deleteGame(BraketGame game) throws UserNotLoggedInException,
+      UserNotAdminException;
+
+  /**
+   * Update a given game and possibly propagate that game's winner forward.
+   * 
+   * @param game
+   *          The game to update.
+   * @param tournament
+   *          The tournament to update.
+   * 
+   * @throws UserNotAdminException
+   * @throws UserNotLoggedInException
+   * 
+   * @throws SecurityException
+   *           If the user is not logged in as an administrator.
+   */
+  public void updateAndPropagateGame(BraketGame game)
+      throws UserNotLoggedInException, UserNotAdminException;
 }

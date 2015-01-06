@@ -21,12 +21,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import net.exclaimindustries.paste.braket.client.BraketGame;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.TournamentService;
-import net.exclaimindustries.paste.braket.shared.NoCurrentTournamentException;
 import net.exclaimindustries.paste.braket.shared.UserNotAdminException;
 import net.exclaimindustries.paste.braket.shared.UserNotLoggedInException;
 
@@ -69,11 +69,11 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
     BraketTournament t = tournament.get();
 
     // Get games
-    List<BraketGame> games = new ArrayList<BraketGame>(OfyService.ofy().load()
-        .type(BraketGame.class).parent(tournament).ids(t.getGames()).values());
+    Map<Long, BraketGame> games = OfyService.ofy().load()
+        .type(BraketGame.class).parent(tournament).ids(t.getGames());
 
-    List<BraketTeam> teams = new ArrayList<BraketTeam>(OfyService.ofy().load()
-        .type(BraketTeam.class).parent(tournament).ids(t.getTeams()).values());
+    Map<Long, BraketTeam> teams = OfyService.ofy().load()
+        .type(BraketTeam.class).ids(t.getTeams());
 
     return new TournamentCollection(t, games, teams);
   }
@@ -231,262 +231,6 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
    * (non-Javadoc)
    * 
    * @see
-   * net.exclaimindustries.paste.braket.client.TournamentService#addTeam(net
-   * .exclaimindustries.paste.braket.client.BraketTeam)
-   */
-  @Override
-  public Long addTeam(final BraketTeam team)
-      throws NoCurrentTournamentException, UserNotLoggedInException,
-      UserNotAdminException {
-
-    // FIXME Consolidate with addTeam(BraketTeam, BraketTournament), and
-    // probably addTeams(*).
-    LogInServiceHelper.assertAdmin();
-
-    if (team.getIndex() < 0) {
-      throw new IllegalArgumentException(
-          "team index must be greater than or equal to zero");
-    }
-
-    final Ref<BraketTournament> currentRef = CurrentTournament
-        .getCurrentTournament();
-    if (currentRef == null) {
-      throw new NullPointerException("current tournament is not set");
-    }
-
-    return OfyService.ofy().transact(new Work<Long>() {
-
-      @Override
-      public Long run() {
-
-        team.setTournamentKey(currentRef.getKey());
-        Long id = OfyService.ofy().save().entity(team).now().getId();
-
-        BraketTournament tournament = currentRef.get();
-        tournament.setTeam(team.getIndex(), id);
-
-        // Update the games of the tournament
-        // FIXME This only works for tournaments of 63 games!
-        int startingGame = (team.getIndex() / 2) + 31;
-        BraketGame game = OfyService.ofy().load().type(BraketGame.class)
-            .parent(tournament).id(tournament.getGame(startingGame)).now();
-        if (game != null) {
-          game.setTeamId(team.getIndex() % 2, team.getId());
-          OfyService.ofy().save().entity(game);
-        }
-
-        OfyService.ofy().save().entity(tournament);
-
-        return id;
-      }
-
-    });
-
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * net.exclaimindustries.paste.braket.client.TournamentService#addTeam(net
-   * .exclaimindustries.paste.braket.client.BraketTeam,
-   * net.exclaimindustries.paste.braket.client.BraketTournament)
-   */
-  @Override
-  public Long addTeam(final BraketTeam team, final BraketTournament tournament)
-      throws UserNotLoggedInException, UserNotAdminException {
-    LogInServiceHelper.assertAdmin();
-
-    if (team.getIndex() < 0) {
-      throw new IllegalArgumentException(
-          "team index must be greater than or equal to zero");
-    }
-
-    return OfyService.ofy().transact(new Work<Long>() {
-
-      @Override
-      public Long run() {
-
-        team.setTournamentKey(Key.create(BraketTournament.class,
-            tournament.getId()));
-        Long id = OfyService.ofy().save().entity(team).now().getId();
-
-        tournament.setTeam(team.getIndex(), id);
-
-        // Update the games of the tournament
-        // FIXME This only works for tournaments of 63 games!
-        int startingGame = (team.getIndex() / 2) + 31;
-        BraketGame game = OfyService.ofy().load().type(BraketGame.class)
-            .parent(tournament).id(tournament.getGame(startingGame)).now();
-        if (game != null) {
-          game.setTeamId(team.getIndex() % 2, team.getId());
-          OfyService.ofy().save().entity(game);
-        }
-
-        OfyService.ofy().save().entity(tournament);
-
-        return id;
-
-      }
-
-    });
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.exclaimindustries.paste.braket.client.TournamentService#addTeams(
-   * java.lang.Iterable)
-   */
-  @Override
-  public void addTeams(final Iterable<BraketTeam> teams)
-      throws NoCurrentTournamentException, UserNotLoggedInException,
-      UserNotAdminException {
-    LogInServiceHelper.assertAdmin();
-
-    final Ref<BraketTournament> currentRef = CurrentTournament
-        .getCurrentTournament();
-    if (currentRef == null) {
-      throw new NullPointerException("current tournament is not set");
-    }
-
-    for (BraketTeam team : teams) {
-      if (team.getIndex() < 0) {
-        throw new IllegalArgumentException(
-            "team index must be greater than or equal to zero");
-      }
-      team.setTournamentKey(currentRef.getKey());
-    }
-
-    OfyService.ofy().transact(new VoidWork() {
-
-      @Override
-      public void vrun() {
-
-        BraketTournament tournament = currentRef.get();
-
-        OfyService.ofy().save().entities(teams).now();
-
-        List<BraketGame> games = new ArrayList<BraketGame>();
-        for (BraketTeam team : teams) {
-          tournament.setTeam(team.getIndex(), team.getId());
-
-          // Update the games of the tournament
-          // FIXME This only works for tournaments of 63 games!
-          int startingGame = (team.getIndex() / 2) + 31;
-          BraketGame game = OfyService.ofy().load().type(BraketGame.class)
-              .id(tournament.getGame(startingGame)).now();
-          if (game != null) {
-            game.setTeamId(team.getIndex() % 2, team.getId());
-            games.add(game);
-          }
-        }
-        OfyService.ofy().save().entities(games);
-        OfyService.ofy().save().entity(tournament);
-
-      }
-
-    });
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.exclaimindustries.paste.braket.client.TournamentService#addTeams(
-   * java.lang.Iterable,
-   * net.exclaimindustries.paste.braket.client.BraketTournament)
-   */
-  @Override
-  public void addTeams(final Iterable<BraketTeam> teams,
-      final BraketTournament tournament) throws UserNotLoggedInException,
-      UserNotAdminException {
-
-    LogInServiceHelper.assertAdmin();
-
-    for (BraketTeam team : teams) {
-      if (team.getIndex() < 0) {
-        throw new IllegalArgumentException(
-            "team index must be greater than or equal to zero");
-      }
-      team.setTournamentKey(Key.create(BraketTournament.class,
-          tournament.getId()));
-    }
-
-    OfyService.ofy().transact(new VoidWork() {
-
-      @Override
-      public void vrun() {
-
-        OfyService.ofy().save().entities(teams).now();
-
-        List<BraketGame> games = new ArrayList<BraketGame>();
-        for (BraketTeam team : teams) {
-          tournament.setTeam(team.getIndex(), team.getId());
-
-          // Update the games of the tournament
-          // FIXME This only works for tournaments of 63 games!
-          int startingGame = (team.getIndex() / 2) + 31;
-          BraketGame game = OfyService.ofy().load().type(BraketGame.class)
-              .id(tournament.getGame(startingGame)).now();
-          if (game != null) {
-            game.setTeamId(team.getIndex() % 2, team.getId());
-            games.add(game);
-          }
-        }
-        OfyService.ofy().save().entities(games);
-        OfyService.ofy().save().entity(tournament);
-      }
-
-    });
-
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * net.exclaimindustries.paste.braket.client.TournamentService#addGame(net
-   * .exclaimindustries.paste.braket.client.BraketGame)
-   */
-  @Override
-  public Long addGame(final BraketGame game)
-      throws NoCurrentTournamentException, UserNotLoggedInException,
-      UserNotAdminException {
-    LogInServiceHelper.assertAdmin();
-
-    if (game.getIndex() < 0) {
-      throw new IllegalArgumentException(
-          "game number must be greater than or equal to zero");
-    }
-
-    final Ref<BraketTournament> currentRef = CurrentTournament
-        .getCurrentTournament();
-    if (currentRef == null) {
-      throw new NullPointerException("current tournament is not set");
-    }
-
-    return OfyService.ofy().transact(new Work<Long>() {
-
-      @Override
-      public Long run() {
-
-        game.setTournamentKey(currentRef.getKey());
-        Long id = OfyService.ofy().save().entity(game).now().getId();
-
-        BraketTournament tournament = currentRef.get();
-        tournament.setGame(game.getIndex(), id);
-        OfyService.ofy().save().entity(tournament);
-
-        return id;
-      }
-
-    });
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
    * net.exclaimindustries.paste.braket.client.TournamentService#addGame(net
    * .exclaimindustries.paste.braket.client.BraketGame,
    * net.exclaimindustries.paste.braket.client.BraketTournament)
@@ -517,55 +261,6 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
       }
 
     });
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.exclaimindustries.paste.braket.client.TournamentService#addGames(
-   * java.lang.Iterable)
-   */
-  @Override
-  public void addGames(final Iterable<BraketGame> games)
-      throws UserNotLoggedInException, UserNotAdminException,
-      NoCurrentTournamentException {
-
-    LogInServiceHelper.assertAdmin();
-
-    final Ref<BraketTournament> currentRef = CurrentTournament
-        .getCurrentTournament();
-    if (currentRef == null) {
-      throw new NullPointerException("current tournament is not set");
-    }
-
-    for (BraketGame game : games) {
-      if (game.getIndex() < 0) {
-        throw new IllegalArgumentException(
-            "game number must be greater than or equal to zero");
-      }
-      game.setTournamentKey(currentRef.getKey());
-    }
-
-    OfyService.ofy().transact(new VoidWork() {
-
-      @Override
-      public void vrun() {
-
-        OfyService.ofy().save().entities(games).now();
-
-        BraketTournament tournament = currentRef.get();
-
-        for (BraketGame game : games) {
-          tournament.setGame(game.getIndex(), game.getId());
-        }
-        OfyService.ofy().save().entity(tournament);
-
-      }
-
-    });
-    /**
-     * UIBinder boilerplate
-     */
   }
 
   /*
@@ -605,55 +300,6 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
       }
 
     });
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.exclaimindustries.paste.braket.client.TournamentService#setRules(
-   * java.lang.String)
-   */
-  @Override
-  public void setRules(String rules) throws UserNotLoggedInException,
-      UserNotAdminException, NoCurrentTournamentException {
-    LogInServiceHelper.assertAdmin();
-
-    Ref<BraketTournament> currentRef = CurrentTournament.getCurrentTournament();
-    if (currentRef == null) {
-      throw new NullPointerException("current tournament is not set");
-    }
-
-    BraketTournament tournament = currentRef.get();
-    tournament.setRules(rules);
-    OfyService.ofy().save().entity(tournament);
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.exclaimindustries.paste.braket.client.TournamentService#
-   * updateAndPropagateGame
-   * (net.exclaimindustries.paste.braket.client.BraketGame)
-   */
-  @Override
-  public void updateAndPropagateGame(final BraketGame game)
-      throws NoCurrentTournamentException, UserNotLoggedInException,
-      UserNotAdminException {
-    LogInServiceHelper.assertAdmin();
-
-    if (game.getIndex() < 0) {
-      throw new IllegalArgumentException(
-          "game number must be greater than or equal to zero");
-    }
-
-    final Ref<BraketTournament> currentRef = CurrentTournament
-        .getCurrentTournament();
-    if (currentRef == null) {
-      throw new NullPointerException("current tournament is not set");
-    }
-
-    uncheckedUpdateAndPropagateGame(currentRef, game);
-
   }
 
   public void uncheckedUpdateAndPropagateGame(

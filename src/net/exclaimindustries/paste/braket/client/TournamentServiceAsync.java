@@ -29,50 +29,31 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface TournamentServiceAsync {
 
-	void getCurrentTournament(AsyncCallback<TournamentCollection> callback);
+  void getCurrentTournament(AsyncCallback<TournamentCollection> callback);
 
-	void getTournaments(AsyncCallback<Collection<BraketTournament>> callback);
+  void getTournaments(AsyncCallback<Collection<BraketTournament>> callback);
 
-	void storeTournaments(Iterable<BraketTournament> tournaments,
-			AsyncCallback<Void> callback);
+  void storeTournaments(Iterable<BraketTournament> tournaments,
+      AsyncCallback<Void> callback);
 
-	void storeTournament(BraketTournament tournament,
-			AsyncCallback<Long> callback);
+  void storeTournament(BraketTournament tournament, AsyncCallback<Long> callback);
 
-	void deleteTournaments(Iterable<BraketTournament> tournaments,
-			AsyncCallback<Void> callback);
+  void deleteTournaments(Iterable<BraketTournament> tournaments,
+      AsyncCallback<Void> callback);
 
-	void deleteTournament(BraketTournament tournament,
-			AsyncCallback<Void> callback);
+  void deleteTournament(BraketTournament tournament,
+      AsyncCallback<Void> callback);
 
   void setCurrentTournament(BraketTournament tournament,
-			AsyncCallback<BraketTournament> callback);
+      AsyncCallback<BraketTournament> callback);
 
-	void addTeam(BraketTeam team, AsyncCallback<Long> callback);
+  void addGame(BraketGame game, BraketTournament tournament,
+      AsyncCallback<Long> callback);
 
-	void addTeam(BraketTeam team, BraketTournament tournament,
-			AsyncCallback<Long> callback);
+  void addGames(Iterable<BraketGame> games, BraketTournament tournament,
+      AsyncCallback<Void> callback);
 
-	void addTeams(Iterable<BraketTeam> teams, AsyncCallback<Void> callback);
-
-	void addTeams(Iterable<BraketTeam> teams, BraketTournament tournament,
-			AsyncCallback<Void> callback);
-
-	void addGame(BraketGame game, AsyncCallback<Long> callback);
-
-	void addGame(BraketGame game, BraketTournament tournament,
-			AsyncCallback<Long> callback);
-
-	void addGames(Iterable<BraketGame> games, AsyncCallback<Void> callback);
-
-	void addGames(Iterable<BraketGame> games, BraketTournament tournament,
-			AsyncCallback<Void> callback);
-
-	void setRules(String rules, AsyncCallback<Void> callback);
-
-	void updateAndPropagateGame(BraketGame game, AsyncCallback<Void> callback);
-
-	void getTournaments(BraketTournament.IndexName orderCondition, int offset,
-			int limit, AsyncCallback<List<BraketTournament>> callback);
+  void getTournaments(BraketTournament.IndexName orderCondition, int offset,
+      int limit, AsyncCallback<List<BraketTournament>> callback);
 
 }

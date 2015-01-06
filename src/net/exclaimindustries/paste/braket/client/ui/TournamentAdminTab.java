@@ -120,8 +120,7 @@ public class TournamentAdminTab extends Composite {
   private final AsyncDataProvider<BraketTournament> dataProvider = new AsyncDataProvider<BraketTournament>(
       BraketTournament.KEY_PROVIDER) {
 
-    private BraketTournament.IndexName sortCondition = BraketTournament.IndexName
-        .valueOf("startTime");
+    private BraketTournament.IndexName sortCondition = BraketTournament.IndexName.startTime;
 
     @Override
     protected void onRangeChanged(HasData<BraketTournament> display) {

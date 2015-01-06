@@ -20,14 +20,16 @@ package net.exclaimindustries.paste.braket.client;
 import java.io.Serializable;
 
 import com.googlecode.objectify.annotation.Embed;
+import com.googlecode.objectify.annotation.Index;
 
 /**
- * A class representing the name of the contenstant team.
+ * A class representing the name of a team.
  * 
  * @author paste
  * 
  */
 @Embed
+@Index
 public final class TeamName implements Serializable {
 
     /**

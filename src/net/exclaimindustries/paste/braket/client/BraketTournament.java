@@ -23,15 +23,23 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import javax.validation.constraints.Size;
 
 import com.google.gwt.view.client.ProvidesKey;
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Cache;
-import com.googlecode.objectify.annotation.EntitySubclass;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Load;
 import com.googlecode.objectify.annotation.OnSave;
 import com.googlecode.objectify.annotation.Serialize;
+import com.googlecode.objectify.annotation.Stringify;
 
 /**
  * A class representing a tournament and its outcome.
@@ -39,9 +47,9 @@ import com.googlecode.objectify.annotation.Serialize;
  * @author paste
  * 
  */
-@EntitySubclass(index = true)
+@Entity
 @Cache
-public class BraketTournament extends BraketSelectable {
+public class BraketTournament {
 
   /**
    * A Key Provider so that BraketTournaments can be placed in DataGrids.
@@ -60,6 +68,98 @@ public class BraketTournament extends BraketSelectable {
     name, startTime;
   }
 
+  public static class GameNode {
+    private Long gameId = null;
+    private GameNode topLeadInGame = null;
+    private GameNode bottomLeadInGame = null;
+    private GameNode advanceGame = null;
+    private Boolean advanceToTopPosition = null;
+
+    GameNode() {
+    }
+
+    GameNode(Long gameId) {
+      this.gameId = gameId;
+    }
+
+    GameNode(Long gameId, GameNode topLeadInGame, GameNode bottomLeadInGame,
+        GameNode advanceGame, Boolean advanceToTopPosition) {
+      this.gameId = gameId;
+      this.topLeadInGame = topLeadInGame;
+      this.bottomLeadInGame = bottomLeadInGame;
+      this.advanceGame = advanceGame;
+      this.advanceToTopPosition = advanceToTopPosition;
+    }
+
+    public Long getGameId() {
+      return gameId;
+    }
+
+    public GameNode getTopLeadInGame() {
+      return topLeadInGame;
+    }
+
+    public GameNode getBottomLeadInGame() {
+      return bottomLeadInGame;
+    }
+
+    public GameNode getAdvanceGame() {
+      return advanceGame;
+    }
+
+    public Boolean getAdvanceToTopPosition() {
+      return advanceToTopPosition;
+    }
+
+    public void setAdvanceToTopPosition(Boolean advanceToTopPosition) {
+      this.advanceToTopPosition = advanceToTopPosition;
+      if (advanceGame != null && advanceToTopPosition != null) {
+        if (advanceToTopPosition) {
+          advanceGame.topLeadInGame = this;
+        } else {
+          advanceGame.bottomLeadInGame = this;
+        }
+      }
+    }
+
+    public void setGameId(Long gameId) {
+      this.gameId = gameId;
+    }
+
+    public void setTopLeadInGame(GameNode topLeadInGame) {
+      this.topLeadInGame = topLeadInGame;
+      if (topLeadInGame != null) {
+        topLeadInGame.advanceGame = this;
+        topLeadInGame.advanceToTopPosition = true;
+      }
+    }
+
+    public void setBottomLeadInGame(GameNode bottomLeadInGame) {
+      this.bottomLeadInGame = bottomLeadInGame;
+      if (bottomLeadInGame != null) {
+        bottomLeadInGame.advanceGame = this;
+        bottomLeadInGame.advanceToTopPosition = false;
+      }
+    }
+
+    public void setAdvanceGame(GameNode advanceGame) {
+      this.advanceGame = advanceGame;
+      if (advanceGame != null && advanceToTopPosition != null) {
+        if (advanceToTopPosition) {
+          advanceGame.topLeadInGame = this;
+        } else {
+          advanceGame.bottomLeadInGame = this;
+        }
+      }
+    }
+  }
+
+  /**
+   * The tournament ID
+   */
+  @Id
+  private Long id = null;
+
   /**
    * The name of this tournament.
    */
@@ -73,24 +173,6 @@ public class BraketTournament extends BraketSelectable {
   private Date startTime = new Date();
 
   /**
-   * If the nth bit of <code>completionMask</code> is 0, this means the nth game
-   * in the tournament does not have a winner determined.
-   */
-  @Serialize
-  private BigInteger completionMask = BigInteger.ZERO;
-
-  /**
-   * The sum of the scores of the teams in the final game.
-   */
-  private Integer tieBreaker = null;
-
-  /**
-   * The point values for each round of the tournament. THIS MUST BE MUTABLE!
-   */
-  private List<Double> roundValues = new ArrayList<Double>(Arrays.asList(13.,
-      7., 5., 3., 2., 1.));
-
-  /**
    * The buyInValue of each buy-in.
    */
   private Double buyInValue = 5.;
@@ -102,7 +184,7 @@ public class BraketTournament extends BraketSelectable {
    * MUST BE MUTABLE!
    */
   @Size(min = 1, message = "at least one pay-out value must be defined")
-  private List<Double> payOutValues = new ArrayList<Double>(
+  private List<Double> payOutValues = new ArrayList<>(
       Arrays.asList((Double) null));
 
   /**
@@ -111,33 +193,28 @@ public class BraketTournament extends BraketSelectable {
   private Double upsetValue = 0.;
 
   /**
-   * The seeds of the first round.
+   * The selections that are registered to this tournament, keyed to the user ID
+   * (which is a String, unlike other IDs in the datastore)
    */
-  public static final int[] firstRoundSeeds = { 1, 16, 8, 9, 5, 12, 4, 13, 6,
-      11, 3, 14, 7, 10, 2, 15, 1, 16, 8, 9, 5, 12, 4, 13, 6, 11, 3, 14, 7, 10,
-      2, 15, 1, 16, 8, 9, 5, 12, 4, 13, 6, 11, 3, 14, 7, 10, 2, 15, 1, 16, 8,
-      9, 5, 12, 4, 13, 6, 11, 3, 14, 7, 10, 2, 15 };
+  private Map<String, Long> registeredSelections = new HashMap<>();
 
   /**
-   * The selections that are registered to this tournament.
+   * The structure of the tournament: each GameNode tells us what game IDs lead
+   * into it and to what game the winner goes (if any). These are keyed by game
+   * ID for easy lookup.
    */
-  @Serialize
-  private HashMap<String, Long> registeredSelections = new HashMap<String, Long>();
+  @Stringify(LongStringifier.class)
+  private Map<Long, GameNode> games = new HashMap<>();
 
   /**
-   * The games in this tournament. These are stored in "tournament order",
-   * meaning the 0th game is the first game in the first round, and the last
-   * game is the championship game.
+   * The IDs of the teams in this tournament, stored here for convenience.
    */
-  private ArrayList<Long> games = new ArrayList<Long>();
+  private Set<Long> teams = new HashSet<Long>();
 
   /**
-   * The teams in this tournament. These are stored in "tournament order",
-   * meaning the 0th team is the "top" or "away" team in the first game of the
-   * first round, and the last is the "bottom" or "home" team in the last game
-   * of the first round.
+   * The championship game. Every tournament requires one of these.
    */
-  private ArrayList<Long> teams = new ArrayList<Long>();
+  private GameNode championship = null;
 
   /**
    * The rules of the tournament.
@@ -148,7 +225,14 @@ public class BraketTournament extends BraketSelectable {
    * Default constructor
    */
   public BraketTournament() {
-    super();
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getName() {
@@ -167,56 +251,12 @@ public class BraketTournament extends BraketSelectable {
     this.startTime = new Date(startTime.getTime());
   }
 
-  public BigInteger getCompletionMask() {
-    return completionMask;
-  }
-
-  public void setCompletionMask(BigInteger completionMask) {
-    this.completionMask = completionMask;
-  }
-
-  public BigInteger getGameMask() {
-    return gameMask;
-  }
-
-  public void setGameMask(BigInteger gameMask) {
-    this.gameMask = gameMask;
-  }
-
   public Double getUpsetValue() {
     return upsetValue;
   }
 
   public void setUpsetValue(Double upsetValue) {
     this.upsetValue = upsetValue;
-  }
-
-  public BigInteger getGameWinners() {
-    return gameWinners;
-  }
-
-  public void setGameWinners(BigInteger gameWinners) {
-    this.gameWinners = gameWinners;
-  }
-
-  public Integer getTieBreaker() {
-    return tieBreaker;
-  }
-
-  public void setTieBreaker(Integer tieBreaker) throws IllegalArgumentException {
-    if (tieBreaker < 0) {
-      throw new IllegalArgumentException("argument must be positive, "
-          + tieBreaker.toString() + " given");
-    }
-    this.tieBreaker = tieBreaker;
-  }
-
-  public List<Double> getRoundValues() {
-    return new ArrayList<Double>(roundValues);
-  }
-
-  public void setRoundValues(List<Double> roundValues) {
-    this.roundValues = new ArrayList<Double>(roundValues);
   }
 
   public Double getBuyInValue() {
@@ -234,85 +274,93 @@ public class BraketTournament extends BraketSelectable {
       for (int i = 1; i < payOutValues.size(); ++i) {
         remainingBuyIn -= payOutValues.get(i);
       }
-      ArrayList<Double> values = new ArrayList<Double>(payOutValues);
+      ArrayList<Double> values = new ArrayList<>(payOutValues);
       values.set(0, remainingBuyIn);
       return values;
 
     } else {
-      return new ArrayList<Double>(payOutValues);
+      return new ArrayList<>(payOutValues);
     }
   }
 
   public List<Double> getRawPayOutValues() {
-    return new ArrayList<Double>(payOutValues);
+    return new ArrayList<>(payOutValues);
   }
 
   public void setPayOutValues(List<Double> payOutValues) {
     // FishSticks is immutable
-    this.payOutValues = new ArrayList<Double>(payOutValues);
+    this.payOutValues = new ArrayList<>(payOutValues);
   }
 
   public HashMap<String, Long> getRegisteredSelections() {
-    return new HashMap<String, Long>(registeredSelections);
+    return new HashMap<>(registeredSelections);
   }
 
   public Long getRegisteredSelectionId(String userKey) {
     return registeredSelections.get(userKey);
   }
 
-  public ArrayList<Long> getGames() {
-    return new ArrayList<Long>(games);
+  public Set<Long> getGames() {
+    return new HashSet<>(games.keySet());
   }
 
-  public Long getGame(int game) {
-    return games.get(game);
-  }
+  public void addGame(Long gameId, Long topPlayInGameId,
+      Long bottomPlayInGameId, Long advanceGameId, boolean advanceToTop) {
 
-  public void setGames(List<Long> games) {
-    this.games = new ArrayList<Long>(games);
-  }
-
-  public void setGame(int index, Long game) {
-    // If we're adding to the end, ADD. If we're changing something in the
-    // middle, SET. If we fly off the end, CRASH.
-    if (games.size() == index)
-      games.add(index, game);
-    else
-      games.set(index, game);
-  }
-
-  public void addGame(BraketGame game) {
-    if (game.getIndex() < 0) {
-      throw new IllegalArgumentException();
+    if (topPlayInGameId == null && bottomPlayInGameId == null
+        && advanceGameId == null) {
+      throw new IllegalArgumentException(
+          "island nodes (no top play-in, bottom play-in, and advance games defined) are not allowed: use setChampionship instead");
     }
-    games.set(game.getIndex(), game.getId());
-  }
 
-  public ArrayList<Long> getTeams() {
-    return new ArrayList<Long>(teams);
-  }
+    GameNode node = new GameNode(gameId, null, null, null, advanceToTop);
 
-  public Long getTeam(int team) {
-    return teams.get(team);
-  }
-
-  public void setTeams(List<Long> teams) {
-    this.teams = new ArrayList<Long>(teams);
-  }
-
-  public void setTeam(int index, Long team) {
-    if (index >= teams.size()) {
-      while (teams.size() < index) {
-        teams.add(null);
+    if (advanceGameId != null) {
+      if (games.containsKey(advanceGameId)) {
+        node.setAdvanceGame(games.get(advanceGameId));
+      } else {
+        GameNode advanceNode = new GameNode(advanceGameId);
+        games.put(advanceGameId, advanceNode);
+        node.setAdvanceGame(advanceNode);
       }
-      teams.add(team);
-    } else {
-      teams.set(index, team);
     }
+
+    if (topPlayInGameId != null) {
+      if (games.containsKey(topPlayInGameId)) {
+        node.setTopLeadInGame(games.get(topPlayInGameId));
+      } else {
+        GameNode topNode = new GameNode(topPlayInGameId);
+        games.put(topPlayInGameId, topNode);
+        node.setTopLeadInGame(topNode);
+      }
+    }
+
+    if (bottomPlayInGameId != null) {
+      if (games.containsKey(bottomPlayInGameId)) {
+        node.setBottomLeadInGame(games.get(bottomPlayInGameId));
+      } else {
+        GameNode bottomNode = new GameNode(bottomPlayInGameId);
+        games.put(bottomPlayInGameId, bottomNode);
+        node.setBottomLeadInGame(bottomNode);
+      }
+    }
+
+  }
+
+  public Set<Long> getTeams() {
+    return new HashSet<>(teams);
+  }
+
+  public void setTeams(Collection<Long> teams) {
+    this.teams = new HashSet<>(teams);
   }
 
   public void addTeam(BraketTeam team) {
-    teams.add(team.getIndex(), team.getId());
+    teams.add(team.getId());
+  }
+
+  public void addTeam(Long teamId) {
+    teams.add(teamId);
   }
 
   public String getRules() {
@@ -328,33 +376,11 @@ public class BraketTournament extends BraketSelectable {
   }
 
   public void addRegistration(String userKey, Long selectionKey) {
-
     registeredSelections.put(userKey, selectionKey);
   }
 
   public void removeRegistration(String userKey) {
-
     registeredSelections.remove(userKey);
-  }
-
-  /**
-   * Get the number of rounds in the tournament.
-   * 
-   * @return The number of rounds in the tournament given the particular
-   *         <code>gameMask</code>.
-   */
-  public int getNumberOfRounds() {
-    int bitLength = gameMask.bitLength();
-    return RoundOffset.getRoundNumber(bitLength - 1) + 1;
-  }
-
-  /**
-   * Convenience method for getting the number of games in the tournament.
-   * 
-   * @return The number of games not masked out in the tournament.
-   */
-  public int getNumberOfGames() {
-    return gameMask.bitCount();
   }
 
   /**
@@ -629,5 +655,16 @@ public class BraketTournament extends BraketSelectable {
       }
     }
     return maybe;
+  }
+
+  public Long getChampionshipGameId() {
+    return championship.getGameId();
+  }
+
+  public void setChampionshipGame(Long gameId) {
+    championship = new GameNode(gameId, new GameNode(), new GameNode(), null,
+        null);
+    games.clear();
+    games.put(gameId, championship);
   }
 }

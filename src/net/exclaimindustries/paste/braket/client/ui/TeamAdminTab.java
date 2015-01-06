@@ -1,5 +1,7 @@
 package net.exclaimindustries.paste.braket.client.ui;
 
+import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.exclaimindustries.paste.braket.client.BraketTeam;
@@ -8,8 +10,13 @@ import net.exclaimindustries.paste.braket.client.TeamServiceAsync;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.cellview.client.DataGrid;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.AsyncDataProvider;
+import com.google.gwt.view.client.HasData;
 
 public class TeamAdminTab extends Composite {
 
@@ -30,32 +37,52 @@ public class TeamAdminTab extends Composite {
    * Logging
    */
   private Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-  
+
   /**
    * Service for reading and editing Team data
    */
-  private TeamServiceAsync teamService = GWT
-      .create(TeamService.class);
+  private TeamServiceAsync teamService = GWT.create(TeamService.class);
 
-  private static class TeamNamePendingChange extends
-      PendingChange<BraketTeam, String> {
+  // UI Fields ----------------------------------------------------------------
 
-    public TeamNamePendingChange(BraketTeam target, String value) {
-      super(target, value);
-    }
+  @UiField(provided = true)
+  DataGrid<BraketTeam> dataGrid;
+
+  // Members ------------------------------------------------------------------
+
+  private final AsyncDataProvider<BraketTeam> dataProvider = new AsyncDataProvider<BraketTeam>(
+      BraketTeam.KEY_PROVIDER) {
+
+    private BraketTeam.IndexName sortCondition = BraketTeam.IndexName.schoolName;
 
     @Override
-    protected void doCommit(BraketTeam target, String value) {
+    protected void onRangeChanged(HasData<BraketTeam> display) {
+      final int offset = display.getVisibleRange().getStart();
+      int limit = display.getVisibleRange().getLength();
+      // RPC call to get more tournaments
+      teamService.getTeams(sortCondition, offset, limit,
+          new AsyncCallback<List<BraketTeam>>() {
 
+            @Override
+            public void onFailure(Throwable caught) {
+              logger.log(Level.SEVERE,
+                  "failed to get team list: " + caught.getLocalizedMessage());
+              Toast
+                  .showErrorToast("Failed to load team list: see the log for more information.");
+              updateRowCount(0, true);
+            }
+
+            @Override
+            public void onSuccess(List<BraketTeam> result) {
+              updateRowCount(result.size(), true);
+              updateRowData(offset, result);
+            }
+
+          });
     }
 
-  }
+  };
 
-  //
-  // @UiField(provided = true)
-  // DataGrid<BraketTournament> dataGrid;
-  //
-  // private TeamServiceAsync teamService = GWT.create(TeamService.class);
   //
   // private final AsyncDataProvider<BraketTeam> dataProvider = new
   // AsyncDataProvider<BraketTeam>(

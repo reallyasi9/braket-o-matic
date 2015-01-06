@@ -18,6 +18,7 @@ package net.exclaimindustries.paste.braket.client;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -27,16 +28,22 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface TeamServiceAsync {
 
-    void storeTeam(BraketTeam team, AsyncCallback<Long> callback);
+  void storeTeam(BraketTeam team, AsyncCallback<Long> callback);
 
-    void deleteTeam(BraketTeam team, AsyncCallback<Void> callback);
+  void deleteTeam(BraketTeam team, AsyncCallback<Void> callback);
 
-    void downloadTeams(Iterable<Long> teamIds,
-            AsyncCallback<Collection<BraketTeam>> callback);
+  void downloadTeams(Iterable<Long> teamIds,
+      AsyncCallback<Collection<BraketTeam>> callback);
 
-    void storeTeams(Iterable<BraketTeam> teams, AsyncCallback<Void> callback);
+  void storeTeams(Iterable<BraketTeam> teams, AsyncCallback<Void> callback);
 
-    void deleteTeams(Iterable<BraketTeam> teams, AsyncCallback<Void> callback);
+  void deleteTeams(Iterable<BraketTeam> teams, AsyncCallback<Void> callback);
 
-    void getTeams(AsyncCallback<List<BraketTeam>> callback);
+  void getTeams(AsyncCallback<List<BraketTeam>> callback);
+
+  void getTeams(BraketTournament tournament,
+      AsyncCallback<Map<Long, BraketTeam>> callback);
+
+  void getTeams(BraketTeam.IndexName orderCondition, int offset, int limit,
+      AsyncCallback<List<BraketTeam>> callback);
 }

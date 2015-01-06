@@ -18,11 +18,10 @@
 package net.exclaimindustries.paste.braket.client;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
-import com.googlecode.objectify.Key;
+import com.google.gwt.view.client.ProvidesKey;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Parent;
 
 /**
  * A class that represents a contestant in a bracket game.
@@ -34,154 +33,93 @@ import com.googlecode.objectify.annotation.Parent;
 @Cache
 public final class BraketTeam implements IsSerializable {
 
-    private static final String imageDirectory = "/images/teams/";
+  private static final String imageDirectory = "/images/teams/";
 
-    @Id
-    private Long id;
-
-    /**
-     * The ID of the tournament to which this team belongs.
-     */
-    @Parent
-    private transient Key<BraketTournament> tournamentKey = null;
-
-    /**
-     * The starting seed of this team.
-     */
-    private int seed = 0;
-
-    /**
-     * The index of this team. An index of 0 means this team starts in the top
-     * slot of the first game in the outer-most round of the tournamentKey.
-     */
-    private int index = 0;
-
-    /**
-     * The teamName of the team.
-     */
-    private TeamName teamName = new TeamName();
-
-    /**
-     * Location of a logo or picture representing the team
-     */
-    private String picture = null;
-
-    /**
-     * A single color that represents the team. Typically light.
-     */
-    private RGBAColor color = new RGBAColor(0xcccccc);
-
-    /**
-     * The team's KenPom Pythagorean score.
-     */
-    private double kenpomScore = 0;
-
-    /**
-     * The team's season win percentage
-     */
-    private double winPercentage = 0;
-
-    /**
-     * Default constructor.
-     */
-    public BraketTeam() {
+  /**
+   * A Key Provider so that BraketTournaments can be placed in DataGrids.
+   */
+  public static final ProvidesKey<BraketTeam> KEY_PROVIDER = new ProvidesKey<BraketTeam>() {
+    @Override
+    public Object getKey(BraketTeam item) {
+      return (item == null) ? null : item.getId();
     }
-    
-    public BraketTeam(int seed, TeamName name) {
-        this.seed = seed;
-        this.teamName = name;
-    }
+  };
 
-    public Object clone() {
-        BraketTeam t = new BraketTeam();
-        t.setColor(this.getColor());
-        t.setIndex(this.getIndex());
-        t.setKenpomScore(this.getKenpomScore());
-        t.setName(this.getName());
-        t.setPicture(this.getPicture());
-        t.setSeed(this.getSeed());
-        t.setTournamentKey(this.getTournamentKey());
-        t.setWinPercentage(this.getWinPercentage());
-        return t;
-    }
+  /**
+   * Enumerated index names.
+   */
+  public static enum IndexName {
+    schoolName, teamName, displayName, shortName, abbreviation;
+  }
 
-    public Key<BraketTournament> getTournamentKey() {
-        return tournamentKey;
-    }
+  @Id
+  private Long id;
 
-    public void setTournamentKey(Key<BraketTournament> tournament) {
-        this.tournamentKey = tournament;
-    }
+  /**
+   * The teamName of the team.
+   */
+  private TeamName teamName = new TeamName();
 
-    public int getSeed() {
-        return seed;
-    }
+  /**
+   * Location of a logo or picture representing the team
+   */
+  private String picture = null;
 
-    public void setSeed(int seed) {
-        if (seed < 1) {
-            throw new IllegalArgumentException(
-                    "seed must be between greater than 0, "
-                            + Integer.toString(seed) + " given");
-        }
-        this.seed = seed;
-    }
+  /**
+   * A single color that represents the team. Typically light.
+   */
+  private RGBAColor color = new RGBAColor(0xcccccc);
 
-    public TeamName getName() {
-        return new TeamName(teamName);
-    }
+  /**
+   * Default constructor.
+   */
+  public BraketTeam() {
+  }
 
-    public void setName(TeamName teamName) {
-        this.teamName = new TeamName(teamName);
-    }
+  public BraketTeam(TeamName name) {
+    this.teamName = name;
+  }
 
-    public String getPicture() {
-        return imageDirectory + picture;
-    }
+  public Object clone() {
+    BraketTeam t = new BraketTeam();
+    t.setColor(this.getColor());
+    t.setName(this.getName());
+    t.setPicture(this.getPicture());
+    return t;
+  }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
+  public TeamName getName() {
+    return new TeamName(teamName);
+  }
 
-    public RGBAColor getColor() {
-        // Color is immutable
-        return color;
-    }
+  public void setName(TeamName teamName) {
+    this.teamName = new TeamName(teamName);
+  }
 
-    public void setColor(RGBAColor color) {
-        // Color is immutable
-        this.color = color;
-    }
+  public String getPicture() {
+    return imageDirectory + picture;
+  }
 
-    public Long getId() {
-        return id;
-    }
+  public void setPicture(String picture) {
+    this.picture = picture;
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public RGBAColor getColor() {
+    // Color is immutable
+    return color;
+  }
 
-    public double getKenpomScore() {
-        return kenpomScore;
-    }
+  public void setColor(RGBAColor color) {
+    // Color is immutable
+    this.color = color;
+  }
 
-    public void setKenpomScore(double kenpomScore) {
-        this.kenpomScore = kenpomScore;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public double getWinPercentage() {
-        return winPercentage;
-    }
-
-    public void setWinPercentage(double winPercentage) {
-        this.winPercentage = winPercentage;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
 }
