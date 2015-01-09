@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.exclaimindustries.paste.braket.client.BraketGame;
+import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.server.CurrentTournament;
@@ -68,8 +68,8 @@ public class GameDownloaderServlet extends HttpServlet {
         }
 
         // Get the games and teams of the tournament
-        Collection<BraketGame> tournGames = OfyService.ofy().load()
-                .type(BraketGame.class).parent(currentTournRef)
+        Collection<Game> tournGames = OfyService.ofy().load()
+                .type(Game.class).parent(currentTournRef)
                 .ids(currentTournRef.get().getGames()).values();
 
         Collection<BraketTeam> tournTeams = OfyService.ofy().load()
@@ -77,8 +77,8 @@ public class GameDownloaderServlet extends HttpServlet {
                 .ids(currentTournRef.get().getGames()).values();
 
         // Index these by ESPN ID for faster lookup
-        HashMap<Long, BraketGame> gameMap = new HashMap<Long, BraketGame>();
-        for (BraketGame game : tournGames) {
+        HashMap<Long, Game> gameMap = new HashMap<Long, Game>();
+        for (Game game : tournGames) {
             if (game.getEspnId() != null) {
                 gameMap.put(game.getEspnId(), game);
             }
@@ -133,8 +133,8 @@ public class GameDownloaderServlet extends HttpServlet {
 
             Long espnId = gameElement.getKey();
 
-            BraketGame game = null; // to be filled in later
-            BraketGame gameToUpdate = null;
+            Game game = null; // to be filled in later
+            Game gameToUpdate = null;
 
             // See if this is a game I know already
             if (gameMap.containsKey(espnId)) {
@@ -178,7 +178,7 @@ public class GameDownloaderServlet extends HttpServlet {
                 Long topTeamId = game.getTopTeamId();
                 Long bottomTeamId = game.getBottomTeamId();
 
-                for (BraketGame tournGame : tournGames) {
+                for (Game tournGame : tournGames) {
                     if ((topTeamId.equals(tournGame.getTopTeamId()) && bottomTeamId
                             .equals(tournGame.getBottomTeamId()))
                             || (topTeamId.equals(tournGame.getBottomTeamId()) && bottomTeamId

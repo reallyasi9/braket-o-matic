@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import net.exclaimindustries.paste.braket.client.BraketGame;
+import net.exclaimindustries.paste.braket.client.Game;
 
 import org.jdom2.CDATA;
 import org.jdom2.Content;
@@ -136,7 +136,7 @@ public final class GameDownloader {
         return parsedElements;
     }
 
-    public static BraketGame buildGame(Element item) throws ParseException {
+    public static Game buildGame(Element item) throws ParseException {
 
         // Get the game ID
         Long gameId =
@@ -179,10 +179,10 @@ public final class GameDownloader {
 
         // If the game is in progress or final, do additional parsing
         switch (gameStatusId) {
-        case (BraketGame.STATUS_SCHEDULED):
+        case (Game.STATUS_SCHEDULED):
             gameStatus = "Starts " + gameStartTime;
             break;
-        case (BraketGame.STATUS_IN_PROGRESS):
+        case (Game.STATUS_IN_PROGRESS):
             String period = item.getChildText(PERIOD_NODE, ESPN_NAMESPACE);
             String timeRemaining =
                     item.getChildText(CLOCK_NODE, ESPN_NAMESPACE);
@@ -195,7 +195,7 @@ public final class GameDownloader {
                     Integer.valueOf(item.getChildText(AWAY_SCORE_NODE,
                             ESPN_NAMESPACE));
             break;
-        case (BraketGame.STATUS_HALFTIME):
+        case (Game.STATUS_HALFTIME):
 
             gameStatus = "Halftime";
 
@@ -206,7 +206,7 @@ public final class GameDownloader {
                     Integer.valueOf(item.getChildText(AWAY_SCORE_NODE,
                             ESPN_NAMESPACE));
             break;
-        case (BraketGame.STATUS_FINAL):
+        case (Game.STATUS_FINAL):
             gameStatus = "FINAL";
             homeScore =
                     Integer.valueOf(item.getChildText(HOME_SCORE_NODE,
@@ -229,7 +229,7 @@ public final class GameDownloader {
         }
 
         // Build the game
-        BraketGame game = new BraketGame();
+        Game game = new Game();
         game.setBottomScore(awayScore);
         game.setTopScore(homeScore);
         game.setBottomTeamId(awayId);

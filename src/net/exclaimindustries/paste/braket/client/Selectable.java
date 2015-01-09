@@ -40,7 +40,7 @@ import com.googlecode.objectify.annotation.Serialize;
  */
 @Entity
 @Cache
-public abstract class BraketSelectable implements IsSerializable {
+public abstract class Selectable {
 
   /**
    * The base class must have the Id field.
@@ -66,7 +66,7 @@ public abstract class BraketSelectable implements IsSerializable {
   /**
    * Set the winner of the selected game
    */
-
+  
 
 
   /**

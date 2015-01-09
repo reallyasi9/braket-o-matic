@@ -17,12 +17,13 @@
 
 package net.exclaimindustries.paste.braket.server;
 
-import net.exclaimindustries.paste.braket.client.BraketGame;
-import net.exclaimindustries.paste.braket.client.BraketSelectable;
+import net.exclaimindustries.paste.braket.client.Game;
+import net.exclaimindustries.paste.braket.client.Selectable;
 import net.exclaimindustries.paste.braket.client.BraketSelection;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.BraketUser;
+import net.exclaimindustries.paste.braket.client.Slot;
 import net.exclaimindustries.paste.braket.server.backends.ExpectoValues;
 
 import com.googlecode.objectify.Objectify;
@@ -31,23 +32,24 @@ import com.googlecode.objectify.ObjectifyService;
 
 public class OfyService {
 
-    static {
-        factory().register(BraketSelectable.class);
-        factory().register(BraketTournament.class);
-        factory().register(BraketUser.class);
-        factory().register(BraketSelection.class);
-        factory().register(BraketTeam.class);
-        factory().register(BraketGame.class);
-        factory().register(ExpectoValues.class);
-        factory().register(CurrentTournament.class);
-        factory().register(CurrentExpectOMatic.class);
-    }
+  static {
+    factory().register(Selectable.class);
+    factory().register(BraketTournament.class);
+    factory().register(BraketUser.class);
+    factory().register(BraketSelection.class);
+    factory().register(BraketTeam.class);
+    factory().register(Game.class);
+    factory().register(Slot.class);
+    factory().register(ExpectoValues.class);
+    factory().register(CurrentTournament.class);
+    factory().register(CurrentExpectOMatic.class);
+  }
 
-    public static Objectify ofy() {
-        return ObjectifyService.ofy();
-    }
+  public static Objectify ofy() {
+    return ObjectifyService.ofy();
+  }
 
-    public static ObjectifyFactory factory() {
-        return ObjectifyService.factory();
-    }
+  public static ObjectifyFactory factory() {
+    return ObjectifyService.factory();
+  }
 }

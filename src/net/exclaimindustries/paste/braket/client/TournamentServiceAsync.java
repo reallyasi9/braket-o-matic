@@ -47,10 +47,10 @@ public interface TournamentServiceAsync {
   void setCurrentTournament(BraketTournament tournament,
       AsyncCallback<BraketTournament> callback);
 
-  void addGame(BraketGame game, BraketTournament tournament,
+  void addGame(Game game, BraketTournament tournament,
       AsyncCallback<Long> callback);
 
-  void addGames(Iterable<BraketGame> games, BraketTournament tournament,
+  void addGames(Iterable<Game> games, BraketTournament tournament,
       AsyncCallback<Void> callback);
 
   void getTournaments(BraketTournament.IndexName orderCondition, int offset,

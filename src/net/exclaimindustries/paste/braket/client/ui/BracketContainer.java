@@ -3,7 +3,7 @@ package net.exclaimindustries.paste.braket.client.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.exclaimindustries.paste.braket.client.BraketGame;
+import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.BraketSelection;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
 import net.exclaimindustries.paste.braket.client.BraketTournament;
@@ -102,7 +102,7 @@ public class BracketContainer extends ScrollPanel {
     private BraketTournament mTournament;
     private BraketSelection mSelection;
     private List<BraketTeam> mTeams;
-    private List<BraketGame> mGames;
+    private List<Game> mGames;
 
     private List<BracketColumn> mColumns;
 
@@ -116,7 +116,7 @@ public class BracketContainer extends ScrollPanel {
      *            a list of BraketTeams
      */
     public BracketContainer(BraketTournament tourn, List<BraketTeam> teams,
-            List<BraketGame> games) {
+            List<Game> games) {
         if (tourn == null)
             throw new IllegalArgumentException(
                     "You need to pass a non-null BraketTournament to BracketContainer's constructor!");
@@ -171,7 +171,7 @@ public class BracketContainer extends ScrollPanel {
      * 
      * @return that there list of games
      */
-    public List<BraketGame> getGames() {
+    public List<Game> getGames() {
         return mGames;
     }
 
@@ -198,7 +198,7 @@ public class BracketContainer extends ScrollPanel {
      *            the new selection (can be null)
      */
     public void setTournament(BraketTournament tourn, List<BraketTeam> teams,
-            List<BraketGame> games, BraketSelection selection) {
+            List<Game> games, BraketSelection selection) {
         if (tourn == null)
             throw new IllegalArgumentException(
                     "The BraketTournament can't be null!");

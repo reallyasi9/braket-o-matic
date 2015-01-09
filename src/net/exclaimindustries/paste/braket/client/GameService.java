@@ -42,7 +42,7 @@ public interface GameService extends RemoteService {
    *         the first game of the first round, and the last game representing
    *         the championship game.
    */
-  public List<BraketGame> getGames();
+  public List<Game> getGames();
 
   /**
    * Saves or updates the given collection of games in the datastore. This
@@ -65,7 +65,7 @@ public interface GameService extends RemoteService {
    *           If any game in the collection is not associated with a valid
    *           <code>BraketTournament</code>.
    */
-  public void storeGames(Iterable<BraketGame> games)
+  public void storeGames(Iterable<Game> games)
       throws UserNotLoggedInException, UserNotAdminException;
 
   /**
@@ -89,7 +89,7 @@ public interface GameService extends RemoteService {
    *           If any game in the collection is not associated with a valid
    *           <code>BraketTournament</code>.
    */
-  Long storeGame(BraketGame game) throws UserNotLoggedInException,
+  Long storeGame(Game game) throws UserNotLoggedInException,
       UserNotAdminException;
 
   /**
@@ -102,7 +102,7 @@ public interface GameService extends RemoteService {
    * @throws SecurityException
    *           If the user is not logged in as an administrator.
    */
-  public void deleteGames(Iterable<BraketGame> games)
+  public void deleteGames(Iterable<Game> games)
       throws UserNotLoggedInException, UserNotAdminException;
 
   /**
@@ -113,7 +113,7 @@ public interface GameService extends RemoteService {
    *          datastore.
    * 
    */
-  public void deleteGame(BraketGame game) throws UserNotLoggedInException,
+  public void deleteGame(Game game) throws UserNotLoggedInException,
       UserNotAdminException;
 
   /**
@@ -130,6 +130,6 @@ public interface GameService extends RemoteService {
    * @throws SecurityException
    *           If the user is not logged in as an administrator.
    */
-  public void updateAndPropagateGame(BraketGame game)
+  public void updateAndPropagateGame(Game game)
       throws UserNotLoggedInException, UserNotAdminException;
 }

@@ -100,14 +100,14 @@ public final class BraketSelection {
    *         correct (true), incorrect (false), or not yet determined (null),
    *         keyed by game ID.
    */
-  public Map<Long, Boolean> calculateMatchingWinners(Map<Long, BraketGame> games) {
+  public Map<Long, Boolean> calculateMatchingWinners(Map<Long, Game> games) {
 
     Map<Long, Boolean> result = new HashMap<Long, Boolean>();
 
     Set<Long> eliminatedTeams = new HashSet<Long>();
 
     // Determine the eliminated teams first
-    for (BraketGame game : games.values()) {
+    for (Game game : games.values()) {
       if (game.isFinal()) {
         eliminatedTeams.add(game.getLosingTeamId());
       }
@@ -121,7 +121,7 @@ public final class BraketSelection {
             + "] not found in given set of games");
       }
       Long winningTeamId = winnerEntry.getValue();
-      BraketGame game = games.get(gameId);
+      Game game = games.get(gameId);
       if (game.isFinal()) {
         result.put(gameId, game.getWinningTeamId() == winningTeamId);
       } else if (eliminatedTeams.contains(winningTeamId)) {
@@ -160,7 +160,7 @@ public final class BraketSelection {
    *           if this decision is impossible given the user's other picks
    */
   public boolean setAndPropagateWinner(Long gameId, Boolean pickedTopTeam,
-      Map<Long, BraketGame> games) {
+      Map<Long, Game> games) {
 
     if (!games.containsKey(gameId)) {
       throw new IllegalArgumentException("gameId [" + Long.toString(gameId)
@@ -182,7 +182,7 @@ public final class BraketSelection {
 
     // Determine if this ID is selectable for this game
 
-    BraketGame thisGame = games.get(gameId);
+    Game thisGame = games.get(gameId);
 
     // TODO: Find a way to query the length of the tourney!
     if (gameIndex > gameMask.bitLength())

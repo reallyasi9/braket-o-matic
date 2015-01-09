@@ -40,6 +40,7 @@ import com.googlecode.objectify.annotation.Load;
 import com.googlecode.objectify.annotation.OnSave;
 import com.googlecode.objectify.annotation.Serialize;
 import com.googlecode.objectify.annotation.Stringify;
+import com.googlecode.objectify.annotation.Subclass;
 
 /**
  * A class representing a tournament and its outcome.
@@ -47,9 +48,9 @@ import com.googlecode.objectify.annotation.Stringify;
  * @author paste
  * 
  */
-@Entity
+@Subclass(index = true)
 @Cache
-public class BraketTournament {
+public class BraketTournament extends Selectable {
 
   /**
    * A Key Provider so that BraketTournaments can be placed in DataGrids.
@@ -67,98 +68,6 @@ public class BraketTournament {
   public static enum IndexName {
     name, startTime;
   }
-
-  public static class GameNode {
-    private Long gameId = null;
-    private GameNode topLeadInGame = null;
-    private GameNode bottomLeadInGame = null;
-    private GameNode advanceGame = null;
-    private Boolean advanceToTopPosition = null;
-
-    GameNode() {
-    }
-
-    GameNode(Long gameId) {
-      this.gameId = gameId;
-    }
-
-    GameNode(Long gameId, GameNode topLeadInGame, GameNode bottomLeadInGame,
-        GameNode advanceGame, Boolean advanceToTopPosition) {
-      this.gameId = gameId;
-      this.topLeadInGame = topLeadInGame;
-      this.bottomLeadInGame = bottomLeadInGame;
-      this.advanceGame = advanceGame;
-      this.advanceToTopPosition = advanceToTopPosition;
-    }
-
-    public Long getGameId() {
-      return gameId;
-    }
-
-    public GameNode getTopLeadInGame() {
-      return topLeadInGame;
-    }
-
-    public GameNode getBottomLeadInGame() {
-      return bottomLeadInGame;
-    }
-
-    public GameNode getAdvanceGame() {
-      return advanceGame;
-    }
-
-    public Boolean getAdvanceToTopPosition() {
-      return advanceToTopPosition;
-    }
-
-    public void setAdvanceToTopPosition(Boolean advanceToTopPosition) {
-      this.advanceToTopPosition = advanceToTopPosition;
-      if (advanceGame != null && advanceToTopPosition != null) {
-        if (advanceToTopPosition) {
-          advanceGame.topLeadInGame = this;
-        } else {
-          advanceGame.bottomLeadInGame = this;
-        }
-      }
-    }
-
-    public void setGameId(Long gameId) {
-      this.gameId = gameId;
-    }
-
-    public void setTopLeadInGame(GameNode topLeadInGame) {
-      this.topLeadInGame = topLeadInGame;
-      if (topLeadInGame != null) {
-        topLeadInGame.advanceGame = this;
-        topLeadInGame.advanceToTopPosition = true;
-      }
-    }
-
-    public void setBottomLeadInGame(GameNode bottomLeadInGame) {
-      this.bottomLeadInGame = bottomLeadInGame;
-      if (bottomLeadInGame != null) {
-        bottomLeadInGame.advanceGame = this;
-        bottomLeadInGame.advanceToTopPosition = false;
-      }
-    }
-
-    public void setAdvanceGame(GameNode advanceGame) {
-      this.advanceGame = advanceGame;
-      if (advanceGame != null && advanceToTopPosition != null) {
-        if (advanceToTopPosition) {
-          advanceGame.topLeadInGame = this;
-        } else {
-          advanceGame.bottomLeadInGame = this;
-        }
-      }
-    }
-  }
-
-  /**
-   * The tournament ID
-   */
-  @Id
-  private Long id = null;
 
   /**
    * The name of this tournament.
@@ -196,25 +105,19 @@ public class BraketTournament {
    * The selections that are registered to this tournament, keyed to the user ID
    * (which is a String, unlike other IDs in the datastore)
    */
-  private Map<String, Long> registeredSelections = new HashMap<>();
-
-  /**
-   * The structure of the tournament: each GameNode tells us what game IDs lead
-   * into it and to what game the winner goes (if any). These are keyed by game
-   * ID for easy lookup.
-   */
-  @Stringify(LongStringifier.class)
-  private Map<Long, GameNode> games = new HashMap<>();
+  @Load
+  private Map<String, Ref<BraketSelection>> registeredSelections = new HashMap<>();
 
   /**
    * The IDs of the teams in this tournament, stored here for convenience.
    */
-  private Set<Long> teams = new HashSet<Long>();
+  @Load
+  private Set<Ref<BraketTeam>> teams = new HashSet<>();
 
   /**
    * The championship game. Every tournament requires one of these.
    */
-  private GameNode championship = null;
+  private Long championshipId = null;
 
   /**
    * The rules of the tournament.
@@ -225,14 +128,6 @@ public class BraketTournament {
    * Default constructor
    */
   public BraketTournament() {
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   public String getName() {
@@ -292,7 +187,7 @@ public class BraketTournament {
     this.payOutValues = new ArrayList<>(payOutValues);
   }
 
-  public HashMap<String, Long> getRegisteredSelections() {
+  public HashMap<String, BraketSelection> getRegisteredSelections() {
     return new HashMap<>(registeredSelections);
   }
 
@@ -391,7 +286,7 @@ public class BraketTournament {
    *          championship game outward in heap order.
    * @return The array index of the winner of the game represented by the given
    *         game number, for use with the
-   *         {@link net.exclaimindustries.paste.braket.client.BraketGame#getTeamId(int)
+   *         {@link net.exclaimindustries.paste.braket.client.Game#getTeamId(int)
    *         BraketGame.getTeam} method.
    */
   public int getGameWinner(int gameIndex) throws IllegalArgumentException {
@@ -658,13 +553,13 @@ public class BraketTournament {
   }
 
   public Long getChampionshipGameId() {
-    return championship.getGameId();
+    return championshipId.getGameId();
   }
 
   public void setChampionshipGame(Long gameId) {
-    championship = new GameNode(gameId, new GameNode(), new GameNode(), null,
+    championshipId = new GameNode(gameId, new GameNode(), new GameNode(), null,
         null);
     games.clear();
-    games.put(gameId, championship);
+    games.put(gameId, championshipId);
   }
 }

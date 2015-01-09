@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.exclaimindustries.paste.braket.client.BraketGame;
+import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.BraketSelection;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
 import net.exclaimindustries.paste.braket.client.BraketTournament;
@@ -489,7 +489,7 @@ public final class ExpectOMatic extends HttpServlet {
                         .type(BraketTeam.class).parent(tournament)
                         .ids(tournament.getTeams()).values());
 
-        new ArrayList<BraketGame>(OfyService.ofy().load().type(BraketGame.class)
+        new ArrayList<Game>(OfyService.ofy().load().type(Game.class)
                 .parent(tournament).ids(tournament.getGames()).values());
 
         // Cache the registered users' selections

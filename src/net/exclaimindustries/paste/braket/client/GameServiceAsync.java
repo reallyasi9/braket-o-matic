@@ -26,14 +26,14 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface GameServiceAsync {
 
-    void getGames(AsyncCallback<List<BraketGame>> callback);
+    void getGames(AsyncCallback<List<Game>> callback);
 
-    void storeGames(Iterable<BraketGame> games, AsyncCallback<Void> callback);
+    void storeGames(Iterable<Game> games, AsyncCallback<Void> callback);
 
-    void storeGame(BraketGame game, AsyncCallback<Long> callback);
+    void storeGame(Game game, AsyncCallback<Long> callback);
 
-    void deleteGames(Iterable<BraketGame> games, AsyncCallback<Void> callback);
+    void deleteGames(Iterable<Game> games, AsyncCallback<Void> callback);
 
-    void deleteGame(BraketGame game, AsyncCallback<Void> callback);
+    void deleteGame(Game game, AsyncCallback<Void> callback);
 
 }

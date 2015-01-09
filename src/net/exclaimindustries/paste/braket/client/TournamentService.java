@@ -39,16 +39,16 @@ public interface TournamentService extends RemoteService {
 
   public final static class TournamentCollection implements IsSerializable {
     private BraketTournament tournament = null;
-    private Map<Long, BraketGame> games = new HashMap<Long, BraketGame>();
+    private Map<Long, Game> games = new HashMap<Long, Game>();
     private Map<Long, BraketTeam> teams = new HashMap<Long, BraketTeam>();
 
     public TournamentCollection() {
     }
 
     public TournamentCollection(BraketTournament tournament,
-        Map<Long, BraketGame> games, Map<Long, BraketTeam> teams) {
+        Map<Long, Game> games, Map<Long, BraketTeam> teams) {
       this.tournament = tournament;
-      this.games = new HashMap<Long, BraketGame>(games);
+      this.games = new HashMap<Long, Game>(games);
       this.teams = new HashMap<Long, BraketTeam>(teams);
     }
 
@@ -56,7 +56,7 @@ public interface TournamentService extends RemoteService {
       return tournament;
     }
 
-    public Map<Long, BraketGame> getGames() {
+    public Map<Long, Game> getGames() {
       return games;
     }
 
@@ -211,7 +211,7 @@ public interface TournamentService extends RemoteService {
    * @throws IllegalArgumentException
    *           If the game's index is nonsensical.
    */
-  public Long addGame(BraketGame game, BraketTournament tournament)
+  public Long addGame(Game game, BraketTournament tournament)
       throws UserNotLoggedInException, UserNotAdminException;
 
   /**
@@ -230,7 +230,7 @@ public interface TournamentService extends RemoteService {
    * @throws IllegalArgumentException
    *           If any of the games' index members are nonsensical.
    */
-  public void addGames(Iterable<BraketGame> games, BraketTournament tournament)
+  public void addGames(Iterable<Game> games, BraketTournament tournament)
       throws UserNotLoggedInException, UserNotAdminException;
 
 }

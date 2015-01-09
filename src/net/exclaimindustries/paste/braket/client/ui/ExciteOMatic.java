@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.exclaimindustries.paste.braket.client.BraketGame;
+import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
 import net.exclaimindustries.paste.braket.client.BraketUser;
 import net.exclaimindustries.paste.braket.client.ExpectedValueService;
@@ -54,11 +54,11 @@ public class ExciteOMatic extends ScrollPanel {
     VerticalPanel panel;
 
     private final BraketUser user;
-    private final List<BraketGame> games;
+    private final List<Game> games;
     private final Map<Long, BraketTeam> teamMap =
             new HashMap<Long, BraketTeam>();
 
-    public ExciteOMatic(BraketUser u, List<BraketGame> g, List<BraketTeam> t) {
+    public ExciteOMatic(BraketUser u, List<Game> g, List<BraketTeam> t) {
         user = u;
         games = g;
         for (BraketTeam team : t) {
@@ -94,7 +94,7 @@ public class ExciteOMatic extends ScrollPanel {
                             return;
                         }
                         double totalValue = result.get(Long.valueOf(0l));
-                        for (BraketGame game : games) {
+                        for (Game game : games) {
                             Long topTeamId = game.getTopTeamId();
                             Long bottomTeamId = game.getBottomTeamId();
 

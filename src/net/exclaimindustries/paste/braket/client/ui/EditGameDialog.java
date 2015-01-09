@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import net.exclaimindustries.paste.braket.client.BraketGame;
+import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
 import net.exclaimindustries.paste.braket.client.TeamService;
 import net.exclaimindustries.paste.braket.client.TeamServiceAsync;
@@ -57,15 +57,15 @@ public class EditGameDialog extends SimpleLayoutPanel {
     }
 
     // TODO make this async
-    private final ListDataProvider<BraketGame> dataProvider =
-            new ListDataProvider<BraketGame>();
+    private final ListDataProvider<Game> dataProvider =
+            new ListDataProvider<Game>();
 
     @UiField(provided = true)
-    DataGrid<BraketGame> dataGrid;
+    DataGrid<Game> dataGrid;
 
     public EditGameDialog() {
         // Make the DataGrid before binding!
-        dataGrid = new DataGrid<BraketGame>(25);
+        dataGrid = new DataGrid<Game>(25);
         // dataGrid.setWidth("600px");
         dataGrid.setMinimumTableWidth(500, Unit.PX);
         dataGrid.setHeight("100%");
@@ -108,28 +108,28 @@ public class EditGameDialog extends SimpleLayoutPanel {
 
         // Add a ColumnSortEvent.ListHandler to connect sorting to the
         // java.util.List.
-        ListHandler<BraketGame> columnSortHandler =
-                new ListHandler<BraketGame>(dataProvider.getList());
+        ListHandler<Game> columnSortHandler =
+                new ListHandler<Game>(dataProvider.getList());
 
         // Index
-        Column<BraketGame, String> indexColumn =
+        Column<Game, String> indexColumn =
                 addColumn(new EditTextCell(), "index", new GetValue<String>() {
 
                     @Override
-                    public String getValue(BraketGame game) {
+                    public String getValue(Game game) {
                         return Integer.toString(game.getIndex());
                     }
 
-                }, new FieldUpdater<BraketGame, String>() {
+                }, new FieldUpdater<Game, String>() {
 
                     @Override
-                    public void update(int index, BraketGame object, String value) {
+                    public void update(int index, Game object, String value) {
                         object.setIndex(Integer.valueOf(value));
                         doGameUpdate(index, object);
                     }
                 });
-        columnSortHandler.setComparator(indexColumn, new Comparator<BraketGame>() {
-            public int compare(BraketGame o1, BraketGame o2) {
+        columnSortHandler.setComparator(indexColumn, new Comparator<Game>() {
+            public int compare(Game o1, Game o2) {
                 return Integer.valueOf(o1.getIndex()).compareTo(o2.getIndex());
             }
         });
@@ -137,22 +137,22 @@ public class EditGameDialog extends SimpleLayoutPanel {
         dataGrid.setColumnWidth(indexColumn, 5, Unit.EM);
 
         // Top team
-        Column<BraketGame, String> topTeamColumn =
+        Column<Game, String> topTeamColumn =
                 addColumn(new SelectionCell(NAME_LIST), "top team",
                         new GetValue<String>() {
 
                             @Override
-                            public String getValue(BraketGame game) {
+                            public String getValue(Game game) {
                                 if (!TEAMS.containsKey(game.getTopTeamId())) {
                                     return "none";
                                 }
                                 return NAMES_BY_ID.get(game.getTopTeamId());
                             }
 
-                        }, new FieldUpdater<BraketGame, String>() {
+                        }, new FieldUpdater<Game, String>() {
 
                             @Override
-                            public void update(int index, BraketGame object,
+                            public void update(int index, Game object,
                                     String value) {
                                 if (value.equals("none")) {
                                     object.setTopTeamId(null);
@@ -167,21 +167,21 @@ public class EditGameDialog extends SimpleLayoutPanel {
         dataGrid.setColumnWidth(topTeamColumn, 12, Unit.EM);
 
         // Top score
-        Column<BraketGame, String> topScoreColumn =
+        Column<Game, String> topScoreColumn =
                 addColumn(new EditTextCell(), "top score", new GetValue<String>() {
 
                     @Override
-                    public String getValue(BraketGame game) {
+                    public String getValue(Game game) {
                         if (game.getTopScore() == null) {
                             return "";
                         }
                         return Integer.toString(game.getTopScore());
                     }
 
-                }, new FieldUpdater<BraketGame, String>() {
+                }, new FieldUpdater<Game, String>() {
 
                     @Override
-                    public void update(int index, BraketGame object, String value) {
+                    public void update(int index, Game object, String value) {
                         object.setTopScore(Integer.valueOf(value));
                         doGameUpdate(index, object);
                     }
@@ -189,22 +189,22 @@ public class EditGameDialog extends SimpleLayoutPanel {
         dataGrid.setColumnWidth(topScoreColumn, 7, Unit.EM);
 
         // Bottom team
-        Column<BraketGame, String> bottomTeamColumn =
+        Column<Game, String> bottomTeamColumn =
                 addColumn(new SelectionCell(NAME_LIST), "bottom team",
                         new GetValue<String>() {
 
                             @Override
-                            public String getValue(BraketGame game) {
+                            public String getValue(Game game) {
                                 if (!TEAMS.containsKey(game.getBottomTeamId())) {
                                     return "none";
                                 }
                                 return NAMES_BY_ID.get(game.getBottomTeamId());
                             }
 
-                        }, new FieldUpdater<BraketGame, String>() {
+                        }, new FieldUpdater<Game, String>() {
 
                             @Override
-                            public void update(int index, BraketGame object,
+                            public void update(int index, Game object,
                                     String value) {
                                 if (value.equals("none")) {
                                     object.setBottomTeamId(null);
@@ -218,22 +218,22 @@ public class EditGameDialog extends SimpleLayoutPanel {
         dataGrid.setColumnWidth(bottomTeamColumn, 12, Unit.EM);
 
         // Bottom score
-        Column<BraketGame, String> bottomScoreColumn =
+        Column<Game, String> bottomScoreColumn =
                 addColumn(new EditTextCell(), "bottom score",
                         new GetValue<String>() {
 
                             @Override
-                            public String getValue(BraketGame game) {
+                            public String getValue(Game game) {
                                 if (game.getBottomScore() == null) {
                                     return "";
                                 }
                                 return Integer.toString(game.getBottomScore());
                             }
 
-                        }, new FieldUpdater<BraketGame, String>() {
+                        }, new FieldUpdater<Game, String>() {
 
                             @Override
-                            public void update(int index, BraketGame object,
+                            public void update(int index, Game object,
                                     String value) {
                                 object.setBottomScore(Integer.valueOf(value));
                                 doGameUpdate(index, object);
@@ -243,12 +243,12 @@ public class EditGameDialog extends SimpleLayoutPanel {
 
         // Winner
         List<String> options = Arrays.asList("none", "top", "bottom");
-        Column<BraketGame, String> winnerColumn =
+        Column<Game, String> winnerColumn =
                 addColumn(new SelectionCell(options), "winner",
                         new GetValue<String>() {
 
                             @Override
-                            public String getValue(BraketGame game) {
+                            public String getValue(Game game) {
                                 if (game.getWinner() == null) {
                                     return "none";
                                 } else {
@@ -256,10 +256,10 @@ public class EditGameDialog extends SimpleLayoutPanel {
                                 }
                             }
 
-                        }, new FieldUpdater<BraketGame, String>() {
+                        }, new FieldUpdater<Game, String>() {
 
                             @Override
-                            public void update(int index, BraketGame object,
+                            public void update(int index, Game object,
                                     String value) {
                                 if (value.equals("none")) {
                                     object.setWinner(null);
@@ -274,18 +274,18 @@ public class EditGameDialog extends SimpleLayoutPanel {
         dataGrid.setColumnWidth(winnerColumn, 7, Unit.EM);
 
         // Location
-        Column<BraketGame, String> locationColumn =
+        Column<Game, String> locationColumn =
                 addColumn(new EditTextCell(), "location", new GetValue<String>() {
 
                     @Override
-                    public String getValue(BraketGame game) {
+                    public String getValue(Game game) {
                         return game.getLocation();
                     }
 
-                }, new FieldUpdater<BraketGame, String>() {
+                }, new FieldUpdater<Game, String>() {
 
                     @Override
-                    public void update(int index, BraketGame object, String value) {
+                    public void update(int index, Game object, String value) {
                         object.setLocation(value);
                         doGameUpdate(index, object);
                     }
@@ -293,18 +293,18 @@ public class EditGameDialog extends SimpleLayoutPanel {
         dataGrid.setColumnWidth(locationColumn, 14, Unit.EM);
 
         // Status
-        Column<BraketGame, String> statusColumn =
+        Column<Game, String> statusColumn =
                 addColumn(new EditTextCell(), "status", new GetValue<String>() {
 
                     @Override
-                    public String getValue(BraketGame game) {
+                    public String getValue(Game game) {
                         return game.getGameStatus();
                     }
 
-                }, new FieldUpdater<BraketGame, String>() {
+                }, new FieldUpdater<Game, String>() {
 
                     @Override
-                    public void update(int index, BraketGame object, String value) {
+                    public void update(int index, Game object, String value) {
                         object.setGameStatus(value);
                         doGameUpdate(index, object);
                     }
@@ -314,19 +314,19 @@ public class EditGameDialog extends SimpleLayoutPanel {
         // Date
         DateTimeFormat dateFormat =
                 DateTimeFormat.getFormat(PredefinedFormat.RFC_2822);
-        Column<BraketGame, Date> dateColumn =
+        Column<Game, Date> dateColumn =
                 addColumn(new DatePickerCell(dateFormat), "date",
                         new GetValue<Date>() {
 
                             @Override
-                            public Date getValue(BraketGame game) {
+                            public Date getValue(Game game) {
                                 return game.getScheduledDate();
                             }
 
-                        }, new FieldUpdater<BraketGame, Date>() {
+                        }, new FieldUpdater<Game, Date>() {
 
                             @Override
-                            public void update(int index, BraketGame object,
+                            public void update(int index, Game object,
                                     Date value) {
                                 object.setScheduledDate(value);
                                 doGameUpdate(index, object);
@@ -335,21 +335,21 @@ public class EditGameDialog extends SimpleLayoutPanel {
         dataGrid.setColumnWidth(dateColumn, 14, Unit.EM);
 
         // ESPN ID
-        Column<BraketGame, String> espnColumn =
+        Column<Game, String> espnColumn =
                 addColumn(new EditTextCell(), "ESPN ID", new GetValue<String>() {
 
                     @Override
-                    public String getValue(BraketGame game) {
+                    public String getValue(Game game) {
                         if (game.getEspnId() == null) {
                             return "";
                         }
                         return Long.toString(game.getEspnId());
                     }
 
-                }, new FieldUpdater<BraketGame, String>() {
+                }, new FieldUpdater<Game, String>() {
 
                     @Override
-                    public void update(int index, BraketGame object, String value) {
+                    public void update(int index, Game object, String value) {
                         object.setEspnId(Long.valueOf(value));
                         doGameUpdate(index, object);
                     }
@@ -385,7 +385,7 @@ public class EditGameDialog extends SimpleLayoutPanel {
 
     }
 
-    private void doGameUpdate(final int index, final BraketGame game) {
+    private void doGameUpdate(final int index, final Game game) {
 
         // BraketEntryPoint.gameService.storeGame(game, new
         // AsyncCallback<Long>() {
@@ -412,7 +412,7 @@ public class EditGameDialog extends SimpleLayoutPanel {
      *            the cell type
      */
     private static interface GetValue<C> {
-        C getValue(BraketGame team);
+        C getValue(Game team);
     }
 
     /**
@@ -427,11 +427,11 @@ public class EditGameDialog extends SimpleLayoutPanel {
      * @param getter
      *            the value getter for the cell
      */
-    private <C> Column<BraketGame, C> addColumn(Cell<C> cell, String headerText,
-            final GetValue<C> getter, FieldUpdater<BraketGame, C> fieldUpdater) {
-        Column<BraketGame, C> column = new Column<BraketGame, C>(cell) {
+    private <C> Column<Game, C> addColumn(Cell<C> cell, String headerText,
+            final GetValue<C> getter, FieldUpdater<Game, C> fieldUpdater) {
+        Column<Game, C> column = new Column<Game, C>(cell) {
             @Override
-            public C getValue(BraketGame object) {
+            public C getValue(Game object) {
                 return getter.getValue(object);
             }
         };
