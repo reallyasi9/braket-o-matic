@@ -5,7 +5,7 @@
 *.war
 
 # gwt caches and compiled units #
-war/gwt_bree/
+war/braket_o_matic/
 gwt-unitCache/
 
 # boilerplate generated classes #
@@ -14,6 +14,7 @@ gwt-unitCache/
 # more caches and things from deploy #
 war/WEB-INF/deploy/
 war/WEB-INF/classes/
+war/WEB-INF/appengine-generated/
 
 #compilation logs
 .gwt/
