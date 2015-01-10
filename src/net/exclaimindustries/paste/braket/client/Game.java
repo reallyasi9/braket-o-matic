@@ -18,10 +18,14 @@
 package net.exclaimindustries.paste.braket.client;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
+import net.exclaimindustries.paste.braket.shared.GameNotFinalException;
+import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
 
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -256,6 +260,35 @@ public final class Game implements IsSerializable {
 
   public void setEspnId(Long espnId) {
     this.espnId = espnId;
+  }
+
+  public double generateRandomResult(ResultProbabilityCalculator calculator) {
+    List<BraketTeam> teams = new ArrayList<>();
+    for (Ref<Slot> slot : slots) {
+      Optional<BraketTeam> team = slot.get().getTeam();
+      if (!team.isPresent()) {
+        throw new NullPointerException("not all teams are present");
+      }
+      teams.add(team.get());
+    }
+    Collections.shuffle(teams);
+    return calculator.probabilityOf(teams);
+  }
+
+  public double getProbability(ResultProbabilityCalculator calculator)
+      throws GameNotFinalException {
+    if (!isFinal) {
+      throw new GameNotFinalException("game is not yet final");
+    }
+    List<Optional<BraketTeam>> teams = getRankedTeams();
+    List<BraketTeam> checkedTeams = new ArrayList<>();
+    for (Optional<BraketTeam> team : teams) {
+      if (!team.isPresent()) {
+        throw new NullPointerException("not all teams are present");
+      }
+      checkedTeams.add(team.get());
+    }
+    return calculator.probabilityOf(checkedTeams);
   }
 
 }
