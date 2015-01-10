@@ -26,21 +26,26 @@ package net.exclaimindustries.paste.braket.shared;
  */
 public class UserNotLoggedInException extends Exception {
 
-    private static final long serialVersionUID = 1L;
+  public UserNotLoggedInException(String message, Throwable cause,
+      boolean enableSuppression, boolean writableStackTrace) {
+    super(message, cause, enableSuppression, writableStackTrace);
+  }
 
-    public UserNotLoggedInException() {
-    }
+  private static final long serialVersionUID = 1L;
 
-    public UserNotLoggedInException(String message) {
-        super(message);
-    }
+  public UserNotLoggedInException() {
+  }
 
-    public UserNotLoggedInException(Throwable cause) {
-        super(cause);
-    }
+  public UserNotLoggedInException(String message) {
+    super(message);
+  }
 
-    public UserNotLoggedInException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  public UserNotLoggedInException(Throwable cause) {
+    super(cause);
+  }
+
+  public UserNotLoggedInException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
 }

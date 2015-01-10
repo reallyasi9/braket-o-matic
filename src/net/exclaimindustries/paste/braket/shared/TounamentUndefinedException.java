@@ -26,22 +26,27 @@ package net.exclaimindustries.paste.braket.shared;
  */
 public class TounamentUndefinedException extends Exception {
 
-    private static final long serialVersionUID = 1L;
+  public TounamentUndefinedException(String message, Throwable cause,
+      boolean enableSuppression, boolean writableStackTrace) {
+    super(message, cause, enableSuppression, writableStackTrace);
+  }
 
-    public TounamentUndefinedException() {
-        super();
-    }
+  private static final long serialVersionUID = 1L;
 
-    public TounamentUndefinedException(String message) {
-        super(message);
-    }
+  public TounamentUndefinedException() {
+    super();
+  }
 
-    public TounamentUndefinedException(Throwable cause) {
-        super(cause);
-    }
+  public TounamentUndefinedException(String message) {
+    super(message);
+  }
 
-    public TounamentUndefinedException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  public TounamentUndefinedException(Throwable cause) {
+    super(cause);
+  }
+
+  public TounamentUndefinedException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
 }

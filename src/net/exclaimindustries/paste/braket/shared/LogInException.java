@@ -8,6 +8,11 @@ package net.exclaimindustries.paste.braket.shared;
  */
 public class LogInException extends Exception {
 
+    public LogInException(String message, Throwable cause,
+      boolean enableSuppression, boolean writableStackTrace) {
+    super(message, cause, enableSuppression, writableStackTrace);
+  }
+
     private static final long serialVersionUID = 1L;
 
     public LogInException() {

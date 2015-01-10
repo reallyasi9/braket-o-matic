@@ -26,21 +26,26 @@ package net.exclaimindustries.paste.braket.shared;
  */
 public class UserNotAdminException extends Exception {
 
-    private static final long serialVersionUID = 1L;
+  public UserNotAdminException(String message, Throwable cause,
+      boolean enableSuppression, boolean writableStackTrace) {
+    super(message, cause, enableSuppression, writableStackTrace);
+  }
 
-    public UserNotAdminException() {
-    }
+  private static final long serialVersionUID = 1L;
 
-    public UserNotAdminException(String message) {
-        super(message);
-    }
+  public UserNotAdminException() {
+  }
 
-    public UserNotAdminException(Throwable cause) {
-        super(cause);
-    }
+  public UserNotAdminException(String message) {
+    super(message);
+  }
 
-    public UserNotAdminException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  public UserNotAdminException(Throwable cause) {
+    super(cause);
+  }
+
+  public UserNotAdminException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
 }
