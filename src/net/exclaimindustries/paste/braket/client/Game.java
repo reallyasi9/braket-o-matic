@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.TreeSet;
 
 import net.exclaimindustries.paste.braket.shared.GameNotFinalException;
@@ -50,7 +51,7 @@ import com.googlecode.objectify.annotation.Parent;
  */
 @Entity
 @Cache
-public final class Game implements IsSerializable {
+public abstract class Game implements IsSerializable {
 
   public static class WithTeams {
   }
@@ -73,13 +74,6 @@ public final class Game implements IsSerializable {
    */
   @Parent
   private transient Key<BraketTournament> tournamentKey = null;
-
-  /**
-   * The Slots that live inside this Game, fillable with Teams. Slots are not
-   * allowed to be null, else exceptions will be thrown.
-   */
-  @Load
-  private List<Ref<Slot>> slots = new ArrayList<>();
 
   /**
    * The Slots where the winners (or losers) of the game propagate. This is
@@ -106,11 +100,6 @@ public final class Game implements IsSerializable {
   private String gameStatus = new String();
 
   /**
-   * ESPN's id, so I can easily find it when parsing the XML feed.
-   */
-  private Long espnId = null;
-
-  /**
    * Whether or not the game has ended
    */
   private boolean isFinal = false;
@@ -123,69 +112,42 @@ public final class Game implements IsSerializable {
     this.tournamentKey = tournamentId;
   }
 
-  public List<Optional<BraketTeam>> getTeams() {
-    List<Optional<BraketTeam>> teams = new ArrayList<>();
-    for (Ref<Slot> slot : slots) {
-      teams.add(slot.get().getTeam());
-    }
-    return teams;
-  }
+  /**
+   * Get teams in game order
+   * 
+   * @return A list of teams participating in this game, in game order. These
+   *         can be null, representing teams that are not yet defined for the
+   *         game.
+   */
+  abstract public List<BraketTeam> getTeams();
+
+  abstract public BraketTeam getTeam(int gameOrderIndex)
+      throws IndexOutOfBoundsException;
 
   /**
-   * Assumes tiebreakers have already been somehow accounted for in Slot's
-   * Compare interface. Runs in O(nSlots*log(nSlots)) time. Slots with no score
-   * are considered to have a score equal to zero for sorting purposes.
+   * Get scores in game order
    * 
-   * @return
+   * @return A list of scores for each team in the game, in game order. A null
+   *         value corresponds to a team that has not yet been defined for the
+   *         game. All teams begin with a defined score by default, but what
+   *         that score is specifically is implementation-specific.
    */
-  public List<Optional<BraketTeam>> getRankedTeams() {
-    Set<Slot> sortedSlots = new TreeSet<>();
-    for (Ref<Slot> slot : slots) {
-      sortedSlots.add(slot.get());
-    }
-    List<Optional<BraketTeam>> sortedTeams = new ArrayList<>();
-    for (Slot slot : sortedSlots) {
-      sortedTeams.add(slot.getTeam());
-    }
-    return sortedTeams;
-  }
-
-  public Optional<BraketTeam> getTeam(int index) {
-    return slots.get(index).get().getTeam();
-  }
-
-  public List<Optional<Integer>> getScores() {
-    ArrayList<Optional<Integer>> scores = new ArrayList<>();
-    for (Ref<Slot> slot : slots) {
-      scores.add(slot.get().getScore());
-    }
-    return scores;
-  }
-
-  public Optional<Integer> getScore(int index) {
-    return slots.get(index).get().getScore();
-  }
+  abstract public List<Integer> getScores();
+  
+  abstract public Integer getScore(int gameOrderIndex)
+      throws IndexOutOfBoundsException;
 
   /**
-   * Note: Server-side only!
+   * Get teams sorted by final score in the game.
    * 
-   * @param slot
+   * @note No team can have a null score, meaning all teams must be defined for
+   *       this method to return a sensible value.
+   * @return The teams, sorted by their scores, keyed by the scores themselves.
+   * @throws GameNotFinalException
+   *           If the game is not yet final.
    */
-  public void addSlot(Slot slot) {
-    slots.add(Ref.create(slot));
-  }
-
-  public List<Slot> getSlots() {
-    List<Slot> slotList = new ArrayList<>();
-    for (Ref<Slot> slot : slots) {
-      slotList.add(slot.get());
-    }
-    return slotList;
-  }
-
-  public Slot getSlot(int index) {
-    return slots.get(index).get();
-  }
+  abstract public SortedMap<Integer, BraketTeam> getScoreSortedTeams()
+      throws GameNotFinalException;
 
   /**
    * Note: Server-side only!
