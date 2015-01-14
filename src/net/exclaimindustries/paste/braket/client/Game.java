@@ -17,25 +17,18 @@
 
 package net.exclaimindustries.paste.braket.client;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.SortedMap;
-import java.util.TreeSet;
 
 import net.exclaimindustries.paste.braket.shared.GameNotFinalException;
 import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
 
-import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Load;
 import com.googlecode.objectify.annotation.Parent;
 
 /**
@@ -56,6 +49,16 @@ public abstract class Game implements IsSerializable {
   public static class WithTeams {
   }
 
+  public static class GameIndexPair {
+    public Game game;
+    public int index;
+
+    GameIndexPair(Game game, int index) {
+      this.game = game;
+      this.index = index;
+    }
+  }
+
   public static final String FINAL = "FINAL";
 
   public static final int STATUS_FINAL = 3;
@@ -66,6 +69,9 @@ public abstract class Game implements IsSerializable {
 
   public static final int STATUS_SCHEDULED = 1;
 
+  /**
+   * The ID of the entity in the datastore.
+   */
   @Id
   private Long id = null;
 
@@ -74,15 +80,6 @@ public abstract class Game implements IsSerializable {
    */
   @Parent
   private transient Key<BraketTournament> tournamentKey = null;
-
-  /**
-   * The Slots where the winners (or losers) of the game propagate. This is
-   * expected to be the same size as Game.slots, where the ith entry here means
-   * the ith rank winner advances to that slot. Can be null (meaning the team in
-   * that slot is eliminated upon achieving the given rank.
-   */
-  @Load
-  private List<Ref<Slot>> advancementSlots = new ArrayList<>();
 
   /**
    * When this game is scheduled to being.
@@ -104,16 +101,28 @@ public abstract class Game implements IsSerializable {
    */
   private boolean isFinal = false;
 
+  /**
+   * @return the key of the tournament to which this game belongs.
+   */
   public Key<BraketTournament> getTournamentKey() {
     return tournamentKey;
   }
 
+  /**
+   * Sets the tournament to which this game belongs.
+   * 
+   * @param tournamentId
+   *          The new tournament.
+   * @note By changing the parent tournament and saving this entity, a new
+   *       entity will be made in the datastore. In order to move this game to
+   *       another parent, the original game must be deleted manually.
+   */
   public void setTournamentKey(Key<BraketTournament> tournamentId) {
     this.tournamentKey = tournamentId;
   }
 
   /**
-   * Get teams in game order
+   * Get teams in game order.
    * 
    * @return A list of teams participating in this game, in game order. These
    *         can be null, representing teams that are not yet defined for the
@@ -121,11 +130,22 @@ public abstract class Game implements IsSerializable {
    */
   abstract public List<BraketTeam> getTeams();
 
+  /**
+   * Get a particular team.
+   * 
+   * @param gameOrderIndex
+   *          The game-order index of the team desired.
+   * @return The desired team, or null if the team for that index is not yet
+   *         defined.
+   * @throws IndexOutOfBoundsException
+   *           If the given game-order index is out of bounds for the number of
+   *           teams in the game.
+   */
   abstract public BraketTeam getTeam(int gameOrderIndex)
       throws IndexOutOfBoundsException;
 
   /**
-   * Get scores in game order
+   * Get scores in game order.
    * 
    * @return A list of scores for each team in the game, in game order. A null
    *         value corresponds to a team that has not yet been defined for the
@@ -133,7 +153,18 @@ public abstract class Game implements IsSerializable {
    *         that score is specifically is implementation-specific.
    */
   abstract public List<Integer> getScores();
-  
+
+  /**
+   * Get a particular score.
+   * 
+   * @param gameOrderIndex
+   *          The game-order index of the score desired.
+   * @return The desired score, or null if the team for that index is not yet
+   *         defined.
+   * @throws IndexOutOfBoundsException
+   *           If the given game-order index is out of bounds for the number of
+   *           teams in the game.
+   */
   abstract public Integer getScore(int gameOrderIndex)
       throws IndexOutOfBoundsException;
 
@@ -150,22 +181,117 @@ public abstract class Game implements IsSerializable {
       throws GameNotFinalException;
 
   /**
-   * Note: Server-side only!
+   * Set what game and slot to where a winner will propagate from this game.
    * 
-   * @param slot
+   * @param rankIndex
+   *          Which rank is to advance. This number is 0-indexed, with 0 being
+   *          the first-place team from this game, 1 being the second-place
+   *          team, and so on down to the Nth place team, where N is the number
+   *          of teams defined in the game.
+   * @param targetGame
+   *          The game and place within the game to where the team will advance.
+   *          If null, this signifies that the given team ranked by placeIndex
+   *          does not advance, and is eliminated from the tournament.
+   * @throws IndexOutOfBoundsException
+   *           If placeIndex is out-of-bounds for the number of teams in the
+   *           game, or if the index given in targetGame is out of bounds for
+   *           the game given in targetGame.
+   * @note Calls setUnpropagatedPlayInGameRankPair in corresponding targetGame.
    */
-  public void addAdvancementSlot(Slot slot) {
-    advancementSlots.add(Ref.create(slot));
+  abstract public void setAdvancement(int rankIndex, GameIndexPair targetGame)
+      throws IndexOutOfBoundsException;
+
+  /**
+   * @see setAdvancement(int, GameIndexPair)
+   * 
+   * @param rankIndex
+   *          Which rank is to advance. This number is 0-indexed, with 0 being
+   *          the first-place team from this game, 1 being the second-place
+   *          team, and so on down to the Nth place team, where N is the number
+   *          of teams defined in the game.
+   * @throws IndexOutOfBoundsException
+   *           If placeIndex is out-of-bounds for the number of teams in the
+   *           game.
+   * @note Calls setUnpropagatedPlayInGameRankPair in corresponding targetGame.
+   */
+  public void setNoAdvancement(int rankIndex) throws IndexOutOfBoundsException {
+    this.setAdvancement(rankIndex, null);
   }
 
-  @SuppressWarnings("unchecked")
-  public List<Optional<Slot>> getAdvancementSlots() {
-    List<Optional<Slot>> slotList = new ArrayList<>();
-    for (Ref<Slot> slot : advancementSlots) {
-      slotList.add((Optional<Slot>) (slot == null ? Optional.absent()
-          : Optional.of(slot.get())));
-    }
-    return slotList;
+  /**
+   * Get the game/index pair to which the given rank advances.
+   * 
+   * @param rankIndex
+   *          The advancing rank.
+   * @return The game/index pair to which the given rank advances.
+   * @throws IndexOutOfBoundsException
+   *           If rankIndex is out-of-bounds for the number of teams in this
+   *           game.
+   */
+  abstract public GameIndexPair getAdvancement(int rankIndex)
+      throws IndexOutOfBoundsException;
+
+  /**
+   * Get all the games to where winners (and losers) of this game advance.
+   * 
+   * @return The game/index pairs to which a given rank advances, in rank order.
+   */
+  abstract public List<GameIndexPair> getAdvancements();
+
+  /**
+   * Get the game and placing within that game which advances to the given index
+   * of this game.
+   * 
+   * @param gameOrderIndex
+   *          The index in this game being queried.
+   * @return The combination game and rank that feeds into the queried index of
+   *         this game. If null, then the selected index of this game represents
+   *         a seeded team.
+   * @throws IndexOutOfBoundsException
+   *           If gameOrderIndex is out-of-bounds for the number of teams in the
+   *           game.
+   */
+  abstract public GameIndexPair getPlayInGameRankPair(int gameOrderIndex)
+      throws IndexOutOfBoundsException;
+
+  /**
+   * Get all of the play-in game/rank pairs that feed into this game.
+   * 
+   * @return The game/rank pairs that feed into this game, sorted by game order
+   *         index. Null values imply the team in that index is a seeded team.
+   */
+  abstract public List<GameIndexPair> getPlayInGameRankPairs();
+
+  /**
+   * Set the play-in game for a particular game-order index.
+   * 
+   * @param gameOrderIndex
+   *          The game-order index of the team that plays in.
+   * @param playInGame
+   *          The play-in game and rank. If null, it implies that the given
+   *          game-order index represents a seeded team.
+   * @throws IndexOutOfBoundsException
+   *           If gameOrderIndex is out-of-bounds for the number of teams in the
+   *           game, or if the index given in playInGame is out of bounds for
+   *           the game given in playInGame.
+   * @note Calls setUnpropagatedAdvancement in corresponding targetGame.
+   */
+  abstract public void setPlayInGameRankPair(int gameOrderIndex,
+      GameIndexPair playInGame) throws IndexOutOfBoundsException;
+
+  /**
+   * @see setPlayInGameRankPair(int, GameRankPair)
+   * 
+   * @param gameOrderIndex
+   *          The game-order index of the team that plays in.
+   * @throws IndexOutOfBoundsException
+   *           If gameOrderIndex is out-of-bounds for the number of teams in the
+   *           game.
+   * @note Calls setUnpropagatedAdvancement in corresponding targetGame.
+   */
+  public void setNoPlayInGameRankPair(int gameOrderIndex)
+      throws IndexOutOfBoundsException {
+    setPlayInGameRankPair(gameOrderIndex, null);
   }
 
   public Date getScheduledDate() {
@@ -216,41 +342,69 @@ public abstract class Game implements IsSerializable {
     return id;
   }
 
-  public Long getEspnId() {
-    return espnId;
+  /**
+   * Generate a random result for this game.
+   * 
+   * @param calculator
+   *          A class that can calculate the probability of a certain outcome.
+   * @return The probability of the generated outcome.
+   */
+  abstract public double randomizeResult(ResultProbabilityCalculator calculator);
+
+  /**
+   * Set what game and slot to where a winner will propagate from this game.
+   * 
+   * @param rankIndex
+   *          Which rank is to advance. This number is 0-indexed, with 0 being
+   *          the first-place team from this game, 1 being the second-place
+   *          team, and so on down to the Nth place team, where N is the number
+   *          of teams defined in the game.
+   * @param targetGame
+   *          The game and place within the game to where the team will advance.
+   *          If null, this signifies that the given team ranked by placeIndex
+   *          does not advance, and is eliminated from the tournament.
+   * @note Does not call setPlayInGameRankPair in corresponding targetGame.
+   */
+  abstract protected void setUnpropagatedAdvancement(int rankIndex,
+      GameIndexPair targetGame) throws IndexOutOfBoundsException;
+
+  /**
+   * @see setAdvancement(int, GameIndexPair)
+   * 
+   * @param rankIndex
+   *          Which rank is to advance. This number is 0-indexed, with 0 being
+   *          the first-place team from this game, 1 being the second-place
+   *          team, and so on down to the Nth place team, where N is the number
+   *          of teams defined in the game.
+   * @note Does not call setPlayInGameRankPair in corresponding targetGame.
+   */
+  protected void setUnpropagatedNoAdvancement(int rankIndex)
+      throws IndexOutOfBoundsException {
+    this.setUnpropagatedAdvancement(rankIndex, null);
   }
 
-  public void setEspnId(Long espnId) {
-    this.espnId = espnId;
-  }
+  /**
+   * Set the play-in game for a particular game-order index.
+   * 
+   * @param gameOrderIndex
+   *          The game-order index of the team that plays in.
+   * @param playInGame
+   *          The play-in game and rank. If null, it implies that the given
+   *          game-order index represents a seeded team.
+   * @note Does not call setAdvancement in corresponding targetGame.
+   */
+  abstract public void setUnpropagatedPlayInGameRankPair(int gameOrderIndex,
+      GameIndexPair playInGame) throws IndexOutOfBoundsException;
 
-  public double generateRandomResult(ResultProbabilityCalculator calculator) {
-    List<BraketTeam> teams = new ArrayList<>();
-    for (Ref<Slot> slot : slots) {
-      Optional<BraketTeam> team = slot.get().getTeam();
-      if (!team.isPresent()) {
-        throw new NullPointerException("not all teams are present");
-      }
-      teams.add(team.get());
-    }
-    Collections.shuffle(teams);
-    return calculator.probabilityOf(teams);
+  /**
+   * @see setPlayInGameRankPair(int, GameRankPair)
+   * 
+   * @param gameOrderIndex
+   *          The game-order index of the team that plays in.
+   * @note Does not call setAdvancement in corresponding targetGame.
+   */
+  protected void setUnpropagatedNoPlayInGameRankPair(int gameOrderIndex)
+      throws IndexOutOfBoundsException {
+    this.setUnpropagatedPlayInGameRankPair(gameOrderIndex, null);
   }
-
-  public double getProbability(ResultProbabilityCalculator calculator)
-      throws GameNotFinalException {
-    if (!isFinal) {
-      throw new GameNotFinalException("game is not yet final");
-    }
-    List<Optional<BraketTeam>> teams = getRankedTeams();
-    List<BraketTeam> checkedTeams = new ArrayList<>();
-    for (Optional<BraketTeam> team : teams) {
-      if (!team.isPresent()) {
-        throw new NullPointerException("not all teams are present");
-      }
-      checkedTeams.add(team.get());
-    }
-    return calculator.probabilityOf(checkedTeams);
-  }
-
 }

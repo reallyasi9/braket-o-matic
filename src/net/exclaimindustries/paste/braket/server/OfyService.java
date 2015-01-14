@@ -17,13 +17,13 @@
 
 package net.exclaimindustries.paste.braket.server;
 
-import net.exclaimindustries.paste.braket.client.Game;
-import net.exclaimindustries.paste.braket.client.Selectable;
 import net.exclaimindustries.paste.braket.client.BraketSelection;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.BraketUser;
-import net.exclaimindustries.paste.braket.client.Slot;
+import net.exclaimindustries.paste.braket.client.Game;
+import net.exclaimindustries.paste.braket.client.HeadToHeadGame;
+import net.exclaimindustries.paste.braket.client.Selectable;
 import net.exclaimindustries.paste.braket.server.backends.ExpectoValues;
 
 import com.googlecode.objectify.Objectify;
@@ -39,7 +39,7 @@ public class OfyService {
     factory().register(BraketSelection.class);
     factory().register(BraketTeam.class);
     factory().register(Game.class);
-    factory().register(Slot.class);
+    factory().register(HeadToHeadGame.class);
     factory().register(ExpectoValues.class);
     factory().register(CurrentTournament.class);
     factory().register(CurrentExpectOMatic.class);
