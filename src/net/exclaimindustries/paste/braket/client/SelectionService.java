@@ -112,7 +112,7 @@ public interface SelectionService extends RemoteService {
      *             If the user is not logged in, or if the user is not an
      *             administrator and the current tournament has not yet begun.
      */
-    public Double getSelectionValue(BraketSelection selection);
+    public Double getSelectionValue(BraketPrediction selection);
 
     /**
      * Get the selections for a user.
@@ -128,7 +128,7 @@ public interface SelectionService extends RemoteService {
      *             is attempting to get the selections of a user other than
      *             himself.
      */
-    public Collection<BraketSelection> getSelections(BraketUser user);
+    public Collection<BraketPrediction> getSelections(BraketUser user);
 
     /**
      * Get a selection for a user for the current tournament. Will create a new,
@@ -147,7 +147,7 @@ public interface SelectionService extends RemoteService {
      *             is attempting to get the selections of a user other than
      *             himself before the tournament has started.
      */
-    public BraketSelection getSelection(BraketUser user);
+    public BraketPrediction getSelection(BraketUser user);
 
     /**
      * Get all the selections registered to the current tournament.
@@ -160,7 +160,7 @@ public interface SelectionService extends RemoteService {
      *             attempting to get selections before the tournament has
      *             started.
      */
-    public Collection<BraketSelection> getRegisteredSelections();
+    public Collection<BraketPrediction> getRegisteredSelections();
 
     /**
      * Get the selection from the given user that is registered to the current
@@ -178,7 +178,7 @@ public interface SelectionService extends RemoteService {
      *             If the user is not logged in, or if the user is not an
      *             administrator and the current tournament has not yet begun.
      */
-    public BraketSelection getRegisteredSelection(BraketUser user);
+    public BraketPrediction getRegisteredSelection(BraketUser user);
 
     /**
      * Write or update a selection. DO NOT use this for changing whether or not
@@ -200,7 +200,7 @@ public interface SelectionService extends RemoteService {
      *             If the user is not logged in as an administrator and the
      *             current tournament has already begun.
      */
-    public Long storeSelection(BraketSelection selection);
+    public Long storeSelection(BraketPrediction selection);
 
     /**
      * Write or update a collection of selections. DO NOT use this for changing
@@ -215,7 +215,7 @@ public interface SelectionService extends RemoteService {
      * @throws NullPointerException
      *             If any of the selections is not associated with a tournament.
      */
-    public void storeSelections(Iterable<BraketSelection> selections);
+    public void storeSelections(Iterable<BraketPrediction> selections);
 
     /**
      * Delete a selection. Will automatically unregister it from its tournament.
@@ -225,7 +225,7 @@ public interface SelectionService extends RemoteService {
      * @throws SecurityException
      *             If the current user is not logged in as an administrator.
      */
-    public void deleteSelection(BraketSelection selection);
+    public void deleteSelection(BraketPrediction selection);
 
     /**
      * Delete a collection of selections. Will automatically unregister them
@@ -236,5 +236,5 @@ public interface SelectionService extends RemoteService {
      * @throws SecurityException
      *             If the current user is not logged in as an administrator.
      */
-    public void deleteSelections(Iterable<BraketSelection> selections);
+    public void deleteSelections(Iterable<BraketPrediction> selections);
 }

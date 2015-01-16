@@ -21,7 +21,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.exclaimindustries.paste.braket.client.BraketSelection;
+import net.exclaimindustries.paste.braket.client.BraketPrediction;
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.BraketUser;
 import net.exclaimindustries.paste.braket.client.SelectionService;
@@ -72,7 +72,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
             throw new SecurityException("administration privileges required");
         }
 
-        Collection<BraketSelection> selections = getRegisteredSelectionsUnchecked(tournament);
+        Collection<BraketPrediction> selections = getRegisteredSelectionsUnchecked(tournament);
 
         if (selections == null) {
             return null;
@@ -80,7 +80,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
 
         HashMap<String, Double> userValues = new HashMap<String, Double>();
 
-        for (BraketSelection selection : selections) {
+        for (BraketPrediction selection : selections) {
             userValues.put(selection.getUserId(),
                     tournament.getSelectionValue(selection));
         }
@@ -116,7 +116,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
             throw new SecurityException("administration privileges required");
         }
 
-        Collection<BraketSelection> selections = getRegisteredSelectionsUnchecked(tournament);
+        Collection<BraketPrediction> selections = getRegisteredSelectionsUnchecked(tournament);
 
         if (selections == null) {
             return null;
@@ -127,7 +127,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
 
         HashMap<String, Double> userValues = new HashMap<String, Double>();
 
-        for (BraketSelection selection : selections) {
+        for (BraketPrediction selection : selections) {
             userValues.put(selection.getUserId(),
                     tournament.getSelectionValue(selection));
         }
@@ -169,8 +169,8 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
             return null;
         }
 
-        BraketSelection selection = OfyService.ofy().load()
-                .type(BraketSelection.class).id(selectionId).now();
+        BraketPrediction selection = OfyService.ofy().load()
+                .type(BraketPrediction.class).id(selectionId).now();
 
         if (selection == null) {
             return null;
@@ -214,8 +214,8 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
             return null;
         }
 
-        BraketSelection selection = OfyService.ofy().load()
-                .type(BraketSelection.class).id(selectionId).now();
+        BraketPrediction selection = OfyService.ofy().load()
+                .type(BraketPrediction.class).id(selectionId).now();
 
         if (selection == null) {
             return null;
@@ -235,7 +235,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
      * (net.exclaimindustries.paste.braket.client.BraketSelection)
      */
     @Override
-    public Double getSelectionValue(BraketSelection selection) {
+    public Double getSelectionValue(BraketPrediction selection) {
 
         if (!UserServiceFactory.getUserService().isUserLoggedIn()) {
             throw new SecurityException("you are not logged in");
@@ -266,7 +266,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
      * (net.exclaimindustries.paste.braket.client.BraketUser)
      */
     @Override
-    public Collection<BraketSelection> getSelections(BraketUser user) {
+    public Collection<BraketPrediction> getSelections(BraketUser user) {
 
         if (!UserServiceFactory.getUserService().getCurrentUser().getUserId()
                 .equals(user.getId())
@@ -276,7 +276,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
 
         Map<Long, Long> selectionMap = user.getSelections();
 
-        return OfyService.ofy().load().type(BraketSelection.class)
+        return OfyService.ofy().load().type(BraketPrediction.class)
                 .ids(selectionMap.values()).values();
 
     }
@@ -288,7 +288,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
      * getRegisteredSelections()
      */
     @Override
-    public Collection<BraketSelection> getRegisteredSelections() {
+    public Collection<BraketPrediction> getRegisteredSelections() {
 
         if (!UserServiceFactory.getUserService().isUserLoggedIn()) {
             throw new SecurityException("you are not logged in");
@@ -311,10 +311,10 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
         return getRegisteredSelectionsUnchecked(tournament);
     }
 
-    private Collection<BraketSelection> getRegisteredSelectionsUnchecked(
+    private Collection<BraketPrediction> getRegisteredSelectionsUnchecked(
             BraketTournament tournament) {
-        return OfyService.ofy().load().type(BraketSelection.class)
-                .ids(tournament.getRegisteredSelections().values()).values();
+        return OfyService.ofy().load().type(BraketPrediction.class)
+                .ids(tournament.getRegisteredPredictions().values()).values();
     }
 
     /*
@@ -325,7 +325,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
      * (net.exclaimindustries.paste.braket.client.BraketUser)
      */
     @Override
-    public BraketSelection getRegisteredSelection(BraketUser user) {
+    public BraketPrediction getRegisteredSelection(BraketUser user) {
 
         if (!UserServiceFactory.getUserService().isUserLoggedIn()) {
             throw new SecurityException("you are not logged in");
@@ -352,8 +352,8 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
             return null;
         }
 
-        BraketSelection selection = OfyService.ofy().load()
-                .type(BraketSelection.class).id(selectionId).now();
+        BraketPrediction selection = OfyService.ofy().load()
+                .type(BraketPrediction.class).id(selectionId).now();
 
         if (selection == null || !selection.isRegistered()) {
             return null;
@@ -370,7 +370,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
      * (net.exclaimindustries.paste.braket.client.BraketSelection)
      */
     @Override
-    public Long storeSelection(BraketSelection selection) {
+    public Long storeSelection(BraketPrediction selection) {
 
         if (!UserServiceFactory.getUserService().getCurrentUser().getUserId()
                 .equals(selection.getUserId())
@@ -414,13 +414,13 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
      * (java.lang.Iterable)
      */
     @Override
-    public void storeSelections(Iterable<BraketSelection> selections) {
+    public void storeSelections(Iterable<BraketPrediction> selections) {
 
         if (!UserServiceFactory.getUserService().isUserAdmin()) {
             throw new SecurityException("administration privileges required");
         }
 
-        for (BraketSelection selection : selections) {
+        for (BraketPrediction selection : selections) {
             if (selection.getUserId() == null) {
                 throw new NullPointerException(
                         "user id must be set before storing");
@@ -444,7 +444,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
      * (net.exclaimindustries.paste.braket.client.BraketSelection)
      */
     @Override
-    public void deleteSelection(final BraketSelection selection) {
+    public void deleteSelection(final BraketPrediction selection) {
         if (!UserServiceFactory.getUserService().isUserAdmin()) {
             throw new SecurityException("administration privileges required");
         }
@@ -487,7 +487,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
      * (java.lang.Iterable)
      */
     @Override
-    public void deleteSelections(final Iterable<BraketSelection> selections) {
+    public void deleteSelections(final Iterable<BraketPrediction> selections) {
         if (!UserServiceFactory.getUserService().isUserAdmin()) {
             throw new SecurityException("administration privileges required");
         }
@@ -495,7 +495,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
         // Nobody has the right parents, so I have to break out all the
         // transactions on a per-user basis.
 
-        for (final BraketSelection selection : selections) {
+        for (final BraketPrediction selection : selections) {
             OfyService.ofy().transact(new VoidWork() {
 
                 @Override
@@ -529,7 +529,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
     }
 
     @Override
-    public BraketSelection getSelection(final BraketUser user) {
+    public BraketPrediction getSelection(final BraketUser user) {
 
         if (!UserServiceFactory.getUserService().isUserLoggedIn()) {
             throw new SecurityException("you are not logged in");
@@ -543,18 +543,18 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
         }
 
         // All one transaction
-        return OfyService.ofy().transact(new Work<BraketSelection>() {
+        return OfyService.ofy().transact(new Work<BraketPrediction>() {
 
             @Override
-            public BraketSelection run() {
+            public BraketPrediction run() {
 
                 Long selectionId = user.getSelection(tournamentRef.getKey()
                         .getId());
 
                 // If the selection is null, make a new one
-                BraketSelection selection;
+                BraketPrediction selection;
                 if (selectionId == null) {
-                    selection = new BraketSelection();
+                    selection = new BraketPrediction();
                     selection.setRegistered(false);
                     selection.setTournamentId(tournamentRef.getKey().getId());
                     selection.setUserId(user.getId());
@@ -564,7 +564,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
                     OfyService.ofy().save().entity(user);
                 } else {
                     selection = OfyService.ofy().load()
-                            .type(BraketSelection.class).id(selectionId).now();
+                            .type(BraketPrediction.class).id(selectionId).now();
                 }
 
                 return selection;

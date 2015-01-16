@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.exclaimindustries.paste.braket.client.Game;
-import net.exclaimindustries.paste.braket.client.BraketSelection;
+import net.exclaimindustries.paste.braket.client.BraketPrediction;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 
@@ -55,7 +55,7 @@ public class BracketButton extends Composite implements ClickHandler, MouseOverH
     private class EditTeamClickPopup extends PopupPanel {
         private BracketEditTeamClickContents mContents;
         private List<BraketTeam> mTeamList;
-        private BraketSelection mSelection;
+        private BraketPrediction mSelection;
         private BraketTournament mTournament;
         
         public EditTeamClickPopup() {

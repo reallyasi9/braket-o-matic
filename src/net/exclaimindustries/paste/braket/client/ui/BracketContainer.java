@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.exclaimindustries.paste.braket.client.Game;
-import net.exclaimindustries.paste.braket.client.BraketSelection;
+import net.exclaimindustries.paste.braket.client.BraketPrediction;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.ui.BracketDrawable.Direction;
@@ -100,7 +100,7 @@ public class BracketContainer extends ScrollPanel {
     private Section mSection = Section.ENTIRE;
     private Mode mMode = Mode.TOURNAMENT_STATUS;
     private BraketTournament mTournament;
-    private BraketSelection mSelection;
+    private BraketPrediction mSelection;
     private List<BraketTeam> mTeams;
     private List<Game> mGames;
 
@@ -153,7 +153,7 @@ public class BracketContainer extends ScrollPanel {
      * 
      * @return a BraketSelection or null
      */
-    public BraketSelection getSelection() {
+    public BraketPrediction getSelection() {
         return mSelection;
     }
 
@@ -198,7 +198,7 @@ public class BracketContainer extends ScrollPanel {
      *            the new selection (can be null)
      */
     public void setTournament(BraketTournament tourn, List<BraketTeam> teams,
-            List<Game> games, BraketSelection selection) {
+            List<Game> games, BraketPrediction selection) {
         if (tourn == null)
             throw new IllegalArgumentException(
                     "The BraketTournament can't be null!");
@@ -221,7 +221,7 @@ public class BracketContainer extends ScrollPanel {
      * @param selection
      *            a new selection of choice
      */
-    public void setSelection(BraketSelection selection) {
+    public void setSelection(BraketPrediction selection) {
         mSelection = selection;
     }
 

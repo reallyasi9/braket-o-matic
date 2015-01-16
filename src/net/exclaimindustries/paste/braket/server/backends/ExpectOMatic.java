@@ -38,7 +38,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.exclaimindustries.paste.braket.client.Game;
-import net.exclaimindustries.paste.braket.client.BraketSelection;
+import net.exclaimindustries.paste.braket.client.BraketPrediction;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.server.CurrentExpectOMatic;
@@ -94,8 +94,8 @@ public final class ExpectOMatic extends HttpServlet {
      * A local copy of the users' selections, keyed by the id user who selected
      * it.
      */
-    private HashMap<String, BraketSelection> selections =
-            new HashMap<String, BraketSelection>();
+    private HashMap<String, BraketPrediction> selections =
+            new HashMap<String, BraketPrediction>();
 
     /**
      * A local copy of the teams in the tournament, in tournament order
@@ -279,7 +279,7 @@ public final class ExpectOMatic extends HttpServlet {
             t.setRoundValues(tournament.getRoundValues());
             t.setUpsetValue(tournament.getUpsetValue());
 
-            for (Entry<String, BraketSelection> entry : selections.entrySet()) {
+            for (Entry<String, BraketPrediction> entry : selections.entrySet()) {
                 Double value = t.getSelectionValue(entry.getValue());
                 userScores.put(value, entry.getKey());
             }
@@ -493,12 +493,12 @@ public final class ExpectOMatic extends HttpServlet {
                 .parent(tournament).ids(tournament.getGames()).values());
 
         // Cache the registered users' selections
-        Collection<BraketSelection> nakedSelections =
-                OfyService.ofy().load().type(BraketSelection.class)
-                        .ids(tournament.getRegisteredSelections().values()).values();
+        Collection<BraketPrediction> nakedSelections =
+                OfyService.ofy().load().type(BraketPrediction.class)
+                        .ids(tournament.getRegisteredPredictions().values()).values();
 
         selections.clear();
-        for (BraketSelection selection : nakedSelections) {
+        for (BraketPrediction selection : nakedSelections) {
             selections.put(selection.getUserId(), selection);
         }
 
@@ -566,7 +566,7 @@ public final class ExpectOMatic extends HttpServlet {
             return 0;
         }
 
-        BraketSelection outcomeAsSelection = new BraketSelection();
+        BraketPrediction outcomeAsSelection = new BraketPrediction();
         outcomeAsSelection.setSelection(outcome);
         outcomeAsSelection.setSelectionMask(tournament.getGameMask());
 

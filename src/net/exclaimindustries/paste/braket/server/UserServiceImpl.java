@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map.Entry;
 
-import net.exclaimindustries.paste.braket.client.BraketSelection;
+import net.exclaimindustries.paste.braket.client.BraketPrediction;
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.BraketUser;
 import net.exclaimindustries.paste.braket.client.UserService;
@@ -104,7 +104,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements
                 Long selectionId;
                 if (!user.getSelections().containsKey(tournamentId)) {
 
-                    BraketSelection selection = new BraketSelection();
+                    BraketPrediction selection = new BraketPrediction();
                     selection.setUserId(user.getId());
                     selection.setTournamentId(tournamentId);
                     selection.setRegistered(true);
@@ -116,8 +116,8 @@ public class UserServiceImpl extends RemoteServiceServlet implements
                 } else {
 
                     selectionId = user.getSelections().get(tournamentId);
-                    BraketSelection selection = OfyService.ofy().load()
-                            .type(BraketSelection.class).id(selectionId).now();
+                    BraketPrediction selection = OfyService.ofy().load()
+                            .type(BraketPrediction.class).id(selectionId).now();
                     selection.setRegistered(true);
                     OfyService.ofy().save().entity(selection);
 
@@ -162,8 +162,8 @@ public class UserServiceImpl extends RemoteServiceServlet implements
 
                     tournament.removeRegistration(userId);
 
-                    BraketSelection selection = OfyService.ofy().load()
-                            .type(BraketSelection.class)
+                    BraketPrediction selection = OfyService.ofy().load()
+                            .type(BraketPrediction.class)
                             .id(user.getSelection(tournamentId)).now();
                     selection.setRegistered(false);
                     OfyService.ofy().save().entities(selection, tournament);
@@ -201,7 +201,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements
                         OfyService.ofy().save().entity(tournament);
                     }
 
-                    OfyService.ofy().delete().type(BraketSelection.class)
+                    OfyService.ofy().delete().type(BraketPrediction.class)
                             .ids(user.getSelections().values());
                     OfyService.ofy().delete().entity(user);
 
@@ -235,7 +235,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements
                     OfyService.ofy().save().entity(tournament);
                 }
 
-                OfyService.ofy().delete().type(BraketSelection.class)
+                OfyService.ofy().delete().type(BraketPrediction.class)
                         .ids(user.getSelections().values());
                 OfyService.ofy().delete().entity(user);
             }

@@ -32,7 +32,7 @@ public interface SelectionServiceAsync {
 
     void getUserValue(BraketUser user, AsyncCallback<Double> callback);
 
-    void getSelectionValue(BraketSelection selection,
+    void getSelectionValue(BraketPrediction selection,
             AsyncCallback<Double> callback);
 
     void getUserValue(BraketUser user, BigInteger outcome, BigInteger mask,
@@ -42,28 +42,28 @@ public interface SelectionServiceAsync {
             AsyncCallback<Map<String, Double>> callback);
 
     void getSelections(BraketUser user,
-            AsyncCallback<Collection<BraketSelection>> callback);
+            AsyncCallback<Collection<BraketPrediction>> callback);
 
     void getRegisteredSelection(BraketUser user,
-            AsyncCallback<BraketSelection> callback);
+            AsyncCallback<BraketPrediction> callback);
 
     void
-            storeSelection(BraketSelection selection,
+            storeSelection(BraketPrediction selection,
                     AsyncCallback<Long> callback);
 
-    void storeSelections(Iterable<BraketSelection> selections,
+    void storeSelections(Iterable<BraketPrediction> selections,
             AsyncCallback<Void> callback);
 
     void
-            deleteSelection(BraketSelection selection,
+            deleteSelection(BraketPrediction selection,
                     AsyncCallback<Void> callback);
 
-    void deleteSelections(Iterable<BraketSelection> selections,
+    void deleteSelections(Iterable<BraketPrediction> selections,
             AsyncCallback<Void> callback);
 
     void getRegisteredSelections(
-            AsyncCallback<Collection<BraketSelection>> callback);
+            AsyncCallback<Collection<BraketPrediction>> callback);
 
-    void getSelection(BraketUser user, AsyncCallback<BraketSelection> callback);
+    void getSelection(BraketUser user, AsyncCallback<BraketPrediction> callback);
 
 }

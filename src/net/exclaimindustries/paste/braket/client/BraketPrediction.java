@@ -33,7 +33,7 @@ import com.googlecode.objectify.annotation.Serialize;
 
 @Entity
 @Cache
-public final class BraketSelection {
+public final class BraketPrediction {
 
   /**
    * The ID of the selection.
@@ -74,7 +74,7 @@ public final class BraketSelection {
   /**
    * Default constructor
    */
-  public BraketSelection() {
+  public BraketPrediction() {
   }
 
   /**
@@ -84,7 +84,7 @@ public final class BraketSelection {
    *          The tournament to use as a template. The game IDs will be copied
    *          over to this selection.
    */
-  public BraketSelection(BraketUser user, BraketTournament tournament) {
+  public BraketPrediction(BraketUser user, BraketTournament tournament) {
     tournamentId = tournament.getId();
     userId = user.getId();
     gameWinners = new HashMap<Long, Long>();

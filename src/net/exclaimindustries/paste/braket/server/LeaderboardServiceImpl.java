@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 
-import net.exclaimindustries.paste.braket.client.BraketSelection;
+import net.exclaimindustries.paste.braket.client.BraketPrediction;
 import net.exclaimindustries.paste.braket.client.BraketTournament;
 import net.exclaimindustries.paste.braket.client.BraketUser;
 import net.exclaimindustries.paste.braket.client.LeaderboardService;
@@ -73,17 +73,17 @@ public class LeaderboardServiceImpl extends RemoteServiceServlet implements
         // Get users registered to this tournament
         Collection<BraketUser> users =
                 OfyService.ofy().load().type(BraketUser.class)
-                        .ids(tournament.getRegisteredSelections().keySet()).values();
+                        .ids(tournament.getRegisteredPredictions().keySet()).values();
 
         // Get user selections
-        Collection<BraketSelection> selections =
-                OfyService.ofy().load().type(BraketSelection.class)
-                        .ids(tournament.getRegisteredSelections().values()).values();
+        Collection<BraketPrediction> selections =
+                OfyService.ofy().load().type(BraketPrediction.class)
+                        .ids(tournament.getRegisteredPredictions().values()).values();
 
         // Sort these by userID
-        HashMap<String, BraketSelection> selectionMap =
-                new HashMap<String, BraketSelection>();
-        for (BraketSelection selection : selections) {
+        HashMap<String, BraketPrediction> selectionMap =
+                new HashMap<String, BraketPrediction>();
+        for (BraketPrediction selection : selections) {
             selectionMap.put(selection.getUserId(), selection);
         }
 
@@ -96,7 +96,7 @@ public class LeaderboardServiceImpl extends RemoteServiceServlet implements
         for (BraketUser user : users) {
 
             // Match selection
-            BraketSelection selection = selectionMap.get(user.getId());
+            BraketPrediction selection = selectionMap.get(user.getId());
 
             // Calculate points
             double points = tournament.getSelectionValue(selection);
