@@ -53,7 +53,7 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
   private BraketAppLayout layout = new BraketAppLayout();
 
   // Local cached values
-  private BraketUser currentUser;
+  private User currentUser;
   private TournamentCollection currentTournamentCollection;
 
   // Async services
@@ -83,7 +83,7 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
    * A callback called immediately after the user goes through the log-in
    * process.
    */
-  private AsyncCallback<BraketUser> userLogInCallback = new AsyncCallback<BraketUser>() {
+  private AsyncCallback<User> userLogInCallback = new AsyncCallback<User>() {
 
     /**
      * Failure means a server error happened (not that the user failed to log
@@ -106,7 +106,7 @@ public class BraketEntryPoint implements EntryPoint, ValueChangeHandler<String> 
      *          determine whether or not a recognized user is logged in.
      */
     @Override
-    public void onSuccess(BraketUser result) {
+    public void onSuccess(User result) {
       // TODO Auto-generated method stub
       currentUser = result;
 

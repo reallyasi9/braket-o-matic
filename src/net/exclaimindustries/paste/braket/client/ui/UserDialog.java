@@ -16,7 +16,7 @@
  */
 package net.exclaimindustries.paste.braket.client.ui;
 
-import net.exclaimindustries.paste.braket.client.BraketUser;
+import net.exclaimindustries.paste.braket.client.User;
 import net.exclaimindustries.paste.braket.client.UserName;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
 
@@ -45,7 +45,7 @@ public class UserDialog extends DialogBox {
     private static UserDialogUiBinder uiBinder = GWT
             .create(UserDialogUiBinder.class);
 
-    private BraketUser user;
+    private User user;
 
     private final static Resources res = GWT.create(Resources.class);
 
@@ -83,7 +83,7 @@ public class UserDialog extends DialogBox {
         saveButton.setEnabled(false);
     }
 
-    public void setUser(BraketUser user) {
+    public void setUser(User user) {
         this.user = user;
         name.setText(user.getName().getFullName("unnamed user"));
         firstName.setText(user.getName().getFirstName());
@@ -159,7 +159,7 @@ public class UserDialog extends DialogBox {
         hide();
     }
     
-    public BraketUser getUser() {
+    public User getUser() {
         return user;
     }
 

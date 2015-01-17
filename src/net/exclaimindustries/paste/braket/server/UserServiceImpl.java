@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 
 import net.exclaimindustries.paste.braket.client.BraketPrediction;
 import net.exclaimindustries.paste.braket.client.Tournament;
-import net.exclaimindustries.paste.braket.client.BraketUser;
+import net.exclaimindustries.paste.braket.client.User;
 import net.exclaimindustries.paste.braket.client.UserService;
 
 import com.google.appengine.api.users.UserServiceFactory;
@@ -24,17 +24,17 @@ public class UserServiceImpl extends RemoteServiceServlet implements
     private static final long serialVersionUID = 1L;
 
     @Override
-    public Collection<BraketUser> getUsers() {
+    public Collection<User> getUsers() {
         if (!UserServiceFactory.getUserService().isUserAdmin()) {
             throw new SecurityException("administration privileges required");
         }
 
-        return new ArrayList<BraketUser>(OfyService.ofy().load()
-                .type(BraketUser.class).list());
+        return new ArrayList<User>(OfyService.ofy().load()
+                .type(User.class).list());
     }
 
     @Override
-    public Collection<BraketUser> getRegisteredUsers() {
+    public Collection<User> getRegisteredUsers() {
 
         Ref<Tournament> tournamentRef = CurrentTournament
                 .getCurrentTournament();
@@ -46,21 +46,21 @@ public class UserServiceImpl extends RemoteServiceServlet implements
         // Get the users
         Collection<String> userKeys = tournament.getUserIds();
 
-        Collection<BraketUser> users = OfyService.ofy().load()
-                .type(BraketUser.class).ids(userKeys).values();
+        Collection<User> users = OfyService.ofy().load()
+                .type(User.class).ids(userKeys).values();
 
         // If not an admin, strip the email addresses from the returned users.
         if (!UserServiceFactory.getUserService().isUserAdmin()) {
-            for (BraketUser user : users) {
+            for (User user : users) {
                 user.setEmail(null);
             }
         }
 
-        return new ArrayList<BraketUser>(users);
+        return new ArrayList<User>(users);
     }
 
     @Override
-    public void storeUsers(Collection<BraketUser> users) {
+    public void storeUsers(Collection<User> users) {
         if (!UserServiceFactory.getUserService().isUserAdmin()) {
             throw new SecurityException("administration privileges required");
         }
@@ -69,7 +69,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements
     }
 
     @Override
-    public String storeUser(BraketUser user) {
+    public String storeUser(User user) {
         if (!UserServiceFactory.getUserService().getCurrentUser().getUserId()
                 .equals(user.getId())
                 && !UserServiceFactory.getUserService().isUserAdmin()) {
@@ -80,7 +80,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements
     }
 
     @Override
-    public Long registerUser(final BraketUser user) {
+    public Long registerUser(final User user) {
         if (!UserServiceFactory.getUserService().isUserAdmin()) {
             throw new SecurityException("administration privileges required");
         }
@@ -136,7 +136,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements
     }
 
     @Override
-    public void unregisterUser(final BraketUser user) {
+    public void unregisterUser(final User user) {
         if (!UserServiceFactory.getUserService().isUserAdmin()) {
             throw new SecurityException("administration privileges required");
         }
@@ -176,7 +176,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements
     }
 
     @Override
-    public void deleteUsers(final Collection<BraketUser> users) {
+    public void deleteUsers(final Collection<User> users) {
         if (!UserServiceFactory.getUserService().isUserAdmin()) {
             throw new SecurityException("administration privileges required");
         }
@@ -188,7 +188,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements
             public void vrun() {
 
                 // Delete all the selections
-                for (BraketUser user : users) {
+                for (User user : users) {
 
                     String userId = user.getId();
 
@@ -213,7 +213,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements
     }
 
     @Override
-    public void deleteUser(final BraketUser user) {
+    public void deleteUser(final User user) {
         if (!UserServiceFactory.getUserService().isUserAdmin()) {
             throw new SecurityException("administration privileges required");
         }

@@ -25,7 +25,7 @@ import java.util.PriorityQueue;
 
 import net.exclaimindustries.paste.braket.client.BraketPrediction;
 import net.exclaimindustries.paste.braket.client.Tournament;
-import net.exclaimindustries.paste.braket.client.BraketUser;
+import net.exclaimindustries.paste.braket.client.User;
 import net.exclaimindustries.paste.braket.client.LeaderboardService;
 import net.exclaimindustries.paste.braket.client.UserRanking;
 import net.exclaimindustries.paste.braket.shared.NoCurrentTournamentException;
@@ -71,8 +71,8 @@ public class LeaderboardServiceImpl extends RemoteServiceServlet implements
         // OfyService.ofy().save().entity(tournament).now();
 
         // Get users registered to this tournament
-        Collection<BraketUser> users =
-                OfyService.ofy().load().type(BraketUser.class)
+        Collection<User> users =
+                OfyService.ofy().load().type(User.class)
                         .ids(tournament.getRegisteredPredictions().keySet()).values();
 
         // Get user selections
@@ -93,7 +93,7 @@ public class LeaderboardServiceImpl extends RemoteServiceServlet implements
 
         // Sort everything out
         ArrayList<SelectionInfo> infos = new ArrayList<SelectionInfo>();
-        for (BraketUser user : users) {
+        for (User user : users) {
 
             // Match selection
             BraketPrediction selection = selectionMap.get(user.getId());
@@ -145,7 +145,7 @@ public class LeaderboardServiceImpl extends RemoteServiceServlet implements
     }
 
     @Override
-    public UserRanking getUserRanking(BraketUser user)
+    public UserRanking getUserRanking(User user)
             throws NoCurrentTournamentException, UserNotLoggedInException {
 
         LogInServiceHelper.assertLoggedIn();

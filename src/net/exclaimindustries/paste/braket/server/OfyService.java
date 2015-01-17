@@ -20,7 +20,7 @@ package net.exclaimindustries.paste.braket.server;
 import net.exclaimindustries.paste.braket.client.BraketPrediction;
 import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.Tournament;
-import net.exclaimindustries.paste.braket.client.BraketUser;
+import net.exclaimindustries.paste.braket.client.User;
 import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.HeadToHeadGame;
 import net.exclaimindustries.paste.braket.client.Selectable;
@@ -35,7 +35,7 @@ public class OfyService {
   static {
     factory().register(Selectable.class);
     factory().register(Tournament.class);
-    factory().register(BraketUser.class);
+    factory().register(User.class);
     factory().register(BraketPrediction.class);
     factory().register(Team.class);
     factory().register(Game.class);

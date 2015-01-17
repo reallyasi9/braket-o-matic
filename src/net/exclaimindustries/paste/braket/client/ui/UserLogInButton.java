@@ -1,6 +1,6 @@
 package net.exclaimindustries.paste.braket.client.ui;
 
-import net.exclaimindustries.paste.braket.client.BraketUser;
+import net.exclaimindustries.paste.braket.client.User;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -25,7 +25,7 @@ public class UserLogInButton extends Composite {
     @UiField
     Anchor logInAnchor;
 
-    public UserLogInButton(BraketUser user) {
+    public UserLogInButton(User user) {
         initWidget(uiBinder.createAndBindUi(this));
         logInAnchor.setHref(user.getLogInLink());
     }

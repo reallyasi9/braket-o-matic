@@ -22,7 +22,7 @@ import java.util.Map;
 
 import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.Team;
-import net.exclaimindustries.paste.braket.client.BraketUser;
+import net.exclaimindustries.paste.braket.client.User;
 import net.exclaimindustries.paste.braket.client.ExpectedValueService;
 import net.exclaimindustries.paste.braket.client.ExpectedValueServiceAsync;
 
@@ -53,12 +53,12 @@ public class ExciteOMatic extends ScrollPanel {
     @UiField
     VerticalPanel panel;
 
-    private final BraketUser user;
+    private final User user;
     private final List<Game> games;
     private final Map<Long, Team> teamMap =
             new HashMap<Long, Team>();
 
-    public ExciteOMatic(BraketUser u, List<Game> g, List<Team> t) {
+    public ExciteOMatic(User u, List<Game> g, List<Team> t) {
         user = u;
         games = g;
         for (Team team : t) {

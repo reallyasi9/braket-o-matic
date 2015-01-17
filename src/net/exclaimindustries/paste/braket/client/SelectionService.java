@@ -76,7 +76,7 @@ public interface SelectionService extends RemoteService {
      *             If the user is not logged in, or if the user is not an
      *             administrator and the current tournament has not yet begun.
      */
-    public Double getUserValue(BraketUser user);
+    public Double getUserValue(User user);
 
     /**
      * Same as above, but for a hypothetical tournament.
@@ -95,7 +95,7 @@ public interface SelectionService extends RemoteService {
      *             If the user is not logged in, or if the user is not an
      *             administrator and the current tournament has not yet begun.
      */
-    public Double getUserValue(BraketUser user, BigInteger outcome,
+    public Double getUserValue(User user, BigInteger outcome,
             BigInteger mask);
 
     /**
@@ -128,7 +128,7 @@ public interface SelectionService extends RemoteService {
      *             is attempting to get the selections of a user other than
      *             himself.
      */
-    public Collection<BraketPrediction> getSelections(BraketUser user);
+    public Collection<BraketPrediction> getSelections(User user);
 
     /**
      * Get a selection for a user for the current tournament. Will create a new,
@@ -147,7 +147,7 @@ public interface SelectionService extends RemoteService {
      *             is attempting to get the selections of a user other than
      *             himself before the tournament has started.
      */
-    public BraketPrediction getSelection(BraketUser user);
+    public BraketPrediction getSelection(User user);
 
     /**
      * Get all the selections registered to the current tournament.
@@ -178,7 +178,7 @@ public interface SelectionService extends RemoteService {
      *             If the user is not logged in, or if the user is not an
      *             administrator and the current tournament has not yet begun.
      */
-    public BraketPrediction getRegisteredSelection(BraketUser user);
+    public BraketPrediction getRegisteredSelection(User user);
 
     /**
      * Write or update a selection. DO NOT use this for changing whether or not

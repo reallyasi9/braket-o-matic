@@ -16,7 +16,7 @@
  */
 package net.exclaimindustries.paste.braket.client.ui;
 
-import net.exclaimindustries.paste.braket.client.BraketUser;
+import net.exclaimindustries.paste.braket.client.User;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
 
 import com.google.gwt.core.client.GWT;
@@ -51,7 +51,7 @@ public class BracketUserBar extends Composite {
     private static BracketUserBarUiBinder uiBinder = GWT
             .create(BracketUserBarUiBinder.class);
 
-    private BraketUser thisUser;
+    private User thisUser;
 
     @UiField
     MyStyle style;
@@ -91,7 +91,7 @@ public class BracketUserBar extends Composite {
         setUser(null);
     }
 
-    public void setUser(BraketUser user) {
+    public void setUser(User user) {
         thisUser = user;
         // Can access @UiField after calling createAndBindUi
         if (thisUser == null || !thisUser.isLoggedIn()) {

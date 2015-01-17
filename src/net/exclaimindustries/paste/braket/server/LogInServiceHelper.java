@@ -1,6 +1,6 @@
 package net.exclaimindustries.paste.braket.server;
 
-import net.exclaimindustries.paste.braket.client.BraketUser;
+import net.exclaimindustries.paste.braket.client.User;
 import net.exclaimindustries.paste.braket.shared.UserNotAdminException;
 import net.exclaimindustries.paste.braket.shared.UserNotLoggedInException;
 
@@ -15,13 +15,13 @@ import com.google.appengine.api.users.UserServiceFactory;
  */
 public final class LogInServiceHelper {
 
-    static public BraketUser assertLoggedIn() throws UserNotLoggedInException {
+    static public User assertLoggedIn() throws UserNotLoggedInException {
         UserService us = UserServiceFactory.getUserService();
         if (!us.isUserLoggedIn()) {
             throw new UserNotLoggedInException(
                     "you need to be logged in to use this feature");
         }
-        return new BraketUser();
+        return new User();
     }
 
     static public void assertAdmin() throws UserNotLoggedInException,

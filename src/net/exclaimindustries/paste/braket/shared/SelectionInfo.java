@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.SortedMap;
 
 import net.exclaimindustries.paste.braket.client.BraketPrediction;
-import net.exclaimindustries.paste.braket.client.BraketUser;
+import net.exclaimindustries.paste.braket.client.User;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.google.gwt.view.client.ProvidesKey;
@@ -30,7 +30,7 @@ import com.google.gwt.view.client.ProvidesKey;
 public class SelectionInfo implements Comparable<SelectionInfo>, IsSerializable {
 
     // The user
-    protected BraketUser user;
+    protected User user;
 
     // The user's selection
     protected BraketPrediction selection;
@@ -76,7 +76,7 @@ public class SelectionInfo implements Comparable<SelectionInfo>, IsSerializable 
      * @param expectedPayout
      * @param expectedPayoutHistory
      */
-    public SelectionInfo(BraketUser user, BraketPrediction selection, double points,
+    public SelectionInfo(User user, BraketPrediction selection, double points,
             double pointsPossible, double expectedPayout,
             SortedMap<Date, Double> expectedPayoutHistory) {
         this.user = user;
@@ -118,7 +118,7 @@ public class SelectionInfo implements Comparable<SelectionInfo>, IsSerializable 
         return comp;
     }
 
-    public BraketUser getUser() {
+    public User getUser() {
         return user;
     }
 

@@ -42,5 +42,5 @@ public interface LogInService extends RemoteService {
      *             If, for whatever reason, you can't access the SHA1 hash
      *             algorithm.
      */
-    public BraketUser logIn(String requestUri) throws NoSuchAlgorithmException;
+    public User logIn(String requestUri) throws NoSuchAlgorithmException;
 }

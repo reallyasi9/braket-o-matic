@@ -6,20 +6,20 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface UserServiceAsync {
 
-	void getUsers(AsyncCallback<Collection<BraketUser>> callback);
+	void getUsers(AsyncCallback<Collection<User>> callback);
 
-	void getRegisteredUsers(AsyncCallback<Collection<BraketUser>> callback);
+	void getRegisteredUsers(AsyncCallback<Collection<User>> callback);
 
-	void storeUsers(Collection<BraketUser> users, AsyncCallback<Void> callback);
+	void storeUsers(Collection<User> users, AsyncCallback<Void> callback);
 
-	void storeUser(BraketUser user, AsyncCallback<String> callback);
+	void storeUser(User user, AsyncCallback<String> callback);
 
-	void registerUser(BraketUser user, AsyncCallback<Long> callback);
+	void registerUser(User user, AsyncCallback<Long> callback);
 
-	void unregisterUser(BraketUser user, AsyncCallback<Void> callback);
+	void unregisterUser(User user, AsyncCallback<Void> callback);
 
-	void deleteUsers(Collection<BraketUser> users, AsyncCallback<Void> callback);
+	void deleteUsers(Collection<User> users, AsyncCallback<Void> callback);
 
-	void deleteUser(BraketUser user, AsyncCallback<Void> callback);
+	void deleteUser(User user, AsyncCallback<Void> callback);
 
 }

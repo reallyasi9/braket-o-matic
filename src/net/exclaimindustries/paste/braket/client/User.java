@@ -34,7 +34,7 @@ import com.googlecode.objectify.annotation.Serialize;
  */
 @Entity
 @Cache
-public class BraketUser implements IsSerializable {
+public class User implements IsSerializable {
 
     /**
      * The ID of the user as stored in the database. Note that this ID is stored
@@ -98,7 +98,7 @@ public class BraketUser implements IsSerializable {
     /**
      * Default constructor.
      */
-    public BraketUser() {
+    public User() {
         super();
     }
 
@@ -109,7 +109,7 @@ public class BraketUser implements IsSerializable {
      *            A unique string identifying the user. It's suggested that the
      *            raw user ID not be used, so a hashed version is best.
      */
-    public BraketUser(String userId) {
+    public User(String userId) {
         // ID needs to be protected, so it gets sent pre-hashed.
         id = userId;
         userName.setNickname("Unidentified Doofus");

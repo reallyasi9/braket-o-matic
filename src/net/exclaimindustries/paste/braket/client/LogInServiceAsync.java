@@ -24,6 +24,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface LogInServiceAsync {
 
-    void logIn(String requestUri, AsyncCallback<BraketUser> callback);
+    void logIn(String requestUri, AsyncCallback<User> callback);
 
 }

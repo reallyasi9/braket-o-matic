@@ -2,7 +2,7 @@ package net.exclaimindustries.paste.braket.client.ui;
 
 import java.util.Comparator;
 
-import net.exclaimindustries.paste.braket.client.BraketUser;
+import net.exclaimindustries.paste.braket.client.User;
 import net.exclaimindustries.paste.braket.client.UserName;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
 
@@ -37,16 +37,16 @@ public class EditUserDialog extends SimpleLayoutPanel {
     }
 
     // TODO make this async
-    private final ListDataProvider<BraketUser> dataProvider =
-            new ListDataProvider<BraketUser>();
+    private final ListDataProvider<User> dataProvider =
+            new ListDataProvider<User>();
 
     @UiField(provided = true)
-    DataGrid<BraketUser> dataGrid;
+    DataGrid<User> dataGrid;
 
     public EditUserDialog() {
         setHeight("100%");
         // Make the DataGrid before binding!
-        dataGrid = new DataGrid<BraketUser>();
+        dataGrid = new DataGrid<User>();
         // dataGrid.setWidth("600px");
         dataGrid.setMinimumTableWidth(500, Unit.PX);
         // dataGrid.setHeight("500px");
@@ -54,15 +54,15 @@ public class EditUserDialog extends SimpleLayoutPanel {
         dataGrid.setEmptyTableWidget(new Label("no data to show right now..."));
 
         // First name
-        Column<BraketUser, String> firstNameColumn =
+        Column<User, String> firstNameColumn =
                 addColumn(new EditTextCell(), "first name", new GetValue<String>() {
                     @Override
-                    public String getValue(BraketUser user) {
+                    public String getValue(User user) {
                         return user.getName().getFirstName();
                     }
-                }, new FieldUpdater<BraketUser, String>() {
+                }, new FieldUpdater<User, String>() {
                     @Override
-                    public void update(int index, BraketUser object, String value) {
+                    public void update(int index, User object, String value) {
                         UserName name = object.getName();
                         UserName newName =
                                 new UserName(value, name.getLastName(), name
@@ -73,11 +73,11 @@ public class EditUserDialog extends SimpleLayoutPanel {
                 });
         // Add a ColumnSortEvent.ListHandler to connect sorting to the
         // java.util.List.
-        ListHandler<BraketUser> columnSortHandler =
-                new ListHandler<BraketUser>(dataProvider.getList());
+        ListHandler<User> columnSortHandler =
+                new ListHandler<User>(dataProvider.getList());
         columnSortHandler.setComparator(firstNameColumn,
-                new Comparator<BraketUser>() {
-                    public int compare(BraketUser o1, BraketUser o2) {
+                new Comparator<User>() {
+                    public int compare(User o1, User o2) {
                         UserName n1 = o1.getName();
                         UserName n2 = o2.getName();
                         return n1.getFirstName().compareTo(n2.getFirstName());
@@ -87,15 +87,15 @@ public class EditUserDialog extends SimpleLayoutPanel {
         firstNameColumn.setSortable(true);
 
         // Last name
-        Column<BraketUser, String> lastNameColumn =
+        Column<User, String> lastNameColumn =
                 addColumn(new EditTextCell(), "last name", new GetValue<String>() {
                     @Override
-                    public String getValue(BraketUser user) {
+                    public String getValue(User user) {
                         return user.getName().getLastName();
                     }
-                }, new FieldUpdater<BraketUser, String>() {
+                }, new FieldUpdater<User, String>() {
                     @Override
-                    public void update(int index, BraketUser object, String value) {
+                    public void update(int index, User object, String value) {
                         UserName name = object.getName();
                         UserName newName =
                                 new UserName(name.getFirstName(), value, name
@@ -105,8 +105,8 @@ public class EditUserDialog extends SimpleLayoutPanel {
                     }
                 });
         columnSortHandler.setComparator(lastNameColumn,
-                new Comparator<BraketUser>() {
-                    public int compare(BraketUser o1, BraketUser o2) {
+                new Comparator<User>() {
+                    public int compare(User o1, User o2) {
                         UserName n1 = o1.getName();
                         UserName n2 = o2.getName();
                         return n1.getLastName().compareTo(n2.getLastName());
@@ -115,15 +115,15 @@ public class EditUserDialog extends SimpleLayoutPanel {
         lastNameColumn.setSortable(true);
 
         // Nickname
-        Column<BraketUser, String> nicknameColumn =
+        Column<User, String> nicknameColumn =
                 addColumn(new EditTextCell(), "nickname", new GetValue<String>() {
                     @Override
-                    public String getValue(BraketUser user) {
+                    public String getValue(User user) {
                         return user.getName().getNickname();
                     }
-                }, new FieldUpdater<BraketUser, String>() {
+                }, new FieldUpdater<User, String>() {
                     @Override
-                    public void update(int index, BraketUser object, String value) {
+                    public void update(int index, User object, String value) {
                         UserName name = object.getName();
                         UserName newName =
                                 new UserName(name.getFirstName(),
@@ -134,8 +134,8 @@ public class EditUserDialog extends SimpleLayoutPanel {
                 });
 
         columnSortHandler.setComparator(nicknameColumn,
-                new Comparator<BraketUser>() {
-                    public int compare(BraketUser o1, BraketUser o2) {
+                new Comparator<User>() {
+                    public int compare(User o1, User o2) {
                         UserName n1 = o1.getName();
                         UserName n2 = o2.getName();
                         return n1.getNickname().compareTo(n2.getNickname());
@@ -145,15 +145,15 @@ public class EditUserDialog extends SimpleLayoutPanel {
         nicknameColumn.setSortable(true);
 
         // Email
-        Column<BraketUser, String> emailColumn =
+        Column<User, String> emailColumn =
                 addColumn(new TextCell(), "email", new GetValue<String>() {
                     @Override
-                    public String getValue(BraketUser user) {
+                    public String getValue(User user) {
                         return user.getEmail();
                     }
                 }, null);
-        columnSortHandler.setComparator(emailColumn, new Comparator<BraketUser>() {
-            public int compare(BraketUser o1, BraketUser o2) {
+        columnSortHandler.setComparator(emailColumn, new Comparator<User>() {
+            public int compare(User o1, User o2) {
                 return (o1.getEmail().compareToIgnoreCase(o2.getEmail()));
             }
         });
@@ -290,7 +290,7 @@ public class EditUserDialog extends SimpleLayoutPanel {
      *            the cell type
      */
     private static interface GetValue<C> {
-        C getValue(BraketUser user);
+        C getValue(User user);
     }
 
     /**
@@ -305,11 +305,11 @@ public class EditUserDialog extends SimpleLayoutPanel {
      * @param getter
      *            the value getter for the cell
      */
-    private <C> Column<BraketUser, C> addColumn(Cell<C> cell, String headerText,
-            final GetValue<C> getter, FieldUpdater<BraketUser, C> fieldUpdater) {
-        Column<BraketUser, C> column = new Column<BraketUser, C>(cell) {
+    private <C> Column<User, C> addColumn(Cell<C> cell, String headerText,
+            final GetValue<C> getter, FieldUpdater<User, C> fieldUpdater) {
+        Column<User, C> column = new Column<User, C>(cell) {
             @Override
-            public C getValue(BraketUser object) {
+            public C getValue(User object) {
                 return getter.getValue(object);
             }
         };
@@ -319,7 +319,7 @@ public class EditUserDialog extends SimpleLayoutPanel {
         return column;
     }
 
-    private void doUserUpdate(final int index, final BraketUser object) {
+    private void doUserUpdate(final int index, final User object) {
         // BraketEntryPoint.userService.storeUser(object,
         // new AsyncCallback<String>() {
         //

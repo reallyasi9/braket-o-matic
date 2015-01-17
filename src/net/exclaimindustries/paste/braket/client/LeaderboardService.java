@@ -59,7 +59,7 @@ public interface LeaderboardService extends RemoteService {
      * @throws UserNotLoggedInException
      * @throws TournamentNotStartedException
      */
-    public UserRanking getUserRanking(BraketUser user)
+    public UserRanking getUserRanking(User user)
             throws NoCurrentTournamentException, UserNotLoggedInException,
             TournamentNotStartedException;
 

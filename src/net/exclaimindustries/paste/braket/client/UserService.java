@@ -16,7 +16,7 @@ public interface UserService extends RemoteService {
      * @throws SecurityException
      *             If the current user is not logged in as an administrator.
      */
-    public Collection<BraketUser> getUsers();
+    public Collection<User> getUsers();
 
     /**
      * Get all the registered users for a given tournament.
@@ -26,7 +26,7 @@ public interface UserService extends RemoteService {
      *         addresses will be stripped from the users in the returned
      *         collection for privacy reasons.
      */
-    public Collection<BraketUser> getRegisteredUsers();
+    public Collection<User> getRegisteredUsers();
 
     /**
      * Update a collection of users all at one time.
@@ -37,7 +37,7 @@ public interface UserService extends RemoteService {
      * @throws SecurityException
      *             If the current user is not logged in as an administrator.
      */
-    public void storeUsers(Collection<BraketUser> users);
+    public void storeUsers(Collection<User> users);
 
     /**
      * Update or create a user in the datastore.
@@ -50,7 +50,7 @@ public interface UserService extends RemoteService {
      *             If the current user is not logged in as an administrator and
      *             is attempting to update a user other than himself.
      */
-    public String storeUser(BraketUser user);
+    public String storeUser(User user);
 
     /**
      * Register a user for the current tournament.
@@ -61,7 +61,7 @@ public interface UserService extends RemoteService {
      * @throws SecurityException
      *             If the current user is not logged in as an administrator.
      */
-    public Long registerUser(BraketUser user);
+    public Long registerUser(User user);
 
     /**
      * Unregister a user from the current tournament.
@@ -71,7 +71,7 @@ public interface UserService extends RemoteService {
      * @throws SecurityException
      *             If the current user is not logged in as an administrator.
      */
-    public void unregisterUser(BraketUser user);
+    public void unregisterUser(User user);
 
     /**
      * Delete a collection of users from the datastore.
@@ -82,7 +82,7 @@ public interface UserService extends RemoteService {
      * @throws SecurityException
      *             If the current user is not logged in as an administrator.
      */
-    public void deleteUsers(Collection<BraketUser> users);
+    public void deleteUsers(Collection<User> users);
 
     /**
      * Delete a user from the datastore.
@@ -93,5 +93,5 @@ public interface UserService extends RemoteService {
      * @throws SecurityException
      *             If the current user is not logged in as an administrator.
      */
-    public void deleteUser(BraketUser user);
+    public void deleteUser(User user);
 }

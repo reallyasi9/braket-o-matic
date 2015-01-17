@@ -23,7 +23,7 @@ import java.util.Map;
 
 import net.exclaimindustries.paste.braket.client.BraketPrediction;
 import net.exclaimindustries.paste.braket.client.Tournament;
-import net.exclaimindustries.paste.braket.client.BraketUser;
+import net.exclaimindustries.paste.braket.client.User;
 import net.exclaimindustries.paste.braket.client.SelectionService;
 
 import com.google.appengine.api.users.UserServiceFactory;
@@ -143,7 +143,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
      * (java.lang.Long)
      */
     @Override
-    public Double getUserValue(BraketUser user) {
+    public Double getUserValue(User user) {
 
         if (!UserServiceFactory.getUserService().isUserLoggedIn()) {
             throw new SecurityException("you are not logged in");
@@ -188,7 +188,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
      * (java.lang.Long, java.math.BigInteger)
      */
     @Override
-    public Double getUserValue(BraketUser user, BigInteger outcome,
+    public Double getUserValue(User user, BigInteger outcome,
             BigInteger mask) {
 
         if (!UserServiceFactory.getUserService().isUserLoggedIn()) {
@@ -266,7 +266,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
      * (net.exclaimindustries.paste.braket.client.BraketUser)
      */
     @Override
-    public Collection<BraketPrediction> getSelections(BraketUser user) {
+    public Collection<BraketPrediction> getSelections(User user) {
 
         if (!UserServiceFactory.getUserService().getCurrentUser().getUserId()
                 .equals(user.getId())
@@ -325,7 +325,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
      * (net.exclaimindustries.paste.braket.client.BraketUser)
      */
     @Override
-    public BraketPrediction getRegisteredSelection(BraketUser user) {
+    public BraketPrediction getRegisteredSelection(User user) {
 
         if (!UserServiceFactory.getUserService().isUserLoggedIn()) {
             throw new SecurityException("you are not logged in");
@@ -462,8 +462,8 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
                         tournament.removeRegistration(selection.getUserId());
                         OfyService.ofy().save().entity(tournament);
 
-                        BraketUser user = OfyService.ofy().load()
-                                .type(BraketUser.class)
+                        User user = OfyService.ofy().load()
+                                .type(User.class)
                                 .id(selection.getUserId()).now();
 
                         if (user != null) {
@@ -509,8 +509,8 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
                             tournament.removeRegistration(selection.getUserId());
                             OfyService.ofy().save().entity(tournament);
 
-                            BraketUser user = OfyService.ofy().load()
-                                    .type(BraketUser.class)
+                            User user = OfyService.ofy().load()
+                                    .type(User.class)
                                     .id(selection.getUserId()).now();
 
                             if (user != null) {
@@ -529,7 +529,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
     }
 
     @Override
-    public BraketPrediction getSelection(final BraketUser user) {
+    public BraketPrediction getSelection(final User user) {
 
         if (!UserServiceFactory.getUserService().isUserLoggedIn()) {
             throw new SecurityException("you are not logged in");

@@ -19,55 +19,56 @@ package net.exclaimindustries.paste.braket.server;
 
 import java.security.NoSuchAlgorithmException;
 
-import net.exclaimindustries.paste.braket.client.BraketUser;
 import net.exclaimindustries.paste.braket.client.LogInService;
+import net.exclaimindustries.paste.braket.client.User;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.googlecode.objectify.Key;
 
-public class LogInServiceImpl extends RemoteServiceServlet implements LogInService {
+public class LogInServiceImpl extends RemoteServiceServlet implements
+    LogInService {
 
-    /**
-     * Generated
-     */
-    private static final long serialVersionUID = 1L;
+  /**
+   * Generated
+   */
+  private static final long serialVersionUID = 1L;
 
-    @Override
-    public BraketUser logIn(String requestUri) throws NoSuchAlgorithmException {
-        UserService userService = UserServiceFactory.getUserService();
-        User user = userService.getCurrentUser();
+  @Override
+  public User logIn(String requestUri) throws NoSuchAlgorithmException {
+    UserService userService = UserServiceFactory.getUserService();
+    com.google.appengine.api.users.User user = userService.getCurrentUser();
 
-        BraketUser braketUser;
-        if (user != null) {
-            // Look up the user's information
+    User braketUser;
+    if (user != null) {
+      // Look up the user's information
 
-            // The user's ID should be protected
-            String userId = DigestUtils.sha1Hex(user.getUserId() + "//braket-o-matic");
+      // The user's ID should be protected
+      String userId = DigestUtils
+          .sha1Hex(user.getUserId() + "//braket-o-matic");
 
-            // Load from the datastore
-            Key<BraketUser> key = Key.create(BraketUser.class, userId);
-            braketUser = OfyService.ofy().load().key(key).now();
+      // Load from the datastore
+      Key<User> key = Key.create(User.class, userId);
+      braketUser = OfyService.ofy().load().key(key).now();
 
-            // If that returns null, then make a user and write it
-            if (braketUser == null) {
-                braketUser = new BraketUser(userId);
-                braketUser.setEmail(user.getEmail());
-                OfyService.ofy().save().entity(braketUser);
-            }
+      // If that returns null, then make a user and write it
+      if (braketUser == null) {
+        braketUser = new User(userId);
+        braketUser.setEmail(user.getEmail());
+        OfyService.ofy().save().entity(braketUser);
+      }
 
-            braketUser.setLogOutLink(userService.createLogoutURL(requestUri));
-            braketUser.setLoggedIn(true);
-            braketUser.setAdmin(userService.isUserAdmin());
-        } else {
-            // Not signed in, so don't do anything with the database.
-            braketUser = new BraketUser();
-            braketUser.setLogInLink(userService.createLoginURL(requestUri));
-        }
-        return braketUser;
+      braketUser.setLogOutLink(userService.createLogoutURL(requestUri));
+      braketUser.setLoggedIn(true);
+      braketUser.setAdmin(userService.isUserAdmin());
+    } else {
+      // Not signed in, so don't do anything with the database.
+      braketUser = new User();
+      braketUser.setLogInLink(userService.createLoginURL(requestUri));
     }
+    return braketUser;
+  }
 }

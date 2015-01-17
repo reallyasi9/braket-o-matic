@@ -30,21 +30,21 @@ public interface SelectionServiceAsync {
 
     void getUserValues(AsyncCallback<Map<String, Double>> callback);
 
-    void getUserValue(BraketUser user, AsyncCallback<Double> callback);
+    void getUserValue(User user, AsyncCallback<Double> callback);
 
     void getSelectionValue(BraketPrediction selection,
             AsyncCallback<Double> callback);
 
-    void getUserValue(BraketUser user, BigInteger outcome, BigInteger mask,
+    void getUserValue(User user, BigInteger outcome, BigInteger mask,
             AsyncCallback<Double> callback);
 
     void getUserValues(BigInteger outcome, BigInteger mask,
             AsyncCallback<Map<String, Double>> callback);
 
-    void getSelections(BraketUser user,
+    void getSelections(User user,
             AsyncCallback<Collection<BraketPrediction>> callback);
 
-    void getRegisteredSelection(BraketUser user,
+    void getRegisteredSelection(User user,
             AsyncCallback<BraketPrediction> callback);
 
     void
@@ -64,6 +64,6 @@ public interface SelectionServiceAsync {
     void getRegisteredSelections(
             AsyncCallback<Collection<BraketPrediction>> callback);
 
-    void getSelection(BraketUser user, AsyncCallback<BraketPrediction> callback);
+    void getSelection(User user, AsyncCallback<BraketPrediction> callback);
 
 }

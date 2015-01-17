@@ -3,7 +3,7 @@ package net.exclaimindustries.paste.braket.client.ui;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.exclaimindustries.paste.braket.client.BraketUser;
+import net.exclaimindustries.paste.braket.client.User;
 import net.exclaimindustries.paste.braket.client.HSLAColor;
 import net.exclaimindustries.paste.braket.client.LeaderboardService;
 import net.exclaimindustries.paste.braket.client.LeaderboardServiceAsync;
@@ -61,7 +61,7 @@ public class UserStatusPanel extends Composite {
     private LeaderboardServiceAsync leaderboardServiceRPC = GWT
             .create(LeaderboardService.class);
 
-    private BraketUser currentUser;
+    private User currentUser;
 
     private AsyncCallback<UserRanking> rankingCallback =
             new AsyncCallback<UserRanking>() {
@@ -96,7 +96,7 @@ public class UserStatusPanel extends Composite {
                 }
             };
 
-    public UserStatusPanel(BraketUser user) {
+    public UserStatusPanel(User user) {
         initWidget(uiBinder.createAndBindUi(this));
         currentUser = user;
         setName(currentUser.getName().getFullName("anonymous loser"));
