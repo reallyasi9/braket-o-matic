@@ -18,7 +18,7 @@ package net.exclaimindustries.paste.braket.client.ui;
 
 import java.util.LinkedList;
 
-import net.exclaimindustries.paste.braket.client.BraketTeam;
+import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.RGBAColor;
 import net.exclaimindustries.paste.braket.client.TeamName;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
@@ -49,7 +49,7 @@ public class DownloadTeamsDialog extends DialogBox {
             UiBinder<Widget, DownloadTeamsDialog> {
     }
 
-    private BraketTeam downloadedTeam;
+    private Team downloadedTeam;
 
     @UiField
     TextBox espnId;

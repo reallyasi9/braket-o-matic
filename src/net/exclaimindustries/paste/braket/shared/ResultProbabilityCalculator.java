@@ -2,7 +2,7 @@ package net.exclaimindustries.paste.braket.shared;
 
 import java.util.List;
 
-import net.exclaimindustries.paste.braket.client.BraketTeam;
+import net.exclaimindustries.paste.braket.client.Team;
 
 /**
  * An interface that provides a method to calculate the probability that a
@@ -22,6 +22,6 @@ public interface ResultProbabilityCalculator {
    *          second place second, and so on).
    * @return The a priori calculated probability that this result would occur.
    */
-  public double probabilityOf(List<BraketTeam> result);
+  public double probabilityOf(List<Team> result);
 
 }

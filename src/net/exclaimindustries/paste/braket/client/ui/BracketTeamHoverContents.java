@@ -1,6 +1,6 @@
 package net.exclaimindustries.paste.braket.client.ui;
 
-import net.exclaimindustries.paste.braket.client.BraketTeam;
+import net.exclaimindustries.paste.braket.client.Team;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
@@ -30,7 +30,7 @@ public class BracketTeamHoverContents extends Composite {
     @UiField DivElement teamName;
     @UiField DivElement hintText;
     
-    public BracketTeamHoverContents(BraketTeam team, boolean editable) {
+    public BracketTeamHoverContents(Team team, boolean editable) {
         initWidget(uiBinder.createAndBindUi(this));
         
         // This popup doesn't need to do ANYTHING but display an icon and some

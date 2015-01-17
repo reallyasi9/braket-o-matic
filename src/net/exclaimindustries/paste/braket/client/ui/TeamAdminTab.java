@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.exclaimindustries.paste.braket.client.BraketTeam;
+import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.TeamService;
 import net.exclaimindustries.paste.braket.client.TeamServiceAsync;
 
@@ -46,22 +46,22 @@ public class TeamAdminTab extends Composite {
   // UI Fields ----------------------------------------------------------------
 
   @UiField(provided = true)
-  DataGrid<BraketTeam> dataGrid;
+  DataGrid<Team> dataGrid;
 
   // Members ------------------------------------------------------------------
 
-  private final AsyncDataProvider<BraketTeam> dataProvider = new AsyncDataProvider<BraketTeam>(
-      BraketTeam.KEY_PROVIDER) {
+  private final AsyncDataProvider<Team> dataProvider = new AsyncDataProvider<Team>(
+      Team.KEY_PROVIDER) {
 
-    private BraketTeam.IndexName sortCondition = BraketTeam.IndexName.schoolName;
+    private Team.IndexName sortCondition = Team.IndexName.schoolName;
 
     @Override
-    protected void onRangeChanged(HasData<BraketTeam> display) {
+    protected void onRangeChanged(HasData<Team> display) {
       final int offset = display.getVisibleRange().getStart();
       int limit = display.getVisibleRange().getLength();
       // RPC call to get more tournaments
       teamService.getTeams(sortCondition, offset, limit,
-          new AsyncCallback<List<BraketTeam>>() {
+          new AsyncCallback<List<Team>>() {
 
             @Override
             public void onFailure(Throwable caught) {
@@ -73,7 +73,7 @@ public class TeamAdminTab extends Composite {
             }
 
             @Override
-            public void onSuccess(List<BraketTeam> result) {
+            public void onSuccess(List<Team> result) {
               updateRowCount(result.size(), true);
               updateRowData(offset, result);
             }

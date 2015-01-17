@@ -181,11 +181,11 @@ abstract public class Tournament extends Selectable {
 
   abstract public void addGame(Game game);
 
-  abstract public Collection<BraketTeam> getTeams();
+  abstract public Collection<Team> getTeams();
 
   abstract public void setTeams(Collection<Long> teams);
 
-  abstract public void addTeam(BraketTeam team);
+  abstract public void addTeam(Team team);
 
   public String getRules() {
     return rules;
@@ -264,7 +264,7 @@ abstract public class Tournament extends Selectable {
    * @throws TeamNotInTournamentException
    *           if the given team is not seeded in the tournament.
    */
-  abstract public int getSeed(BraketTeam team)
+  abstract public int getSeed(Team team)
       throws TeamNotInTournamentException;
 
 }

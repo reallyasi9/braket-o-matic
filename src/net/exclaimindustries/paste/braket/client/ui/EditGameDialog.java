@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.exclaimindustries.paste.braket.client.Game;
-import net.exclaimindustries.paste.braket.client.BraketTeam;
+import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.TeamService;
 import net.exclaimindustries.paste.braket.client.TeamServiceAsync;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
@@ -43,8 +43,8 @@ public class EditGameDialog extends SimpleLayoutPanel {
 
     private final static Resources RES = GWT.create(Resources.class);
     private final static TeamServiceAsync TEAM_SERV = GWT.create(TeamService.class);
-    private final static HashMap<Long, BraketTeam> TEAMS =
-            new HashMap<Long, BraketTeam>();
+    private final static HashMap<Long, Team> TEAMS =
+            new HashMap<Long, Team>();
     private final static HashMap<String, Long> IDS_BY_NAME =
             new HashMap<String, Long>();
     private final static HashMap<Long, String> NAMES_BY_ID =
@@ -72,7 +72,7 @@ public class EditGameDialog extends SimpleLayoutPanel {
         dataGrid.setAutoHeaderRefreshDisabled(true);
         dataGrid.setEmptyTableWidget(new Label("no data to show right now..."));
 
-        TEAM_SERV.getTeams(new AsyncCallback<List<BraketTeam>>() {
+        TEAM_SERV.getTeams(new AsyncCallback<List<Team>>() {
 
             @Override
             public void onFailure(Throwable caught) {
@@ -80,14 +80,14 @@ public class EditGameDialog extends SimpleLayoutPanel {
             }
 
             @Override
-            public void onSuccess(List<BraketTeam> result) {
+            public void onSuccess(List<Team> result) {
                 TEAMS.clear();
-                for (BraketTeam t : result) {
+                for (Team t : result) {
                     TEAMS.put(t.getId(), t);
                 }
                 IDS_BY_NAME.clear();
                 NAMES_BY_ID.clear();
-                for (BraketTeam t : TEAMS.values()) {
+                for (Team t : TEAMS.values()) {
                     IDS_BY_NAME.put(t.getName().getAbbreviation(), t.getId());
                     NAMES_BY_ID.put(t.getId(), t.getName().getAbbreviation());
                 }

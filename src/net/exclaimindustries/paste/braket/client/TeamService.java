@@ -42,13 +42,13 @@ public interface TeamService extends RemoteService {
    * 
    * @see TeamService.getTeams(BraketTournament)
    */
-  public List<BraketTeam> getTeams();
+  public List<Team> getTeams();
 
   /**
    * @return The teams for the given tournament, keyed in a map by the datastore
    *         ID of the team.
    */
-  public Map<Long, BraketTeam> getTeams(Tournament tournament);
+  public Map<Long, Team> getTeams(Tournament tournament);
 
   /**
    * Fetches some number of teams by order from the datastore.
@@ -64,7 +64,7 @@ public interface TeamService extends RemoteService {
    *         <code>sortCondition</code> condition, starting at offset
    *         <code>offset</code>.
    */
-  public List<BraketTeam> getTeams(BraketTeam.IndexName orderCondition,
+  public List<Team> getTeams(Team.IndexName orderCondition,
       int offset, int limit) throws UserNotLoggedInException,
       UserNotAdminException;
 
@@ -90,7 +90,7 @@ public interface TeamService extends RemoteService {
    *           If there is no <code>BraketTournament</code> referenced to the
    *           team.
    */
-  public Long storeTeam(BraketTeam team) throws UserNotLoggedInException,
+  public Long storeTeam(Team team) throws UserNotLoggedInException,
       UserNotAdminException;
 
   /**
@@ -116,7 +116,7 @@ public interface TeamService extends RemoteService {
    *           If there is no <code>BraketTournament</code> referenced to any of
    *           the teams.
    */
-  public void storeTeams(Iterable<BraketTeam> teams)
+  public void storeTeams(Iterable<Team> teams)
       throws UserNotLoggedInException, UserNotAdminException;
 
   /**
@@ -130,7 +130,7 @@ public interface TeamService extends RemoteService {
    * @throws UserNotLoggedInException
    *           if no user is logged in.
    */
-  public void deleteTeam(BraketTeam team) throws UserNotLoggedInException,
+  public void deleteTeam(Team team) throws UserNotLoggedInException,
       UserNotAdminException;
 
   /**
@@ -145,7 +145,7 @@ public interface TeamService extends RemoteService {
    *           if no user is logged in.
    * 
    */
-  public void deleteTeams(Iterable<BraketTeam> teams)
+  public void deleteTeams(Iterable<Team> teams)
       throws UserNotLoggedInException, UserNotAdminException;
 
   /**
@@ -180,6 +180,6 @@ public interface TeamService extends RemoteService {
    * @throws UserNotLoggedInException
    *           if no user is logged in.
    */
-  public Collection<BraketTeam> downloadTeams(Iterable<Long> teamIds)
+  public Collection<Team> downloadTeams(Iterable<Long> teamIds)
       throws IOException, UserNotLoggedInException, UserNotAdminException;
 }

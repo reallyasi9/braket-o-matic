@@ -2,7 +2,7 @@ package net.exclaimindustries.paste.braket.client.ui;
 
 import java.util.List;
 
-import net.exclaimindustries.paste.braket.client.BraketTeam;
+import net.exclaimindustries.paste.braket.client.Team;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -44,7 +44,7 @@ public class BracketEditTeamClickContents extends Composite {
     /**
      * Our list of teams.  The order is important.
      */
-    private List<BraketTeam> mTeams;
+    private List<Team> mTeams;
     
     private ChangeHandler mChanger = new ChangeHandler() {
 
@@ -70,7 +70,7 @@ public class BracketEditTeamClickContents extends Composite {
         submitButton.addClickHandler(handler);
     }
     
-    BraketTeam getSelectedTeam() {
+    Team getSelectedTeam() {
         // Returning a null means they didn't pick anything.
         int selection = listBox.getSelectedIndex();
         
@@ -79,7 +79,7 @@ public class BracketEditTeamClickContents extends Composite {
         return mTeams.get(selection);
     }
     
-    void updateTeamList(List<BraketTeam> teams, BraketTeam currentTeam) {
+    void updateTeamList(List<Team> teams, Team currentTeam) {
         mTeams = teams;
         listBox.clear();
         
@@ -87,7 +87,7 @@ public class BracketEditTeamClickContents extends Composite {
         listBox.addItem("-- Dunno -- ", "-1");
         
         int curIndex = 1;
-        for(BraketTeam team : mTeams) {
+        for(Team team : mTeams) {
             listBox.addItem(team.getName().getSchoolName(), Integer.toString(team.getIndex()));
             
             if(currentTeam != null && currentTeam.getIndex() == team.getIndex()) {

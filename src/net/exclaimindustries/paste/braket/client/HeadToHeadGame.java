@@ -20,10 +20,10 @@ import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
 public class HeadToHeadGame extends Game {
 
   @Load
-  private Ref<BraketTeam> topTeam = null;
+  private Ref<Team> topTeam = null;
 
   @Load
-  private Ref<BraketTeam> bottomTeam = null;
+  private Ref<Team> bottomTeam = null;
 
   private Integer topScore = null;
 
@@ -38,18 +38,18 @@ public class HeadToHeadGame extends Game {
   private GameIndexPair bottomPlayIn = null;
 
   @Override
-  public List<BraketTeam> getTeams() {
-    List<BraketTeam> derefTeams = new ArrayList<>();
+  public List<Team> getTeams() {
+    List<Team> derefTeams = new ArrayList<>();
     derefTeams.add((topTeam == null) ? null : topTeam.get());
     derefTeams.add((bottomTeam == null) ? null : bottomTeam.get());
     return derefTeams;
   }
 
   @Override
-  public BraketTeam getTeam(int gameOrderIndex)
+  public Team getTeam(int gameOrderIndex)
       throws IndexOutOfBoundsException {
     validateGameOrderIndex(gameOrderIndex);
-    Ref<BraketTeam> selected = (gameOrderIndex == 0) ? topTeam : bottomTeam;
+    Ref<Team> selected = (gameOrderIndex == 0) ? topTeam : bottomTeam;
     return (selected == null) ? null : selected.get();
   }
 
@@ -65,15 +65,15 @@ public class HeadToHeadGame extends Game {
   }
 
   @Override
-  public SortedMap<Integer, BraketTeam> getScoreSortedTeams()
+  public SortedMap<Integer, Team> getScoreSortedTeams()
       throws GameNotFinalException {
     if (!isFinal() || topScore == bottomScore || topScore == null
         || bottomScore == null) {
       throw new GameNotFinalException();
     }
-    SortedMap<Integer, BraketTeam> map = new TreeMap<>();
-    BraketTeam team1 = (topTeam == null) ? null : topTeam.get();
-    BraketTeam team2 = (bottomTeam == null) ? null : bottomTeam.get();
+    SortedMap<Integer, Team> map = new TreeMap<>();
+    Team team1 = (topTeam == null) ? null : topTeam.get();
+    Team team2 = (bottomTeam == null) ? null : bottomTeam.get();
     map.put(topScore, team1);
     map.put(bottomScore, team2);
     return map;
@@ -104,7 +104,7 @@ public class HeadToHeadGame extends Game {
 
   @Override
   public double randomizeResult(ResultProbabilityCalculator calculator) {
-    List<BraketTeam> result = getTeams();
+    List<Team> result = getTeams();
     double weight = calculator.probabilityOf(result);
     if (Random.nextDouble() <= weight) {
       topScore = 1;

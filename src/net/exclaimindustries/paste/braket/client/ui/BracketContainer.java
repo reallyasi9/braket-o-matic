@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.BraketPrediction;
-import net.exclaimindustries.paste.braket.client.BraketTeam;
+import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.ui.BracketDrawable.Direction;
 
@@ -101,7 +101,7 @@ public class BracketContainer extends ScrollPanel {
     private Mode mMode = Mode.TOURNAMENT_STATUS;
     private Tournament mTournament;
     private BraketPrediction mSelection;
-    private List<BraketTeam> mTeams;
+    private List<Team> mTeams;
     private List<Game> mGames;
 
     private List<BracketColumn> mColumns;
@@ -115,7 +115,7 @@ public class BracketContainer extends ScrollPanel {
      * @param teams
      *            a list of BraketTeams
      */
-    public BracketContainer(Tournament tourn, List<BraketTeam> teams,
+    public BracketContainer(Tournament tourn, List<Team> teams,
             List<Game> games) {
         if (tourn == null)
             throw new IllegalArgumentException(
@@ -162,7 +162,7 @@ public class BracketContainer extends ScrollPanel {
      * 
      * @return teams, teams, teams!
      */
-    public List<BraketTeam> getTeams() {
+    public List<Team> getTeams() {
         return mTeams;
     }
 
@@ -197,7 +197,7 @@ public class BracketContainer extends ScrollPanel {
      * @param selection
      *            the new selection (can be null)
      */
-    public void setTournament(Tournament tourn, List<BraketTeam> teams,
+    public void setTournament(Tournament tourn, List<Team> teams,
             List<Game> games, BraketPrediction selection) {
         if (tourn == null)
             throw new IllegalArgumentException(
@@ -497,7 +497,7 @@ public class BracketContainer extends ScrollPanel {
         //}
     }
 
-    void pickTeam(int index, BraketTeam pick) {
+    void pickTeam(int index, Team pick) {
         // Are we even allowed to do this?
         if (!canUserEditThis()) {
             throw new IllegalStateException(

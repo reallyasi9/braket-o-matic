@@ -28,22 +28,22 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface TeamServiceAsync {
 
-  void storeTeam(BraketTeam team, AsyncCallback<Long> callback);
+  void storeTeam(Team team, AsyncCallback<Long> callback);
 
-  void deleteTeam(BraketTeam team, AsyncCallback<Void> callback);
+  void deleteTeam(Team team, AsyncCallback<Void> callback);
 
   void downloadTeams(Iterable<Long> teamIds,
-      AsyncCallback<Collection<BraketTeam>> callback);
+      AsyncCallback<Collection<Team>> callback);
 
-  void storeTeams(Iterable<BraketTeam> teams, AsyncCallback<Void> callback);
+  void storeTeams(Iterable<Team> teams, AsyncCallback<Void> callback);
 
-  void deleteTeams(Iterable<BraketTeam> teams, AsyncCallback<Void> callback);
+  void deleteTeams(Iterable<Team> teams, AsyncCallback<Void> callback);
 
-  void getTeams(AsyncCallback<List<BraketTeam>> callback);
+  void getTeams(AsyncCallback<List<Team>> callback);
 
   void getTeams(Tournament tournament,
-      AsyncCallback<Map<Long, BraketTeam>> callback);
+      AsyncCallback<Map<Long, Team>> callback);
 
-  void getTeams(BraketTeam.IndexName orderCondition, int offset, int limit,
-      AsyncCallback<List<BraketTeam>> callback);
+  void getTeams(Team.IndexName orderCondition, int offset, int limit,
+      AsyncCallback<List<Team>> callback);
 }

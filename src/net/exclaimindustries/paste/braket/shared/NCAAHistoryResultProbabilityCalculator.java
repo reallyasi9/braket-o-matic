@@ -2,13 +2,13 @@ package net.exclaimindustries.paste.braket.shared;
 
 import java.util.List;
 
-import net.exclaimindustries.paste.braket.client.BraketTeam;
+import net.exclaimindustries.paste.braket.client.Team;
 
 public class NCAAHistoryResultProbabilityCalculator implements
     ResultProbabilityCalculator {
 
   @Override
-  public double probabilityOf(List<BraketTeam> result) {
+  public double probabilityOf(List<Team> result) {
     if (result == null) {
       throw new NullPointerException();
     }

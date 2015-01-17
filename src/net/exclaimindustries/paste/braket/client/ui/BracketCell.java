@@ -7,7 +7,7 @@
  */
 package net.exclaimindustries.paste.braket.client.ui;
 
-import net.exclaimindustries.paste.braket.client.BraketTeam;
+import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.ui.BracketButton.Type;
 import net.exclaimindustries.paste.braket.client.ui.BracketContainer.Mode;
 
@@ -143,7 +143,7 @@ public class BracketCell extends BracketDrawable {
         if(mTerminus) {
             // Terminus nodes (that is, teams) ALWAYS just display the team
             // without any click popups.  Hovers, yes.
-            BraketTeam team = mController.getTeams().get(mId);
+            Team team = mController.getTeams().get(mId);
             
             buttonContainer.setTeamIcon(team.getPicture());
             buttonContainer.setSeed(team.getSeed());
@@ -158,7 +158,7 @@ public class BracketCell extends BracketDrawable {
 
             if(mController.getSelection().hasSelection(mId)) {
                 int teamIndex = mController.getSelection().getSelectedTeamIndex(mId);
-                BraketTeam team = mController.getTeams().get(teamIndex);
+                Team team = mController.getTeams().get(teamIndex);
                 buttonContainer.setTeamIcon(team.getPicture());
                 buttonContainer.setSeed(team.getSeed());
             } else {
@@ -176,7 +176,7 @@ public class BracketCell extends BracketDrawable {
             // current tournament, if the team's played.
             if(mController.getTournament().isCompletedGame(mId)) {
                 int teamIndex = mController.getTournament().getSelectedTeamIndex(mId);
-                BraketTeam team = mController.getTeams().get(teamIndex);
+                Team team = mController.getTeams().get(teamIndex);
                 buttonContainer.setTeamIcon(team.getPicture());
                 buttonContainer.setSeed(team.getSeed());
             } else {
@@ -187,7 +187,7 @@ public class BracketCell extends BracketDrawable {
         } else if(mController.getMode() == Mode.TOURNAMENT_STATUS_WITH_USER_PICKS) {
             if(mController.getSelection().hasSelection(mId)) {
                 int teamIndex = mController.getSelection().getSelectedTeamIndex(mId);
-                BraketTeam team = mController.getTeams().get(teamIndex);
+                Team team = mController.getTeams().get(teamIndex);
                 buttonContainer.setTeamIcon(team.getPicture());
                 buttonContainer.setSeed(team.getSeed());
             } else {

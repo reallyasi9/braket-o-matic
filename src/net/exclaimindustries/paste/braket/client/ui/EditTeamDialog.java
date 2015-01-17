@@ -2,7 +2,7 @@ package net.exclaimindustries.paste.braket.client.ui;
 
 import java.util.Comparator;
 
-import net.exclaimindustries.paste.braket.client.BraketTeam;
+import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.TeamName;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
 
@@ -36,15 +36,15 @@ public class EditTeamDialog extends SimpleLayoutPanel {
     }
 
     // TODO make this async
-    private final ListDataProvider<BraketTeam> dataProvider =
-            new ListDataProvider<BraketTeam>();
+    private final ListDataProvider<Team> dataProvider =
+            new ListDataProvider<Team>();
 
     @UiField(provided = true)
-    DataGrid<BraketTeam> dataGrid;
+    DataGrid<Team> dataGrid;
 
     public EditTeamDialog() {
         // Make the DataGrid before binding!
-        dataGrid = new DataGrid<BraketTeam>(25);
+        dataGrid = new DataGrid<Team>(25);
         // dataGrid.setWidth("600px");
         dataGrid.setMinimumTableWidth(500, Unit.PX);
         dataGrid.setHeight("100%");
@@ -53,28 +53,28 @@ public class EditTeamDialog extends SimpleLayoutPanel {
 
         // Add a ColumnSortEvent.ListHandler to connect sorting to the
         // java.util.List.
-        ListHandler<BraketTeam> columnSortHandler =
-                new ListHandler<BraketTeam>(dataProvider.getList());
+        ListHandler<Team> columnSortHandler =
+                new ListHandler<Team>(dataProvider.getList());
 
         // Index
-        Column<BraketTeam, String> indexColumn =
+        Column<Team, String> indexColumn =
                 addColumn(new EditTextCell(), "index", new GetValue<String>() {
 
                     @Override
-                    public String getValue(BraketTeam team) {
+                    public String getValue(Team team) {
                         return Integer.toString(team.getIndex());
                     }
 
-                }, new FieldUpdater<BraketTeam, String>() {
+                }, new FieldUpdater<Team, String>() {
 
                     @Override
-                    public void update(int index, BraketTeam object, String value) {
+                    public void update(int index, Team object, String value) {
                         object.setIndex(Integer.valueOf(value));
                         doTeamUpdate(index, object);
                     }
                 });
-        columnSortHandler.setComparator(indexColumn, new Comparator<BraketTeam>() {
-            public int compare(BraketTeam o1, BraketTeam o2) {
+        columnSortHandler.setComparator(indexColumn, new Comparator<Team>() {
+            public int compare(Team o1, Team o2) {
                 return Integer.valueOf(o1.getIndex()).compareTo(o2.getIndex());
             }
         });
@@ -82,24 +82,24 @@ public class EditTeamDialog extends SimpleLayoutPanel {
         dataGrid.setColumnWidth(indexColumn, 5, Unit.EM);
 
         // Seed
-        Column<BraketTeam, String> seedColumn =
+        Column<Team, String> seedColumn =
                 addColumn(new EditTextCell(), "seed", new GetValue<String>() {
 
                     @Override
-                    public String getValue(BraketTeam team) {
+                    public String getValue(Team team) {
                         return Integer.toString(team.getSeed());
                     }
 
-                }, new FieldUpdater<BraketTeam, String>() {
+                }, new FieldUpdater<Team, String>() {
 
                     @Override
-                    public void update(int index, BraketTeam object, String value) {
+                    public void update(int index, Team object, String value) {
                         object.setSeed(Integer.valueOf(value));
                         doTeamUpdate(index, object);
                     }
                 });
-        columnSortHandler.setComparator(seedColumn, new Comparator<BraketTeam>() {
-            public int compare(BraketTeam o1, BraketTeam o2) {
+        columnSortHandler.setComparator(seedColumn, new Comparator<Team>() {
+            public int compare(Team o1, Team o2) {
                 return Integer.valueOf(o1.getSeed()).compareTo(o2.getSeed());
             }
         });
@@ -107,18 +107,18 @@ public class EditTeamDialog extends SimpleLayoutPanel {
         dataGrid.setColumnWidth(seedColumn, 5, Unit.EM);
 
         // School name
-        Column<BraketTeam, String> schoolNameColumn =
+        Column<Team, String> schoolNameColumn =
                 addColumn(new EditTextCell(), "school name", new GetValue<String>() {
 
                     @Override
-                    public String getValue(BraketTeam team) {
+                    public String getValue(Team team) {
                         return team.getName().getSchoolName();
                     }
 
-                }, new FieldUpdater<BraketTeam, String>() {
+                }, new FieldUpdater<Team, String>() {
 
                     @Override
-                    public void update(int index, BraketTeam object, String value) {
+                    public void update(int index, Team object, String value) {
                         TeamName oldName = object.getName();
                         object.setName(new TeamName(value, oldName.getTeamName(),
                                 oldName.getDisplayName(), oldName.getShortName(),
@@ -127,8 +127,8 @@ public class EditTeamDialog extends SimpleLayoutPanel {
                     }
                 });
         columnSortHandler.setComparator(schoolNameColumn,
-                new Comparator<BraketTeam>() {
-                    public int compare(BraketTeam o1, BraketTeam o2) {
+                new Comparator<Team>() {
+                    public int compare(Team o1, Team o2) {
                         return o1.getName().getSchoolName()
                                 .compareTo(o2.getName().getSchoolName());
                     }
@@ -137,18 +137,18 @@ public class EditTeamDialog extends SimpleLayoutPanel {
         dataGrid.setColumnWidth(schoolNameColumn, 12, Unit.EM);
 
         // Team name
-        Column<BraketTeam, String> teamNameColumn =
+        Column<Team, String> teamNameColumn =
                 addColumn(new EditTextCell(), "team name", new GetValue<String>() {
 
                     @Override
-                    public String getValue(BraketTeam team) {
+                    public String getValue(Team team) {
                         return team.getName().getTeamName();
                     }
 
-                }, new FieldUpdater<BraketTeam, String>() {
+                }, new FieldUpdater<Team, String>() {
 
                     @Override
-                    public void update(int index, BraketTeam object, String value) {
+                    public void update(int index, Team object, String value) {
                         TeamName oldName = object.getName();
                         object.setName(new TeamName(oldName.getSchoolName(), value,
                                 oldName.getDisplayName(), oldName.getShortName(),
@@ -157,8 +157,8 @@ public class EditTeamDialog extends SimpleLayoutPanel {
                     }
                 });
         columnSortHandler.setComparator(teamNameColumn,
-                new Comparator<BraketTeam>() {
-                    public int compare(BraketTeam o1, BraketTeam o2) {
+                new Comparator<Team>() {
+                    public int compare(Team o1, Team o2) {
                         return o1.getName().getTeamName()
                                 .compareTo(o2.getName().getTeamName());
                     }
@@ -167,19 +167,19 @@ public class EditTeamDialog extends SimpleLayoutPanel {
         dataGrid.setColumnWidth(teamNameColumn, 12, Unit.EM);
 
         // Display name
-        Column<BraketTeam, String> displayNameColumn =
+        Column<Team, String> displayNameColumn =
                 addColumn(new EditTextCell(), "display name",
                         new GetValue<String>() {
 
                             @Override
-                            public String getValue(BraketTeam team) {
+                            public String getValue(Team team) {
                                 return team.getName().getDisplayName();
                             }
 
-                        }, new FieldUpdater<BraketTeam, String>() {
+                        }, new FieldUpdater<Team, String>() {
 
                             @Override
-                            public void update(int index, BraketTeam object,
+                            public void update(int index, Team object,
                                     String value) {
                                 TeamName oldName = object.getName();
                                 object.setName(new TeamName(oldName.getSchoolName(),
@@ -190,8 +190,8 @@ public class EditTeamDialog extends SimpleLayoutPanel {
                             }
                         });
         columnSortHandler.setComparator(displayNameColumn,
-                new Comparator<BraketTeam>() {
-                    public int compare(BraketTeam o1, BraketTeam o2) {
+                new Comparator<Team>() {
+                    public int compare(Team o1, Team o2) {
                         return o1.getName().getDisplayName()
                                 .compareTo(o2.getName().getDisplayName());
                     }
@@ -200,18 +200,18 @@ public class EditTeamDialog extends SimpleLayoutPanel {
         displayNameColumn.setSortable(true);
 
         // Short name
-        Column<BraketTeam, String> shortNameColumn =
+        Column<Team, String> shortNameColumn =
                 addColumn(new EditTextCell(), "short name", new GetValue<String>() {
 
                     @Override
-                    public String getValue(BraketTeam team) {
+                    public String getValue(Team team) {
                         return team.getName().getShortName();
                     }
 
-                }, new FieldUpdater<BraketTeam, String>() {
+                }, new FieldUpdater<Team, String>() {
 
                     @Override
-                    public void update(int index, BraketTeam object, String value) {
+                    public void update(int index, Team object, String value) {
                         TeamName oldName = object.getName();
                         object.setName(new TeamName(oldName.getSchoolName(), oldName
                                 .getTeamName(), oldName.getDisplayName(), value,
@@ -220,8 +220,8 @@ public class EditTeamDialog extends SimpleLayoutPanel {
                     }
                 });
         columnSortHandler.setComparator(shortNameColumn,
-                new Comparator<BraketTeam>() {
-                    public int compare(BraketTeam o1, BraketTeam o2) {
+                new Comparator<Team>() {
+                    public int compare(Team o1, Team o2) {
                         return o1.getName().getShortName()
                                 .compareTo(o2.getName().getShortName());
                     }
@@ -230,18 +230,18 @@ public class EditTeamDialog extends SimpleLayoutPanel {
         dataGrid.setColumnWidth(shortNameColumn, 15, Unit.EM);
 
         // Abbreviation name
-        Column<BraketTeam, String> abbreviationColumn =
+        Column<Team, String> abbreviationColumn =
                 addColumn(new EditTextCell(), "abbrv.", new GetValue<String>() {
 
                     @Override
-                    public String getValue(BraketTeam team) {
+                    public String getValue(Team team) {
                         return team.getName().getAbbreviation();
                     }
 
-                }, new FieldUpdater<BraketTeam, String>() {
+                }, new FieldUpdater<Team, String>() {
 
                     @Override
-                    public void update(int index, BraketTeam object, String value) {
+                    public void update(int index, Team object, String value) {
                         TeamName oldName = object.getName();
                         object.setName(new TeamName(oldName.getSchoolName(), oldName
                                 .getTeamName(), oldName.getDisplayName(), oldName
@@ -250,8 +250,8 @@ public class EditTeamDialog extends SimpleLayoutPanel {
                     }
                 });
         columnSortHandler.setComparator(abbreviationColumn,
-                new Comparator<BraketTeam>() {
-                    public int compare(BraketTeam o1, BraketTeam o2) {
+                new Comparator<Team>() {
+                    public int compare(Team o1, Team o2) {
                         return o1.getName().getAbbreviation()
                                 .compareTo(o2.getName().getAbbreviation());
                     }
@@ -260,26 +260,26 @@ public class EditTeamDialog extends SimpleLayoutPanel {
         dataGrid.setColumnWidth(abbreviationColumn, 5, Unit.EM);
 
         // Kenpom Pyth
-        Column<BraketTeam, String> pythColumn =
+        Column<Team, String> pythColumn =
                 addColumn(new EditTextCell(), "Kenpom Pyth.",
                         new GetValue<String>() {
 
                             @Override
-                            public String getValue(BraketTeam team) {
+                            public String getValue(Team team) {
                                 return Double.toString(team.getKenpomScore());
                             }
 
-                        }, new FieldUpdater<BraketTeam, String>() {
+                        }, new FieldUpdater<Team, String>() {
 
                             @Override
-                            public void update(int index, BraketTeam object,
+                            public void update(int index, Team object,
                                     String value) {
                                 object.setKenpomScore(Double.valueOf(value));
                                 doTeamUpdate(index, object);
                             }
                         });
-        columnSortHandler.setComparator(pythColumn, new Comparator<BraketTeam>() {
-            public int compare(BraketTeam o1, BraketTeam o2) {
+        columnSortHandler.setComparator(pythColumn, new Comparator<Team>() {
+            public int compare(Team o1, Team o2) {
                 return Double.compare(o1.getKenpomScore(), o2.getKenpomScore());
             }
         });
@@ -287,24 +287,24 @@ public class EditTeamDialog extends SimpleLayoutPanel {
         dataGrid.setColumnWidth(pythColumn, 5, Unit.EM);
 
         // Win pct
-        Column<BraketTeam, String> winColumn =
+        Column<Team, String> winColumn =
                 addColumn(new EditTextCell(), "Win Pct.", new GetValue<String>() {
 
                     @Override
-                    public String getValue(BraketTeam team) {
+                    public String getValue(Team team) {
                         return Double.toString(team.getWinPercentage());
                     }
 
-                }, new FieldUpdater<BraketTeam, String>() {
+                }, new FieldUpdater<Team, String>() {
 
                     @Override
-                    public void update(int index, BraketTeam object, String value) {
+                    public void update(int index, Team object, String value) {
                         object.setWinPercentage(Double.valueOf(value));
                         doTeamUpdate(index, object);
                     }
                 });
-        columnSortHandler.setComparator(winColumn, new Comparator<BraketTeam>() {
-            public int compare(BraketTeam o1, BraketTeam o2) {
+        columnSortHandler.setComparator(winColumn, new Comparator<Team>() {
+            public int compare(Team o1, Team o2) {
                 return Double.compare(o1.getWinPercentage(), o2.getWinPercentage());
             }
         });
@@ -341,7 +341,7 @@ public class EditTeamDialog extends SimpleLayoutPanel {
 
     }
 
-    private void doTeamUpdate(final int index, final BraketTeam team) {
+    private void doTeamUpdate(final int index, final Team team) {
 
         // BraketEntryPoint.teamService.storeTeam(team, new
         // AsyncCallback<Long>() {
@@ -369,7 +369,7 @@ public class EditTeamDialog extends SimpleLayoutPanel {
      *            the cell type
      */
     private static interface GetValue<C> {
-        C getValue(BraketTeam team);
+        C getValue(Team team);
     }
 
     /**
@@ -384,11 +384,11 @@ public class EditTeamDialog extends SimpleLayoutPanel {
      * @param getter
      *            the value getter for the cell
      */
-    private <C> Column<BraketTeam, C> addColumn(Cell<C> cell, String headerText,
-            final GetValue<C> getter, FieldUpdater<BraketTeam, C> fieldUpdater) {
-        Column<BraketTeam, C> column = new Column<BraketTeam, C>(cell) {
+    private <C> Column<Team, C> addColumn(Cell<C> cell, String headerText,
+            final GetValue<C> getter, FieldUpdater<Team, C> fieldUpdater) {
+        Column<Team, C> column = new Column<Team, C>(cell) {
             @Override
-            public C getValue(BraketTeam object) {
+            public C getValue(Team object) {
                 return getter.getValue(object);
             }
         };

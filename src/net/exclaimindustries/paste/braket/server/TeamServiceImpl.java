@@ -21,7 +21,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import net.exclaimindustries.paste.braket.client.BraketTeam;
+import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.TeamService;
 import net.exclaimindustries.paste.braket.shared.UserNotAdminException;
@@ -47,8 +47,8 @@ public class TeamServiceImpl extends RemoteServiceServlet implements
    * @see net.exclaimindustries.paste.braket.client.TeamService#getTeams()
    */
   @Override
-  public List<BraketTeam> getTeams() {
-    return OfyService.ofy().load().type(BraketTeam.class).list();
+  public List<Team> getTeams() {
+    return OfyService.ofy().load().type(Team.class).list();
   }
 
   /*
@@ -58,8 +58,8 @@ public class TeamServiceImpl extends RemoteServiceServlet implements
    * exclaimindustries.paste.braket.client.BraketTournament)
    */
   @Override
-  public Map<Long, BraketTeam> getTeams(Tournament tournament) {
-    return OfyService.ofy().load().type(BraketTeam.class)
+  public Map<Long, Team> getTeams(Tournament tournament) {
+    return OfyService.ofy().load().type(Team.class)
         .ids(tournament.getTeams());
   }
 
@@ -70,7 +70,7 @@ public class TeamServiceImpl extends RemoteServiceServlet implements
    * exclaimindustries.paste.braket.client.BraketTeam)
    */
   @Override
-  public Long storeTeam(BraketTeam team) throws UserNotLoggedInException,
+  public Long storeTeam(Team team) throws UserNotLoggedInException,
       UserNotAdminException {
     // Check to see if you are an administrator.
     LogInServiceHelper.assertAdmin();
@@ -84,7 +84,7 @@ public class TeamServiceImpl extends RemoteServiceServlet implements
    * .util.Collection)
    */
   @Override
-  public void storeTeams(Iterable<BraketTeam> teams)
+  public void storeTeams(Iterable<Team> teams)
       throws UserNotLoggedInException, UserNotAdminException {
     LogInServiceHelper.assertAdmin();
     OfyService.ofy().save().entities(teams);
@@ -98,7 +98,7 @@ public class TeamServiceImpl extends RemoteServiceServlet implements
    * .util.Collection)
    */
   @Override
-  public Collection<BraketTeam> downloadTeams(Iterable<Long> teamIds)
+  public Collection<Team> downloadTeams(Iterable<Long> teamIds)
       throws IOException, UserNotLoggedInException, UserNotAdminException {
     LogInServiceHelper.assertAdmin();
     return TeamDownloader.downloadTeams(teamIds);
@@ -111,7 +111,7 @@ public class TeamServiceImpl extends RemoteServiceServlet implements
    * exclaimindustries.paste.braket.client.BraketTeam)
    */
   @Override
-  public void deleteTeam(BraketTeam team) throws UserNotLoggedInException,
+  public void deleteTeam(Team team) throws UserNotLoggedInException,
       UserNotAdminException {
     LogInServiceHelper.assertAdmin();
     OfyService.ofy().delete().entity(team);
@@ -124,18 +124,18 @@ public class TeamServiceImpl extends RemoteServiceServlet implements
    * .util.Collection)
    */
   @Override
-  public void deleteTeams(Iterable<BraketTeam> teams)
+  public void deleteTeams(Iterable<Team> teams)
       throws UserNotLoggedInException, UserNotAdminException {
     LogInServiceHelper.assertAdmin();
     OfyService.ofy().delete().entities(teams);
   }
 
   @Override
-  public List<BraketTeam> getTeams(BraketTeam.IndexName orderCondition,
+  public List<Team> getTeams(Team.IndexName orderCondition,
       int offset, int limit) throws UserNotLoggedInException,
       UserNotAdminException {
     LogInServiceHelper.assertAdmin();
-    return OfyService.ofy().load().type(BraketTeam.class)
+    return OfyService.ofy().load().type(Team.class)
         .order(orderCondition.toString()).offset(offset).limit(limit).list();
   }
 

@@ -40,16 +40,16 @@ public interface TournamentService extends RemoteService {
   public final static class TournamentCollection implements IsSerializable {
     private Tournament tournament = null;
     private Map<Long, Game> games = new HashMap<Long, Game>();
-    private Map<Long, BraketTeam> teams = new HashMap<Long, BraketTeam>();
+    private Map<Long, Team> teams = new HashMap<Long, Team>();
 
     public TournamentCollection() {
     }
 
     public TournamentCollection(Tournament tournament,
-        Map<Long, Game> games, Map<Long, BraketTeam> teams) {
+        Map<Long, Game> games, Map<Long, Team> teams) {
       this.tournament = tournament;
       this.games = new HashMap<Long, Game>(games);
-      this.teams = new HashMap<Long, BraketTeam>(teams);
+      this.teams = new HashMap<Long, Team>(teams);
     }
 
     public Tournament getTournament() {
@@ -60,7 +60,7 @@ public interface TournamentService extends RemoteService {
       return games;
     }
 
-    public Map<Long, BraketTeam> getTeams() {
+    public Map<Long, Team> getTeams() {
       return teams;
     }
   }

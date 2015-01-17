@@ -39,7 +39,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.BraketPrediction;
-import net.exclaimindustries.paste.braket.client.BraketTeam;
+import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.server.CurrentExpectOMatic;
 import net.exclaimindustries.paste.braket.server.CurrentTournament;
@@ -100,7 +100,7 @@ public final class ExpectOMatic extends HttpServlet {
     /**
      * A local copy of the teams in the tournament, in tournament order
      */
-    private List<BraketTeam> teams;
+    private List<Team> teams;
 
     /**
      * A set of bits representing the games left to simulate.
@@ -485,8 +485,8 @@ public final class ExpectOMatic extends HttpServlet {
 
         // Cache the teams
         teams =
-                new ArrayList<BraketTeam>(OfyService.ofy().load()
-                        .type(BraketTeam.class).parent(tournament)
+                new ArrayList<Team>(OfyService.ofy().load()
+                        .type(Team.class).parent(tournament)
                         .ids(tournament.getTeams()).values());
 
         new ArrayList<Game>(OfyService.ofy().load().type(Game.class)
@@ -602,7 +602,7 @@ public final class ExpectOMatic extends HttpServlet {
      *            The second team in the game.
      * @return The modeled probability that team 2 wins.
      */
-    public static double getWinProbability(BraketTeam team1, BraketTeam team2) {
+    public static double getWinProbability(Team team1, Team team2) {
         // From Sasha's calculations.
         double kpDiff = team1.getKenpomScore() - team2.getKenpomScore();
         double wpDiff = team1.getWinPercentage() - team2.getWinPercentage();

@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.exclaimindustries.paste.braket.client.Game;
-import net.exclaimindustries.paste.braket.client.BraketTeam;
+import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.server.CurrentTournament;
 import net.exclaimindustries.paste.braket.server.OfyService;
@@ -72,8 +72,8 @@ public class GameDownloaderServlet extends HttpServlet {
                 .type(Game.class).parent(currentTournRef)
                 .ids(currentTournRef.get().getGames()).values();
 
-        Collection<BraketTeam> tournTeams = OfyService.ofy().load()
-                .type(BraketTeam.class).parent(currentTournRef)
+        Collection<Team> tournTeams = OfyService.ofy().load()
+                .type(Team.class).parent(currentTournRef)
                 .ids(currentTournRef.get().getGames()).values();
 
         // Index these by ESPN ID for faster lookup
@@ -84,8 +84,8 @@ public class GameDownloaderServlet extends HttpServlet {
             }
         }
 
-        HashMap<Long, BraketTeam> teamMap = new HashMap<Long, BraketTeam>();
-        for (BraketTeam team : tournTeams) {
+        HashMap<Long, Team> teamMap = new HashMap<Long, Team>();
+        for (Team team : tournTeams) {
             teamMap.put(team.getId(), team);
         }
 

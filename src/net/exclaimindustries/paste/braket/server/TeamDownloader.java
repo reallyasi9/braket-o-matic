@@ -25,7 +25,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.exclaimindustries.paste.braket.client.BraketTeam;
+import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.RGBAColor;
 import net.exclaimindustries.paste.braket.client.TeamName;
 
@@ -65,9 +65,9 @@ public class TeamDownloader {
      * @throws IOException
      * @throws JDOMException
      */
-    public static Collection<BraketTeam> downloadTeams(Iterable<Long> teamIds)
+    public static Collection<Team> downloadTeams(Iterable<Long> teamIds)
             throws IOException {
-        LinkedList<BraketTeam> teamList = new LinkedList<BraketTeam>();
+        LinkedList<Team> teamList = new LinkedList<Team>();
 
         for (Long iTeam : teamIds) {
             URI uri = URI.create(feedString + iTeam.toString());
@@ -79,7 +79,7 @@ public class TeamDownloader {
                 throw new IOException(e);
             }
 
-            BraketTeam team = parseTeam(feedDocument);
+            Team team = parseTeam(feedDocument);
 
             if (team == null) {
                 // Couldn't find any info about the team, so skip it.
@@ -98,7 +98,7 @@ public class TeamDownloader {
         return teamList;
     }
 
-    public static BraketTeam parseTeam(Document document)
+    public static Team parseTeam(Document document)
             throws MalformedURLException {
         // Parse out the details
         Element rootNode = document.getRootElement();
@@ -133,7 +133,7 @@ public class TeamDownloader {
         // is not a real team)
         Long teamId = Long.valueOf(teamElement.getChildText("teamId", ns));
 
-        BraketTeam team = new BraketTeam();
+        Team team = new Team();
         team.setId(teamId);
 
         String abbreviation = digOutCDATA(teamElement, "teamAbbrev", ns);

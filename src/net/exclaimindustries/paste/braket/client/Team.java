@@ -31,16 +31,16 @@ import com.googlecode.objectify.annotation.Id;
  */
 @Entity
 @Cache
-public final class BraketTeam implements IsSerializable {
+public final class Team implements IsSerializable {
 
   private static final String imageDirectory = "/images/teams/";
 
   /**
    * A Key Provider so that BraketTournaments can be placed in DataGrids.
    */
-  public static final ProvidesKey<BraketTeam> KEY_PROVIDER = new ProvidesKey<BraketTeam>() {
+  public static final ProvidesKey<Team> KEY_PROVIDER = new ProvidesKey<Team>() {
     @Override
-    public Object getKey(BraketTeam item) {
+    public Object getKey(Team item) {
       return (item == null) ? null : item.getId();
     }
   };
@@ -73,15 +73,15 @@ public final class BraketTeam implements IsSerializable {
   /**
    * Default constructor.
    */
-  public BraketTeam() {
+  public Team() {
   }
 
-  public BraketTeam(TeamName name) {
+  public Team(TeamName name) {
     this.teamName = name;
   }
 
   public Object clone() {
-    BraketTeam t = new BraketTeam();
+    Team t = new Team();
     t.setColor(this.getColor());
     t.setName(this.getName());
     t.setPicture(this.getPicture());

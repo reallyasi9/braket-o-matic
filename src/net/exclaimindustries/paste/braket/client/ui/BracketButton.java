@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.BraketPrediction;
-import net.exclaimindustries.paste.braket.client.BraketTeam;
+import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.Tournament;
 
 import com.google.gwt.core.client.GWT;
@@ -54,7 +54,7 @@ public class BracketButton extends Composite implements ClickHandler, MouseOverH
     
     private class EditTeamClickPopup extends PopupPanel {
         private BracketEditTeamClickContents mContents;
-        private List<BraketTeam> mTeamList;
+        private List<Team> mTeamList;
         private BraketPrediction mSelection;
         private Tournament mTournament;
         
@@ -82,7 +82,7 @@ public class BracketButton extends Composite implements ClickHandler, MouseOverH
         private void actOnSelection() {
             super.hide();
             
-            BraketTeam selection = mContents.getSelectedTeam();
+            Team selection = mContents.getSelectedTeam();
             
             // Now, past this, the controller will finish the job and tell all
             // the columns to update.
@@ -93,13 +93,13 @@ public class BracketButton extends Composite implements ClickHandler, MouseOverH
         public void show() {
             // Before showing, we need to set things up a bit.
             int selectedTeam = mController.getSelection().getSelectedTeamIndex(mIndex);
-            BraketTeam team = (selectedTeam != -1 ? mController.getTeams().get(selectedTeam) : null);
+            Team team = (selectedTeam != -1 ? mController.getTeams().get(selectedTeam) : null);
             mContents.updateTeamList(getPossibleTeams(), team);
             super.show();
         }
         
-        private List<BraketTeam> getPossibleTeams() {
-            List<BraketTeam> toReturn = new ArrayList<BraketTeam>();
+        private List<Team> getPossibleTeams() {
+            List<Team> toReturn = new ArrayList<Team>();
             
             // If this is null, we should be here in the first place!
             assert(mSelection != null);
@@ -110,7 +110,7 @@ public class BracketButton extends Composite implements ClickHandler, MouseOverH
             return toReturn;
         }
         
-        private void recursePossibleTeams(List<BraketTeam> teams, int curGame) {
+        private void recursePossibleTeams(List<Team> teams, int curGame) {
             // Recurses!  Foiled again!
             if(mSelection.hasSelection(curGame) && curGame != mIndex) {
                 // If the user's already picked something here, return that.
@@ -322,7 +322,7 @@ public class BracketButton extends Composite implements ClickHandler, MouseOverH
         if (pickedIndex < 0) {
             return GameResult.FAILURE;
         }
-        BraketTeam pickedTeam = mController.getTeams().get(pickedIndex);
+        Team pickedTeam = mController.getTeams().get(pickedIndex);
         
         if(game.isFinal()) {
             // The game's done!  Who won?

@@ -128,7 +128,7 @@ public abstract class Game implements IsSerializable {
    *         can be null, representing teams that are not yet defined for the
    *         game.
    */
-  abstract public List<BraketTeam> getTeams();
+  abstract public List<Team> getTeams();
 
   /**
    * Get a particular team.
@@ -141,7 +141,7 @@ public abstract class Game implements IsSerializable {
    *           If the given game-order index is out of bounds for the number of
    *           teams in the game.
    */
-  abstract public BraketTeam getTeam(int gameOrderIndex)
+  abstract public Team getTeam(int gameOrderIndex)
       throws IndexOutOfBoundsException;
 
   /**
@@ -177,7 +177,7 @@ public abstract class Game implements IsSerializable {
    * @throws GameNotFinalException
    *           If the game is not yet final.
    */
-  abstract public SortedMap<Integer, BraketTeam> getScoreSortedTeams()
+  abstract public SortedMap<Integer, Team> getScoreSortedTeams()
       throws GameNotFinalException;
 
   /**

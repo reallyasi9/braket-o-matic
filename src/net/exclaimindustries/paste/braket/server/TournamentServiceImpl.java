@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.exclaimindustries.paste.braket.client.Game;
-import net.exclaimindustries.paste.braket.client.BraketTeam;
+import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.TournamentService;
 import net.exclaimindustries.paste.braket.shared.UserNotAdminException;
@@ -72,8 +72,8 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
     Map<Long, Game> games = OfyService.ofy().load()
         .type(Game.class).parent(tournament).ids(t.getGames());
 
-    Map<Long, BraketTeam> teams = OfyService.ofy().load()
-        .type(BraketTeam.class).ids(t.getTeams());
+    Map<Long, Team> teams = OfyService.ofy().load()
+        .type(Team.class).ids(t.getTeams());
 
     return new TournamentCollection(t, games, teams);
   }
