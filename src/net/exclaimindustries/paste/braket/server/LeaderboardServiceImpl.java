@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 
 import net.exclaimindustries.paste.braket.client.BraketPrediction;
-import net.exclaimindustries.paste.braket.client.BraketTournament;
+import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.BraketUser;
 import net.exclaimindustries.paste.braket.client.LeaderboardService;
 import net.exclaimindustries.paste.braket.client.UserRanking;
@@ -48,7 +48,7 @@ public class LeaderboardServiceImpl extends RemoteServiceServlet implements
      */
     private static final long serialVersionUID = 1L;
 
-    private Collection<SelectionInfo> getSelectionInfos(BraketTournament tournament)
+    private Collection<SelectionInfo> getSelectionInfos(Tournament tournament)
             throws NoCurrentTournamentException, UserNotLoggedInException,
             TournamentNotStartedException {
         // FORCED CONSISTENCY CHECK (TRUST GAMES)
@@ -136,10 +136,10 @@ public class LeaderboardServiceImpl extends RemoteServiceServlet implements
         LogInServiceHelper.assertLoggedIn();
         TournamentServiceHelper.assertStarted();
 
-        Ref<BraketTournament> tournamentRef =
+        Ref<Tournament> tournamentRef =
                 CurrentTournament.getCurrentTournament();
 
-        BraketTournament tournament = tournamentRef.get();
+        Tournament tournament = tournamentRef.get();
 
         return getSelectionInfos(tournament);
     }
@@ -157,10 +157,10 @@ public class LeaderboardServiceImpl extends RemoteServiceServlet implements
             return null;
         }
 
-        Ref<BraketTournament> tournamentRef =
+        Ref<Tournament> tournamentRef =
                 CurrentTournament.getCurrentTournament();
 
-        BraketTournament tournament = tournamentRef.get();
+        Tournament tournament = tournamentRef.get();
 
         // If the tournament hasn't started, return immediately
         if (!tournament.isOngoing()) {

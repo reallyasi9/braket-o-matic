@@ -40,7 +40,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.BraketPrediction;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
-import net.exclaimindustries.paste.braket.client.BraketTournament;
+import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.server.CurrentExpectOMatic;
 import net.exclaimindustries.paste.braket.server.CurrentTournament;
 import net.exclaimindustries.paste.braket.server.OfyService;
@@ -120,7 +120,7 @@ public final class ExpectOMatic extends HttpServlet {
     /**
      * A cached copy of the tournament
      */
-    private BraketTournament tournament;
+    private Tournament tournament;
 
     /**
      * @author paste
@@ -272,7 +272,7 @@ public final class ExpectOMatic extends HttpServlet {
                             Ordering.natural());
 
             // A pseudo-tournament
-            BraketTournament t = new BraketTournament();
+            Tournament t = new Tournament();
             t.setCompletionMask(tournament.getGameMask());
             t.setGameMask(tournament.getGameMask());
             t.setGameWinners(thisOutcome);
@@ -472,7 +472,7 @@ public final class ExpectOMatic extends HttpServlet {
     private void initialize() {
 
         // Get the tournament
-        Ref<BraketTournament> tournRef = CurrentTournament.getCurrentTournament();
+        Ref<Tournament> tournRef = CurrentTournament.getCurrentTournament();
         if (tournRef == null) {
             tournament = null;
             return;

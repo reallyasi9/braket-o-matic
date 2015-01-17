@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.exclaimindustries.paste.braket.client.Game;
-import net.exclaimindustries.paste.braket.client.BraketTournament;
+import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.GameServiceAsync;
 import net.exclaimindustries.paste.braket.client.TournamentService;
 import net.exclaimindustries.paste.braket.client.TournamentServiceAsync;

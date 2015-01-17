@@ -41,7 +41,7 @@ public interface TeamServiceAsync {
 
   void getTeams(AsyncCallback<List<BraketTeam>> callback);
 
-  void getTeams(BraketTournament tournament,
+  void getTeams(Tournament tournament,
       AsyncCallback<Map<Long, BraketTeam>> callback);
 
   void getTeams(BraketTeam.IndexName orderCondition, int offset, int limit,

@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.exclaimindustries.paste.braket.client.BraketPrediction;
-import net.exclaimindustries.paste.braket.client.BraketTournament;
+import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.BraketUser;
 import net.exclaimindustries.paste.braket.client.SelectionService;
 
@@ -58,14 +58,14 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
             throw new SecurityException("you are not logged in");
         }
 
-        Ref<BraketTournament> tournamentRef = CurrentTournament
+        Ref<Tournament> tournamentRef = CurrentTournament
                 .getCurrentTournament();
 
         if (tournamentRef == null) {
             return null;
         }
 
-        BraketTournament tournament = tournamentRef.get();
+        Tournament tournament = tournamentRef.get();
 
         if (!UserServiceFactory.getUserService().isUserAdmin()
                 && tournament.isScheduled()) {
@@ -102,14 +102,14 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
             throw new SecurityException("you are not logged in");
         }
 
-        Ref<BraketTournament> tournamentRef = CurrentTournament
+        Ref<Tournament> tournamentRef = CurrentTournament
                 .getCurrentTournament();
 
         if (tournamentRef == null) {
             return null;
         }
 
-        BraketTournament tournament = tournamentRef.get();
+        Tournament tournament = tournamentRef.get();
 
         if (!UserServiceFactory.getUserService().isUserAdmin()
                 && tournament.isScheduled()) {
@@ -149,14 +149,14 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
             throw new SecurityException("you are not logged in");
         }
 
-        Ref<BraketTournament> tournamentRef = CurrentTournament
+        Ref<Tournament> tournamentRef = CurrentTournament
                 .getCurrentTournament();
 
         if (tournamentRef == null) {
             return null;
         }
 
-        BraketTournament tournament = tournamentRef.get();
+        Tournament tournament = tournamentRef.get();
 
         if (!UserServiceFactory.getUserService().isUserAdmin()
                 && tournament.isScheduled()) {
@@ -195,14 +195,14 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
             throw new SecurityException("you are not logged in");
         }
 
-        Ref<BraketTournament> tournamentRef = CurrentTournament
+        Ref<Tournament> tournamentRef = CurrentTournament
                 .getCurrentTournament();
 
         if (tournamentRef == null) {
             return null;
         }
 
-        BraketTournament tournament = tournamentRef.get();
+        Tournament tournament = tournamentRef.get();
 
         if (!UserServiceFactory.getUserService().isUserAdmin()
                 && tournament.isScheduled()) {
@@ -241,14 +241,14 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
             throw new SecurityException("you are not logged in");
         }
 
-        Ref<BraketTournament> tournamentRef = CurrentTournament
+        Ref<Tournament> tournamentRef = CurrentTournament
                 .getCurrentTournament();
 
         if (tournamentRef == null) {
             return null;
         }
 
-        BraketTournament tournament = tournamentRef.get();
+        Tournament tournament = tournamentRef.get();
 
         if (!UserServiceFactory.getUserService().isUserAdmin()
                 && tournament.isScheduled()) {
@@ -294,14 +294,14 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
             throw new SecurityException("you are not logged in");
         }
 
-        Ref<BraketTournament> tournamentRef = CurrentTournament
+        Ref<Tournament> tournamentRef = CurrentTournament
                 .getCurrentTournament();
 
         if (tournamentRef == null) {
             return null;
         }
 
-        BraketTournament tournament = tournamentRef.get();
+        Tournament tournament = tournamentRef.get();
 
         if (!UserServiceFactory.getUserService().isUserAdmin()
                 && tournament.isScheduled()) {
@@ -312,7 +312,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
     }
 
     private Collection<BraketPrediction> getRegisteredSelectionsUnchecked(
-            BraketTournament tournament) {
+            Tournament tournament) {
         return OfyService.ofy().load().type(BraketPrediction.class)
                 .ids(tournament.getRegisteredPredictions().values()).values();
     }
@@ -331,14 +331,14 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
             throw new SecurityException("you are not logged in");
         }
 
-        Ref<BraketTournament> tournamentRef = CurrentTournament
+        Ref<Tournament> tournamentRef = CurrentTournament
                 .getCurrentTournament();
 
         if (tournamentRef == null) {
             return null;
         }
 
-        BraketTournament tournament = tournamentRef.get();
+        Tournament tournament = tournamentRef.get();
 
         if (tournament.isScheduled()
                 && !(UserServiceFactory.getUserService().isUserAdmin() || UserServiceFactory
@@ -388,14 +388,14 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
         }
 
         // Check to see if the tournament has started
-        Ref<BraketTournament> tournamentRef = CurrentTournament
+        Ref<Tournament> tournamentRef = CurrentTournament
                 .getCurrentTournament();
 
         if (tournamentRef == null) {
             throw new NullPointerException("current tournament not set");
         }
 
-        BraketTournament tournament = tournamentRef.get();
+        Tournament tournament = tournamentRef.get();
 
         if (!UserServiceFactory.getUserService().isUserAdmin()
                 && !tournament.isScheduled()) {
@@ -455,8 +455,8 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
             public void vrun() {
 
                 if (selection.isRegistered()) {
-                    BraketTournament tournament = OfyService.ofy().load()
-                            .type(BraketTournament.class)
+                    Tournament tournament = OfyService.ofy().load()
+                            .type(Tournament.class)
                             .id(selection.getTournamentId()).now();
                     if (tournament != null) {
                         tournament.removeRegistration(selection.getUserId());
@@ -502,8 +502,8 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
                 public void vrun() {
 
                     if (selection.isRegistered()) {
-                        BraketTournament tournament = OfyService.ofy().load()
-                                .type(BraketTournament.class)
+                        Tournament tournament = OfyService.ofy().load()
+                                .type(Tournament.class)
                                 .id(selection.getTournamentId()).now();
                         if (tournament != null) {
                             tournament.removeRegistration(selection.getUserId());
@@ -535,7 +535,7 @@ public class SelectionServiceImpl extends RemoteServiceServlet implements
             throw new SecurityException("you are not logged in");
         }
 
-        final Ref<BraketTournament> tournamentRef = CurrentTournament
+        final Ref<Tournament> tournamentRef = CurrentTournament
                 .getCurrentTournament();
 
         if (tournamentRef == null) {

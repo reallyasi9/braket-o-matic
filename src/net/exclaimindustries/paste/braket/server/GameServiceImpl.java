@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.exclaimindustries.paste.braket.client.Game;
-import net.exclaimindustries.paste.braket.client.BraketTournament;
+import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.GameService;
 import net.exclaimindustries.paste.braket.shared.UserNotAdminException;
 import net.exclaimindustries.paste.braket.shared.UserNotLoggedInException;
@@ -52,7 +52,7 @@ public class GameServiceImpl extends RemoteServiceServlet implements
    * @see net.exclaimindustries.paste.braket.client.GameService#getGames()
    */
   @Override
-  public Map<Long, Game> getGames(BraketTournament tournament) {
+  public Map<Long, Game> getGames(Tournament tournament) {
     return OfyService.ofy().load().type(Game.class).parent(tournament)
         .ids(tournament.getGames());
   }

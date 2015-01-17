@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.exclaimindustries.paste.braket.client.BraketTournament;
+import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.TournamentService;
 import net.exclaimindustries.paste.braket.client.TournamentService.TournamentCollection;
 import net.exclaimindustries.paste.braket.client.TournamentServiceAsync;
@@ -62,18 +62,18 @@ public class TournamentAdminTab extends Composite {
   /**
    * Container for Tournament data
    */
-  private CellList<BraketTournament> cellList;
+  private CellList<Tournament> cellList;
 
   /**
-   * The Cell used to render a {@link BraketTournament}.
+   * The Cell used to render a {@link Tournament}.
    */
-  static class TournamentCell extends AbstractCell<BraketTournament> {
+  static class TournamentCell extends AbstractCell<Tournament> {
 
     public TournamentCell() {
     }
 
     @Override
-    public void render(Context context, BraketTournament value,
+    public void render(Context context, Tournament value,
         SafeHtmlBuilder sb) {
       // Value can be null, so do a null check.
       if (value == null) {
@@ -111,24 +111,24 @@ public class TournamentAdminTab extends Composite {
   /**
    * Current tournament
    */
-  static private BraketTournament currentTournament;
+  static private Tournament currentTournament;
 
   /**
    * Provider for BraketTournaments to handle sort requests, offsets, and the
    * like.
    */
-  private final AsyncDataProvider<BraketTournament> dataProvider = new AsyncDataProvider<BraketTournament>(
-      BraketTournament.KEY_PROVIDER) {
+  private final AsyncDataProvider<Tournament> dataProvider = new AsyncDataProvider<Tournament>(
+      Tournament.KEY_PROVIDER) {
 
-    private BraketTournament.IndexName sortCondition = BraketTournament.IndexName.startTime;
+    private Tournament.IndexName sortCondition = Tournament.IndexName.startTime;
 
     @Override
-    protected void onRangeChanged(HasData<BraketTournament> display) {
+    protected void onRangeChanged(HasData<Tournament> display) {
       final int offset = display.getVisibleRange().getStart();
       int limit = display.getVisibleRange().getLength();
       // RPC call to get more tournaments
       tournamentService.getTournaments(sortCondition, offset, limit,
-          new AsyncCallback<List<BraketTournament>>() {
+          new AsyncCallback<List<Tournament>>() {
 
             @Override
             public void onFailure(Throwable caught) {
@@ -140,7 +140,7 @@ public class TournamentAdminTab extends Composite {
             }
 
             @Override
-            public void onSuccess(List<BraketTournament> result) {
+            public void onSuccess(List<Tournament> result) {
               updateRowCount(result.size(), true);
               updateRowData(offset, result);
             }
@@ -181,8 +181,8 @@ public class TournamentAdminTab extends Composite {
     TournamentCell tournamentCell = new TournamentCell();
 
     // CellList with a key provider
-    cellList = new CellList<BraketTournament>(tournamentCell,
-        BraketTournament.KEY_PROVIDER);
+    cellList = new CellList<Tournament>(tournamentCell,
+        Tournament.KEY_PROVIDER);
     tournamentInfoPanel = new TournamentInfoPanel(cellList);
 
     // Initialize the widget
@@ -215,8 +215,8 @@ public class TournamentAdminTab extends Composite {
         .setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
 
     // Add a selection model so we can select cells.
-    final SingleSelectionModel<BraketTournament> selectionModel = new SingleSelectionModel<BraketTournament>(
-        BraketTournament.KEY_PROVIDER);
+    final SingleSelectionModel<Tournament> selectionModel = new SingleSelectionModel<Tournament>(
+        Tournament.KEY_PROVIDER);
     cellList.setSelectionModel(selectionModel);
     selectionModel
         .addSelectionChangeHandler(new SelectionChangeEvent.Handler() {

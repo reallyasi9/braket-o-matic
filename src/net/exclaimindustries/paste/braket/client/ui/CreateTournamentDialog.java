@@ -19,7 +19,7 @@ package net.exclaimindustries.paste.braket.client.ui;
 import java.math.BigInteger;
 import java.util.LinkedList;
 
-import net.exclaimindustries.paste.braket.client.BraketTournament;
+import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
 
 import com.google.common.base.Splitter;
@@ -117,7 +117,7 @@ public class CreateTournamentDialog extends DialogBox {
         try {
             saveButton.setEnabled(false);
 
-            final BraketTournament tournament = new BraketTournament();
+            final Tournament tournament = new Tournament();
             // Easy stuff first
             tournament.setName(name.getText());
             tournament.setUpsetValue(Double.valueOf(upset.getText()));

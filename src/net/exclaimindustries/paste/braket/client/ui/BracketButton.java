@@ -6,7 +6,7 @@ import java.util.List;
 import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.BraketPrediction;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
-import net.exclaimindustries.paste.braket.client.BraketTournament;
+import net.exclaimindustries.paste.braket.client.Tournament;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
@@ -56,7 +56,7 @@ public class BracketButton extends Composite implements ClickHandler, MouseOverH
         private BracketEditTeamClickContents mContents;
         private List<BraketTeam> mTeamList;
         private BraketPrediction mSelection;
-        private BraketTournament mTournament;
+        private Tournament mTournament;
         
         public EditTeamClickPopup() {
             super(true);
@@ -341,7 +341,7 @@ public class BracketButton extends Composite implements ClickHandler, MouseOverH
             // condition here, as this game hasn't been played.
             //
             // TODO: I really should generalize the traversal method...
-            BraketTournament tourn = mController.getTournament();
+            Tournament tourn = mController.getTournament();
             
             int curGame = (pickedTeam.getIndex() / 2) + (tourn.getNumberOfGames() / 2);
             

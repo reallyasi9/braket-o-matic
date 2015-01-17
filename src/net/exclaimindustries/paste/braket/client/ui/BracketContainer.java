@@ -6,7 +6,7 @@ import java.util.List;
 import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.BraketPrediction;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
-import net.exclaimindustries.paste.braket.client.BraketTournament;
+import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.ui.BracketDrawable.Direction;
 
 import com.google.gwt.core.client.GWT;
@@ -99,7 +99,7 @@ public class BracketContainer extends ScrollPanel {
 
     private Section mSection = Section.ENTIRE;
     private Mode mMode = Mode.TOURNAMENT_STATUS;
-    private BraketTournament mTournament;
+    private Tournament mTournament;
     private BraketPrediction mSelection;
     private List<BraketTeam> mTeams;
     private List<Game> mGames;
@@ -115,7 +115,7 @@ public class BracketContainer extends ScrollPanel {
      * @param teams
      *            a list of BraketTeams
      */
-    public BracketContainer(BraketTournament tourn, List<BraketTeam> teams,
+    public BracketContainer(Tournament tourn, List<BraketTeam> teams,
             List<Game> games) {
         if (tourn == null)
             throw new IllegalArgumentException(
@@ -143,7 +143,7 @@ public class BracketContainer extends ScrollPanel {
      * 
      * @return a BraketTournament
      */
-    public BraketTournament getTournament() {
+    public Tournament getTournament() {
         return mTournament;
     }
 
@@ -197,7 +197,7 @@ public class BracketContainer extends ScrollPanel {
      * @param selection
      *            the new selection (can be null)
      */
-    public void setTournament(BraketTournament tourn, List<BraketTeam> teams,
+    public void setTournament(Tournament tourn, List<BraketTeam> teams,
             List<Game> games, BraketPrediction selection) {
         if (tourn == null)
             throw new IllegalArgumentException(

@@ -25,7 +25,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import javax.validation.constraints.Size;
+
+import net.exclaimindustries.paste.braket.shared.TeamNotInTournamentException;
 
 import com.google.gwt.view.client.ProvidesKey;
 import com.googlecode.objectify.Ref;
@@ -42,14 +45,14 @@ import com.googlecode.objectify.annotation.Subclass;
  */
 @Subclass(index = true)
 @Cache
-abstract public class BraketTournament extends Selectable {
+abstract public class Tournament extends Selectable {
 
   /**
    * A Key Provider so that BraketTournaments can be placed in DataGrids.
    */
-  public static final ProvidesKey<BraketTournament> KEY_PROVIDER = new ProvidesKey<BraketTournament>() {
+  public static final ProvidesKey<Tournament> KEY_PROVIDER = new ProvidesKey<Tournament>() {
     @Override
-    public Object getKey(BraketTournament item) {
+    public Object getKey(Tournament item) {
       return (item == null) ? null : item.getId();
     }
   };
@@ -103,7 +106,7 @@ abstract public class BraketTournament extends Selectable {
   /**
    * Default constructor
    */
-  public BraketTournament() {
+  public Tournament() {
   }
 
   public String getName() {
@@ -251,5 +254,17 @@ abstract public class BraketTournament extends Selectable {
   public boolean isCompleted() {
     return getChampionshipGame().isFinal();
   }
+
+  /**
+   * Get the seed associated with a particular team.
+   * 
+   * @param team
+   *          The team to look up.
+   * @return The seed that the team carries in the tournament.
+   * @throws TeamNotInTournamentException
+   *           if the given team is not seeded in the tournament.
+   */
+  abstract public int getSeed(BraketTeam team)
+      throws TeamNotInTournamentException;
 
 }

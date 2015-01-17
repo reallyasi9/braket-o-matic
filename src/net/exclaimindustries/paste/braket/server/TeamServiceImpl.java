@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.exclaimindustries.paste.braket.client.BraketTeam;
-import net.exclaimindustries.paste.braket.client.BraketTournament;
+import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.TeamService;
 import net.exclaimindustries.paste.braket.shared.UserNotAdminException;
 import net.exclaimindustries.paste.braket.shared.UserNotLoggedInException;
@@ -58,7 +58,7 @@ public class TeamServiceImpl extends RemoteServiceServlet implements
    * exclaimindustries.paste.braket.client.BraketTournament)
    */
   @Override
-  public Map<Long, BraketTeam> getTeams(BraketTournament tournament) {
+  public Map<Long, BraketTeam> getTeams(Tournament tournament) {
     return OfyService.ofy().load().type(BraketTeam.class)
         .ids(tournament.getTeams());
   }

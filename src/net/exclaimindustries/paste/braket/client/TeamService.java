@@ -48,7 +48,7 @@ public interface TeamService extends RemoteService {
    * @return The teams for the given tournament, keyed in a map by the datastore
    *         ID of the team.
    */
-  public Map<Long, BraketTeam> getTeams(BraketTournament tournament);
+  public Map<Long, BraketTeam> getTeams(Tournament tournament);
 
   /**
    * Fetches some number of teams by order from the datastore.

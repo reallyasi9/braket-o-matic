@@ -38,21 +38,21 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface TournamentService extends RemoteService {
 
   public final static class TournamentCollection implements IsSerializable {
-    private BraketTournament tournament = null;
+    private Tournament tournament = null;
     private Map<Long, Game> games = new HashMap<Long, Game>();
     private Map<Long, BraketTeam> teams = new HashMap<Long, BraketTeam>();
 
     public TournamentCollection() {
     }
 
-    public TournamentCollection(BraketTournament tournament,
+    public TournamentCollection(Tournament tournament,
         Map<Long, Game> games, Map<Long, BraketTeam> teams) {
       this.tournament = tournament;
       this.games = new HashMap<Long, Game>(games);
       this.teams = new HashMap<Long, BraketTeam>(teams);
     }
 
-    public BraketTournament getTournament() {
+    public Tournament getTournament() {
       return tournament;
     }
 
@@ -93,7 +93,7 @@ public interface TournamentService extends RemoteService {
    * @throws SecurityException
    *           If the user is not logged in as an administrator.
    */
-  public BraketTournament setCurrentTournament(BraketTournament tournament)
+  public Tournament setCurrentTournament(Tournament tournament)
       throws UserNotLoggedInException, UserNotAdminException;
 
   /**
@@ -106,7 +106,7 @@ public interface TournamentService extends RemoteService {
    * @throws SecurityException
    *           If the user is not logged in as an administrator.
    */
-  public Collection<BraketTournament> getTournaments()
+  public Collection<Tournament> getTournaments()
       throws UserNotLoggedInException, UserNotAdminException;
 
   /**
@@ -123,8 +123,8 @@ public interface TournamentService extends RemoteService {
    *         <code>sortCondition</code> condition, starting at offset
    *         <code>offset</code>.
    */
-  public List<BraketTournament> getTournaments(
-      BraketTournament.IndexName orderCondition, int offset, int limit)
+  public List<Tournament> getTournaments(
+      Tournament.IndexName orderCondition, int offset, int limit)
       throws UserNotLoggedInException, UserNotAdminException;
 
   /**
@@ -143,7 +143,7 @@ public interface TournamentService extends RemoteService {
    * @throws SecurityException
    *           If the user is not logged in as an administrator.
    */
-  public void storeTournaments(Iterable<BraketTournament> tournaments)
+  public void storeTournaments(Iterable<Tournament> tournaments)
       throws UserNotLoggedInException, UserNotAdminException;
 
   /**
@@ -161,7 +161,7 @@ public interface TournamentService extends RemoteService {
    * @throws SecurityException
    *           If the user is not logged in as an administrator.
    */
-  public Long storeTournament(BraketTournament tournament)
+  public Long storeTournament(Tournament tournament)
       throws UserNotLoggedInException, UserNotAdminException;
 
   /**
@@ -176,7 +176,7 @@ public interface TournamentService extends RemoteService {
    * @throws SecurityException
    *           If the user is not logged in as an administrator.
    */
-  public void deleteTournaments(Iterable<BraketTournament> tournaments)
+  public void deleteTournaments(Iterable<Tournament> tournaments)
       throws UserNotLoggedInException, UserNotAdminException;
 
   /**
@@ -191,7 +191,7 @@ public interface TournamentService extends RemoteService {
    * @throws SecurityException
    *           If the user is not logged in as an administrator.
    */
-  public void deleteTournament(BraketTournament tournament)
+  public void deleteTournament(Tournament tournament)
       throws UserNotLoggedInException, UserNotAdminException;
 
   /**
@@ -211,7 +211,7 @@ public interface TournamentService extends RemoteService {
    * @throws IllegalArgumentException
    *           If the game's index is nonsensical.
    */
-  public Long addGame(Game game, BraketTournament tournament)
+  public Long addGame(Game game, Tournament tournament)
       throws UserNotLoggedInException, UserNotAdminException;
 
   /**
@@ -230,7 +230,7 @@ public interface TournamentService extends RemoteService {
    * @throws IllegalArgumentException
    *           If any of the games' index members are nonsensical.
    */
-  public void addGames(Iterable<Game> games, BraketTournament tournament)
+  public void addGames(Iterable<Game> games, Tournament tournament)
       throws UserNotLoggedInException, UserNotAdminException;
 
 }

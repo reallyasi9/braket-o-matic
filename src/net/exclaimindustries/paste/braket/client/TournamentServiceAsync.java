@@ -31,29 +31,29 @@ public interface TournamentServiceAsync {
 
   void getCurrentTournament(AsyncCallback<TournamentCollection> callback);
 
-  void getTournaments(AsyncCallback<Collection<BraketTournament>> callback);
+  void getTournaments(AsyncCallback<Collection<Tournament>> callback);
 
-  void storeTournaments(Iterable<BraketTournament> tournaments,
+  void storeTournaments(Iterable<Tournament> tournaments,
       AsyncCallback<Void> callback);
 
-  void storeTournament(BraketTournament tournament, AsyncCallback<Long> callback);
+  void storeTournament(Tournament tournament, AsyncCallback<Long> callback);
 
-  void deleteTournaments(Iterable<BraketTournament> tournaments,
+  void deleteTournaments(Iterable<Tournament> tournaments,
       AsyncCallback<Void> callback);
 
-  void deleteTournament(BraketTournament tournament,
+  void deleteTournament(Tournament tournament,
       AsyncCallback<Void> callback);
 
-  void setCurrentTournament(BraketTournament tournament,
-      AsyncCallback<BraketTournament> callback);
+  void setCurrentTournament(Tournament tournament,
+      AsyncCallback<Tournament> callback);
 
-  void addGame(Game game, BraketTournament tournament,
+  void addGame(Game game, Tournament tournament,
       AsyncCallback<Long> callback);
 
-  void addGames(Iterable<Game> games, BraketTournament tournament,
+  void addGames(Iterable<Game> games, Tournament tournament,
       AsyncCallback<Void> callback);
 
-  void getTournaments(BraketTournament.IndexName orderCondition, int offset,
-      int limit, AsyncCallback<List<BraketTournament>> callback);
+  void getTournaments(Tournament.IndexName orderCondition, int offset,
+      int limit, AsyncCallback<List<Tournament>> callback);
 
 }

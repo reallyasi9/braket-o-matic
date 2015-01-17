@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.exclaimindustries.paste.braket.client.BraketTournament;
+import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.TournamentService;
 import net.exclaimindustries.paste.braket.client.TournamentService.TournamentCollection;
 import net.exclaimindustries.paste.braket.client.TournamentServiceAsync;
@@ -104,9 +104,9 @@ public class TournamentInfoPanel extends Composite {
 
   // Members ------------------------------------------------------------------
 
-  private BraketTournament tournament;
+  private Tournament tournament;
 
-  private BraketTournament currentTournament;
+  private Tournament currentTournament;
 
   private CellList<?> cellList;
 
@@ -163,7 +163,7 @@ public class TournamentInfoPanel extends Composite {
     }
   };
 
-  private AsyncCallback<BraketTournament> updateCurrentTournamentCallback = new AsyncCallback<BraketTournament>() {
+  private AsyncCallback<Tournament> updateCurrentTournamentCallback = new AsyncCallback<Tournament>() {
     @Override
     public void onFailure(Throwable caught) {
       logger.log(Level.SEVERE,
@@ -173,7 +173,7 @@ public class TournamentInfoPanel extends Composite {
     }
 
     @Override
-    public void onSuccess(BraketTournament result) {
+    public void onSuccess(Tournament result) {
       currentTournament = result;
 
       cellList.setVisibleRangeAndClearData(cellList.getVisibleRange(), true);
@@ -201,7 +201,7 @@ public class TournamentInfoPanel extends Composite {
 
       // Unselect the tournament
       @SuppressWarnings("unchecked")
-      SelectionModel<BraketTournament> selectionModel = (SelectionModel<BraketTournament>) cellList
+      SelectionModel<Tournament> selectionModel = (SelectionModel<Tournament>) cellList
           .getSelectionModel();
       selectionModel.setSelected(tournament, false);
 
@@ -217,7 +217,7 @@ public class TournamentInfoPanel extends Composite {
   private ClickHandler createTournamentHandler = new ClickHandler() {
     @Override
     public void onClick(ClickEvent event) {
-      tournament = new BraketTournament();
+      tournament = new Tournament();
       if (validateFields()) {
         updateTournamentFromInput();
         tournamentService.storeTournament(tournament, storeTournamentCallback);
@@ -288,7 +288,7 @@ public class TournamentInfoPanel extends Composite {
    * 
    * Builds the UI and
    */
-  public TournamentInfoPanel(CellList<BraketTournament> cl) {
+  public TournamentInfoPanel(CellList<Tournament> cl) {
     cellList = cl;
 
     startTimeBox = new HourMinutePicker(HourMinutePicker.PickerFormat._24_HOUR);
@@ -371,7 +371,7 @@ public class TournamentInfoPanel extends Composite {
     return (!invalid);
   }
 
-  public void setSelectedTournament(BraketTournament tourn) {
+  public void setSelectedTournament(Tournament tourn) {
     tournament = tourn;
     updateInputFromTournament();
   }

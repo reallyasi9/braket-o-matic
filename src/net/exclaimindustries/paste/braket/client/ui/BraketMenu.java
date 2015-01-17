@@ -3,7 +3,7 @@
  */
 package net.exclaimindustries.paste.braket.client.ui;
 
-import net.exclaimindustries.paste.braket.client.BraketTournament;
+import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.BraketUser;
 import net.exclaimindustries.paste.braket.client.resources.UiConstants.HistoryToken;
 
@@ -40,7 +40,7 @@ public class BraketMenu extends Composite {
 	interface BraketMenuUiBinder extends UiBinder<Widget, BraketMenu> {
 	}
 
-	public BraketMenu(BraketTournament tournament, BraketUser user) {
+	public BraketMenu(Tournament tournament, BraketUser user) {
 		initWidget(uiBinder.createAndBindUi(this));
 
 		// If the tournament is null, then only show an admin button

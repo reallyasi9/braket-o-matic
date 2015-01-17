@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.BraketTeam;
-import net.exclaimindustries.paste.braket.client.BraketTournament;
+import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.server.CurrentTournament;
 import net.exclaimindustries.paste.braket.server.OfyService;
 import net.exclaimindustries.paste.braket.server.TournamentServiceImpl;
@@ -59,7 +59,7 @@ public class GameDownloaderServlet extends HttpServlet {
         // }
 
         // Get the current tournament
-        Ref<BraketTournament> currentTournRef = CurrentTournament
+        Ref<Tournament> currentTournRef = CurrentTournament
                 .getCurrentTournament();
         if (currentTournRef == null) {
             LOG.warning("Not downloading games because no current tournament is set");

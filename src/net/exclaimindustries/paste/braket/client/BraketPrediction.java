@@ -84,7 +84,7 @@ public final class BraketPrediction {
    *          The tournament to use as a template. The game IDs will be copied
    *          over to this selection.
    */
-  public BraketPrediction(BraketUser user, BraketTournament tournament) {
+  public BraketPrediction(BraketUser user, Tournament tournament) {
     tournamentId = tournament.getId();
     userId = user.getId();
     gameWinners = new HashMap<Long, Long>();
@@ -347,7 +347,7 @@ public final class BraketPrediction {
    *          The tournamentId truth.
    * @return The point value of this selection.
    */
-  public double getSelectionValue(BraketTournament tournament) {
+  public double getSelectionValue(Tournament tournament) {
     return tournament.getSelectionValue(this);
   }
 

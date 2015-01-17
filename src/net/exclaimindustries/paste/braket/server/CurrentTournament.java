@@ -1,6 +1,6 @@
 package net.exclaimindustries.paste.braket.server;
 
-import net.exclaimindustries.paste.braket.client.BraketTournament;
+import net.exclaimindustries.paste.braket.client.Tournament;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
@@ -26,29 +26,29 @@ public class CurrentTournament {
     private long id = 1;
 
     @Load(LoadTournament.class)
-    private Ref<BraketTournament> tournament = null;
+    private Ref<Tournament> tournament = null;
 
     public CurrentTournament() {
         super();
     }
 
-    public Ref<BraketTournament> getTournamentRef() {
+    public Ref<Tournament> getTournamentRef() {
         return tournament;
     }
 
-    public BraketTournament getTournament() {
+    public Tournament getTournament() {
         return tournament.get();
     }
 
-    public void setTournamentRef(Ref<BraketTournament> tournament) {
+    public void setTournamentRef(Ref<Tournament> tournament) {
         this.tournament = tournament;
     }
 
-    public void setTournament(BraketTournament tournament) {
+    public void setTournament(Tournament tournament) {
         this.tournament = Ref.create(tournament);
     }
 
-    public static Ref<BraketTournament> getCurrentTournament() {
+    public static Ref<Tournament> getCurrentTournament() {
         Key<CurrentTournament> key = Key.create(CurrentTournament.class, 1);
         CurrentTournament t =
                 OfyService.ofy().load().group(LoadTournament.class).key(key).now();

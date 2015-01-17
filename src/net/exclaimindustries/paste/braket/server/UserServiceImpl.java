@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Map.Entry;
 
 import net.exclaimindustries.paste.braket.client.BraketPrediction;
-import net.exclaimindustries.paste.braket.client.BraketTournament;
+import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.BraketUser;
 import net.exclaimindustries.paste.braket.client.UserService;
 
@@ -36,12 +36,12 @@ public class UserServiceImpl extends RemoteServiceServlet implements
     @Override
     public Collection<BraketUser> getRegisteredUsers() {
 
-        Ref<BraketTournament> tournamentRef = CurrentTournament
+        Ref<Tournament> tournamentRef = CurrentTournament
                 .getCurrentTournament();
         if (tournamentRef == null) {
             return null;
         }
-        BraketTournament tournament = tournamentRef.get();
+        Tournament tournament = tournamentRef.get();
 
         // Get the users
         Collection<String> userKeys = tournament.getUserIds();
@@ -85,12 +85,12 @@ public class UserServiceImpl extends RemoteServiceServlet implements
             throw new SecurityException("administration privileges required");
         }
 
-        Ref<BraketTournament> tournamentRef = CurrentTournament
+        Ref<Tournament> tournamentRef = CurrentTournament
                 .getCurrentTournament();
         if (tournamentRef == null) {
             throw new NullPointerException("current tournament not defined");
         }
-        final BraketTournament tournament = tournamentRef.get();
+        final Tournament tournament = tournamentRef.get();
 
         return OfyService.ofy().transact(new Work<Long>() {
 
@@ -141,12 +141,12 @@ public class UserServiceImpl extends RemoteServiceServlet implements
             throw new SecurityException("administration privileges required");
         }
 
-        Ref<BraketTournament> tournamentRef = CurrentTournament
+        Ref<Tournament> tournamentRef = CurrentTournament
                 .getCurrentTournament();
         if (tournamentRef == null) {
             throw new NullPointerException("current tournament not defined");
         }
-        final BraketTournament tournament = tournamentRef.get();
+        final Tournament tournament = tournamentRef.get();
 
         final Long tournamentId = tournament.getId();
 
@@ -194,8 +194,8 @@ public class UserServiceImpl extends RemoteServiceServlet implements
 
                     for (Entry<Long, Long> entry : user.getSelections()
                             .entrySet()) {
-                        BraketTournament tournament = OfyService.ofy().load()
-                                .type(BraketTournament.class)
+                        Tournament tournament = OfyService.ofy().load()
+                                .type(Tournament.class)
                                 .id(entry.getKey()).now();
                         tournament.removeRegistration(userId);
                         OfyService.ofy().save().entity(tournament);
@@ -228,8 +228,8 @@ public class UserServiceImpl extends RemoteServiceServlet implements
                 String userId = user.getId();
 
                 for (Entry<Long, Long> entry : user.getSelections().entrySet()) {
-                    BraketTournament tournament = OfyService.ofy().load()
-                            .type(BraketTournament.class).id(entry.getKey())
+                    Tournament tournament = OfyService.ofy().load()
+                            .type(Tournament.class).id(entry.getKey())
                             .now();
                     tournament.removeRegistration(userId);
                     OfyService.ofy().save().entity(tournament);

@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.exclaimindustries.paste.braket.client.BraketTournament;
+import net.exclaimindustries.paste.braket.client.Tournament;
 
 import com.google.common.collect.HashBasedTable;
 import com.googlecode.objectify.Ref;
@@ -46,7 +46,7 @@ public class ExpectoValues {
      * The tournament to which this BoM belongs.
      */
     @Parent
-    private Ref<BraketTournament> tournament;
+    private Ref<Tournament> tournament;
 
     /**
      * The iteration the BoM is considering.
@@ -81,11 +81,11 @@ public class ExpectoValues {
         return v;
     }
 
-    public Ref<BraketTournament> getTournament() {
+    public Ref<Tournament> getTournament() {
         return tournament;
     }
 
-    public void setTournament(Ref<BraketTournament> tournament) {
+    public void setTournament(Ref<Tournament> tournament) {
         this.tournament = tournament;
     }
 

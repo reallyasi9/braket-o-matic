@@ -79,7 +79,7 @@ public abstract class Game implements IsSerializable {
    * An Id representing the tournament to which this game belongs.
    */
   @Parent
-  private transient Key<BraketTournament> tournamentKey = null;
+  private transient Key<Tournament> tournamentKey = null;
 
   /**
    * When this game is scheduled to being.
@@ -104,7 +104,7 @@ public abstract class Game implements IsSerializable {
   /**
    * @return the key of the tournament to which this game belongs.
    */
-  public Key<BraketTournament> getTournamentKey() {
+  public Key<Tournament> getTournamentKey() {
     return tournamentKey;
   }
 
@@ -117,7 +117,7 @@ public abstract class Game implements IsSerializable {
    *       entity will be made in the datastore. In order to move this game to
    *       another parent, the original game must be deleted manually.
    */
-  public void setTournamentKey(Key<BraketTournament> tournamentId) {
+  public void setTournamentKey(Key<Tournament> tournamentId) {
     this.tournamentKey = tournamentId;
   }
 
