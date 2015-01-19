@@ -19,17 +19,19 @@ package net.exclaimindustries.paste.braket.client;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedMap;
 
 import net.exclaimindustries.paste.braket.shared.GameNotFinalException;
 import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
 
+import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
-import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Parent;
+import com.googlecode.objectify.annotation.Subclass;
 
 /**
  * A class that represents a bracket game.
@@ -42,7 +44,7 @@ import com.googlecode.objectify.annotation.Parent;
  * @author paste
  * 
  */
-@Entity
+@Subclass(index = true)
 @Cache
 public abstract class Game implements IsSerializable {
 
@@ -56,6 +58,15 @@ public abstract class Game implements IsSerializable {
     GameIndexPair(Game game, int index) {
       this.game = game;
       this.index = index;
+    }
+  }
+  public static class GameRankPair {
+    public Game game;
+    public int rank;
+
+    GameRankPair(Game game, int rank) {
+      this.game = game;
+      this.rank = rank;
     }
   }
 
@@ -73,7 +84,7 @@ public abstract class Game implements IsSerializable {
    * The ID of the entity in the datastore.
    */
   @Id
-  private Long id = null;
+  protected Long id = null;
 
   /**
    * An Id representing the tournament to which this game belongs.
@@ -152,7 +163,7 @@ public abstract class Game implements IsSerializable {
    *         game. All teams begin with a defined score by default, but what
    *         that score is specifically is implementation-specific.
    */
-  abstract public List<Integer> getScores();
+  abstract public List<Optional<Integer>> getScores();
 
   /**
    * Get a particular score.
@@ -165,7 +176,7 @@ public abstract class Game implements IsSerializable {
    *           If the given game-order index is out of bounds for the number of
    *           teams in the game.
    */
-  abstract public Integer getScore(int gameOrderIndex)
+  abstract public Optional<Integer> getScore(int gameOrderIndex)
       throws IndexOutOfBoundsException;
 
   /**
@@ -215,7 +226,7 @@ public abstract class Game implements IsSerializable {
    * @note Calls setUnpropagatedPlayInGameRankPair in corresponding targetGame.
    */
   public void setNoAdvancement(int rankIndex) throws IndexOutOfBoundsException {
-    this.setAdvancement(rankIndex, null);
+    this.setAdvancement(rankIndex, new GameIndexPair(UndefinedGame.get(), 0));
   }
 
   /**
@@ -236,7 +247,7 @@ public abstract class Game implements IsSerializable {
    * 
    * @return The game/index pairs to which a given rank advances, in rank order.
    */
-  abstract public List<GameIndexPair> getAdvancements();
+  abstract public Map<Integer, GameIndexPair> getAdvancements();
 
   /**
    * Get the game and placing within that game which advances to the given index
@@ -251,7 +262,7 @@ public abstract class Game implements IsSerializable {
    *           If gameOrderIndex is out-of-bounds for the number of teams in the
    *           game.
    */
-  abstract public GameIndexPair getPlayInGameRankPair(int gameOrderIndex)
+  abstract public GameRankPair getPlayInGame(int gameOrderIndex)
       throws IndexOutOfBoundsException;
 
   /**
@@ -260,7 +271,7 @@ public abstract class Game implements IsSerializable {
    * @return The game/rank pairs that feed into this game, sorted by game order
    *         index. Null values imply the team in that index is a seeded team.
    */
-  abstract public List<GameIndexPair> getPlayInGameRankPairs();
+  abstract public Map<Integer, GameRankPair> getPlayInGames();
 
   /**
    * Set the play-in game for a particular game-order index.
@@ -277,7 +288,7 @@ public abstract class Game implements IsSerializable {
    * @note Calls setUnpropagatedAdvancement in corresponding targetGame.
    */
   abstract public void setPlayInGameRankPair(int gameOrderIndex,
-      GameIndexPair playInGame) throws IndexOutOfBoundsException;
+      GameRankPair playInGame) throws IndexOutOfBoundsException;
 
   /**
    * @see setPlayInGameRankPair(int, GameRankPair)
@@ -291,7 +302,7 @@ public abstract class Game implements IsSerializable {
    */
   public void setNoPlayInGameRankPair(int gameOrderIndex)
       throws IndexOutOfBoundsException {
-    setPlayInGameRankPair(gameOrderIndex, null);
+    setPlayInGameRankPair(gameOrderIndex, new GameRankPair(UndefinedGame.get(), 0));
   }
 
   public Date getScheduledDate() {
@@ -380,7 +391,7 @@ public abstract class Game implements IsSerializable {
    */
   protected void setUnpropagatedNoAdvancement(int rankIndex)
       throws IndexOutOfBoundsException {
-    this.setUnpropagatedAdvancement(rankIndex, null);
+    this.setUnpropagatedAdvancement(rankIndex, new GameIndexPair(UndefinedGame.get(), 0));
   }
 
   /**
@@ -394,7 +405,7 @@ public abstract class Game implements IsSerializable {
    * @note Does not call setAdvancement in corresponding targetGame.
    */
   abstract public void setUnpropagatedPlayInGameRankPair(int gameOrderIndex,
-      GameIndexPair playInGame) throws IndexOutOfBoundsException;
+      GameRankPair playInGame) throws IndexOutOfBoundsException;
 
   /**
    * @see setPlayInGameRankPair(int, GameRankPair)
@@ -405,6 +416,6 @@ public abstract class Game implements IsSerializable {
    */
   protected void setUnpropagatedNoPlayInGameRankPair(int gameOrderIndex)
       throws IndexOutOfBoundsException {
-    this.setUnpropagatedPlayInGameRankPair(gameOrderIndex, null);
+    this.setUnpropagatedPlayInGameRankPair(gameOrderIndex, new GameRankPair(UndefinedGame.get(), 0));
   }
 }

@@ -34,6 +34,8 @@ import net.exclaimindustries.paste.braket.shared.TeamNotInTournamentException;
 import com.google.gwt.view.client.ProvidesKey;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Load;
 import com.googlecode.objectify.annotation.Subclass;
@@ -44,9 +46,9 @@ import com.googlecode.objectify.annotation.Subclass;
  * @author paste
  * 
  */
-@Subclass(index = true)
+@Entity
 @Cache
-abstract public class Tournament extends Selectable {
+abstract public class Tournament {
 
   /**
    * A Key Provider so that BraketTournaments can be placed in DataGrids.
@@ -63,6 +65,17 @@ abstract public class Tournament extends Selectable {
    */
   public static enum IndexName {
     name, startTime;
+  }
+
+  @Id
+  protected Long id = null;
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
   /**
@@ -212,7 +225,7 @@ abstract public class Tournament extends Selectable {
    * @return The value of the prediction given based on the current status of
    *         the tournament.
    */
-  abstract public double getValue(Selectable selection);
+  abstract public double getValue(Outcome selection);
 
   /**
    * Calculates the possible point value of a prediction based on the current
@@ -224,7 +237,7 @@ abstract public class Tournament extends Selectable {
    *         current status of the tournament, including games that have not yet
    *         finished.
    */
-  abstract public double getPossibleValue(Selectable selection);
+  abstract public double getPossibleValue(Outcome selection);
 
   /**
    * Determine whether or not the tournament has started.
@@ -264,7 +277,6 @@ abstract public class Tournament extends Selectable {
    * @throws TeamNotInTournamentException
    *           if the given team is not seeded in the tournament.
    */
-  abstract public int getSeed(Team team)
-      throws TeamNotInTournamentException;
+  abstract public int getSeed(Team team) throws TeamNotInTournamentException;
 
 }

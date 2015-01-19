@@ -23,7 +23,7 @@ import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.User;
 import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.HeadToHeadGame;
-import net.exclaimindustries.paste.braket.client.Selectable;
+import net.exclaimindustries.paste.braket.client.Outcome;
 import net.exclaimindustries.paste.braket.server.backends.ExpectoValues;
 
 import com.googlecode.objectify.Objectify;
@@ -33,7 +33,7 @@ import com.googlecode.objectify.ObjectifyService;
 public class OfyService {
 
   static {
-    factory().register(Selectable.class);
+    factory().register(Outcome.class);
     factory().register(Tournament.class);
     factory().register(User.class);
     factory().register(BraketPrediction.class);

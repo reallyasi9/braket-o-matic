@@ -16,12 +16,19 @@
  */
 package net.exclaimindustries.paste.braket.client;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import net.exclaimindustries.paste.braket.shared.GameNotInOutcomeException;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Parent;
 
 /**
  * @author paste
@@ -34,13 +41,18 @@ import com.googlecode.objectify.annotation.Id;
  */
 @Entity
 @Cache
-public abstract class Selectable implements IsSerializable {
+public class Outcome implements IsSerializable {
 
   /**
    * The base class must have the Id field.
    */
   @Id
   protected Long id = null;
+
+  @Parent
+  protected Key<Tournament> parentTournament = null;
+
+  private Map<Long, List<Long>> outcome = new HashMap<>();
 
   public Long getId() {
     return id;
@@ -50,8 +62,20 @@ public abstract class Selectable implements IsSerializable {
     this.id = id;
   }
 
-  public abstract void setOutcome(Game game, List<Team> outcome);
+  public void setResult(Game game, List<Team> result) {
+    List<Long> teamIdList = new ArrayList<>();
+    for (Team team : result) {
+      teamIdList.add(team.getId());
+    }
+    outcome.put(game.getId(), teamIdList);
+  }
 
-  public abstract List<Team> getOutcome(Game game);
+  public List<Long> getResult(Game game) throws GameNotInOutcomeException {
+    if (!outcome.containsKey(game.getId())) {
+      throw new GameNotInOutcomeException("game with id [" + game.getId()
+          + "] not in outcome");
+    }
+    return outcome.get(game.getId());
+  }
 
 }

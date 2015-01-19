@@ -2,13 +2,16 @@ package net.exclaimindustries.paste.braket.client;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import net.exclaimindustries.paste.braket.shared.RefDereferencer;
+import net.exclaimindustries.paste.braket.client.Game.GameRankPair;
+import net.exclaimindustries.paste.braket.shared.GameNotInOutcomeException;
 import net.exclaimindustries.paste.braket.shared.TeamNotInTournamentException;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Load;
@@ -19,21 +22,28 @@ import com.googlecode.objectify.annotation.Subclass;
 public class SingleEliminationTournament extends Tournament {
 
   @Load
-  private List<Ref<Game>> seedGames = new ArrayList<>();
+  private Collection<Ref<Game>> seedGames = new ArrayList<>();
+  
+  @Load
+  private Collection<Ref<Game>> games = new HashSet<>();
 
   @Load
-  private Ref<Game> championshipGame = null;
+  private Ref<Game> championshipGame = Ref.create(UndefinedGame.get());
+
+  private Map<Long, Integer> teamSeeds = new HashMap<>();
 
   @Load
-  private BiMap<Integer, Ref<Team>> seededTeams = HashBiMap.create();
-
-  public SingleEliminationTournament() {
-  }
-
+  private Collection<Ref<Team>> teams = new ArrayList<>();
+  
   @Override
   public Collection<Game> getGames() {
-    // TODO Auto-generated method stub
-    return null;
+    Collection<Game> games = new HashSet<>();
+    Map<Integer, GameRankPair> playInGames = championshipGame.get()
+        .getPlayInGames();
+    for (GameRankPair pair : playInGames.values()) {
+      games.add(pair.game);
+    }
+    return games;
   }
 
   @Override
@@ -41,14 +51,14 @@ public class SingleEliminationTournament extends Tournament {
     // TODO Lambdas would make this nicer
     Collection<Game> derefGames = new ArrayList<>();
     for (Ref<Game> game : seedGames) {
-      derefGames.add(RefDereferencer.dereference(game));
+      derefGames.add(game.get());
     }
     return derefGames;
   }
 
   @Override
   public Game getChampionshipGame() {
-    return RefDereferencer.dereference(championshipGame);
+    return championshipGame.get();
   }
 
   @Override
@@ -60,11 +70,11 @@ public class SingleEliminationTournament extends Tournament {
   @Override
   public Collection<Team> getTeams() {
     // TODO Lambdas would make this much nicer
-    ArrayList<Team> teams = new ArrayList<>();
-    for (Ref<Team> team : seededTeams.values()) {
-      teams.add(RefDereferencer.dereference(team));
+    Collection<Team> derefTeams = new HashSet<>();
+    for (Ref<Team> team : teams) {
+      derefTeams.add(team.get());
     }
-    return teams;
+    return derefTeams;
   }
 
   @Override
@@ -80,20 +90,20 @@ public class SingleEliminationTournament extends Tournament {
   }
 
   @Override
-  public double getValue(Selectable selection) {
+  public double getValue(Outcome selection) {
     // TODO Auto-generated method stub
     return 0;
   }
 
   @Override
-  public double getPossibleValue(Selectable selection) {
+  public double getPossibleValue(Outcome selection) {
     // TODO Auto-generated method stub
     return 0;
   }
 
   @Override
   public int getSeed(Team team) throws TeamNotInTournamentException {
-    Integer seed = seededTeams.inverse().get(Ref.create(team));
+    Integer seed = teamSeeds.get(team.id);
     if (seed == null) {
       throw new TeamNotInTournamentException();
     }
@@ -101,13 +111,17 @@ public class SingleEliminationTournament extends Tournament {
   }
 
   @Override
-  public void setOutcome(Game game, List<Team> outcome) {
+  public void setOutcome(Game game, List<Team> outcome)
+      throws GameNotInOutcomeException {
     // TODO Auto-generated method stub
-
+    Ref<Game> ref = Ref.create(game);
+    if (!games.contains(ref)) {
+      throw new GameNotInOutcomeException();
+    }
   }
 
   @Override
-  public List<Team> getOutcome(Game game) {
+  public List<Team> getOutcome(Game game) throws GameNotInOutcomeException {
     // TODO Auto-generated method stub
     return null;
   }

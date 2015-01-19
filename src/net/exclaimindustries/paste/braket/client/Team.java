@@ -31,7 +31,7 @@ import com.googlecode.objectify.annotation.Id;
  */
 @Entity
 @Cache
-public final class Team implements IsSerializable {
+public class Team implements IsSerializable {
 
   private static final String imageDirectory = "/images/teams/";
 
@@ -53,7 +53,7 @@ public final class Team implements IsSerializable {
   }
 
   @Id
-  private Long id;
+  protected Long id = null;
 
   /**
    * The teamName of the team.

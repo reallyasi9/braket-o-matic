@@ -2,7 +2,9 @@ package net.exclaimindustries.paste.braket.client;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -30,21 +32,30 @@ public class HeadToHeadGame extends Game {
 
   private Integer bottomScore = null;
 
-  private GameIndexPair winnerAdvancement = null;
+  @Load
+  private Ref<Game> winnerAdvancement = Ref.create(UndefinedGame.get());
+  
+  private Integer winnerAdvancementIndex = null;
 
-  private GameIndexPair loserAdvancement = null;
+  @Load
+  private Ref<Game> loserAdvancement = Ref.create(UndefinedGame.get());
 
-  private GameIndexPair topPlayIn = null;
+  private Integer loserAdvancementIndex = null;
+  
+  @Load
+  private Ref<Game> topPlayIn = Ref.create(UndefinedGame.get());
+  
+  private Integer topPlayInRank = null;
 
-  private GameIndexPair bottomPlayIn = null;
+  @Load
+  private Ref<Game> bottomPlayIn = Ref.create(UndefinedGame.get());
 
+  private Integer bottomPlayInRank = null;
+  
   @Override
   public List<Team> getTeams() {
     // TODO lambdas would make this much nicer
-    List<Team> derefTeams = new ArrayList<>();
-    derefTeams.add(RefDereferencer.dereference(topTeam));
-    derefTeams.add(RefDereferencer.dereference(bottomTeam));
-    return derefTeams;
+    return Arrays.asList(topTeam.get(), bottomTeam.get());
   }
 
   @Override
@@ -52,7 +63,7 @@ public class HeadToHeadGame extends Game {
       throws IndexOutOfBoundsException {
     validateGameOrderIndex(gameOrderIndex);
     Ref<Team> selected = (gameOrderIndex == 0) ? topTeam : bottomTeam;
-    return RefDereferencer.dereference(selected);
+    return selected.get();
   }
 
   @Override
@@ -75,35 +86,40 @@ public class HeadToHeadGame extends Game {
     }
     // TODO Lambdas would make this much nicer
     SortedMap<Integer, Team> map = new TreeMap<>();
-    Team team1 = RefDereferencer.dereference(topTeam);
-    Team team2 = RefDereferencer.dereference(bottomTeam);
-    map.put(topScore, team1);
-    map.put(bottomScore, team2);
+    map.put(topScore, topTeam.get());
+    map.put(bottomScore, bottomTeam.get());
     return map;
   }
 
   @Override
-  public void setAdvancement(int rankIndex, GameIndexPair targetGame)
+  public void setAdvancement(int rankIndex, GameRankPair targetGame)
       throws IndexOutOfBoundsException {
     setUnpropagatedAdvancement(rankIndex, targetGame);
     if (targetGame != null) {
-      GameIndexPair thisPair = new GameIndexPair(this, rankIndex);
+      GameRankPair thisPair = new GameRankPair(this, rankIndex);
       targetGame.game.setUnpropagatedPlayInGameRankPair(targetGame.index,
           thisPair);
     }
   }
 
   @Override
-  public GameIndexPair getPlayInGameRankPair(int gameOrderIndex)
+  public GameRankPair getPlayInGame(int gameOrderIndex)
       throws IndexOutOfBoundsException {
     validateGameOrderIndex(gameOrderIndex);
-    return (gameOrderIndex == 0) ? topPlayIn : bottomPlayIn;
+    if (gameOrderIndex == 0) {
+      return new GameRankPair(topPlayIn.get(), topPlayInRank);
+    } else {
+      return new GameRankPair(bottomPlayIn.get(), bottomPlayInRank);
+    }
   }
 
   @Override
-  public List<GameIndexPair> getPlayInGameRankPairs() {
-    return Arrays.asList(topPlayIn, bottomPlayIn);
-  }
+  public Map<Integer, GameRankPair> getPlayInGames() {
+    Map<Integer, GameRankPair> games = new HashMap<>();
+    games.put(0, new GameRankPair(topPlayIn.get(), topPlayInRank));
+    games.put(1, new GameRankPair(bottomPlayIn.get(), bottomPlayInRank));
+    return games;
+    }
 
   @Override
   public double randomizeResult(ResultProbabilityCalculator calculator) {
@@ -130,21 +146,21 @@ public class HeadToHeadGame extends Game {
   }
 
   @Override
-  public void setPlayInGameRankPair(int gameOrderIndex, GameIndexPair playInGame)
+  public void setPlayInGameRankPair(int gameOrderIndex, GameRankPair playInGame)
       throws IndexOutOfBoundsException {
     setUnpropagatedPlayInGameRankPair(gameOrderIndex, playInGame);
     if (playInGame != null) {
-      GameIndexPair thisPair = new GameIndexPair(this, gameOrderIndex);
+      GameRankPair thisPair = new GameRankPair(this, gameOrderIndex);
       playInGame.game.setUnpropagatedAdvancement(playInGame.index, thisPair);
     }
   }
 
   @Override
   protected void setUnpropagatedAdvancement(int rankIndex,
-      GameIndexPair targetGame) throws IndexOutOfBoundsException {
+      GameRankPair targetGame) throws IndexOutOfBoundsException {
     validateGameOrderIndex(rankIndex);
     if (rankIndex == 0) {
-      winnerAdvancement = targetGame;
+      winnerAdvancement = Ref.create(targetGame.game);
     } else {
       loserAdvancement = targetGame;
     }
@@ -152,7 +168,7 @@ public class HeadToHeadGame extends Game {
 
   @Override
   public void setUnpropagatedPlayInGameRankPair(int gameOrderIndex,
-      GameIndexPair playInGame) throws IndexOutOfBoundsException {
+      GameRankPair playInGame) throws IndexOutOfBoundsException {
     validateGameOrderIndex(gameOrderIndex);
     if (gameOrderIndex == 0) {
       topPlayIn = playInGame;
@@ -162,14 +178,14 @@ public class HeadToHeadGame extends Game {
   }
 
   @Override
-  public GameIndexPair getAdvancement(int rankIndex)
+  public GameRankPair getAdvancement(int rankIndex)
       throws IndexOutOfBoundsException {
     validateGameOrderIndex(rankIndex);
     return (rankIndex == 0) ? winnerAdvancement : loserAdvancement;
   }
 
   @Override
-  public List<GameIndexPair> getAdvancements() {
+  public List<GameRankPair> getAdvancements() {
     return Arrays.asList(winnerAdvancement, loserAdvancement);
   }
 
