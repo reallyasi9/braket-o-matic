@@ -13,6 +13,7 @@ import com.googlecode.objectify.annotation.Load;
 import com.googlecode.objectify.annotation.Subclass;
 
 import net.exclaimindustries.paste.braket.shared.GameNotFinalException;
+import net.exclaimindustries.paste.braket.shared.RefDereferencer;
 import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
 
 @Subclass(index = true)
@@ -39,9 +40,10 @@ public class HeadToHeadGame extends Game {
 
   @Override
   public List<Team> getTeams() {
+    // TODO lambdas would make this much nicer
     List<Team> derefTeams = new ArrayList<>();
-    derefTeams.add((topTeam == null) ? null : topTeam.get());
-    derefTeams.add((bottomTeam == null) ? null : bottomTeam.get());
+    derefTeams.add(RefDereferencer.dereference(topTeam));
+    derefTeams.add(RefDereferencer.dereference(bottomTeam));
     return derefTeams;
   }
 
@@ -50,7 +52,7 @@ public class HeadToHeadGame extends Game {
       throws IndexOutOfBoundsException {
     validateGameOrderIndex(gameOrderIndex);
     Ref<Team> selected = (gameOrderIndex == 0) ? topTeam : bottomTeam;
-    return (selected == null) ? null : selected.get();
+    return RefDereferencer.dereference(selected);
   }
 
   @Override
@@ -71,9 +73,10 @@ public class HeadToHeadGame extends Game {
         || bottomScore == null) {
       throw new GameNotFinalException();
     }
+    // TODO Lambdas would make this much nicer
     SortedMap<Integer, Team> map = new TreeMap<>();
-    Team team1 = (topTeam == null) ? null : topTeam.get();
-    Team team2 = (bottomTeam == null) ? null : bottomTeam.get();
+    Team team1 = RefDereferencer.dereference(topTeam);
+    Team team2 = RefDereferencer.dereference(bottomTeam);
     map.put(topScore, team1);
     map.put(bottomScore, team2);
     return map;

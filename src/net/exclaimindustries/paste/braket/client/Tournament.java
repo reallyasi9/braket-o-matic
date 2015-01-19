@@ -28,6 +28,7 @@ import java.util.Map.Entry;
 
 import javax.validation.constraints.Size;
 
+import net.exclaimindustries.paste.braket.shared.RefDereferencer;
 import net.exclaimindustries.paste.braket.shared.TeamNotInTournamentException;
 
 import com.google.gwt.view.client.ProvidesKey;
@@ -163,14 +164,13 @@ abstract public class Tournament extends Selectable {
     for (Entry<String, Ref<BraketPrediction>> entry : registeredPredictions
         .entrySet()) {
       Ref<BraketPrediction> value = entry.getValue();
-      predictions.put(entry.getKey(), (value == null) ? null : value.get());
+      predictions.put(entry.getKey(), RefDereferencer.dereference(value));
     }
     return predictions;
   }
 
   public BraketPrediction getRegisteredPrediction(String userKey) {
-    Ref<BraketPrediction> value = registeredPredictions.get(userKey);
-    return (value == null) ? null : value.get();
+    return RefDereferencer.dereference(registeredPredictions.get(userKey));
   }
 
   abstract public Collection<Game> getGames();
