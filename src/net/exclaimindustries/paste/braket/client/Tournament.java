@@ -28,7 +28,6 @@ import java.util.Map.Entry;
 
 import javax.validation.constraints.Size;
 
-import net.exclaimindustries.paste.braket.shared.RefDereferencer;
 import net.exclaimindustries.paste.braket.shared.TeamNotInTournamentException;
 
 import com.google.gwt.view.client.ProvidesKey;
@@ -38,7 +37,6 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Load;
-import com.googlecode.objectify.annotation.Subclass;
 
 /**
  * A class representing a tournament and its outcome.
@@ -177,13 +175,13 @@ abstract public class Tournament {
     for (Entry<String, Ref<BraketPrediction>> entry : registeredPredictions
         .entrySet()) {
       Ref<BraketPrediction> value = entry.getValue();
-      predictions.put(entry.getKey(), RefDereferencer.dereference(value));
+      predictions.put(entry.getKey(), value.get());
     }
     return predictions;
   }
 
   public BraketPrediction getRegisteredPrediction(String userKey) {
-    return RefDereferencer.dereference(registeredPredictions.get(userKey));
+    return registeredPredictions.get(userKey).get();
   }
 
   abstract public Collection<Game> getGames();

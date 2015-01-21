@@ -18,17 +18,20 @@
 package net.exclaimindustries.paste.braket.client;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.EntitySubclass;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Parent;
 import com.googlecode.objectify.annotation.Serialize;
 
 @Entity
@@ -44,14 +47,14 @@ public final class BraketPrediction {
   /**
    * The ID of the tournament to which this selection belongs.
    */
-  @Index
-  private Long tournamentId = null;
+  @Parent
+  private Ref<Tournament> parentTournament = null;
 
   /**
    * The ID of the user to whom this selection belongs.
    */
   @Index
-  private String userId = null;
+  private Ref<User> user = null;
 
   /**
    * A tiebreaker value.
@@ -69,7 +72,7 @@ public final class BraketPrediction {
    * game ID.
    */
   @Serialize
-  private Map<Long, Long> gameWinners = new HashMap<Long, Long>();
+  private Map<Long, List<Long>> gameWinners = new HashMap<>();
 
   /**
    * Default constructor
@@ -85,11 +88,11 @@ public final class BraketPrediction {
    *          over to this selection.
    */
   public BraketPrediction(User user, Tournament tournament) {
-    tournamentId = tournament.getId();
-    userId = user.getId();
-    gameWinners = new HashMap<Long, Long>();
-    for (Long gameID : tournament.getGames()) {
-      gameWinners.put(gameID, null);
+    parentTournament = Ref.create(tournament);
+    this.user = Ref.create(user);
+    gameWinners = new HashMap<>();
+    for (Game game : tournament.getGames()) {
+      gameWinners.put(game.getId(), new ArrayList<Long>());
     }
   }
 
@@ -343,7 +346,7 @@ public final class BraketPrediction {
   /**
    * Check the value of this selection against the given tournamentId truth.
    * 
-   * @param tournamentId
+   * @param parentTournament
    *          The tournamentId truth.
    * @return The point value of this selection.
    */
