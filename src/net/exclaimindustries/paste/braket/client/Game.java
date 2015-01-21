@@ -140,6 +140,13 @@ public abstract class Game implements IsSerializable {
    *         game.
    */
   abstract public List<Team> getTeams();
+  
+  /**
+   * Get the number of teams
+   * 
+   * @return The number of teams playing in this game.
+   */
+  abstract public int getNumberOfTeams();
 
   /**
    * Get a particular team.
