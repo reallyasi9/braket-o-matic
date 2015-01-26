@@ -71,8 +71,7 @@ public final class BraketPrediction {
    * The selected winning team IDs for each game in the tournament, keyed by
    * game ID.
    */
-  @Serialize
-  private Map<Long, List<Long>> gameWinners = new HashMap<>();
+  private Outcome predictedOutcome = new Outcome();
 
   /**
    * Default constructor

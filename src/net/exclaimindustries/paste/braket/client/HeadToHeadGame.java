@@ -51,6 +51,8 @@ public class HeadToHeadGame extends Game {
 
   private Integer bottomPlayInRank = null;
 
+  private boolean isFinal = false;
+
   @Override
   public List<Team> getTeams() {
     // TODO lambdas would make this much nicer
@@ -177,8 +179,7 @@ public class HeadToHeadGame extends Game {
 
   @Override
   public int getNumberOfTeams() {
-    // TODO Auto-generated method stub
-    return 0;
+    return 2; // always
   }
 
   @Override
@@ -203,6 +204,21 @@ public class HeadToHeadGame extends Game {
       loserAdvancement = Ref.create(targetGame.game);
       loserAdvancementIndex = targetGame.index;
     }
+  }
+
+  @Override
+  public boolean isReadyToPlay() {
+    return topTeam != null && bottomTeam != null && !isFinal();
+  }
+
+  @Override
+  public boolean isFinal() {
+    return isFinal;
+  }
+
+  @Override
+  protected void setFinal() {
+    isFinal = true;
   }
 
 }

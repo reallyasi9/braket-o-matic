@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import net.exclaimindustries.paste.braket.client.Game.GameRankPair;
-import net.exclaimindustries.paste.braket.shared.GameNotInOutcomeException;
+import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
 import net.exclaimindustries.paste.braket.shared.TeamNotInTournamentException;
 
 import com.googlecode.objectify.Ref;
@@ -23,7 +21,7 @@ public class SingleEliminationTournament extends Tournament {
 
   @Load
   private Collection<Ref<Game>> seedGames = new ArrayList<>();
-  
+
   @Load
   private Collection<Ref<Game>> games = new HashSet<>();
 
@@ -34,7 +32,7 @@ public class SingleEliminationTournament extends Tournament {
 
   @Load
   private Collection<Ref<Team>> teams = new ArrayList<>();
-  
+
   @Override
   public Collection<Game> getGames() {
     Collection<Game> games = new HashSet<>();
@@ -63,8 +61,7 @@ public class SingleEliminationTournament extends Tournament {
 
   @Override
   public void addGame(Game game) {
-    // TODO Auto-generated method stub
-
+    games.add(Ref.create(game));
   }
 
   @Override
@@ -78,15 +75,18 @@ public class SingleEliminationTournament extends Tournament {
   }
 
   @Override
-  public void setTeams(Collection<Long> teams) {
-    // TODO Auto-generated method stub
-
+  public void setTeams(Collection<Team> teams) {
+    this.teams.clear();
+    for (Team team : teams) {
+      this.teams.add(Ref.create(team));
+    }
   }
 
   @Override
   public void addTeam(Team team) {
-    // TODO Auto-generated method stub
-
+    // because teams is a hash set, this simply overwrites the team if it is
+    // already in the set.
+    teams.add(Ref.create(team));
   }
 
   @Override
@@ -105,25 +105,34 @@ public class SingleEliminationTournament extends Tournament {
   public int getSeed(Team team) throws TeamNotInTournamentException {
     Integer seed = teamSeeds.get(team.id);
     if (seed == null) {
-      throw new TeamNotInTournamentException();
+      throw new TeamNotInTournamentException("team with id ["
+          + Long.toString(team.getId()) + "] not in tournament");
     }
     return seed;
   }
 
   @Override
-  public void setOutcome(Game game, List<Team> outcome)
-      throws GameNotInOutcomeException {
+  public Tournament randomizeRemainder(ResultProbabilityCalculator calculator) {
     // TODO Auto-generated method stub
-    Ref<Game> ref = Ref.create(game);
-    if (!games.contains(ref)) {
-      throw new GameNotInOutcomeException();
-    }
+    return null;
   }
 
   @Override
-  public List<Team> getOutcome(Game game) throws GameNotInOutcomeException {
+  public Tournament randomizeNextGames(ResultProbabilityCalculator calculator) {
     // TODO Auto-generated method stub
     return null;
+  }
+
+  @Override
+  public Collection<Game> getScheduledGames() {
+    Collection<Game> nextGames = new HashSet<Game>();
+    for (Ref<Game> game : games) {
+      Game derefGame = game.get();
+      if (derefGame.isScheduled()) {
+        nextGames.add(derefGame);
+      }
+    }
+    return nextGames;
   }
 
 }

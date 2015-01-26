@@ -28,6 +28,7 @@ import java.util.Map.Entry;
 
 import javax.validation.constraints.Size;
 
+import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
 import net.exclaimindustries.paste.braket.shared.TeamNotInTournamentException;
 
 import com.google.gwt.view.client.ProvidesKey;
@@ -194,7 +195,7 @@ abstract public class Tournament {
 
   abstract public Collection<Team> getTeams();
 
-  abstract public void setTeams(Collection<Long> teams);
+  abstract public void setTeams(Collection<Team> teams);
 
   abstract public void addTeam(Team team);
 
@@ -277,4 +278,32 @@ abstract public class Tournament {
    */
   abstract public int getSeed(Team team) throws TeamNotInTournamentException;
 
+  /**
+   * Randomize the remaining games in the tournament.
+   * 
+   * @param calculator
+   *          The probability calculator to use to generate the random outcomes.
+   * @return A new tournament with the remaining games randomized.
+   */
+  abstract public Tournament randomizeRemainder(
+      ResultProbabilityCalculator calculator);
+
+  /**
+   * Randomize the games that are to be played next (for Excite-o-Matic)
+   * 
+   * @param calculator
+   *          The probability calculator to use to generate the random outcomes.
+   * @return A new tournament with the outcome of the next games to be played
+   *         randomized.
+   */
+  abstract public Tournament randomizeNextGames(
+      ResultProbabilityCalculator calculator);
+
+  /**
+   * Get the next games to be played.
+   * 
+   * @return Those games that have all of the teams defined, but no outcome yet
+   *         defined.
+   */
+  abstract public Collection<Game> getScheduledGames();
 }

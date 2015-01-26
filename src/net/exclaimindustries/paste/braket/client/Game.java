@@ -60,6 +60,7 @@ public abstract class Game implements IsSerializable {
       this.index = index;
     }
   }
+
   public static class GameRankPair {
     public Game game;
     public int rank;
@@ -108,11 +109,6 @@ public abstract class Game implements IsSerializable {
   private String gameStatus = new String();
 
   /**
-   * Whether or not the game has ended
-   */
-  private boolean isFinal = false;
-
-  /**
    * @return the key of the tournament to which this game belongs.
    */
   public Key<Tournament> getTournamentKey() {
@@ -140,7 +136,7 @@ public abstract class Game implements IsSerializable {
    *         game.
    */
   abstract public List<Team> getTeams();
-  
+
   /**
    * Get the number of teams
    * 
@@ -309,7 +305,8 @@ public abstract class Game implements IsSerializable {
    */
   public void setNoPlayInGameRankPair(int gameOrderIndex)
       throws IndexOutOfBoundsException {
-    setPlayInGameRankPair(gameOrderIndex, new GameRankPair(UndefinedGame.get(), 0));
+    setPlayInGameRankPair(gameOrderIndex, new GameRankPair(UndefinedGame.get(),
+        0));
   }
 
   public Date getScheduledDate() {
@@ -320,21 +317,22 @@ public abstract class Game implements IsSerializable {
     this.scheduledDate = new Date(scheduledDate.getTime());
   }
 
+  /**
+   * Determine if the game is ready to be played.
+   * 
+   * @return true if all the teams are defined, but the game is not over yet.
+   */
+  public abstract boolean isReadyToPlay();
+
   public boolean isScheduled() {
-    return scheduledDate.getTime() > new Date().getTime() && isFinal == false;
+    return scheduledDate.getTime() > new Date().getTime() && !isFinal();
   }
 
   public boolean isInProgress() {
-    return scheduledDate.getTime() <= new Date().getTime() && isFinal == false;
+    return scheduledDate.getTime() <= new Date().getTime() && !isFinal();
   }
 
-  public boolean isFinal() {
-    return scheduledDate.getTime() <= new Date().getTime() && isFinal == true;
-  }
-
-  public void setFinal(boolean isFinal) {
-    this.isFinal = isFinal;
-  }
+  public abstract boolean isFinal();
 
   public String getLocation() {
     return location;
@@ -398,7 +396,8 @@ public abstract class Game implements IsSerializable {
    */
   protected void setUnpropagatedNoAdvancement(int rankIndex)
       throws IndexOutOfBoundsException {
-    this.setUnpropagatedAdvancement(rankIndex, new GameIndexPair(UndefinedGame.get(), 0));
+    this.setUnpropagatedAdvancement(rankIndex,
+        new GameIndexPair(UndefinedGame.get(), 0));
   }
 
   /**
@@ -423,6 +422,20 @@ public abstract class Game implements IsSerializable {
    */
   protected void setUnpropagatedNoPlayInGameRankPair(int gameOrderIndex)
       throws IndexOutOfBoundsException {
-    this.setUnpropagatedPlayInGameRankPair(gameOrderIndex, new GameRankPair(UndefinedGame.get(), 0));
+    this.setUnpropagatedPlayInGameRankPair(gameOrderIndex, new GameRankPair(
+        UndefinedGame.get(), 0));
   }
+
+  /**
+   * Mark a game as finalized.
+   */
+  public void finalize() {
+    gameStatus = "Final";
+    setFinal();
+  }
+
+  /**
+   * Set the game as finalized internally
+   */
+  protected abstract void setFinal();
 }
