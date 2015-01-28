@@ -138,6 +138,19 @@ public abstract class Game implements IsSerializable {
   abstract public List<Team> getTeams();
 
   /**
+   * Adds a team to the game at the given index.
+   * 
+   * @param index
+   *          The game-order index where the team will be.
+   * @param team
+   *          The team to add.
+   * @throws IndexOutOfBoundsException
+   *           If index is negative or if index > getNumberOfTeams().
+   */
+  abstract public void setTeam(int index, Team team)
+      throws IndexOutOfBoundsException;
+
+  /**
    * Get the number of teams
    * 
    * @return The number of teams playing in this game.
@@ -364,8 +377,26 @@ public abstract class Game implements IsSerializable {
    * @param calculator
    *          A class that can calculate the probability of a certain outcome.
    * @return The probability of the generated outcome.
+   * @post Leaves the game in a condition where isFinal() == true, and
+   *       propagates the randomized results to the advancement games.
    */
-  abstract public double randomizeResult(ResultProbabilityCalculator calculator);
+  public double randomizeResult(ResultProbabilityCalculator calculator) {
+    double prob = doRandomiztion(calculator);
+    finalize();
+    return prob;
+  }
+
+  /**
+   * Actually perform the randomization of the result.
+   * 
+   * @param calculator
+   * @return The probability of the generated outcome.
+   * @post The scores of the teams in the game should be such that the
+   *       randomized outcome is the result of the game, but isFinal() should
+   *       not necessarily return true.
+   */
+  abstract protected double doRandomiztion(
+      ResultProbabilityCalculator calculator);
 
   /**
    * Set what game and slot to where a winner will propagate from this game.
@@ -432,10 +463,34 @@ public abstract class Game implements IsSerializable {
   public void finalize() {
     gameStatus = "Final";
     setFinal();
+    try {
+      propagateResult();
+    } catch (GameNotFinalException e) {
+      // This will never happen due to the setFinal() call above
+    }
   }
 
   /**
    * Set the game as finalized internally
    */
   protected abstract void setFinal();
+
+  /**
+   * If the game is final, propagate the teams to the advancement games.
+   * 
+   * @throws GameNotFinalException
+   *           If the game is not marked as final yet.
+   */
+  protected void propagateResult() throws GameNotFinalException {
+    Map<Integer, Team> sortedTeams = getScoreSortedTeams();
+    Map<Integer, GameIndexPair> advancementGames = getAdvancements();
+    Integer rank = 0;
+    for (Team team : sortedTeams.values()) {
+      if (advancementGames.containsKey(rank)) {
+        GameIndexPair advancement = advancementGames.get(rank);
+        advancement.game.setTeam(advancement.index, team);
+      }
+      ++rank;
+    }
+  }
 }

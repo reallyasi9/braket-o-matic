@@ -8,14 +8,19 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import com.google.common.base.Optional;
-import com.googlecode.objectify.annotation.Cache;
-import com.googlecode.objectify.annotation.Entity;
-
 import net.exclaimindustries.paste.braket.shared.GameNotFinalException;
 import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
 
-@Entity
+import com.google.common.base.Optional;
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Subclass;
+
+/**
+ * A datastore entity that represents a game that has not been defined yet
+ * @author paste
+ *
+ */
+@Subclass(index = true)
 @Cache
 public class UndefinedGame extends Game {
 
@@ -112,11 +117,6 @@ public class UndefinedGame extends Game {
   }
 
   @Override
-  public void setFinal(boolean isFinal) {
-    return;
-  }
-
-  @Override
   public void setLocation(String location) {
     return;
   }
@@ -129,6 +129,34 @@ public class UndefinedGame extends Game {
   @Override
   public void setId(Long id) {
     return;
+  }
+
+  @Override
+  public int getNumberOfTeams() {
+    return 0;
+  }
+
+  @Override
+  public boolean isReadyToPlay() {
+    return false;
+  }
+
+  @Override
+  public boolean isFinal() {
+    return false;
+  }
+
+  @Override
+  protected void setFinal() {
+  }
+
+  @Override
+  public void setTeam(int index, Team team) throws IndexOutOfBoundsException {
+  }
+
+  @Override
+  protected double doRandomiztion(ResultProbabilityCalculator calculator) {
+    return 1;
   }
 
 }

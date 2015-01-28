@@ -112,21 +112,6 @@ public class HeadToHeadGame extends Game {
     return games;
   }
 
-  @Override
-  public double randomizeResult(ResultProbabilityCalculator calculator) {
-    List<Team> result = getTeams();
-    double weight = calculator.probabilityOf(result);
-    if (Random.nextDouble() <= weight) {
-      topScore = 1;
-      bottomScore = 0;
-      return weight;
-    } else {
-      topScore = 0;
-      bottomScore = 1;
-      return 1 - weight;
-    }
-  }
-
   private static void validateGameOrderIndex(int gameOrderIndex)
       throws IndexOutOfBoundsException {
     if (gameOrderIndex < 0 || gameOrderIndex > 1) {
@@ -219,6 +204,49 @@ public class HeadToHeadGame extends Game {
   @Override
   protected void setFinal() {
     isFinal = true;
+  }
+
+  @Override
+  public void setTeam(int index, Team team) throws IndexOutOfBoundsException {
+    if (index < 0 || index > 1) {
+      throw new IndexOutOfBoundsException("index [" + Integer.toString(index)
+          + "] is out of bounds (only 2 teams in this game)");
+    }
+    if (index == 0) {
+      topTeam = Ref.create(team);
+    } else {
+      bottomTeam = Ref.create(team);
+    }
+  }
+
+  @Override
+  protected double doRandomiztion(ResultProbabilityCalculator calculator) {
+    List<Team> result = getTeams();
+    double weight = calculator.probabilityOf(result);
+    if (Random.nextDouble() <= weight) {
+      topScore = 1;
+      bottomScore = 0;
+      return weight;
+    } else {
+      topScore = 0;
+      bottomScore = 1;
+      return 1 - weight;
+    }
+  }
+
+  @Override
+  protected void propagateResult() throws GameNotFinalException {
+    if (!isFinal()) {
+      throw new GameNotFinalException();
+    }
+    Team winningTeam = (topScore > bottomScore) ? topTeam.get() : bottomTeam.get();
+    Team losingTeam = (topScore < bottomScore) ? topTeam.get() : bottomTeam.get();
+    if (winnerAdvancementIndex != null) {
+      winnerAdvancement.get().setTeam(winnerAdvancementIndex, winningTeam);
+    }
+    if (loserAdvancementIndex != null) {
+      loserAdvancement.get().setTeam(loserAdvancementIndex, losingTeam);
+    }
   }
 
 }

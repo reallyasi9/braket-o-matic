@@ -3,6 +3,12 @@ package net.exclaimindustries.paste.braket.client;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Subclass;
 
+/**
+ * A datastore entity that represents a team that has not yet been defined
+ * 
+ * @author paste
+ *
+ */
 @Subclass(index = true)
 @Cache
 public class UndefinedTeam extends Team {

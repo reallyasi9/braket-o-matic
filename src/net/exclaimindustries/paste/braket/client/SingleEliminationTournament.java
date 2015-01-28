@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
+import net.exclaimindustries.paste.braket.client.Game.GameIndexPair;
 import net.exclaimindustries.paste.braket.client.Game.GameRankPair;
 import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
 import net.exclaimindustries.paste.braket.shared.TeamNotInTournamentException;
@@ -119,7 +123,23 @@ public class SingleEliminationTournament extends Tournament {
 
   @Override
   public Tournament randomizeNextGames(ResultProbabilityCalculator calculator) {
-    // TODO Auto-generated method stub
+    // Start with those games I can simulate, then work my way forward
+    Tournament randomizedTournament = new Tournament(this);
+    Queue<Game> nextGames = new LinkedList<>(
+        randomizedTournament.getScheduledGames());
+    Game game = nextGames.peek();
+    while (game != null) {
+      game.randomizeResult(calculator);
+      game.finalize();
+      game.propagateResult();
+      // TODO Possibly re-add the game to the tournament, depending on how
+      // Ref.get() functions
+      Map<Integer, GameIndexPair> advancementGames = game.getAdvancements();
+      for (GameIndexPair gameIndexPair : advancementGames.values()) {
+        nextGames.add(gameIndexPair.game);
+      }
+      game = nextGames.peek();
+    }
     return null;
   }
 
