@@ -62,6 +62,10 @@ public class Outcome implements IsSerializable {
     this.id = id;
   }
 
+  public Long getParentTournamentId() {
+    return (parentTournament == null) ? null : parentTournament.getId();
+  }
+
   public void setResult(Game game, List<Team> result) {
     List<Long> teamIdList = new ArrayList<>();
     for (Team team : result) {

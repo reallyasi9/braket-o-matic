@@ -131,9 +131,7 @@ public abstract class Game implements IsSerializable {
   /**
    * Get teams in game order.
    * 
-   * @return A list of teams participating in this game, in game order. These
-   *         can be null, representing teams that are not yet defined for the
-   *         game.
+   * @return A list of teams participating in this game, in game order. These should never be null.
    */
   abstract public List<Team> getTeams();
 

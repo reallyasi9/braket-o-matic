@@ -28,6 +28,7 @@ import java.util.Map.Entry;
 
 import javax.validation.constraints.Size;
 
+import net.exclaimindustries.paste.braket.shared.OutcomeNotPairedToTournamentException;
 import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
 import net.exclaimindustries.paste.braket.shared.TeamNotInTournamentException;
 
@@ -120,6 +121,22 @@ abstract public class Tournament {
    * Default constructor
    */
   public Tournament() {
+  }
+
+  /**
+   * Copy constructor.
+   * 
+   * @param other
+   *          The tournament to copy.
+   */
+  public Tournament(Tournament other) {
+    this.buyInValue = other.buyInValue;
+    this.id = null;
+    this.name = other.name;
+    this.payOutValues = new ArrayList<>(other.payOutValues);
+    this.registeredPredictions = new HashMap<>(other.registeredPredictions);
+    this.rules = other.rules;
+    this.startTime = other.startTime;
   }
 
   public String getName() {
@@ -223,8 +240,11 @@ abstract public class Tournament {
    *          The prediction to check.
    * @return The value of the prediction given based on the current status of
    *         the tournament.
+   * @throws OutcomeNotPairedToTournamentException
+   *           If the given outcome does not correspond to this tournament.
    */
-  abstract public double getValue(Outcome selection);
+  abstract public double getValue(Outcome selection)
+      throws OutcomeNotPairedToTournamentException;
 
   /**
    * Calculates the possible point value of a prediction based on the current

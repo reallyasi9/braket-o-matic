@@ -4,13 +4,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.SortedMap;
 
 import net.exclaimindustries.paste.braket.client.Game.GameIndexPair;
 import net.exclaimindustries.paste.braket.client.Game.GameRankPair;
+import net.exclaimindustries.paste.braket.shared.GameNotFinalException;
+import net.exclaimindustries.paste.braket.shared.GameNotInOutcomeException;
+import net.exclaimindustries.paste.braket.shared.OutcomeNotPairedToTournamentException;
 import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
 import net.exclaimindustries.paste.braket.shared.TeamNotInTournamentException;
 
@@ -36,6 +41,15 @@ public class SingleEliminationTournament extends Tournament {
 
   @Load
   private Collection<Ref<Team>> teams = new ArrayList<>();
+
+  private Map<Long, Double> gameValues = new HashMap<>();
+
+  /**
+   * Default constructor
+   */
+  public SingleEliminationTournament() {
+    super();
+  }
 
   @Override
   public Collection<Game> getGames() {
@@ -94,9 +108,60 @@ public class SingleEliminationTournament extends Tournament {
   }
 
   @Override
-  public double getValue(Outcome selection) {
-    // TODO Auto-generated method stub
-    return 0;
+  public double getValue(Outcome selection)
+      throws OutcomeNotPairedToTournamentException {
+    if (selection.getParentTournamentId() != id) {
+      throw new OutcomeNotPairedToTournamentException(
+          "outcome paired to tournament with id ["
+              + Long.toString(selection.getParentTournamentId())
+              + "], this tournament has id [" + Long.toString(id) + "]");
+    }
+
+    double value = 0;
+
+    for (Ref<Game> game : games) {
+      Game derefGame = game.get();
+      if (!derefGame.isFinal()) {
+        continue;
+      }
+      List<Long> selectionResult;
+      try {
+        selectionResult = selection.getResult(derefGame);
+      } catch (GameNotInOutcomeException e) {
+        throw new OutcomeNotPairedToTournamentException(e);
+      }
+      SortedMap<Integer, Team> result;
+      try {
+        result = derefGame.getScoreSortedTeams();
+      } catch (GameNotFinalException e) {
+        // The game is already checked for isFinal.
+        // If this happens, it's the programmer's fault, not the user's.
+        throw new RuntimeException(e);
+      }
+      if (selectionResult.size() != result.size()) {
+        throw new OutcomeNotPairedToTournamentException("number of teams ["
+            + Integer.toString(selectionResult.size())
+            + "] in outcome game with id [" + Long.toString(derefGame.getId())
+            + "] not equal to the number of teams ["
+            + Integer.toString(result.size()) + "] in the tournament game");
+      }
+      // TODO fix how I am storing things to make this more sensible...
+      // TODO possibly a GameValueCalculator class?
+      Iterator<Long> selectionIterator = selectionResult.iterator();
+      Iterator<Team> resultIterator = result.values().iterator();
+      boolean same = true;
+      while (selectionIterator.hasNext()) {
+        if (selectionIterator.next() != resultIterator.next().getId()) {
+          same = false;
+          break;
+        }
+      }
+      if (same) {
+        value += gameValues.get(derefGame.getId());
+      }
+    }
+
+    return value;
   }
 
   @Override
@@ -117,27 +182,36 @@ public class SingleEliminationTournament extends Tournament {
 
   @Override
   public Tournament randomizeRemainder(ResultProbabilityCalculator calculator) {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public Tournament randomizeNextGames(ResultProbabilityCalculator calculator) {
     // Start with those games I can simulate, then work my way forward
-    Tournament randomizedTournament = new Tournament(this);
+    Tournament randomizedTournament = new SingleEliminationTournament(this);
     Queue<Game> nextGames = new LinkedList<>(
         randomizedTournament.getScheduledGames());
     Game game = nextGames.peek();
     while (game != null) {
       game.randomizeResult(calculator);
       game.finalize();
-      game.propagateResult();
       // TODO Possibly re-add the game to the tournament, depending on how
       // Ref.get() functions
       Map<Integer, GameIndexPair> advancementGames = game.getAdvancements();
       for (GameIndexPair gameIndexPair : advancementGames.values()) {
         nextGames.add(gameIndexPair.game);
       }
+      game = nextGames.peek();
+    }
+    return randomizedTournament;
+  }
+
+  @Override
+  public Tournament randomizeNextGames(ResultProbabilityCalculator calculator) {
+    Tournament randomizedTournament = new SingleEliminationTournament(this);
+    Queue<Game> nextGames = new LinkedList<>(
+        randomizedTournament.getScheduledGames());
+    Game game = nextGames.peek();
+    while (game != null) {
+      game.randomizeResult(calculator);
+      game.finalize();
+      // TODO Possibly re-add the game to the tournament, depending on how
+      // Ref.get() functions
       game = nextGames.peek();
     }
     return null;
@@ -153,6 +227,16 @@ public class SingleEliminationTournament extends Tournament {
       }
     }
     return nextGames;
+  }
+
+  public SingleEliminationTournament(SingleEliminationTournament other) {
+    super(other);
+    this.championshipGame = other.championshipGame;
+    this.games = new HashSet<>(other.games);
+    this.id = null;
+    this.seedGames = new ArrayList<>(other.seedGames);
+    this.teams = new ArrayList<>(other.teams);
+    this.teamSeeds = new HashMap<>(other.teamSeeds);
   }
 
 }
