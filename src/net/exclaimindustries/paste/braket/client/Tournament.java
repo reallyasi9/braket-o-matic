@@ -30,6 +30,7 @@ import javax.validation.constraints.Size;
 
 import net.exclaimindustries.paste.braket.shared.OutcomeNotPairedToTournamentException;
 import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
+import net.exclaimindustries.paste.braket.shared.Team;
 import net.exclaimindustries.paste.braket.shared.TeamNotInTournamentException;
 
 import com.google.gwt.view.client.ProvidesKey;

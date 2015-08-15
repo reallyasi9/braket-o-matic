@@ -2,8 +2,6 @@ package net.exclaimindustries.paste.braket.shared;
 
 import java.util.List;
 
-import net.exclaimindustries.paste.braket.client.Team;
-
 /**
  * An interface that provides a method to calculate the probability that a
  * certain result happened in a Game.

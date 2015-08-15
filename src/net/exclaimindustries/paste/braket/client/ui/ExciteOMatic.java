@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.exclaimindustries.paste.braket.client.Game;
-import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.User;
+import net.exclaimindustries.paste.braket.shared.Team;
 import net.exclaimindustries.paste.braket.client.ExpectedValueService;
 import net.exclaimindustries.paste.braket.client.ExpectedValueServiceAsync;
 

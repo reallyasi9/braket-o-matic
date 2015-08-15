@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.exclaimindustries.paste.braket.shared.GameNotInOutcomeException;
+import net.exclaimindustries.paste.braket.shared.Team;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.googlecode.objectify.Key;

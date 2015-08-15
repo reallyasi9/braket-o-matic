@@ -2,9 +2,9 @@ package net.exclaimindustries.paste.braket.client.ui;
 
 import java.util.Comparator;
 
-import net.exclaimindustries.paste.braket.client.Team;
-import net.exclaimindustries.paste.braket.client.TeamName;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
+import net.exclaimindustries.paste.braket.shared.Team;
+import net.exclaimindustries.paste.braket.shared.TeamName;
 
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.EditTextCell;

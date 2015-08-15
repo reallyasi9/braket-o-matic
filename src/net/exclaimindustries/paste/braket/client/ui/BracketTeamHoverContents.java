@@ -1,7 +1,5 @@
 package net.exclaimindustries.paste.braket.client.ui;
 
-import net.exclaimindustries.paste.braket.client.Team;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.ImageElement;
@@ -10,6 +8,8 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+
+import net.exclaimindustries.paste.braket.shared.Team;
 
 /**
  * The BracketTeamHoverContents are what the user sees when mousing over a team
@@ -35,7 +35,7 @@ public class BracketTeamHoverContents extends Composite {
         
         // This popup doesn't need to do ANYTHING but display an icon and some
         // team info.
-        teamIcon.setSrc(team.getPicture());
+        teamIcon.setSrc(team.getImage());
         teamName.setInnerText(team.getName().getDisplayName());
         
         if(!editable)

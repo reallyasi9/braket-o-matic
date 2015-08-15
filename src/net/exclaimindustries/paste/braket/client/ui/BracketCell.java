@@ -7,9 +7,9 @@
  */
 package net.exclaimindustries.paste.braket.client.ui;
 
-import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.ui.BracketButton.Type;
 import net.exclaimindustries.paste.braket.client.ui.BracketContainer.Mode;
+import net.exclaimindustries.paste.braket.shared.Team;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -145,7 +145,7 @@ public class BracketCell extends BracketDrawable {
             // without any click popups.  Hovers, yes.
             Team team = mController.getTeams().get(mId);
             
-            buttonContainer.setTeamIcon(team.getPicture());
+            buttonContainer.setTeamIcon(team.getImage());
             buttonContainer.setSeed(team.getSeed());
             
             Type type = Type.TEAM_NONEDITABLE;
@@ -159,7 +159,7 @@ public class BracketCell extends BracketDrawable {
             if(mController.getSelection().hasSelection(mId)) {
                 int teamIndex = mController.getSelection().getSelectedTeamIndex(mId);
                 Team team = mController.getTeams().get(teamIndex);
-                buttonContainer.setTeamIcon(team.getPicture());
+                buttonContainer.setTeamIcon(team.getImage());
                 buttonContainer.setSeed(team.getSeed());
             } else {
                 buttonContainer.setTeamIcon("images/unknown-selection.png");
@@ -177,7 +177,7 @@ public class BracketCell extends BracketDrawable {
             if(mController.getTournament().isCompletedGame(mId)) {
                 int teamIndex = mController.getTournament().getSelectedTeamIndex(mId);
                 Team team = mController.getTeams().get(teamIndex);
-                buttonContainer.setTeamIcon(team.getPicture());
+                buttonContainer.setTeamIcon(team.getImage());
                 buttonContainer.setSeed(team.getSeed());
             } else {
                 buttonContainer.setTeamIcon("images/unknown-selection.png");
@@ -188,7 +188,7 @@ public class BracketCell extends BracketDrawable {
             if(mController.getSelection().hasSelection(mId)) {
                 int teamIndex = mController.getSelection().getSelectedTeamIndex(mId);
                 Team team = mController.getTeams().get(teamIndex);
-                buttonContainer.setTeamIcon(team.getPicture());
+                buttonContainer.setTeamIcon(team.getImage());
                 buttonContainer.setSeed(team.getSeed());
             } else {
                 buttonContainer.setTeamIcon("images/unknown-selection.png");

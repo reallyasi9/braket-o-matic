@@ -8,10 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.exclaimindustries.paste.braket.client.Game;
-import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.TeamService;
 import net.exclaimindustries.paste.braket.client.TeamServiceAsync;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
+import net.exclaimindustries.paste.braket.shared.Team;
 
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.DatePickerCell;

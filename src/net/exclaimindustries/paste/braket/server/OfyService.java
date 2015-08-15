@@ -18,13 +18,13 @@
 package net.exclaimindustries.paste.braket.server;
 
 import net.exclaimindustries.paste.braket.client.BraketPrediction;
-import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.User;
 import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.HeadToHeadGame;
 import net.exclaimindustries.paste.braket.client.Outcome;
 import net.exclaimindustries.paste.braket.server.backends.ExpectoValues;
+import net.exclaimindustries.paste.braket.shared.Team;
 
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;

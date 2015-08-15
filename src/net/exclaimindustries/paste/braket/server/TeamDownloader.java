@@ -25,9 +25,9 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.RGBAColor;
-import net.exclaimindustries.paste.braket.client.TeamName;
+import net.exclaimindustries.paste.braket.shared.Team;
+import net.exclaimindustries.paste.braket.shared.TeamName;
 
 import org.jdom2.CDATA;
 import org.jdom2.Content;
@@ -162,7 +162,7 @@ public class TeamDownloader {
         URL url = new URL(teamLogoUrl);
         File file = new File(url.getPath());
         String teamLogoName = file.getName();
-        team.setPicture(teamLogoName);
+        team.setImage(teamLogoName);
 
         return team;
     }

@@ -17,11 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.exclaimindustries.paste.braket.client.Game;
-import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.server.CurrentTournament;
 import net.exclaimindustries.paste.braket.server.OfyService;
 import net.exclaimindustries.paste.braket.server.TournamentServiceImpl;
+import net.exclaimindustries.paste.braket.shared.Team;
 
 import org.jdom2.Document;
 import org.jdom2.Element;

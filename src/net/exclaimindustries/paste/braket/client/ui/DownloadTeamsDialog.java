@@ -18,10 +18,10 @@ package net.exclaimindustries.paste.braket.client.ui;
 
 import java.util.LinkedList;
 
-import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.RGBAColor;
-import net.exclaimindustries.paste.braket.client.TeamName;
 import net.exclaimindustries.paste.braket.client.resources.Resources;
+import net.exclaimindustries.paste.braket.shared.Team;
+import net.exclaimindustries.paste.braket.shared.TeamName;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

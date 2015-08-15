@@ -24,6 +24,7 @@ import java.util.SortedMap;
 
 import net.exclaimindustries.paste.braket.shared.GameNotFinalException;
 import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
+import net.exclaimindustries.paste.braket.shared.Team;
 
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.IsSerializable;

@@ -2,8 +2,6 @@ package net.exclaimindustries.paste.braket.client.ui;
 
 import java.util.List;
 
-import net.exclaimindustries.paste.braket.client.Team;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -16,6 +14,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
+
+import net.exclaimindustries.paste.braket.shared.Team;
 
 /**
  * The BracketEditTeamClickContents is what shows its filthy, ratty face around
@@ -114,7 +114,7 @@ public class BracketEditTeamClickContents extends Composite {
         // ONE FROM THE INDEX so it lines up with mTeams.  Or PAIN.
         selectedIndex--;
         
-        teamIcon.setUrl(mTeams.get(selectedIndex).getPicture());
+        teamIcon.setUrl(mTeams.get(selectedIndex).getImage());
     }
     
 }

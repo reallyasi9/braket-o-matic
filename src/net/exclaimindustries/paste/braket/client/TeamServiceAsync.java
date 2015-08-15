@@ -22,6 +22,8 @@ import java.util.Map;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import net.exclaimindustries.paste.braket.shared.Team;
+
 /**
  * @author paste
  * 

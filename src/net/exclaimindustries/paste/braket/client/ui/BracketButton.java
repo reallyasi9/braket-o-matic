@@ -5,8 +5,8 @@ import java.util.List;
 
 import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.BraketPrediction;
-import net.exclaimindustries.paste.braket.client.Team;
 import net.exclaimindustries.paste.braket.client.Tournament;
+import net.exclaimindustries.paste.braket.shared.Team;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;

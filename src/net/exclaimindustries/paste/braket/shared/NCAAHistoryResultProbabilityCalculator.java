@@ -2,8 +2,6 @@ package net.exclaimindustries.paste.braket.shared;
 
 import java.util.List;
 
-import net.exclaimindustries.paste.braket.client.Team;
-
 public class NCAAHistoryResultProbabilityCalculator implements
     ResultProbabilityCalculator {
 

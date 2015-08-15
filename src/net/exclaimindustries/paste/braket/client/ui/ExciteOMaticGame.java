@@ -17,7 +17,7 @@
 package net.exclaimindustries.paste.braket.client.ui;
 
 import net.exclaimindustries.paste.braket.client.Game;
-import net.exclaimindustries.paste.braket.client.Team;
+import net.exclaimindustries.paste.braket.shared.Team;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.NumberFormat;
@@ -90,8 +90,8 @@ public class ExciteOMaticGame extends ResizeComposite {
 
         topTeamName.setText(topTeam.getName().getDisplayName());
         bottomTeamName.setText(bottomTeam.getName().getDisplayName());
-        topTeamImage.setUrl(topTeam.getPicture());
-        bottomTeamImage.setUrl(bottomTeam.getPicture());
+        topTeamImage.setUrl(topTeam.getImage());
+        bottomTeamImage.setUrl(bottomTeam.getImage());
         topTeamChange.setText(changeFormat.format(topChange));
         bottomTeamChange.setText(changeFormat.format(bottomChange));
         if (topChange > bottomChange) {
