@@ -15,13 +15,15 @@
  * along with braket-o-matic.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.exclaimindustries.paste.braket.client;
+package net.exclaimindustries.paste.braket.shared;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.google.gwt.view.client.ProvidesKey;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+
+import net.exclaimindustries.paste.braket.client.RGBAColor;
 
 /**
  * A class that represents a contestant in a bracket game.
@@ -32,8 +34,6 @@ import com.googlecode.objectify.annotation.Id;
 @Entity
 @Cache
 public class Team implements IsSerializable {
-
-  private static final String imageDirectory = "/images/teams/";
 
   /**
    * A Key Provider so that BraketTournaments can be placed in DataGrids.
@@ -61,9 +61,9 @@ public class Team implements IsSerializable {
   private TeamName teamName = new TeamName();
 
   /**
-   * Location of a logo or picture representing the team
+   * A logo or picture representing the team
    */
-  private String picture = null;
+  private Image image = Image.UNKNOWN;
 
   /**
    * A single color that represents the team. Typically light.
@@ -84,7 +84,7 @@ public class Team implements IsSerializable {
     Team t = new Team();
     t.setColor(this.getColor());
     t.setName(this.getName());
-    t.setPicture(this.getPicture());
+    t.setImage(this.getImage());
     return t;
   }
 
@@ -96,12 +96,12 @@ public class Team implements IsSerializable {
     this.teamName = new TeamName(teamName);
   }
 
-  public String getPicture() {
-    return imageDirectory + picture;
+  public Image getImage() {
+    return this.image;
   }
 
-  public void setPicture(String picture) {
-    this.picture = picture;
+  public void setImage(Image image) {
+    this.image = image;
   }
 
   public RGBAColor getColor() {

@@ -15,12 +15,9 @@
  * along with braket-o-matic.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.exclaimindustries.paste.braket.client;
+package net.exclaimindustries.paste.braket.shared;
 
 import java.io.Serializable;
-
-import com.googlecode.objectify.annotation.Embed;
-import com.googlecode.objectify.annotation.Index;
 
 /**
  * A class representing the name of a team.
@@ -28,8 +25,6 @@ import com.googlecode.objectify.annotation.Index;
  * @author paste
  * 
  */
-@Embed
-@Index
 public final class TeamName implements Serializable {
 
     /**
