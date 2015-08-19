@@ -8,7 +8,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import net.exclaimindustries.paste.braket.shared.Fixture;
-import net.exclaimindustries.paste.braket.shared.GameNotFinalException;
+import net.exclaimindustries.paste.braket.shared.FixtureNotFinalException;
 import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
 import net.exclaimindustries.paste.braket.shared.Team;
 
@@ -34,22 +34,22 @@ public class HeadToHeadGame extends Fixture {
   private Integer bottomScore = null;
 
   @Load
-  private Ref<Fixture> winnerAdvancement = Ref.create(UndefinedGame.get());
+  private Ref<Fixture> winnerAdvancement = Ref.create(UndefinedFixture.get());
 
   private Integer winnerAdvancementIndex = null;
 
   @Load
-  private Ref<Fixture> loserAdvancement = Ref.create(UndefinedGame.get());
+  private Ref<Fixture> loserAdvancement = Ref.create(UndefinedFixture.get());
 
   private Integer loserAdvancementIndex = null;
 
   @Load
-  private Ref<Fixture> topPlayIn = Ref.create(UndefinedGame.get());
+  private Ref<Fixture> topPlayIn = Ref.create(UndefinedFixture.get());
 
   private Integer topPlayInRank = null;
 
   @Load
-  private Ref<Fixture> bottomPlayIn = Ref.create(UndefinedGame.get());
+  private Ref<Fixture> bottomPlayIn = Ref.create(UndefinedFixture.get());
 
   private Integer bottomPlayInRank = null;
 
@@ -83,10 +83,10 @@ public class HeadToHeadGame extends Fixture {
 
   @Override
   public SortedMap<Integer, Team> getScoreSortedTeams()
-      throws GameNotFinalException {
+      throws FixtureNotFinalException {
     if (!isFinal() || topScore == bottomScore || topScore == null
         || bottomScore == null) {
-      throw new GameNotFinalException();
+      throw new FixtureNotFinalException();
     }
     // TODO Lambdas would make this much nicer
     SortedMap<Integer, Team> map = new TreeMap<>();
@@ -96,21 +96,21 @@ public class HeadToHeadGame extends Fixture {
   }
 
   @Override
-  public GameRankPair getPlayInGame(int gameOrderIndex)
+  public FixtureRankPair getPlayInFixture(int gameOrderIndex)
       throws IndexOutOfBoundsException {
     validateGameOrderIndex(gameOrderIndex);
     if (gameOrderIndex == 0) {
-      return new GameRankPair(topPlayIn.get(), topPlayInRank);
+      return new FixtureRankPair(topPlayIn.get(), topPlayInRank);
     } else {
-      return new GameRankPair(bottomPlayIn.get(), bottomPlayInRank);
+      return new FixtureRankPair(bottomPlayIn.get(), bottomPlayInRank);
     }
   }
 
   @Override
-  public Map<Integer, GameRankPair> getPlayInGames() {
-    Map<Integer, GameRankPair> games = new HashMap<>();
-    games.put(0, new GameRankPair(topPlayIn.get(), topPlayInRank));
-    games.put(1, new GameRankPair(bottomPlayIn.get(), bottomPlayInRank));
+  public Map<Integer, FixtureRankPair> getPlayInFixtures() {
+    Map<Integer, FixtureRankPair> games = new HashMap<>();
+    games.put(0, new FixtureRankPair(topPlayIn.get(), topPlayInRank));
+    games.put(1, new FixtureRankPair(bottomPlayIn.get(), bottomPlayInRank));
     return games;
   }
 
@@ -124,18 +124,18 @@ public class HeadToHeadGame extends Fixture {
   }
 
   @Override
-  public void setPlayInGameRankPair(int gameOrderIndex, GameRankPair playInGame)
+  public void setPlayInFixtureRankPair(int gameOrderIndex, FixtureRankPair playInGame)
       throws IndexOutOfBoundsException {
-    setUnpropagatedPlayInGameRankPair(gameOrderIndex, playInGame);
+    setUnpropagatedPlayInFixtureRankPair(gameOrderIndex, playInGame);
     if (playInGame != null) {
-      GameIndexPair thisPair = new GameIndexPair(this, gameOrderIndex);
+      FixtureIndexPair thisPair = new FixtureIndexPair(this, gameOrderIndex);
       playInGame.game.setUnpropagatedAdvancement(playInGame.rank, thisPair);
     }
   }
 
   @Override
-  public void setUnpropagatedPlayInGameRankPair(int gameOrderIndex,
-      GameRankPair playInGame) throws IndexOutOfBoundsException {
+  public void setUnpropagatedPlayInFixtureRankPair(int gameOrderIndex,
+      FixtureRankPair playInGame) throws IndexOutOfBoundsException {
     validateGameOrderIndex(gameOrderIndex);
     if (gameOrderIndex == 0) {
       topPlayIn = Ref.create(playInGame.game);
@@ -147,20 +147,20 @@ public class HeadToHeadGame extends Fixture {
   }
 
   @Override
-  public GameIndexPair getAdvancement(int rankIndex)
+  public FixtureIndexPair getAdvancement(int rankIndex)
       throws IndexOutOfBoundsException {
     validateGameOrderIndex(rankIndex);
-    return (rankIndex == 0) ? new GameIndexPair(winnerAdvancement.get(),
-        winnerAdvancementIndex) : new GameIndexPair(loserAdvancement.get(),
+    return (rankIndex == 0) ? new FixtureIndexPair(winnerAdvancement.get(),
+        winnerAdvancementIndex) : new FixtureIndexPair(loserAdvancement.get(),
         loserAdvancementIndex);
   }
 
   @Override
-  public Map<Integer, GameIndexPair> getAdvancements() {
-    Map<Integer, GameIndexPair> map = new HashMap<>();
-    map.put(0, new GameIndexPair(winnerAdvancement.get(),
+  public Map<Integer, FixtureIndexPair> getAdvancements() {
+    Map<Integer, FixtureIndexPair> map = new HashMap<>();
+    map.put(0, new FixtureIndexPair(winnerAdvancement.get(),
         winnerAdvancementIndex));
-    map.put(1, new GameIndexPair(loserAdvancement.get(), loserAdvancementIndex));
+    map.put(1, new FixtureIndexPair(loserAdvancement.get(), loserAdvancementIndex));
     return map;
   }
 
@@ -170,19 +170,19 @@ public class HeadToHeadGame extends Fixture {
   }
 
   @Override
-  public void setAdvancement(int rankIndex, GameIndexPair targetGame)
+  public void setAdvancement(int rankIndex, FixtureIndexPair targetGame)
       throws IndexOutOfBoundsException {
     setUnpropagatedAdvancement(rankIndex, targetGame);
     if (targetGame != null) {
-      GameRankPair thisPair = new GameRankPair(this, rankIndex);
-      targetGame.game.setUnpropagatedPlayInGameRankPair(targetGame.index,
+      FixtureRankPair thisPair = new FixtureRankPair(this, rankIndex);
+      targetGame.game.setUnpropagatedPlayInFixtureRankPair(targetGame.index,
           thisPair);
     }
   }
 
   @Override
   protected void setUnpropagatedAdvancement(int rankIndex,
-      GameIndexPair targetGame) throws IndexOutOfBoundsException {
+      FixtureIndexPair targetGame) throws IndexOutOfBoundsException {
     validateGameOrderIndex(rankIndex);
     if (rankIndex == 0) {
       winnerAdvancement = Ref.create(targetGame.game);
@@ -237,9 +237,9 @@ public class HeadToHeadGame extends Fixture {
   }
 
   @Override
-  protected void propagateResult() throws GameNotFinalException {
+  protected void propagateResult() throws FixtureNotFinalException {
     if (!isFinal()) {
-      throw new GameNotFinalException();
+      throw new FixtureNotFinalException();
     }
     Team winningTeam = (topScore > bottomScore) ? topTeam.get() : bottomTeam.get();
     Team losingTeam = (topScore < bottomScore) ? topTeam.get() : bottomTeam.get();

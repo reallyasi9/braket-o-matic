@@ -12,14 +12,14 @@ import java.util.Queue;
 import java.util.SortedMap;
 
 import net.exclaimindustries.paste.braket.shared.Fixture;
-import net.exclaimindustries.paste.braket.shared.GameNotFinalException;
+import net.exclaimindustries.paste.braket.shared.FixtureNotFinalException;
 import net.exclaimindustries.paste.braket.shared.GameNotInOutcomeException;
 import net.exclaimindustries.paste.braket.shared.OutcomeNotPairedToTournamentException;
 import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
 import net.exclaimindustries.paste.braket.shared.Team;
 import net.exclaimindustries.paste.braket.shared.TeamNotInTournamentException;
-import net.exclaimindustries.paste.braket.shared.Fixture.GameIndexPair;
-import net.exclaimindustries.paste.braket.shared.Fixture.GameRankPair;
+import net.exclaimindustries.paste.braket.shared.Fixture.FixtureIndexPair;
+import net.exclaimindustries.paste.braket.shared.Fixture.FixtureRankPair;
 
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Cache;
@@ -37,7 +37,7 @@ public class SingleEliminationTournament extends Tournament {
   private Collection<Ref<Fixture>> games = new HashSet<>();
 
   @Load
-  private Ref<Fixture> championshipGame = Ref.create(UndefinedGame.get());
+  private Ref<Fixture> championshipGame = Ref.create(UndefinedFixture.get());
 
   private Map<Long, Integer> teamSeeds = new HashMap<>();
 
@@ -56,9 +56,9 @@ public class SingleEliminationTournament extends Tournament {
   @Override
   public Collection<Fixture> getGames() {
     Collection<Fixture> games = new HashSet<>();
-    Map<Integer, GameRankPair> playInGames = championshipGame.get()
-        .getPlayInGames();
-    for (GameRankPair pair : playInGames.values()) {
+    Map<Integer, FixtureRankPair> playInGames = championshipGame.get()
+        .getPlayInFixtures();
+    for (FixtureRankPair pair : playInGames.values()) {
       games.add(pair.game);
     }
     return games;
@@ -135,7 +135,7 @@ public class SingleEliminationTournament extends Tournament {
       SortedMap<Integer, Team> result;
       try {
         result = derefGame.getScoreSortedTeams();
-      } catch (GameNotFinalException e) {
+      } catch (FixtureNotFinalException e) {
         // The game is already checked for isFinal.
         // If this happens, it's the programmer's fault, not the user's.
         throw new RuntimeException(e);
@@ -194,8 +194,8 @@ public class SingleEliminationTournament extends Tournament {
       game.finalize();
       // TODO Possibly re-add the game to the tournament, depending on how
       // Ref.get() functions
-      Map<Integer, GameIndexPair> advancementGames = game.getAdvancements();
-      for (GameIndexPair gameIndexPair : advancementGames.values()) {
+      Map<Integer, FixtureIndexPair> advancementGames = game.getAdvancements();
+      for (FixtureIndexPair gameIndexPair : advancementGames.values()) {
         nextGames.add(gameIndexPair.game);
       }
       game = nextGames.peek();

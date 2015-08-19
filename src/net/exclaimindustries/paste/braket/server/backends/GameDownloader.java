@@ -235,7 +235,7 @@ public final class GameDownloader {
         game.setBottomTeamId(awayId);
         game.setTopTeamId(homeId);
         game.setEspnId(gameId);
-        game.setGameStatus(gameStatus);
+        game.setFixtureStatus(gameStatus);
         game.setLocation(gameLocation);
         game.setScheduledDate(startTime);
         game.setWinner(awayWon);

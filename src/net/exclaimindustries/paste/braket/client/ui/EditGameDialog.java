@@ -298,14 +298,14 @@ public class EditGameDialog extends SimpleLayoutPanel {
 
                     @Override
                     public String getValue(Fixture game) {
-                        return game.getGameStatus();
+                        return game.getFixtureStatus();
                     }
 
                 }, new FieldUpdater<Fixture, String>() {
 
                     @Override
                     public void update(int index, Fixture object, String value) {
-                        object.setGameStatus(value);
+                        object.setFixtureStatus(value);
                         doGameUpdate(index, object);
                     }
                 });
