@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.exclaimindustries.paste.braket.shared.Fixture;
 import net.exclaimindustries.paste.braket.shared.GameNotInOutcomeException;
 import net.exclaimindustries.paste.braket.shared.Team;
 
@@ -67,7 +68,7 @@ public class Outcome implements IsSerializable {
     return (parentTournament == null) ? null : parentTournament.getId();
   }
 
-  public void setResult(Game game, List<Team> result) {
+  public void setResult(Fixture game, List<Team> result) {
     List<Long> teamIdList = new ArrayList<>();
     for (Team team : result) {
       teamIdList.add(team.getId());
@@ -75,7 +76,7 @@ public class Outcome implements IsSerializable {
     outcome.put(game.getId(), teamIdList);
   }
 
-  public List<Long> getResult(Game game) throws GameNotInOutcomeException {
+  public List<Long> getResult(Fixture game) throws GameNotInOutcomeException {
     if (!outcome.containsKey(game.getId())) {
       throw new GameNotInOutcomeException("game with id [" + game.getId()
           + "] not in outcome");

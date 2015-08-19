@@ -15,16 +15,12 @@
  * along with braket-o-matic.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.exclaimindustries.paste.braket.client;
+package net.exclaimindustries.paste.braket.shared;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
-
-import net.exclaimindustries.paste.braket.shared.GameNotFinalException;
-import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
-import net.exclaimindustries.paste.braket.shared.Team;
 
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -33,6 +29,9 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Parent;
 import com.googlecode.objectify.annotation.Subclass;
+
+import net.exclaimindustries.paste.braket.client.Tournament;
+import net.exclaimindustries.paste.braket.client.UndefinedGame;
 
 /**
  * A class that represents a bracket game.
@@ -47,26 +46,26 @@ import com.googlecode.objectify.annotation.Subclass;
  */
 @Subclass(index = true)
 @Cache
-public abstract class Game implements IsSerializable {
+public abstract class Fixture implements IsSerializable {
 
   public static class WithTeams {
   }
 
   public static class GameIndexPair {
-    public Game game;
+    public Fixture game;
     public int index;
 
-    GameIndexPair(Game game, int index) {
+    GameIndexPair(Fixture game, int index) {
       this.game = game;
       this.index = index;
     }
   }
 
   public static class GameRankPair {
-    public Game game;
+    public Fixture game;
     public int rank;
 
-    GameRankPair(Game game, int rank) {
+    GameRankPair(Fixture game, int rank) {
       this.game = game;
       this.rank = rank;
     }

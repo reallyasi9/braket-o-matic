@@ -3,10 +3,10 @@ package net.exclaimindustries.paste.braket.client.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.BraketPrediction;
 import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.ui.BracketDrawable.Direction;
+import net.exclaimindustries.paste.braket.shared.Fixture;
 import net.exclaimindustries.paste.braket.shared.Team;
 
 import com.google.gwt.core.client.GWT;
@@ -102,7 +102,7 @@ public class BracketContainer extends ScrollPanel {
     private Tournament mTournament;
     private BraketPrediction mSelection;
     private List<Team> mTeams;
-    private List<Game> mGames;
+    private List<Fixture> mGames;
 
     private List<BracketColumn> mColumns;
 
@@ -116,7 +116,7 @@ public class BracketContainer extends ScrollPanel {
      *            a list of BraketTeams
      */
     public BracketContainer(Tournament tourn, List<Team> teams,
-            List<Game> games) {
+            List<Fixture> games) {
         if (tourn == null)
             throw new IllegalArgumentException(
                     "You need to pass a non-null BraketTournament to BracketContainer's constructor!");
@@ -171,7 +171,7 @@ public class BracketContainer extends ScrollPanel {
      * 
      * @return that there list of games
      */
-    public List<Game> getGames() {
+    public List<Fixture> getGames() {
         return mGames;
     }
 
@@ -198,7 +198,7 @@ public class BracketContainer extends ScrollPanel {
      *            the new selection (can be null)
      */
     public void setTournament(Tournament tourn, List<Team> teams,
-            List<Game> games, BraketPrediction selection) {
+            List<Fixture> games, BraketPrediction selection) {
         if (tourn == null)
             throw new IllegalArgumentException(
                     "The BraketTournament can't be null!");

@@ -18,6 +18,7 @@ package net.exclaimindustries.paste.braket.client;
 
 import java.util.List;
 
+import net.exclaimindustries.paste.braket.shared.Fixture;
 import net.exclaimindustries.paste.braket.shared.UserNotAdminException;
 import net.exclaimindustries.paste.braket.shared.UserNotLoggedInException;
 
@@ -42,7 +43,7 @@ public interface GameService extends RemoteService {
    *         the first game of the first round, and the last game representing
    *         the championship game.
    */
-  public List<Game> getGames();
+  public List<Fixture> getGames();
 
   /**
    * Saves or updates the given collection of games in the datastore. This
@@ -65,7 +66,7 @@ public interface GameService extends RemoteService {
    *           If any game in the collection is not associated with a valid
    *           <code>BraketTournament</code>.
    */
-  public void storeGames(Iterable<Game> games)
+  public void storeGames(Iterable<Fixture> games)
       throws UserNotLoggedInException, UserNotAdminException;
 
   /**
@@ -89,7 +90,7 @@ public interface GameService extends RemoteService {
    *           If any game in the collection is not associated with a valid
    *           <code>BraketTournament</code>.
    */
-  Long storeGame(Game game) throws UserNotLoggedInException,
+  Long storeGame(Fixture game) throws UserNotLoggedInException,
       UserNotAdminException;
 
   /**
@@ -102,7 +103,7 @@ public interface GameService extends RemoteService {
    * @throws SecurityException
    *           If the user is not logged in as an administrator.
    */
-  public void deleteGames(Iterable<Game> games)
+  public void deleteGames(Iterable<Fixture> games)
       throws UserNotLoggedInException, UserNotAdminException;
 
   /**
@@ -113,7 +114,7 @@ public interface GameService extends RemoteService {
    *          datastore.
    * 
    */
-  public void deleteGame(Game game) throws UserNotLoggedInException,
+  public void deleteGame(Fixture game) throws UserNotLoggedInException,
       UserNotAdminException;
 
   /**
@@ -130,6 +131,6 @@ public interface GameService extends RemoteService {
    * @throws SecurityException
    *           If the user is not logged in as an administrator.
    */
-  public void updateAndPropagateGame(Game game)
+  public void updateAndPropagateGame(Fixture game)
       throws UserNotLoggedInException, UserNotAdminException;
 }

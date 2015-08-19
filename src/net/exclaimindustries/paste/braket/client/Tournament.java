@@ -28,6 +28,7 @@ import java.util.Map.Entry;
 
 import javax.validation.constraints.Size;
 
+import net.exclaimindustries.paste.braket.shared.Fixture;
 import net.exclaimindustries.paste.braket.shared.OutcomeNotPairedToTournamentException;
 import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
 import net.exclaimindustries.paste.braket.shared.Team;
@@ -203,13 +204,13 @@ abstract public class Tournament {
     return registeredPredictions.get(userKey).get();
   }
 
-  abstract public Collection<Game> getGames();
+  abstract public Collection<Fixture> getGames();
 
-  abstract public Collection<Game> getSeedGames();
+  abstract public Collection<Fixture> getSeedGames();
 
-  abstract public Game getChampionshipGame();
+  abstract public Fixture getChampionshipGame();
 
-  abstract public void addGame(Game game);
+  abstract public void addGame(Fixture game);
 
   abstract public Collection<Team> getTeams();
 
@@ -326,5 +327,5 @@ abstract public class Tournament {
    * @return Those games that have all of the teams defined, but no outcome yet
    *         defined.
    */
-  abstract public Collection<Game> getScheduledGames();
+  abstract public Collection<Fixture> getScheduledGames();
 }

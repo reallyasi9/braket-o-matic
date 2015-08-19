@@ -16,11 +16,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.server.CurrentTournament;
 import net.exclaimindustries.paste.braket.server.OfyService;
 import net.exclaimindustries.paste.braket.server.TournamentServiceImpl;
+import net.exclaimindustries.paste.braket.shared.Fixture;
 import net.exclaimindustries.paste.braket.shared.Team;
 
 import org.jdom2.Document;
@@ -68,8 +68,8 @@ public class GameDownloaderServlet extends HttpServlet {
         }
 
         // Get the games and teams of the tournament
-        Collection<Game> tournGames = OfyService.ofy().load()
-                .type(Game.class).parent(currentTournRef)
+        Collection<Fixture> tournGames = OfyService.ofy().load()
+                .type(Fixture.class).parent(currentTournRef)
                 .ids(currentTournRef.get().getGames()).values();
 
         Collection<Team> tournTeams = OfyService.ofy().load()
@@ -77,8 +77,8 @@ public class GameDownloaderServlet extends HttpServlet {
                 .ids(currentTournRef.get().getGames()).values();
 
         // Index these by ESPN ID for faster lookup
-        HashMap<Long, Game> gameMap = new HashMap<Long, Game>();
-        for (Game game : tournGames) {
+        HashMap<Long, Fixture> gameMap = new HashMap<Long, Fixture>();
+        for (Fixture game : tournGames) {
             if (game.getEspnId() != null) {
                 gameMap.put(game.getEspnId(), game);
             }
@@ -133,8 +133,8 @@ public class GameDownloaderServlet extends HttpServlet {
 
             Long espnId = gameElement.getKey();
 
-            Game game = null; // to be filled in later
-            Game gameToUpdate = null;
+            Fixture game = null; // to be filled in later
+            Fixture gameToUpdate = null;
 
             // See if this is a game I know already
             if (gameMap.containsKey(espnId)) {
@@ -178,7 +178,7 @@ public class GameDownloaderServlet extends HttpServlet {
                 Long topTeamId = game.getTopTeamId();
                 Long bottomTeamId = game.getBottomTeamId();
 
-                for (Game tournGame : tournGames) {
+                for (Fixture tournGame : tournGames) {
                     if ((topTeamId.equals(tournGame.getTopTeamId()) && bottomTeamId
                             .equals(tournGame.getBottomTeamId()))
                             || (topTeamId.equals(tournGame.getBottomTeamId()) && bottomTeamId

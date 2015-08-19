@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.GameServiceAsync;
 import net.exclaimindustries.paste.braket.client.TournamentService;
 import net.exclaimindustries.paste.braket.client.TournamentServiceAsync;
+import net.exclaimindustries.paste.braket.shared.Fixture;
 
 import com.google.gwt.cell.client.DateCell;
 import com.google.gwt.cell.client.FieldUpdater;

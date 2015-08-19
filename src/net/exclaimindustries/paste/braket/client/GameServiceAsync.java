@@ -20,20 +20,22 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import net.exclaimindustries.paste.braket.shared.Fixture;
+
 /**
  * @author paste
  *
  */
 public interface GameServiceAsync {
 
-    void getGames(AsyncCallback<List<Game>> callback);
+    void getGames(AsyncCallback<List<Fixture>> callback);
 
-    void storeGames(Iterable<Game> games, AsyncCallback<Void> callback);
+    void storeGames(Iterable<Fixture> games, AsyncCallback<Void> callback);
 
-    void storeGame(Game game, AsyncCallback<Long> callback);
+    void storeGame(Fixture game, AsyncCallback<Long> callback);
 
-    void deleteGames(Iterable<Game> games, AsyncCallback<Void> callback);
+    void deleteGames(Iterable<Fixture> games, AsyncCallback<Void> callback);
 
-    void deleteGame(Game game, AsyncCallback<Void> callback);
+    void deleteGame(Fixture game, AsyncCallback<Void> callback);
 
 }

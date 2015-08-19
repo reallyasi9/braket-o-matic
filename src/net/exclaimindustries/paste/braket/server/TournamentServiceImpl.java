@@ -23,9 +23,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.TournamentService;
+import net.exclaimindustries.paste.braket.shared.Fixture;
 import net.exclaimindustries.paste.braket.shared.Team;
 import net.exclaimindustries.paste.braket.shared.UserNotAdminException;
 import net.exclaimindustries.paste.braket.shared.UserNotLoggedInException;
@@ -69,8 +69,8 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
     Tournament t = tournament.get();
 
     // Get games
-    Map<Long, Game> games = OfyService.ofy().load()
-        .type(Game.class).parent(tournament).ids(t.getGames());
+    Map<Long, Fixture> games = OfyService.ofy().load()
+        .type(Fixture.class).parent(tournament).ids(t.getGames());
 
     Map<Long, Team> teams = OfyService.ofy().load()
         .type(Team.class).ids(t.getTeams());
@@ -145,11 +145,11 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
    */
   private List<Long> generateGames(Tournament tournament) {
     BigInteger validGames = tournament.getGameMask();
-    ArrayList<Game> gamesToGenerate = new ArrayList<Game>();
+    ArrayList<Fixture> gamesToGenerate = new ArrayList<Fixture>();
     for (int i = 0; i < validGames.bitLength(); ++i) {
       if (validGames.testBit(i)) {
 
-        Game game = new Game();
+        Fixture game = new Fixture();
         game.setIndex(i);
         game.setTournamentKey(Key.create(Tournament.class,
             tournament.getId()));
@@ -161,7 +161,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
     // Save them all together. now() will write the Ids.
     OfyService.ofy().save().entities(gamesToGenerate).now();
     ArrayList<Long> gamesInOrder = new ArrayList<Long>();
-    for (Game game : gamesToGenerate) {
+    for (Fixture game : gamesToGenerate) {
       if (game.getIndex() >= gamesInOrder.size()) {
         while (game.getIndex() > gamesInOrder.size()) {
           gamesInOrder.add(null);
@@ -236,7 +236,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
    * net.exclaimindustries.paste.braket.client.BraketTournament)
    */
   @Override
-  public Long addGame(final Game game, final Tournament tournament)
+  public Long addGame(final Fixture game, final Tournament tournament)
       throws UserNotLoggedInException, UserNotAdminException {
     LogInServiceHelper.assertAdmin();
 
@@ -271,12 +271,12 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
    * net.exclaimindustries.paste.braket.client.BraketTournament)
    */
   @Override
-  public void addGames(final Iterable<Game> games,
+  public void addGames(final Iterable<Fixture> games,
       final Tournament tournament) throws UserNotLoggedInException,
       UserNotAdminException {
     LogInServiceHelper.assertAdmin();
 
-    for (Game game : games) {
+    for (Fixture game : games) {
       if (game.getIndex() < 0) {
         throw new IllegalArgumentException(
             "game number must be greater than or equal to zero");
@@ -292,7 +292,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
 
         OfyService.ofy().save().entities(games).now();
 
-        for (Game game : games) {
+        for (Fixture game : games) {
           tournament.setGame(game.getIndex(), game.getId());
         }
         OfyService.ofy().save().entity(tournament);
@@ -303,7 +303,7 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
   }
 
   public void uncheckedUpdateAndPropagateGame(
-      final Ref<Tournament> currentRef, final Game game) {
+      final Ref<Tournament> currentRef, final Fixture game) {
 
     final Tournament tournament = currentRef.get();
 
@@ -346,9 +346,9 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
       public void vrun() {
         game.setTournamentKey(currentRef.getKey());
 
-        Game thisGame = game;
+        Fixture thisGame = game;
 
-        ArrayList<Game> gamesToSave = new ArrayList<Game>();
+        ArrayList<Fixture> gamesToSave = new ArrayList<Fixture>();
         gamesToSave.add(thisGame);
 
         // Update the completion mask
@@ -370,10 +370,10 @@ public class TournamentServiceImpl extends RemoteServiceServlet implements
           Long thisWinnerId = thisGame.getTeamId(thisGame.getWinner() ? 1 : 0);
           int parentGameIndex = tournament.getParentGameIndex(thisGameIndex);
           long parentGameId = tournament.getGame(parentGameIndex);
-          Key<Game> parentKey = Key.create(currentRef.getKey(),
-              Game.class, parentGameId);
+          Key<Fixture> parentKey = Key.create(currentRef.getKey(),
+              Fixture.class, parentGameId);
 
-          Game parentGame = OfyService.ofy().load().key(parentKey).now();
+          Fixture parentGame = OfyService.ofy().load().key(parentKey).now();
 
           parentGame.setTeamId((thisGameIndex + 1) % 2, thisWinnerId);
 

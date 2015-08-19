@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import net.exclaimindustries.paste.braket.client.Game;
-
 import org.jdom2.CDATA;
 import org.jdom2.Content;
 import org.jdom2.Document;
@@ -22,6 +20,8 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
+
+import net.exclaimindustries.paste.braket.shared.Fixture;
 
 public final class GameDownloader {
 
@@ -136,7 +136,7 @@ public final class GameDownloader {
         return parsedElements;
     }
 
-    public static Game buildGame(Element item) throws ParseException {
+    public static Fixture buildGame(Element item) throws ParseException {
 
         // Get the game ID
         Long gameId =
@@ -179,10 +179,10 @@ public final class GameDownloader {
 
         // If the game is in progress or final, do additional parsing
         switch (gameStatusId) {
-        case (Game.STATUS_SCHEDULED):
+        case (Fixture.STATUS_SCHEDULED):
             gameStatus = "Starts " + gameStartTime;
             break;
-        case (Game.STATUS_IN_PROGRESS):
+        case (Fixture.STATUS_IN_PROGRESS):
             String period = item.getChildText(PERIOD_NODE, ESPN_NAMESPACE);
             String timeRemaining =
                     item.getChildText(CLOCK_NODE, ESPN_NAMESPACE);
@@ -195,7 +195,7 @@ public final class GameDownloader {
                     Integer.valueOf(item.getChildText(AWAY_SCORE_NODE,
                             ESPN_NAMESPACE));
             break;
-        case (Game.STATUS_HALFTIME):
+        case (Fixture.STATUS_HALFTIME):
 
             gameStatus = "Halftime";
 
@@ -206,7 +206,7 @@ public final class GameDownloader {
                     Integer.valueOf(item.getChildText(AWAY_SCORE_NODE,
                             ESPN_NAMESPACE));
             break;
-        case (Game.STATUS_FINAL):
+        case (Fixture.STATUS_FINAL):
             gameStatus = "FINAL";
             homeScore =
                     Integer.valueOf(item.getChildText(HOME_SCORE_NODE,
@@ -229,7 +229,7 @@ public final class GameDownloader {
         }
 
         // Build the game
-        Game game = new Game();
+        Fixture game = new Fixture();
         game.setBottomScore(awayScore);
         game.setTopScore(homeScore);
         game.setBottomTeamId(awayId);

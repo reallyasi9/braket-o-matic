@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.exclaimindustries.paste.braket.client.TournamentService.TournamentCollection;
+import net.exclaimindustries.paste.braket.shared.Fixture;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -47,10 +48,10 @@ public interface TournamentServiceAsync {
   void setCurrentTournament(Tournament tournament,
       AsyncCallback<Tournament> callback);
 
-  void addGame(Game game, Tournament tournament,
+  void addGame(Fixture game, Tournament tournament,
       AsyncCallback<Long> callback);
 
-  void addGames(Iterable<Game> games, Tournament tournament,
+  void addGames(Iterable<Fixture> games, Tournament tournament,
       AsyncCallback<Void> callback);
 
   void getTournaments(Tournament.IndexName orderCondition, int offset,

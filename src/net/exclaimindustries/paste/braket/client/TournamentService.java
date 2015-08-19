@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.exclaimindustries.paste.braket.shared.Fixture;
 import net.exclaimindustries.paste.braket.shared.Team;
 import net.exclaimindustries.paste.braket.shared.UserNotAdminException;
 import net.exclaimindustries.paste.braket.shared.UserNotLoggedInException;
@@ -40,16 +41,16 @@ public interface TournamentService extends RemoteService {
 
   public final static class TournamentCollection implements IsSerializable {
     private Tournament tournament = null;
-    private Map<Long, Game> games = new HashMap<Long, Game>();
+    private Map<Long, Fixture> games = new HashMap<Long, Fixture>();
     private Map<Long, Team> teams = new HashMap<Long, Team>();
 
     public TournamentCollection() {
     }
 
     public TournamentCollection(Tournament tournament,
-        Map<Long, Game> games, Map<Long, Team> teams) {
+        Map<Long, Fixture> games, Map<Long, Team> teams) {
       this.tournament = tournament;
-      this.games = new HashMap<Long, Game>(games);
+      this.games = new HashMap<Long, Fixture>(games);
       this.teams = new HashMap<Long, Team>(teams);
     }
 
@@ -57,7 +58,7 @@ public interface TournamentService extends RemoteService {
       return tournament;
     }
 
-    public Map<Long, Game> getGames() {
+    public Map<Long, Fixture> getGames() {
       return games;
     }
 
@@ -212,7 +213,7 @@ public interface TournamentService extends RemoteService {
    * @throws IllegalArgumentException
    *           If the game's index is nonsensical.
    */
-  public Long addGame(Game game, Tournament tournament)
+  public Long addGame(Fixture game, Tournament tournament)
       throws UserNotLoggedInException, UserNotAdminException;
 
   /**
@@ -231,7 +232,7 @@ public interface TournamentService extends RemoteService {
    * @throws IllegalArgumentException
    *           If any of the games' index members are nonsensical.
    */
-  public void addGames(Iterable<Game> games, Tournament tournament)
+  public void addGames(Iterable<Fixture> games, Tournament tournament)
       throws UserNotLoggedInException, UserNotAdminException;
 
 }

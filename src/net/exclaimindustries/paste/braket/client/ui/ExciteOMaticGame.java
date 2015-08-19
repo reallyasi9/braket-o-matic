@@ -16,7 +16,7 @@
  */
 package net.exclaimindustries.paste.braket.client.ui;
 
-import net.exclaimindustries.paste.braket.client.Game;
+import net.exclaimindustries.paste.braket.shared.Fixture;
 import net.exclaimindustries.paste.braket.shared.Team;
 
 import com.google.gwt.core.client.GWT;
@@ -81,7 +81,7 @@ public class ExciteOMaticGame extends ResizeComposite {
     @UiField
     MyStyle style;
 
-    public ExciteOMaticGame(Game game, Team topTeam,
+    public ExciteOMaticGame(Fixture game, Team topTeam,
             Team bottomTeam, double topChange, double bottomChange) {
         initWidget(uiBinder.createAndBindUi(this));
 

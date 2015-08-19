@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import net.exclaimindustries.paste.braket.shared.Fixture;
 import net.exclaimindustries.paste.braket.shared.GameNotFinalException;
 import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
 import net.exclaimindustries.paste.braket.shared.Team;
@@ -23,14 +24,14 @@ import com.googlecode.objectify.annotation.Subclass;
  */
 @Subclass(index = true)
 @Cache
-public class UndefinedGame extends Game {
+public class UndefinedGame extends Fixture {
 
   public UndefinedGame() {
     super();
     id = 0l;
   }
 
-  public static Game get() {
+  public static Fixture get() {
     return new UndefinedGame();
   }
 

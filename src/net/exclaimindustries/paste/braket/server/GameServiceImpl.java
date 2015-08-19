@@ -21,9 +21,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.Tournament;
 import net.exclaimindustries.paste.braket.client.GameService;
+import net.exclaimindustries.paste.braket.shared.Fixture;
 import net.exclaimindustries.paste.braket.shared.UserNotAdminException;
 import net.exclaimindustries.paste.braket.shared.UserNotLoggedInException;
 
@@ -52,8 +52,8 @@ public class GameServiceImpl extends RemoteServiceServlet implements
    * @see net.exclaimindustries.paste.braket.client.GameService#getGames()
    */
   @Override
-  public Map<Long, Game> getGames(Tournament tournament) {
-    return OfyService.ofy().load().type(Game.class).parent(tournament)
+  public Map<Long, Fixture> getGames(Tournament tournament) {
+    return OfyService.ofy().load().type(Fixture.class).parent(tournament)
         .ids(tournament.getGames());
   }
 
@@ -64,7 +64,7 @@ public class GameServiceImpl extends RemoteServiceServlet implements
    * .util.Collection)
    */
   @Override
-  public void storeGames(Iterable<Game> games)
+  public void storeGames(Iterable<Fixture> games)
       throws UserNotLoggedInException, UserNotAdminException {
     LogInServiceHelper.assertAdmin();
     OfyService.ofy().save().entities(games);
@@ -77,7 +77,7 @@ public class GameServiceImpl extends RemoteServiceServlet implements
    * exclaimindustries.paste.braket.client.BraketGame)
    */
   @Override
-  public Long storeGame(Game game) throws UserNotLoggedInException,
+  public Long storeGame(Fixture game) throws UserNotLoggedInException,
       UserNotAdminException {
     LogInServiceHelper.assertAdmin();
     return OfyService.ofy().save().entity(game).now().getId();
@@ -90,7 +90,7 @@ public class GameServiceImpl extends RemoteServiceServlet implements
    * .util.Collection)
    */
   @Override
-  public void deleteGames(Iterable<Game> games)
+  public void deleteGames(Iterable<Fixture> games)
       throws UserNotLoggedInException, UserNotAdminException {
     LogInServiceHelper.assertAdmin();
     OfyService.ofy().delete().entities(games);
@@ -103,14 +103,14 @@ public class GameServiceImpl extends RemoteServiceServlet implements
    * exclaimindustries.paste.braket.client.BraketGame)
    */
   @Override
-  public void deleteGame(Game game) throws UserNotLoggedInException,
+  public void deleteGame(Fixture game) throws UserNotLoggedInException,
       UserNotAdminException {
     LogInServiceHelper.assertAdmin();
     OfyService.ofy().delete().entity(game);
   }
 
   @Override
-  public void updateAndPropagateGame(Game game)
+  public void updateAndPropagateGame(Fixture game)
       throws UserNotLoggedInException, UserNotAdminException {
     // TODO Auto-generated method stub
 

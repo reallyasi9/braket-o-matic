@@ -11,14 +11,15 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.SortedMap;
 
-import net.exclaimindustries.paste.braket.client.Game.GameIndexPair;
-import net.exclaimindustries.paste.braket.client.Game.GameRankPair;
+import net.exclaimindustries.paste.braket.shared.Fixture;
 import net.exclaimindustries.paste.braket.shared.GameNotFinalException;
 import net.exclaimindustries.paste.braket.shared.GameNotInOutcomeException;
 import net.exclaimindustries.paste.braket.shared.OutcomeNotPairedToTournamentException;
 import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
 import net.exclaimindustries.paste.braket.shared.Team;
 import net.exclaimindustries.paste.braket.shared.TeamNotInTournamentException;
+import net.exclaimindustries.paste.braket.shared.Fixture.GameIndexPair;
+import net.exclaimindustries.paste.braket.shared.Fixture.GameRankPair;
 
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Cache;
@@ -30,13 +31,13 @@ import com.googlecode.objectify.annotation.Subclass;
 public class SingleEliminationTournament extends Tournament {
 
   @Load
-  private Collection<Ref<Game>> seedGames = new ArrayList<>();
+  private Collection<Ref<Fixture>> seedGames = new ArrayList<>();
 
   @Load
-  private Collection<Ref<Game>> games = new HashSet<>();
+  private Collection<Ref<Fixture>> games = new HashSet<>();
 
   @Load
-  private Ref<Game> championshipGame = Ref.create(UndefinedGame.get());
+  private Ref<Fixture> championshipGame = Ref.create(UndefinedGame.get());
 
   private Map<Long, Integer> teamSeeds = new HashMap<>();
 
@@ -53,8 +54,8 @@ public class SingleEliminationTournament extends Tournament {
   }
 
   @Override
-  public Collection<Game> getGames() {
-    Collection<Game> games = new HashSet<>();
+  public Collection<Fixture> getGames() {
+    Collection<Fixture> games = new HashSet<>();
     Map<Integer, GameRankPair> playInGames = championshipGame.get()
         .getPlayInGames();
     for (GameRankPair pair : playInGames.values()) {
@@ -64,22 +65,22 @@ public class SingleEliminationTournament extends Tournament {
   }
 
   @Override
-  public Collection<Game> getSeedGames() {
+  public Collection<Fixture> getSeedGames() {
     // TODO Lambdas would make this nicer
-    Collection<Game> derefGames = new ArrayList<>();
-    for (Ref<Game> game : seedGames) {
+    Collection<Fixture> derefGames = new ArrayList<>();
+    for (Ref<Fixture> game : seedGames) {
       derefGames.add(game.get());
     }
     return derefGames;
   }
 
   @Override
-  public Game getChampionshipGame() {
+  public Fixture getChampionshipGame() {
     return championshipGame.get();
   }
 
   @Override
-  public void addGame(Game game) {
+  public void addGame(Fixture game) {
     games.add(Ref.create(game));
   }
 
@@ -120,8 +121,8 @@ public class SingleEliminationTournament extends Tournament {
 
     double value = 0;
 
-    for (Ref<Game> game : games) {
-      Game derefGame = game.get();
+    for (Ref<Fixture> game : games) {
+      Fixture derefGame = game.get();
       if (!derefGame.isFinal()) {
         continue;
       }
@@ -185,9 +186,9 @@ public class SingleEliminationTournament extends Tournament {
   public Tournament randomizeRemainder(ResultProbabilityCalculator calculator) {
     // Start with those games I can simulate, then work my way forward
     Tournament randomizedTournament = new SingleEliminationTournament(this);
-    Queue<Game> nextGames = new LinkedList<>(
+    Queue<Fixture> nextGames = new LinkedList<>(
         randomizedTournament.getScheduledGames());
-    Game game = nextGames.peek();
+    Fixture game = nextGames.peek();
     while (game != null) {
       game.randomizeResult(calculator);
       game.finalize();
@@ -205,9 +206,9 @@ public class SingleEliminationTournament extends Tournament {
   @Override
   public Tournament randomizeNextGames(ResultProbabilityCalculator calculator) {
     Tournament randomizedTournament = new SingleEliminationTournament(this);
-    Queue<Game> nextGames = new LinkedList<>(
+    Queue<Fixture> nextGames = new LinkedList<>(
         randomizedTournament.getScheduledGames());
-    Game game = nextGames.peek();
+    Fixture game = nextGames.peek();
     while (game != null) {
       game.randomizeResult(calculator);
       game.finalize();
@@ -219,10 +220,10 @@ public class SingleEliminationTournament extends Tournament {
   }
 
   @Override
-  public Collection<Game> getScheduledGames() {
-    Collection<Game> nextGames = new HashSet<Game>();
-    for (Ref<Game> game : games) {
-      Game derefGame = game.get();
+  public Collection<Fixture> getScheduledGames() {
+    Collection<Fixture> nextGames = new HashSet<Fixture>();
+    for (Ref<Fixture> game : games) {
+      Fixture derefGame = game.get();
       if (derefGame.isScheduled()) {
         nextGames.add(derefGame);
       }

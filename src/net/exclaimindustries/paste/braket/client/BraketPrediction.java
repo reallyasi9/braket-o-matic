@@ -34,6 +34,8 @@ import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 import com.googlecode.objectify.annotation.Serialize;
 
+import net.exclaimindustries.paste.braket.shared.Fixture;
+
 @Entity
 @Cache
 public final class BraketPrediction {
@@ -90,7 +92,7 @@ public final class BraketPrediction {
     parentTournament = Ref.create(tournament);
     this.user = Ref.create(user);
     gameWinners = new HashMap<>();
-    for (Game game : tournament.getGames()) {
+    for (Fixture game : tournament.getGames()) {
       gameWinners.put(game.getId(), new ArrayList<Long>());
     }
   }
@@ -102,14 +104,14 @@ public final class BraketPrediction {
    *         correct (true), incorrect (false), or not yet determined (null),
    *         keyed by game ID.
    */
-  public Map<Long, Boolean> calculateMatchingWinners(Map<Long, Game> games) {
+  public Map<Long, Boolean> calculateMatchingWinners(Map<Long, Fixture> games) {
 
     Map<Long, Boolean> result = new HashMap<Long, Boolean>();
 
     Set<Long> eliminatedTeams = new HashSet<Long>();
 
     // Determine the eliminated teams first
-    for (Game game : games.values()) {
+    for (Fixture game : games.values()) {
       if (game.isFinal()) {
         eliminatedTeams.add(game.getLosingTeamId());
       }
@@ -123,7 +125,7 @@ public final class BraketPrediction {
             + "] not found in given set of games");
       }
       Long winningTeamId = winnerEntry.getValue();
-      Game game = games.get(gameId);
+      Fixture game = games.get(gameId);
       if (game.isFinal()) {
         result.put(gameId, game.getWinningTeamId() == winningTeamId);
       } else if (eliminatedTeams.contains(winningTeamId)) {
@@ -162,7 +164,7 @@ public final class BraketPrediction {
    *           if this decision is impossible given the user's other picks
    */
   public boolean setAndPropagateWinner(Long gameId, Boolean pickedTopTeam,
-      Map<Long, Game> games) {
+      Map<Long, Fixture> games) {
 
     if (!games.containsKey(gameId)) {
       throw new IllegalArgumentException("gameId [" + Long.toString(gameId)
@@ -184,7 +186,7 @@ public final class BraketPrediction {
 
     // Determine if this ID is selectable for this game
 
-    Game thisGame = games.get(gameId);
+    Fixture thisGame = games.get(gameId);
 
     // TODO: Find a way to query the length of the tourney!
     if (gameIndex > gameMask.bitLength())

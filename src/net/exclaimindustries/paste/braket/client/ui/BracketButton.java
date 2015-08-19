@@ -3,9 +3,9 @@ package net.exclaimindustries.paste.braket.client.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.exclaimindustries.paste.braket.client.Game;
 import net.exclaimindustries.paste.braket.client.BraketPrediction;
 import net.exclaimindustries.paste.braket.client.Tournament;
+import net.exclaimindustries.paste.braket.shared.Fixture;
 import net.exclaimindustries.paste.braket.shared.Team;
 
 import com.google.gwt.core.client.GWT;
@@ -309,8 +309,8 @@ public class BracketButton extends Composite implements ClickHandler, MouseOverH
         // Period.  Same applies if there's no selection.
         if((mType != Type.RESULT && mType != Type.PICK_NONEDITABLE) || mController.getSelection() == null) return GameResult.UNKNOWN;
         
-        List<Game> gameList = mController.getGames();
-        Game game = gameList.get(mIndex); 
+        List<Fixture> gameList = mController.getGames();
+        Fixture game = gameList.get(mIndex); 
         
         // So what we have here is a team the user picked.  If the game's been
         // played, we know there's SOME result.  If it hasn't been, we need to
@@ -346,7 +346,7 @@ public class BracketButton extends Composite implements ClickHandler, MouseOverH
             int curGame = (pickedTeam.getIndex() / 2) + (tourn.getNumberOfGames() / 2);
             
             do {
-                Game checkGame = gameList.get(curGame);
+                Fixture checkGame = gameList.get(curGame);
                 
                 if(!checkGame.isFinal()) {
                     // If we haven't returned AND this game isn't final yet,

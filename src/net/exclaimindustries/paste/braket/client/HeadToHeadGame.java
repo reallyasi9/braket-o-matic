@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import net.exclaimindustries.paste.braket.shared.Fixture;
 import net.exclaimindustries.paste.braket.shared.GameNotFinalException;
 import net.exclaimindustries.paste.braket.shared.ResultProbabilityCalculator;
 import net.exclaimindustries.paste.braket.shared.Team;
@@ -20,7 +21,7 @@ import com.googlecode.objectify.annotation.Subclass;
 
 @Subclass(index = true)
 @Cache
-public class HeadToHeadGame extends Game {
+public class HeadToHeadGame extends Fixture {
 
   @Load
   private Ref<Team> topTeam = null;
@@ -33,22 +34,22 @@ public class HeadToHeadGame extends Game {
   private Integer bottomScore = null;
 
   @Load
-  private Ref<Game> winnerAdvancement = Ref.create(UndefinedGame.get());
+  private Ref<Fixture> winnerAdvancement = Ref.create(UndefinedGame.get());
 
   private Integer winnerAdvancementIndex = null;
 
   @Load
-  private Ref<Game> loserAdvancement = Ref.create(UndefinedGame.get());
+  private Ref<Fixture> loserAdvancement = Ref.create(UndefinedGame.get());
 
   private Integer loserAdvancementIndex = null;
 
   @Load
-  private Ref<Game> topPlayIn = Ref.create(UndefinedGame.get());
+  private Ref<Fixture> topPlayIn = Ref.create(UndefinedGame.get());
 
   private Integer topPlayInRank = null;
 
   @Load
-  private Ref<Game> bottomPlayIn = Ref.create(UndefinedGame.get());
+  private Ref<Fixture> bottomPlayIn = Ref.create(UndefinedGame.get());
 
   private Integer bottomPlayInRank = null;
 
