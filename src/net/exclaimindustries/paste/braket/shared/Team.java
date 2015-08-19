@@ -33,7 +33,7 @@ import net.exclaimindustries.paste.braket.client.RGBAColor;
  */
 @Entity
 @Cache
-public class Team implements IsSerializable {
+public class Team implements IsSerializable, Competitor {
 
   /**
    * A Key Provider so that BraketTournaments can be placed in DataGrids.
