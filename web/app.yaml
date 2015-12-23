@@ -1,0 +1,13 @@
+application: braketomatic
+version: 1
+module: frontend
+runtime: go
+api_version: go1
+
+handlers:
+- url: /
+  static_files: build/web/index.html
+  upload: build/web/index.html
+
+- url: /
+  static_dir: build/web
