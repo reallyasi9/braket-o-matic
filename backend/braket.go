@@ -7,6 +7,7 @@ import (
 	//"appengine/datastore"
 	//"appengine/user"
 
+	"fmt"
 	"html/template"
 	"net/http"
 )
@@ -15,21 +16,12 @@ func init() {
 	// Required to serve SVG from appengine, which treats it as text/xml.  https://github.com/golang/go/issues/6378
 	mime.AddExtensionType(".svg", "image/svg+xml")
 
-	http.HandleFunc("/", root)
-	http.HandleFunc("/signin", signin)
-	http.HandleFunc("/signout", signout)
+	http.HandleFunc("/_ah/spi/verify-user", verifyuser)
 }
 
-func root(w http.ResponseWriter, r *http.Request) {
+func verifyuser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-type", "text/html; charset=utf-8")
-}
-
-func signin(w http.ResponseWriter, r *http.Request) {
-
-}
-
-func signout(w http.ResponseWriter, r *http.Request) {
-
+	fmt.Fprint(w, "'s cool")
 }
 
 const guestbookForm = `
