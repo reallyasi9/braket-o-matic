@@ -1,7 +1,7 @@
 application: braketomatic
 
 dispatch:
-  - url: "*/_ah/spi/*"
+  - url: "*/backend/*"
     module: default
 
   - url: "*/*"

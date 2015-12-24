@@ -3,25 +3,108 @@ package braket
 import (
 	"mime"
 
-	//"appengine"
+	"appengine"
+	"appengine/urlfetch"
 	//"appengine/datastore"
-	//"appengine/user"
+	"appengine/user"
 
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"net/http"
+	"net/url"
+	"strconv"
+	"time"
 )
+
+const scope = "https://www.googleapis.com/auth/userinfo.email"
 
 func init() {
 	// Required to serve SVG from appengine, which treats it as text/xml.  https://github.com/golang/go/issues/6378
 	mime.AddExtensionType(".svg", "image/svg+xml")
 
-	http.HandleFunc("/_ah/spi/verify-user", verifyuser)
+	http.HandleFunc("/backend/verify-user", verifyuser)
+	http.HandleFunc("/backend/signin", signin)
 }
 
 func verifyuser(w http.ResponseWriter, r *http.Request) {
+	token := r.PostFormValue("id_token")
+
+	// No need to error check here.
+	u, _ := url.Parse("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=" + token)
+
+	// AppEngine uses a specialized version of http.Get
+	ctx := appengine.NewContext(r)
+	client := urlfetch.Client(ctx)
+
+	resp, err := client.Get(u.String())
+	if err != nil {
+		returnError(w, err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// TODO move all this to some other function?
+	if resp.StatusCode != http.StatusOK {
+		returnError(w, fmt.Errorf("Status code returned from auth server %d", resp.StatusCode))
+		return
+	}
+	/*
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			returnError(w, err)
+			return
+		}
+
+		fmt.Fprintf(w, "%s", body)
+	*/
+	decoder := json.NewDecoder(resp.Body)
+	var message interface{}
+	err = decoder.Decode(&message)
+	if err != nil {
+		returnError(w, err)
+		return
+	}
+	m := message.(map[string]interface{})
+
+	if m["iss"] != "https://accounts.google.com" && m["iss"] != "accounts.google.com" {
+		returnError(w, fmt.Errorf("Invalid iss '%s'", m["iss"]))
+		return
+	}
+
+	exp, err := strconv.ParseInt(m["exp"].(string), 10, 64)
+	if err != nil {
+		returnError(w, err)
+		return
+	}
+
+	if exp < time.Now().Unix() {
+		returnError(w, fmt.Errorf("Authorization has expired %d", exp))
+		return
+	}
+
+	if m["aud"] != "955696707006-d65hn137t184mbjcohuosff7os1vumjp.apps.googleusercontent.com" {
+		returnError(w, fmt.Errorf("Authorization not from correct app '%s'", m["aud"]))
+		return
+	}
+
 	w.Header().Set("Content-type", "text/html; charset=utf-8")
-	fmt.Fprint(w, "'s cool")
+	fmt.Fprint(w, m["sub"])
+}
+
+func signin(w http.ResponseWriter, r *http.Request) {
+	ctx := appengine.NewContext(r)
+	u := user.Current(ctx)
+	if u == nil {
+		url, _ := user.LoginURL(ctx, "/")
+		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
+	}
+	url, _ := user.LogoutURL(ctx, "/")
+	fmt.Fprintf(w, `Welcome, %s! (<a href="%s">sign out</a>)`, u, url)
+
+	//oau, err := user.CurrentOAuth(ctx, "")
+
 }
 
 const guestbookForm = `
@@ -54,6 +137,6 @@ const signTemplateHTML = `
 </html>
 `
 
-func ReturnError(w http.ResponseWriter, err error) {
+func returnError(w http.ResponseWriter, err error) {
 	http.Error(w, err.Error(), http.StatusInternalServerError)
 }
