@@ -17,7 +17,12 @@ import (
 	"time"
 )
 
-const scope = "https://www.googleapis.com/auth/userinfo.email"
+const oauthScope = "https://www.googleapis.com/auth/userinfo.email"
+
+var allowedClients = map[string]bool{
+	"955696707006-d65hn137t184mbjcohuosff7os1vumjp.apps.googleusercontent.com": true,
+	"123456789.apps.googleusercontent.com":                                     true, // test client
+}
 
 func init() {
 	// Required to serve SVG from appengine, which treats it as text/xml.  https://github.com/golang/go/issues/6378
@@ -103,7 +108,17 @@ func signin(w http.ResponseWriter, r *http.Request) {
 	url, _ := user.LogoutURL(ctx, "/")
 	fmt.Fprintf(w, `Welcome, %s! (<a href="%s">sign out</a>)`, u, url)
 
-	//oau, err := user.CurrentOAuth(ctx, "")
+	oau, err := user.CurrentOAuth(ctx, oauthScope)
+	if err != nil {
+		returnError(w, err)
+		return
+	}
+	if allowed := allowedClients[oau.ClientID]; !allowed {
+		returnError(w, fmt.Errorf("client %s now allowed", oau.ClientID))
+		return
+	}
+	key, _ := user.OAuthConsumerKey(ctx)
+	fmt.Fprintf(w, "Hello, %+v", key)
 
 }
 
