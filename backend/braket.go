@@ -98,6 +98,9 @@ func verifyuser(w http.ResponseWriter, r *http.Request) {
 }
 
 func signin(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-type", "text/html; charset=utf-8")
+
 	ctx := appengine.NewContext(r)
 	u := user.Current(ctx)
 	if u == nil {
