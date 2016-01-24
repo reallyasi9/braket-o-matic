@@ -16,10 +16,10 @@ var roundValues = [nRounds]float32{
 	1, 2, 3, 5, 7, 13,
 }
 
-// Given an n-bit number stored in the first n bits of a, returns a 2n-bit
-// integer where each of the original bits of a has a zero bit inserted after
-// it.  For instance, any '1' becomes '01', and any '0' becomes '00', so the
-// number '11001001' becomes '0101000001000001'.
+// expand will insert zeros ahead of each bit in the first n bits of a, pushing
+// the remaining bits left with each insert.  For example, a=0b11001001 and n=8
+// would expand to 0b0101000001000001, while the same a but n=4 would expand to
+// 0b110001000001.
 func expand(a int64, n uint64) int64 {
 	m := int64(1) // start with the first bit
 	for i := uint64(0); i < n; i++ {
@@ -31,10 +31,10 @@ func expand(a int64, n uint64) int64 {
 	return a
 }
 
-// Given a 2n-bit number stored in the first 2n bits of a, returns an n-bit
-// number constructed by applying the 'or' operation to every pair of bits.  For
-// instance, any '10', '01', or '11' becomes '1', and any '00' becomes '0', so
-// the number '11001001' becomes '1011'.
+// contract will effectively 'or' the first 2n bits of a pairwise, reducing
+// those to n bits, and shifting everything else to the right.  For example,
+// a=0b11001001 and n=4 would contract to 0b1011, while the same a but n=2 would
+// contract to 0b110011.
 func contract(a int64, n uint64) int64 {
 	out := int64(0)
 	b := a >> 1
@@ -48,7 +48,7 @@ func contract(a int64, n uint64) int64 {
 	return out
 }
 
-// Score a given selection (sel) against a tournament outcome (tru) given
+// tally given selection (sel) against a tournament outcome (tru) given
 // certain games have been played already (played).
 // This function assumes a 6-round (64-team) tournament, and the existance of a
 // global 6-element vector roundValues containing the number of points per
@@ -146,12 +146,14 @@ func tally(sel int64, tru int64, played int64) (float32, float32) {
 	return score, potential
 }
 
-// See https://en.wikipedia.org/wiki/Hamming_weight
 const m1 int64 = 0x5555555555555555  // binary 0101...
 const m2 int64 = 0x3333333333333333  // binary 00110011...
 const m4 int64 = 0x0f0f0f0f0f0f0f0f  // binary 0000111100001111...
 const h01 int64 = 0x0101010101010101 // binary sum(256^[0 1 2 3 ...])
 
+// popcount counts the number of 1's in the binary representation of the
+// argument.  Most processors can do this in a single instruction.  See
+// https://en.wikipedia.org/wiki/Hamming_weight
 func popcount(x int64) int64 {
 	x -= (x >> 1) & m1
 	x = (x & m2) + ((x >> 2) & m2)
