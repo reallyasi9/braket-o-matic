@@ -16,20 +16,34 @@ var roundValues = [nRounds]float32{
 	1, 2, 3, 5, 7, 13,
 }
 
+// Given an n-bit number stored in the first n bits of a, returns a 2n-bit
+// integer where each of the original bits of a has a zero bit inserted after
+// it.  For instance, any '1' becomes '01', and any '0' becomes '00', so the
+// number '11001001' becomes '0101000001000001'.
 func expand(a int64, n uint64) int64 {
+	m := int64(1) // start with the first bit
 	for i := uint64(0); i < n; i++ {
-		m := int64(1<<(i*2+1) - 1)
+		// Keep the bits masked by m, and shift the ones not masked by m to the left
 		a = (a & m) + ((a & ^m) << 1)
+		// Add '11' to the start of m.
+		m = (m << 2) | 3
 	}
 	return a
 }
 
+// Given a 2n-bit number stored in the first 2n bits of a, returns an n-bit
+// number constructed by applying the 'or' operation to every pair of bits.  For
+// instance, any '10', '01', or '11' becomes '1', and any '00' becomes '0', so
+// the number '11001001' becomes '1011'.
 func contract(a int64, n uint64) int64 {
 	out := int64(0)
+	b := a >> 1
 	for i := uint64(0); i < n; i++ {
-		b := a >> 1
+		// a & 1 is the first bit of a, b & 1 is the second.  'Or' them.
 		out |= ((a | b) & 1) << i
+		// On to the next few bits.
 		a >>= 2
+		b >>= 2
 	}
 	return out
 }
