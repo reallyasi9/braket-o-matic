@@ -1,21 +1,5 @@
 package braket
 
-const nRounds = uint64(6)
-
-var nGames = [nRounds]uint64{
-	32,
-	16,
-	8,
-	4,
-	2,
-	1,
-}
-
-// TODO Make this external
-var roundValues = [nRounds]float32{
-	1, 2, 3, 5, 7, 13,
-}
-
 // expand will insert zeros ahead of each bit in the first n bits of a, pushing
 // the remaining bits left with each insert.  For example, a=0b11001001 and n=8
 // would expand to 0b0101000001000001, while the same a but n=4 would expand to
@@ -81,9 +65,10 @@ func tally(sel int64, tru int64, played int64) (float32, float32) {
 	correct |= ^p
 
 	// Move on to the next round
-	a >>= nGames[0]
-	b >>= nGames[0]
-	p >>= nGames[0]
+	ugames := uint64(nGames[0])
+	a >>= ugames
+	b >>= ugames
+	p >>= ugames
 
 	// -----all other rounds-----
 	for rnd := uint64(1); rnd < nRounds; rnd++ {
@@ -94,7 +79,8 @@ func tally(sel int64, tru int64, played int64) (float32, float32) {
 		//fmt.Printf("round %d, mask %064b\n", rnd+1, roundMask)
 
 		// This trick expands a set of bits, so 0bWXYZ -> 0b0W0X0Y0Z
-		c := expand(a, nGames[rnd])
+		ugames = uint64(nGames[rnd])
+		c := expand(a, ugames)
 
 		//fmt.Printf("%064b expanded from\n%064b\n", c, a&roundMask)
 
@@ -115,7 +101,7 @@ func tally(sel int64, tru int64, played int64) (float32, float32) {
 		/* Now contract the mask, effectively ORing every two bits.  So if we picked
 		   correctly at least the game in the last round that matches the selection
 		   we chose this round, we can consider it for points this round. */
-		forwardMask := contract(forward, nGames[rnd])
+		forwardMask := contract(forward, ugames)
 
 		//fmt.Printf("%064b contracted\n", forwardMask)
 		//fmt.Printf("%064b a\n", a)
@@ -138,9 +124,9 @@ func tally(sel int64, tru int64, played int64) (float32, float32) {
 		correct |= ^p & forwardMask
 
 		// Move on to the next round
-		a >>= nGames[rnd]
-		b >>= nGames[rnd]
-		p >>= nGames[rnd]
+		a >>= ugames
+		b >>= ugames
+		p >>= ugames
 	}
 
 	return score, potential
