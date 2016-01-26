@@ -10,21 +10,39 @@ func expand(a int64, n uint64) int64 {
 		// Keep the bits masked by m, and shift the ones not masked by m to the left
 		a = (a & m) + ((a & ^m) << 1)
 		// Add '11' to the start of m.
-		m = (m << 2) | 3
+		m <<= 2
+		m |= 3
 	}
 	return a
 }
 
-// contract will effectively 'or' the first 2n bits of a pairwise, reducing
+// contractOr will effectively 'or' the first 2n bits of a pairwise, reducing
 // those to n bits, and shifting everything else to the right.  For example,
 // a=0b11001001 and n=4 would contract to 0b1011, while the same a but n=2 would
 // contract to 0b110011.
-func contract(a int64, n uint64) int64 {
+func contractOr(a int64, n uint64) int64 {
 	out := int64(0)
 	b := a >> 1
 	for i := uint64(0); i < n; i++ {
 		// a & 1 is the first bit of a, b & 1 is the second.  'Or' them.
 		out |= ((a | b) & 1) << i
+		// On to the next few bits.
+		a >>= 2
+		b >>= 2
+	}
+	return out
+}
+
+// contractAnd will effectively 'and' the first 2n bits of a pairwise, reducing
+// those to n bits, and shifting everything else to the right.  For example,
+// a=0b11001001 and n=4 would contract to 0b1000, while the same a but n=2 would
+// contract to 0b110000.
+func contractAnd(a int64, n uint64) int64 {
+	out := int64(0)
+	b := a >> 1
+	for i := uint64(0); i < n; i++ {
+		// a & 1 is the first bit of a, b & 1 is the second.  'Or' them.
+		out |= ((a & b) & 1) << i
 		// On to the next few bits.
 		a >>= 2
 		b >>= 2
@@ -43,7 +61,7 @@ func tally(sel int64, tru int64, played int64) (float32, float32) {
 	p := played
 
 	// -----first round-----
-	roundMask := int64(0x00000000ffffffff)
+	roundMask := roundMasks[0]
 
 	// In the first round, just check if the selection matches the outcome.
 	correct := ^(a ^ b) & roundMask
@@ -74,7 +92,7 @@ func tally(sel int64, tru int64, played int64) (float32, float32) {
 	for rnd := uint64(1); rnd < nRounds; rnd++ {
 		// Because we shifted the selection over, the lowest nGames bits are all we want.
 		// nGames follows the pattern 2^(6-rnd) = 1 << (nRounds - rnd)
-		roundMask = int64((1 << (1 << (nRounds - rnd - 1))) - 1)
+		roundMask = roundMasks[rnd]
 
 		//fmt.Printf("round %d, mask %064b\n", rnd+1, roundMask)
 
@@ -101,7 +119,7 @@ func tally(sel int64, tru int64, played int64) (float32, float32) {
 		/* Now contract the mask, effectively ORing every two bits.  So if we picked
 		   correctly at least the game in the last round that matches the selection
 		   we chose this round, we can consider it for points this round. */
-		forwardMask := contract(forward, ugames)
+		forwardMask := contractOr(forward, ugames)
 
 		//fmt.Printf("%064b contracted\n", forwardMask)
 		//fmt.Printf("%064b a\n", a)

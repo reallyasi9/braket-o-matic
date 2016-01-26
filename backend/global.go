@@ -21,6 +21,15 @@ var roundValues = [nRounds]float32{
 	1, 2, 3, 5, 7, 13,
 }
 
+var roundMasks = [nRounds]int64{
+	0xffffffff,
+	0xffff,
+	0xff,
+	0xf,
+	0x3,
+	0x1,
+}
+
 var teamList = [nTeams]Team{}
 
 var seedsList = [nTeamsPerRegion]int{
