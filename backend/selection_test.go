@@ -12,6 +12,7 @@ func BenchmarkTally(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		bra := r.Int63()
 		ket := r.Int63()
-		tally(bra, ket)
+		pla := int64(1<<uint64(r.Intn(64))) - 1
+		tally(bra, ket, pla)
 	}
 }

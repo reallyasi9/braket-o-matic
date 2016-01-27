@@ -10,6 +10,7 @@ type Game struct {
 	GameInRound     int
 }
 
+// selectedGames returns a list of Games that are implied by a given selection.
 func selectedGames(sel int64) [nGamesTotal]Game {
 	teams := make([]Team, len(teamList))
 	copy(teams, teamList[:])
@@ -32,4 +33,30 @@ func selectedGames(sel int64) [nGamesTotal]Game {
 	}
 
 	return games
+}
+
+// gamesUpNext determines a mask for the games that have yet to be played, but
+// for which the teams have been determined.
+func gamesUpNext(played int64) int64 {
+
+	// Anything not played in the first round is easy, and is already done
+	next := ^played & roundMasks[0]
+
+	cachedPlayed := played
+	totalShift := uint64(nGames[0])
+	played >>= totalShift
+
+	// Anything not played in any successive round requires that the two games
+	// that feed into it be played.
+	for r := 1; r < nRounds; r++ {
+		ugames := uint64(nGames[r])
+		roundNext := ^played & contractAnd(cachedPlayed, ugames) & roundMasks[r]
+		next |= roundNext << totalShift
+
+		cachedPlayed = played
+		played >>= ugames
+		totalShift += ugames
+	}
+
+	return next
 }
