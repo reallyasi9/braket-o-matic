@@ -18,10 +18,11 @@ import (
 )
 
 // TODO Deal with OAuth later.
-//const oauthScope = "https://www.googleapis.com/auth/userinfo.email"
+const oauthScope = "https://www.googleapis.com/auth/userinfo.email"
 
 func init() {
-	// Required to serve SVG from appengine, which treats it as text/xml.  https://github.com/golang/go/issues/6378
+	// Required to serve SVG from appengine, which treats it as text/xml.
+	// https://github.com/golang/go/issues/6378
 	mime.AddExtensionType(".svg", "image/svg+xml")
 
 	http.HandleFunc("/backend/signin", signin)
@@ -41,19 +42,18 @@ func signin(w http.ResponseWriter, r *http.Request) {
 	url, _ := user.LogoutURL(ctx, "/")
 	fmt.Fprintf(w, `Welcome, %s! (<a href="%s">sign out</a>)`, u, url)
 
-	/* TODO: Deal with OAuth later.
-	oau, err := user.CurrentOAuth(ctx, oauthScope)
+	// TODO: Deal with OAuth later.
+	_, err := user.CurrentOAuth(ctx, oauthScope)
 	if err != nil {
 		returnError(w, err)
 		return
 	}
-	if allowed := allowedClients[oau.ClientID]; !allowed {
-		returnError(w, fmt.Errorf("client %s now allowed", oau.ClientID))
-		return
-	}
+	//if allowed := allowedClients[oau.ClientID]; !allowed {
+	//	returnError(w, fmt.Errorf("client %s not allowed", oau.ClientID))
+	//	return
+	//}
 	key, _ := user.OAuthConsumerKey(ctx)
 	fmt.Fprintf(w, "Hello, user %++v key %s", *u, key)
-	*/
 }
 
 const guestbookForm = `
