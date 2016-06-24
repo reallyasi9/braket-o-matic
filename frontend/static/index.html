@@ -55,6 +55,7 @@ html,body {
     var it = cu.getAuthResponse().id_token;
     // TODO: post to backend, verify with Google. (https://developers.google.com/identity/sign-in/web/backend-auth)
     var xhr = new XMLHttpRequest();
+    // TODO backend is running on a different port.  Hrm...
     xhr.open('POST', '/backend/verify-user');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function() {
