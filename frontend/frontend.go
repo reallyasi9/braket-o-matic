@@ -1,3 +1,34 @@
+package braket
+
+import (
+	"appengine"
+	"html/template"
+	"mime"
+	"net/http"
+)
+
+func init() {
+	// Required to serve SVG from appengine, which treats it as text/xml.
+	// https://github.com/golang/go/issues/6378
+	mime.AddExtensionType(".svg", "image/svg+xml")
+
+	http.HandleFunc("/", root)
+}
+
+func root(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	hn, err := appengine.ModuleHostname(c, "default", "", "")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	if err := rootTemplate.Execute(w, hn); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+var rootTemplate = template.Must(template.New("root").Parse(`
 <!doctype html>
 <html>
 <head>
@@ -29,8 +60,8 @@ html,body {
   <dom-module id="user-card">
     <template>
       <div class="card">
-        <h1>{{displayName}}</h1>
-        <h2>Avatar <img src="{{image.url}}" /></h2>
+        <h1></h1>
+        <h2>Avatar <img src="" /></h2>
       </div>
     </template>
 
@@ -56,7 +87,7 @@ html,body {
     // TODO: post to backend, verify with Google. (https://developers.google.com/identity/sign-in/web/backend-auth)
     var xhr = new XMLHttpRequest();
     // TODO backend is running on a different port.  Hrm...
-    xhr.open('POST', '/backend/verify-user');
+    xhr.open('POST', 'http://{{.}}/backend/verify-user');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function() {
       console.log('Signed in as: ' + xhr.responseText);
@@ -77,3 +108,4 @@ html,body {
 </body>
 
 </html>
+`))
