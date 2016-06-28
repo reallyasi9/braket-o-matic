@@ -1,10 +1,11 @@
 package braket
 
 import (
-	"appengine"
 	"html/template"
 	"mime"
 	"net/http"
+
+	"appengine"
 )
 
 func init() {
@@ -56,31 +57,9 @@ html,body {
 
   <google-signin client-id="384318016625-he5cnjm31855qknihknudiue9gg41553.apps.googleusercontent.com" scopes="https://www.googleapis.com/auth/userinfo.email"></google-signin>
 
-  <!-- For kicks -->
-  <dom-module id="user-card">
-    <template>
-      <div class="card">
-        <h1></h1>
-        <h2>Avatar <img src="" /></h2>
-      </div>
-    </template>
-
-    <script>
-      Polymer({
-        is: 'user-card',
-        properties: {
-          displayName: String,
-          image: Object
-        }
-      });
-    </script>
-  </dom-module>
-
-  <user-card></user-card>
-
   <script type="text/javascript">
   document.addEventListener("google-signin-success", function(e) {
-    var cu = gapi.auth2.getAuthInstance().currentUser.get();
+    var cu = gapi.auth2.getAuthInstance()['currentUser'].get();
 
     // Authentication
     var it = cu.getAuthResponse().id_token;
