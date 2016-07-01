@@ -1,0 +1,12 @@
+name: braketomatic
+description: >
+  Front-end for a bracket-style tournament manager.
+dependencies:
+  browser: ^0.10.0
+  polymer: 1.0.0-rc.2
+  polymer_elements: 1.0.0-rc.2
+  web_components: ^0.12.0
+transformers:
+- polymer:
+    entry_points:
+      - web/static/index.html

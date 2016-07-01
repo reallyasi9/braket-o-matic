@@ -1,0 +1,23 @@
+application: braketomatic
+version: 1
+module: frontend
+runtime: go
+api_version: go1
+
+handlers:
+#- url: /
+#  static_files: static/index.html
+#  upload: static/index.html
+
+#- url: /index.html
+#  script: _go_app
+#  secure: always
+
+#- url: /bower_components
+#  static_dir: bower_components
+
+- url: /packages
+  static_dir: packages
+
+- url: /
+  static_dir: static
