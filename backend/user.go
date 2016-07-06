@@ -4,8 +4,10 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"google.golang.org/appengine"
-	"google.golang.org/appengine/user"
+	//"google.golang.org/appengine"
+	//"google.golang.org/appengine/user"
+	"appengine"
+	"appengine/user"
 )
 
 // TODO Deal with OAuth later.
@@ -14,10 +16,10 @@ const oauthScope = "https://www.googleapis.com/auth/userinfo.email"
 // User represents a user, yo.
 // TODO Add OAuth here
 type User struct {
-	loggedIn  bool
-	loginURL  string
-	logoutURL string
-	user      *user.User
+	LoggedIn      bool
+	LoginURL      string
+	LogoutURL     string
+	AppEngineUser *user.User
 }
 
 func init() {
