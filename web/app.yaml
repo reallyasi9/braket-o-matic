@@ -5,19 +5,13 @@ runtime: go
 api_version: go1
 
 handlers:
-#- url: /
-#  static_files: static/index.html
-#  upload: static/index.html
-
-#- url: /index.html
-#  script: _go_app
-#  secure: always
-
-#- url: /bower_components
-#  static_dir: bower_components
 
 - url: /packages
   static_dir: packages
+  login: required
+  secure: always
 
 - url: /
   static_dir: static
+  login: required
+  secure: always
