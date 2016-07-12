@@ -1,6 +1,6 @@
 import 'dart:html';
 import 'package:polymer/polymer.dart';
-import 'package:polymer_elements/paper_header_panel.dart';
+//import 'package:polymer_elements/paper_header_panel.dart';
 import 'lib/user.dart';
 
 main() async {

@@ -4,63 +4,64 @@
         <title>braket-o-matic</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet">
         <link href="braket.css" rel="stylesheet">
         <script src="packages/web_components/webcomponents.min.js"></script>
-        <link rel="import" href="packages/polymer_elements/paper_header_panel.html">
-        <link rel="import" href="packages/polymer_elements/iron_flex_layout.html">
+
+        <link rel="import" href="packages/polymer_app_layout/app_scroll_effects.html">
+        <link rel="import" href="packages/polymer_app_layout/app_header.html">
+        <link rel="import" href="packages/polymer_app_layout/app_toolbar.html">
+        <link rel="import" href="packages/polymer_elements/paper_tabs.html">
+        <link rel="import" href="packages/polymer_elements/iron_icons.html">
+        <link rel="import" href="packages/polymer_elements/paper_icon_button.html">
         <link rel="import" href="packages/polymer_elements/color.html">
 
         <style is="custom-style">
             body {
-                @apply(--layout-vertical);
-                @apply(--layout-center-center);
-                @apply(--layout-wrap);
-                padding: 40px;
+              margin: 0;
+              font-family: arial;
+              background-color: #eee;
             }
 
-            paper-header-panel {
-                float: left;
-                width: 800px;
-                height: 240px;
-                margin: 12px;
-                @apply(--shadow-elevation-2dp);
-            }
-
-            .paper-header {
-                height: 60px;
-                font-size: 16px;
-                line-height: 60px;
-                padding: 0 10px;
-                color: white;
-                transition: height 0.2s;
-            }
-
-            .paper-header.tall {
-                height: 120px;
-            }
-
-            .content {
-                height: 2000px;
-            }
-            .cover {
-                margin: 60px;
-            }
-
-            .pink .paper-header {
+            app-header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 132px;
+                color: #fff;
                 background-color: var(--paper-pink-a200);
+                --app-header-background-rear-layer: {
+                    background-color: #0b8043;
+                };
             }
-
-            .pink .content {
-                background: linear-gradient(white, #f8bbd0);
+            paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
+            app-toolbar {
+                margin-bottom: 20px;
             }
         </style>
     </head>
-    <body>
-        <paper-header-panel mode="waterfall-tall" class="pink">
-          <div class="paper-header">&lt;braket|o|matic&gt;</div>
-          <div class="content">This is some content on the underside, yo.</div>
-        </paper-header-panel>
+    <body unresolved>
+        <app-header condenses reveals fixed effects="waterfall">
+            <app-toolbar>
+                <paper-icon-button icon="menu"></paper-icon-button>
+                <h1 main-title>&lt;braket|o|matic&gt;</h1>
+                <paper-icon-button icon="search"></paper-icon-button>
+            </app-toolbar>
+
+            <paper-tabs selected="0" sticky>
+                <paper-tab>TAB 1</paper-tab>
+                <paper-tab>TAB 2</paper-tab>
+                <paper-tab>TAB 3</paper-tab>
+            </paper-tabs>
+        </app-header>
+
         <script type="application/dart" src="index.dart"></script>
         <script type="text/javascript" src="packages/browser/dart.js"></script>
     </body>
