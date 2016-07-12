@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'package:polymer/polymer.dart';
-//import 'package:polymer_elements/paper_header_panel.dart';
+import 'package:polymer_elements/paper_tabs.dart';
+import 'package:polymer_elements/iron_pages.dart';
 import 'lib/user.dart';
 
 main() async {
@@ -8,7 +9,6 @@ main() async {
 
     // Bind tab selector
     Element tabs = document.querySelector("paper-tabs");
-    Element pages = document.querySelector("iron-pages");
     tabs.addEventListener("iron-select", onTabSelect);
 
     try {
@@ -25,7 +25,7 @@ onUserLoaded(String jsonUser) async {
 }
 
 onTabSelect(Event event) async {
-    Element tabs = document.querySelector("paper-tabs");
-    Element pages = document.querySelector("iron-pages");
+    PaperTabs tabs = document.querySelector("paper-tabs");
+    IronPages pages = document.querySelector("iron-pages");
     pages.selected = tabs.selected;
 }
