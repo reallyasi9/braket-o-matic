@@ -17,6 +17,7 @@
         <link rel="import" href="packages/polymer_app_layout/app_toolbar.html">
         <link rel="import" href="packages/polymer_elements/paper_tabs.html">
         <link rel="import" href="packages/polymer_elements/iron_icons.html">
+        <link rel="import" href="packages/polymer_elements/iron_pages.html">
         <link rel="import" href="packages/polymer_elements/paper_icon_button.html">
         <link rel="import" href="packages/polymer_elements/color.html">
 
@@ -34,16 +35,23 @@
                 width: 100%;
                 height: 132px;
                 color: #fff;
-                background-color: var(--paper-pink-a200);
+                background-color: var(--paper-blue-grey-400);
                 --app-header-background-rear-layer: {
-                    background-color: #0b8043;
+                    background-color: var(--paper-brown-400);
                 };
+            }
+            paper-tabs {
+                --paper-tabs-selection-bar-color: var(--paper-orange-300);
             }
             paper-icon-button {
                 --paper-icon-button-ink-color: white;
             }
             app-toolbar {
                 margin-bottom: 20px;
+            }
+
+            iron-pages .iron-selected {
+                margin-top: 132px;
             }
         </style>
     </head>
@@ -52,15 +60,22 @@
             <app-toolbar>
                 <paper-icon-button icon="menu"></paper-icon-button>
                 <h1 main-title>&lt;braket|o|matic&gt;</h1>
-                <paper-icon-button icon="search"></paper-icon-button>
             </app-toolbar>
 
-            <paper-tabs selected="0" sticky>
-                <paper-tab>TAB 1</paper-tab>
-                <paper-tab>TAB 2</paper-tab>
-                <paper-tab>TAB 3</paper-tab>
+            <paper-tabs selected="{{selected_tab}}" sticky autoselect>
+                <paper-tab>Bracket</paper-tab>
+                <paper-tab>Standings</paper-tab>
+                <paper-tab>&lt;predict|o|matic&gt;</paper-tab>
+                <paper-tab>&lt;excite|o|matic&gt;</paper-tab>
             </paper-tabs>
         </app-header>
+
+        <iron-pages selected="{{selected_tab}}">
+            <div>Braket page</div>
+            <div>Standings page</div>
+            <div>Predict-o-Matic page</div>
+            <div>Excite-o-Matic page</div>
+        </iron-pages>
 
         <script type="application/dart" src="index.dart"></script>
         <script type="text/javascript" src="packages/browser/dart.js"></script>
