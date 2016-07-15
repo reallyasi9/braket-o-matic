@@ -12,20 +12,33 @@
         <link href="braket.css" rel="stylesheet">
         <script src="packages/web_components/webcomponents.min.js"></script>
 
+        <script>
+        /* this script must run before Polymer is imported */
+        window.Polymer = {
+          //dom: 'shadow',
+          lazyRegister: true
+        };
+        </script>
+
         <link rel="import" href="packages/polymer_app_layout/app_scroll_effects.html">
         <link rel="import" href="packages/polymer_app_layout/app_header.html">
         <link rel="import" href="packages/polymer_app_layout/app_toolbar.html">
+
         <link rel="import" href="packages/polymer_elements/paper_tabs.html">
         <link rel="import" href="packages/polymer_elements/iron_icons.html">
-        <link rel="import" href="packages/polymer_elements/iron_pages.html">
+        <!--link rel="import" href="packages/polymer_elements/iron_pages.html"-->
         <link rel="import" href="packages/polymer_elements/paper_icon_button.html">
+        <link rel="import" href="packages/polymer_elements/paper_drawer_panel.html">
+
         <link rel="import" href="packages/polymer_elements/color.html">
+
+        <link rel="import" href="elements/braket_page_layout.html">
 
         <style is="custom-style">
             body {
               margin: 0;
-              font-family: arial;
-              background-color: #eee;
+              font-family: 'Open Sans', sans-serif;
+              background-color: var(--paper-grey-100);
             }
 
             app-header {
@@ -50,33 +63,27 @@
                 margin-bottom: 20px;
             }
 
-            iron-pages .iron-selected {
-                margin-top: 132px;
-            }
         </style>
+
     </head>
     <body unresolved>
         <app-header condenses reveals fixed effects="waterfall">
             <app-toolbar>
                 <paper-icon-button icon="menu"></paper-icon-button>
-                <h1 main-title>&lt;braket|o|matic&gt;</h1>
+                <h2 main-title>&lt;braket|o|matic&gt;</h2>
             </app-toolbar>
 
             <!-- TODO: make this a template so I can actually use these variables -->
-            <paper-tabs selected="{{selected_tab}}" sticky autoselect>
-                <paper-tab>Bracket</paper-tab>
-                <paper-tab>Standings</paper-tab>
-                <paper-tab>&lt;predict|o|matic&gt;</paper-tab>
-                <paper-tab>&lt;excite|o|matic&gt;</paper-tab>
+            <paper-tabs selected="braket" attr-for-selected="tab-title" autoselect>
+                <paper-tab tab-title="braket">Bracket</paper-tab>
+                <paper-tab tab-title="standings">Standings</paper-tab>
+                <paper-tab tab-title="predict">&lt;predict|o|matic&gt;</paper-tab>
+                <paper-tab tab-title="excite">&lt;excite|o|matic&gt;</paper-tab>
             </paper-tabs>
         </app-header>
 
-        <iron-pages selected="{{selected_tab}}">
-            <div>Braket page</div>
-            <div>Standings page</div>
-            <div>Predict-o-Matic page</div>
-            <div>Excite-o-Matic page</div>
-        </iron-pages>
+        <!-- TODO: Move these to a separate page for loading as needed -->
+        <braket-page-layout page="braket"></braket-page-layout>
 
         <script type="application/dart" src="index.dart"></script>
         <script type="text/javascript" src="packages/browser/dart.js"></script>

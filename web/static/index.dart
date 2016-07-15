@@ -1,7 +1,7 @@
 import 'dart:html';
 import 'package:polymer/polymer.dart';
 import 'package:polymer_elements/paper_tabs.dart';
-import 'package:polymer_elements/iron_pages.dart';
+import 'elements/braket_page_layout.dart';
 import 'lib/user.dart';
 
 main() async {
@@ -26,6 +26,6 @@ onUserLoaded(String jsonUser) async {
 
 onTabSelect(Event event) async {
     PaperTabs tabs = document.querySelector("paper-tabs");
-    IronPages pages = document.querySelector("iron-pages");
-    pages.selected = tabs.selected;
+    BraketPageLayout pages = document.querySelector("braket-page-layout");
+    pages.setAttribute("page", tabs.selected);
 }
