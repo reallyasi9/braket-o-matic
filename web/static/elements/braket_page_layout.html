@@ -1,6 +1,9 @@
 <link rel="import" href="../packages/polymer/polymer.html">
 <link rel="import" href="../packages/polymer_elements/iron_pages.html">
 <link rel="import" href="braket_page.html">
+<link rel="import" href="standings_page.html">
+<link rel="import" href="predict_page.html">
+<link rel="import" href="excite_page.html">
 
 <dom-module id="braket-page-layout">
 
@@ -18,9 +21,9 @@
 
         <iron-pages id="pages" selected="[[page]]" attr-for-selected="page-selection">
             <braket-page page-selection="braket"></braket-page>
-            <div page-selection="standings">Standings page</div>
-            <div page-selection="predict">Predict-o-Matic page</div>
-            <div page-selection="excite">Excite-o-Matic page</div>
+            <standings-page page-selection="standings"></standings-page>
+            <predict-page page-selection="predict"></predict-page>
+            <excite-page page-selection="excite"></excite-page>
         </iron-pages>
 
     </template>
