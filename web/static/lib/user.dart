@@ -1,27 +1,25 @@
 import 'package:json_object/json_object.dart';
 
-abstract class AppEngineUser {
-    String Email;
-    String AuthDomain;
-    bool Admin;
-    String ID;
-    String ClientID;
-    String FederatedIdentity;
-    String FederatedProvider;
-}
-
 abstract class User {
-	bool LoggedIn;
-	String LoginURL;
-	String LogoutURL;
-	AppEngineUser AppEngineUser;
+	String Surname;
+    String GivenName;
+    String Nickname;
+    String Email;
+    DateTime FirstAccessDate;
+    DateTime LastAccessDate;
+    FavoriteTeam String; // TODO make this a new object.
 }
 
-class AppEngineUserImpl extends JsonObject implements AppEngineUser {
-    AppEngineUserImpl();
+abstract class UserReturnMessage {
+    User User;
+    String LogoutURL;
+}
 
-    factory AppEngineUserImpl.fromJsonString(String string) {
-        return new JsonObject.fromJsonString(string, new AppEngineUserImpl());
+class UserReturnMessageImpl extends JsonObject implements UserReturnMessage {
+    UserReturnMessageImpl();
+
+    factory UserReturnMessageImpl.fromJsonString(String string) {
+        return new JsonObject.fromJsonString(string, new UserReturnMessageImpl());
     }
 }
 

@@ -1,25 +1,45 @@
 package braket
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"net/http"
+	"strings"
+	"time"
 
-	//"google.golang.org/appengine"
-	//"google.golang.org/appengine/user"
-	"appengine"
-	"appengine/user"
+	"golang.org/x/crypto/sha3"
+
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
+	"google.golang.org/appengine/user"
 )
 
-// TODO Deal with OAuth later.
-const oauthScope = "https://www.googleapis.com/auth/userinfo.email"
+const salt = "<braket|o|matic>"
 
 // User represents a user, yo.
-// TODO Add OAuth here
 type User struct {
-	LoggedIn      bool
-	LoginURL      string
-	LogoutURL     string
-	AppEngineUser *user.User
+	Surname         string
+	GivenName       string
+	Nickname        string
+	Email           string
+	FirstAccessDate time.Time
+	LastAccessDate  time.Time
+	FavoriteTeam    *datastore.Key
+}
+
+type returnMessage struct {
+	User      *User
+	LogoutURL string
+}
+
+func newUser(in *user.User) *User {
+	u := new(User)
+	u.Email = in.Email
+	u.Nickname = strings.Split(in.Email, "@")[0]
+	u.FirstAccessDate = time.Now()
+	u.LastAccessDate = u.FirstAccessDate
+
+	return u
 }
 
 func init() {
@@ -32,6 +52,7 @@ func get(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 
+	// Allow cross-site origin to the frontend and backend
 	hn, err := appengine.ModuleHostname(ctx, "frontend", "", "")
 	if err != nil {
 		returnError(w, err)
@@ -46,21 +67,41 @@ func get(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Add("Access-Control-Allow-Origin", "http://"+hn)
 
-	liu, _ := user.LoginURL(ctx, "/")
-	lou, _ := user.LogoutURL(ctx, "/")
-	loggedIn := true
-	u := user.Current(ctx)
-	if u == nil {
-		loggedIn = false
+	// Check the datastore for the user
+	currentUser := user.Current(ctx)
+	id := []byte(currentUser.ID + salt)
+	sum := sha3.Sum512(id)
+	hash := base64.StdEncoding.EncodeToString(sum[:])
+	key := datastore.NewKey(ctx, "User", hash, 0, nil)
+	braketUser := new(User)
+	err = datastore.Get(ctx, key, braketUser)
+
+	switch err {
+	case datastore.ErrNoSuchEntity:
+		// Create a new, default user
+		braketUser = newUser(currentUser)
+		_, err2 := datastore.Put(ctx, key, braketUser)
+		if err2 != nil {
+			returnError(w, err2)
+			return
+		}
+	case nil:
+		braketUser.LastAccessDate = time.Now()
+	default:
+		returnError(w, err)
+		return
 	}
 
-	data := User{loggedIn, liu, lou, u}
-	js, err := json.Marshal(data)
+	var rm returnMessage
+	rm.User = braketUser
+	lou, _ := user.LogoutURL(ctx, "/")
+	rm.LogoutURL = lou
+	js, err := json.Marshal(rm)
 	if err != nil {
 		returnError(w, err)
 		return
 	}
-	w.Write(js) // Why doesn't this work?
+	w.Write(js)
 }
 
 func returnError(w http.ResponseWriter, err error) {

@@ -18,10 +18,11 @@ main() async {
     }
 }
 
-onUserLoaded(String jsonUser) async {
+onUserLoaded(String jsonMessage) async {
     // I seriously can't believe this just works.
-    User user = new UserImpl.fromJsonString(jsonUser);
-    print(user.AppEngineUser.Email);
+    UserReturnMessage userReturn = new UserReturnMessageImpl.fromJsonString(jsonMessage);
+    //User user = userReturn.User; // TODO update button, etc.
+    print(userReturn.LogoutURL);
 }
 
 onTabSelect(Event event) async {
