@@ -6,12 +6,23 @@ api_version: go1
 
 handlers:
 
-- url: /packages
-  static_dir: packages
+# Dart packages (but don't upload the dart code)
+- url: /packages/(.*\.(js|dart|html))
+  static_files: packages/\1
+  upload: packages/(.*\.(js|html))
   login: required
   secure: always
 
+# CSS, HTML, Dart, and JS files (don't upload Dart)
+- url: /(.*\.(css|js|html|dart))
+  static_files: static/\1
+  upload: static/(.*\.(css|js|html))
+  login: required
+  secure: always
+
+# Site root
 - url: /
-  static_dir: static
+  static_files: static/index.html
+  upload: static/index.html
   login: required
   secure: always
