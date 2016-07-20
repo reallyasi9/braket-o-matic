@@ -2,6 +2,9 @@ package braket
 
 import (
 	"fmt"
+	"net/http"
+
+	"google.golang.org/appengine"
 )
 
 const nRounds = 6
@@ -41,4 +44,29 @@ func init() {
 		name := fmt.Sprintf("Team%d", i)
 		teamList[i] = Team{i, name, seedsList[i%nTeamsPerRegion], 0.}
 	}
+}
+
+func EnableCORS(w http.ResponseWriter, r *http.Request) {
+	ctx := appengine.NewContext(r)
+
+	w.Header().Set("Content-Type", "application/json")
+
+	// Allow cross-site origin to the frontend and backend
+	hn, err := appengine.ModuleHostname(ctx, "frontend", "", "")
+	if err != nil {
+		ReturnError(w, err)
+		return
+	}
+	w.Header().Add("Access-Control-Allow-Origin", "http://"+hn)
+
+	hn, err = appengine.ModuleHostname(ctx, "default", "", "")
+	if err != nil {
+		ReturnError(w, err)
+		return
+	}
+	w.Header().Add("Access-Control-Allow-Origin", "http://"+hn)
+}
+
+func ReturnError(w http.ResponseWriter, err error) {
+	http.Error(w, err.Error(), http.StatusInternalServerError)
 }

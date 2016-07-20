@@ -12,11 +12,6 @@ import 'excite_page.dart';
 class BraketPageLayout extends PolymerElement {
   BraketPageLayout.created() : super.created();
 
-  @Property(observer: 'pageChanged')
+  @property
   String page;
-
-  @reflectable
-  void pageChanged(newValue, _) {
-      $['pages'].selected = newValue;
-  }
 }

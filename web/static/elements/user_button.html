@@ -1,0 +1,20 @@
+<link rel="import" href="../packages/polymer/polymer.html">
+<link rel="import" href="../packages/polymer_elements/shadow.html">
+<link rel="import" href="../packages/polymer_elements/paper_button.html">
+
+<dom-module id="user-button">
+
+    <template>
+        <style>
+            paper-button {
+                font-size: 10pt;
+                text-transform: none;
+            }
+        </style>
+
+        <paper-button raised>
+            <div>[[userName]]</div>
+        </paper-button>
+    </template>
+
+</dom-module>

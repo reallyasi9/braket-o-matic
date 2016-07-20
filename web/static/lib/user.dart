@@ -6,8 +6,8 @@ abstract class User {
     String Nickname;
     String Email;
     DateTime FirstAccessDate;
-    DateTime LastAccessDate;
-    FavoriteTeam String; // TODO make this a new object.
+    String FavoriteTeam; // TODO make this a new object.
+	String PictureURL;
 }
 
 abstract class UserReturnMessage {
