@@ -1,6 +1,9 @@
 <link rel="import" href="../packages/polymer/polymer.html">
-<link rel="import" href="../packages/polymer_elements/shadow.html">
+<!--link rel="import" href="../packages/polymer_elements/shadow.html"-->
+<link rel="import" href="../packages/polymer_elements/iron_image.html">
 <link rel="import" href="../packages/polymer_elements/paper_button.html">
+<link rel="import" href="../packages/polymer_elements/color.html">
+<link rel="import" href="../packages/polymer_elements/iron_flex_layout.html">
 
 <dom-module id="user-button">
 
@@ -9,11 +12,25 @@
             paper-button {
                 font-size: 10pt;
                 text-transform: none;
+                @apply(--layout-horizontal);
+            }
+            paper-button span {
+                @apply(--layout-flex);
+                height: 32px;
+                line-height: 32px;
+                white-space: nowrap;
+            }
+            iron-image {
+                width: 32px;
+                height: 32px;
+                background-color: var(--paper-grey-100);
+                margin-right: 0.57em;
             }
         </style>
 
         <paper-button raised>
-            <div>[[userName]]</div>
+            <iron-image id="iron-image" sizing="cover" preload fade src="[[user.PictureURL]]"></iron-image>
+            <span>[[fullDisplayName(user)]]</span>
         </paper-button>
     </template>
 

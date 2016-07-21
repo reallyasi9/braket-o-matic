@@ -24,7 +24,7 @@ onUserLoaded(String jsonMessage) async {
     UserReturnMessage userReturn = new UserReturnMessageImpl.fromJsonString(jsonMessage);
     User user = userReturn.User; // TODO update button, etc.
     UserButton button = document.querySelector("user-button");
-    button.set("userName", user.Nickname);
+    button.set("user", user);
 }
 
 onTabSelect(Event event) async {
