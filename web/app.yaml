@@ -20,6 +20,13 @@ handlers:
   login: required
   secure: always
 
+# Images
+- url: /images/(.*\.(png|jpg|svg))
+  static_files: static/images/\1
+  upload: static/images/(.*\.(png|jpg|svg))
+  login: required
+  secure: always
+
 # Site root
 - url: /
   static_files: static/index.html
