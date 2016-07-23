@@ -6,6 +6,7 @@ import 'package:web_components/web_components.dart' show HtmlImport;
 import 'package:polymer_elements/paper_button.dart';
 import 'package:polymer_elements/iron_image.dart';
 import '../lib/user.dart';
+import 'file_upload.dart';
 
 @PolymerRegister('user-button')
 class UserButton extends PolymerElement {
