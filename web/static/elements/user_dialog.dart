@@ -28,6 +28,9 @@ class UserDialog extends PolymerElement {
     @property
     String pictureURL;
 
+    @property
+    bool withBackdrop = false;
+
     @reflectable
     openDialog() async {
         PaperDialog pd = $["dialog"];

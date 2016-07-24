@@ -7,7 +7,7 @@
         </style>
 
         <!-- modal is broken right now... -->
-        <paper-dialog id="dialog"> <!-- modal on-iron-overlay-opened="patchOverlay" -->
+        <paper-dialog with-backdrop={{withBackdrop}} id="dialog"> <!-- modal on-iron-overlay-opened="patchOverlay" -->
             <h2>Edit user information</h2>
             <file-upload raised>Upload a file?</file-upload>
             <paper-input label="Given name" id="surname-input" value={{givenName}}>
