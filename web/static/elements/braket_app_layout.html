@@ -1,0 +1,55 @@
+<link rel="import" href="../packages/polymer/polymer.html">
+
+<dom-module id="braket-app-layout">
+
+    <template>
+        <style>
+        app-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 132px;
+            color: #fff;
+            background-color: var(--paper-blue-grey-400);
+            --app-header-background-rear-layer: {
+                background-color: var(--paper-brown-400);
+            };
+        }
+        paper-tabs {
+            --paper-tabs-selection-bar-color: var(--paper-orange-300);
+        }
+        app-header paper-button {
+            text-transform: none;
+            font-size: 10pt;
+        }
+        app-toolbar {
+            margin-bottom: 20px;
+            @apply(--layout-horizontal);
+        }
+        app-toolbar [main-title] {
+            @apply(--layout-flex);
+        }
+        </style>
+
+        <user-dialog id="user-dialog" surname="{{user.surname}}" given-name="{{user.givenName}}" nickname="{{user.nickname}}" picture-url="{{user.pictureURL}}"></user-dialog>
+
+        <app-header condenses reveals fixed effects="waterfall">
+            <app-toolbar>
+                <div main-title>&lt;braket|o|matic&gt;</div>
+                <user-button id="user-button" on-click="openUserDialog" user-name="{{fullDisplayName(user)}}" picture="{{user.pictureURL}}"></user-button>
+            </app-toolbar>
+
+            <paper-tabs id="tabs" selected="{{page}}" attr-for-selected="tab-title" autoselect on-iron-select="onTabSelect">
+                <paper-tab tab-title="braket">Bracket</paper-tab>
+                <paper-tab tab-title="standings">Standings</paper-tab>
+                <paper-tab tab-title="predict">&lt;predict|o|matic&gt;</paper-tab>
+                <paper-tab tab-title="excite">&lt;excite|o|matic&gt;</paper-tab>
+            </paper-tabs>
+        </app-header>
+
+        <braket-page-layout id="page-layout" page="{{page}}"></braket-page-layout>
+
+    </template>
+
+</dom-module>

@@ -1,0 +1,33 @@
+<link rel="import" href="../packages/polymer/polymer.html">
+
+<dom-module id="user-dialog">
+
+    <template>
+        <style>
+        </style>
+
+        <!-- modal is broken right now... -->
+        <paper-dialog id="dialog"> <!-- modal on-iron-overlay-opened="patchOverlay" -->
+            <h2>Edit user information</h2>
+            <file-upload raised>Upload a file?</file-upload>
+            <paper-input label="Given name" id="surname-input" value={{givenName}}>
+                <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
+            </paper-input>
+            <paper-input label="Surname" id="family-name-input" value={{surname}}>
+                <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
+            </paper-input>
+            <paper-input label="Nickname" id="nickname-input" value={{nickname}}>
+                <div prefix>“</div>
+                <div suffix>”</div>
+                <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
+            </paper-input>
+            <paper-dropdown-menu label="Favorite team" id="favorite-input">
+                <paper-listbox class="dropdown-content">
+                    <paper-item>University of Michigan Wolverines</paper-item>
+                </paper-listbox>
+            </paper-dropdown-menu>
+        </paper-dialog>
+
+    </template>
+
+</dom-module>

@@ -12,13 +12,13 @@ packages:
       name: args
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.4+2"
+    version: "0.13.5"
   async:
     description:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.11.0"
+    version: "1.11.1"
   barback:
     description:
       name: barback
@@ -114,7 +114,7 @@ packages:
       name: logging
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.11.3"
+    version: "0.11.3+1"
   package_config:
     description:
       name: package_config
@@ -138,25 +138,19 @@ packages:
       name: polymer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-rc.17"
-  polymer_app_layout:
-    description:
-      name: polymer_app_layout
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.5"
+    version: "1.0.0-rc.18"
   polymer_elements:
     description:
       name: polymer_elements
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-rc.8"
+    version: "1.0.0-rc.9"
   polymer_interop:
     description:
       name: polymer_interop
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-rc.9"
+    version: "1.0.0-rc.10"
   pool:
     description:
       name: pool

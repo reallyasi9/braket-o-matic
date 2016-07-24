@@ -1,32 +1,17 @@
-import 'package:json_object/json_object.dart';
+import 'package:polymer/polymer.dart';
 
-abstract class User {
-	String Surname;
-    String GivenName;
-    String Nickname;
-    String Email;
-    DateTime FirstAccessDate;
-    String FavoriteTeam; // TODO make this a new object.
-	String PictureURL;
-}
+class User extends JsProxy {
+	String surname;
+	String givenName;
+	String nickname;
+	String favoriteTeam; // TODO make this a new object.
+	String pictureURL;
 
-abstract class UserReturnMessage {
-    User User;
-    String LogoutURL;
-}
-
-class UserReturnMessageImpl extends JsonObject implements UserReturnMessage {
-    UserReturnMessageImpl();
-
-    factory UserReturnMessageImpl.fromJsonString(String string) {
-        return new JsonObject.fromJsonString(string, new UserReturnMessageImpl());
-    }
-}
-
-class UserImpl extends JsonObject implements User {
-    UserImpl();
-
-    factory UserImpl.fromJsonString(String string) {
-        return new JsonObject.fromJsonString(string, new UserImpl());
-    }
+	User(Map<String, dynamic> obj) {
+		this.surname = obj["Surname"];
+		this.givenName = obj["GivenName"];
+		this.nickname = obj["Nickname"];
+		this.favoriteTeam = obj["FavoriteTeam"];
+		this.pictureURL = obj["PictureURL"];
+	}
 }

@@ -1,10 +1,4 @@
 <link rel="import" href="../packages/polymer/polymer.html">
-<!--link rel="import" href="../packages/polymer_elements/shadow.html"-->
-<link rel="import" href="../packages/polymer_elements/iron_image.html">
-<link rel="import" href="../packages/polymer_elements/paper_button.html">
-<link rel="import" href="../packages/polymer_elements/color.html">
-<link rel="import" href="../packages/polymer_elements/iron_flex_layout.html">
-<link rel="import" href="file_upload.html">
 
 <dom-module id="user-button">
 
@@ -30,10 +24,10 @@
         </style>
 
         <paper-button raised>
-            <iron-image id="iron-image" sizing="cover" preload fade src="[[user.PictureURL]]"></iron-image>
-            <span>[[fullDisplayName(user)]]</span>
-            <file-upload raised>Upload a file?</file-upload>
+            <iron-image id="iron-image" sizing="cover" preload fade src="[[picture]]"></iron-image>
+            <span>[[userName]]</span>
         </paper-button>
+
     </template>
 
 </dom-module>

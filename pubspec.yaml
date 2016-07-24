@@ -4,8 +4,7 @@ description: >
 dependencies:
   browser: ^0.10.0
   polymer: ^1.0.0-rc.16
-  polymer_elements: ^1.0.0-rc.8
-  polymer_app_layout: ^0.0.5
+  polymer_elements: ^1.0.0-rc.9
   web_components: ^0.12.0
   js: ^0.6.0
   json_object: any

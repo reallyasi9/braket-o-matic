@@ -233,7 +233,7 @@ class FileUpload extends PolymerElement {
   * Clicks the invisible file input
   */
   @reflectable
-  void fileClick(CustomEventWrapper e, other) {
+  void fileClick(CustomEventWrapper e, [_]) {
     Element elem = $['fileInput'];
     MouseEvent evt = new MouseEvent("click");
     elem.dispatchEvent(evt);
