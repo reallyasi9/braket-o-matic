@@ -37,7 +37,7 @@
         <app-header condenses reveals fixed effects="waterfall">
             <app-toolbar>
                 <div main-title>&lt;braket|o|matic&gt;</div>
-                <user-button id="user-button" on-click="openUserDialog" user-name="{{fullDisplayName(user)}}" picture="{{user.pictureURL}}"></user-button>
+                <user-button id="user-button" on-click="openUserDialog" user-name="[[fullDisplayName(user)]]" picture="[[user.pictureURL]]"></user-button>
             </app-toolbar>
 
             <paper-tabs id="tabs" selected="{{page}}" attr-for-selected="tab-title" autoselect on-iron-select="onTabSelect">

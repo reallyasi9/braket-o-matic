@@ -18,7 +18,7 @@ class UserButton extends PolymerElement {
   String userName = "calculating name...";
 
   @Property(notify: true, observer: "changePicture")
-  String picture;
+  String pictureURL;
 
   @reflectable
   changePicture(String newPictureURL, [_]) async {

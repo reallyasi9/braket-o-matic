@@ -10,13 +10,13 @@
         <paper-dialog with-backdrop={{withBackdrop}} id="dialog"> <!-- modal on-iron-overlay-opened="patchOverlay" -->
             <h2>Edit user information</h2>
             <file-upload raised>Upload a file?</file-upload>
-            <paper-input label="Given name" id="surname-input" value={{givenName}}>
+            <paper-input label="Given name" id="surname-input" value="{{givenName}}" on-change="handleChange">
                 <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
             </paper-input>
-            <paper-input label="Surname" id="family-name-input" value={{surname}}>
+            <paper-input label="Surname" id="family-name-input" value="{{surname}}" on-change="handleChange">
                 <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
             </paper-input>
-            <paper-input label="Nickname" id="nickname-input" value={{nickname}}>
+            <paper-input label="Nickname" id="nickname-input" value="{{nickname}}" on-change="handleChange">
                 <div prefix>“</div>
                 <div suffix>”</div>
                 <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>

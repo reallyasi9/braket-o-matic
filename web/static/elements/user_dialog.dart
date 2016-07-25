@@ -1,6 +1,8 @@
 @HtmlImport('user_dialog.html')
 library braket.user_dialog;
 
+import 'dart:html';
+
 import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart' show HtmlImport;
 
@@ -11,6 +13,7 @@ import 'package:polymer_elements/paper_icon_button.dart';
 import 'package:polymer_elements/paper_dropdown_menu.dart';
 import 'package:polymer_elements/paper_listbox.dart';
 import 'package:polymer_elements/paper_item.dart';
+import '../lib/user.dart';
 
 @PolymerRegister('user-dialog')
 class UserDialog extends PolymerElement {
@@ -27,6 +30,9 @@ class UserDialog extends PolymerElement {
 
     @property
     String pictureURL;
+
+    @property
+    String favoriteTeam;
 
     @property
     bool withBackdrop = false;
@@ -58,5 +64,15 @@ class UserDialog extends PolymerElement {
         // TODO
     }
 
+    @reflectable
+    handleChange(CustomEventWrapper e, [_]) async {
+        // I guess this works, but it doesn't propogate up...
+        User u = new User(this.surname, this.givenName, this.nickname, this.favoriteTeam);
+        try {
+            HttpRequest.request("/backend/user", method: "PUT", sendData: u);
+        } catch (e) {
+            print("Shoot!  Couldn't write user data!");
+        }
+    }
 
 }

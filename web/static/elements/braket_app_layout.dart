@@ -32,7 +32,7 @@ class BraketAppLayout extends PolymerElement {
 
     void ready() {
         try {
-            HttpRequest.getString("/backend/get-user").then(_onUserLoaded);
+            HttpRequest.getString("/backend/user").then(_onUserLoaded);
         } catch (e) {
             print("Shoot!  Couldn't access the login URL!");
         }
@@ -41,7 +41,7 @@ class BraketAppLayout extends PolymerElement {
     _onUserLoaded(String jsonMessage) async {
         // I seriously can't believe this just works.
         Map<String, dynamic> userReturn = JSON.decode(jsonMessage);
-        this.set("user", new User(userReturn["User"]));
+        this.set("user", new User.fromMap(userReturn["User"]));
         // notification isn't smart enough to do this yet...
         this.notifyPath('user.surname', user.surname);
         this.notifyPath('user.givenName', user.givenName);

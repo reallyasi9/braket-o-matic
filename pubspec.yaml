@@ -7,7 +7,7 @@ dependencies:
   polymer_elements: ^1.0.0-rc.9
   web_components: ^0.12.0
   js: ^0.6.0
-  json_object: any
+  exportable: any
 transformers:
 - polymer:
     entry_points:

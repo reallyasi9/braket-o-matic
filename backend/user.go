@@ -36,7 +36,18 @@ type returnMessage struct {
 }
 
 func init() {
-	http.HandleFunc("/backend/get-user", get)
+	http.HandleFunc("/backend/user", dispatch)
+}
+
+func dispatch(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	default:
+		ReturnError(w, http.ErrNotSupported)
+	case http.MethodGet:
+		get(w, r)
+	case http.MethodPut:
+		put(w, r)
+	}
 }
 
 func get(w http.ResponseWriter, r *http.Request) {
@@ -70,6 +81,43 @@ func get(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Write(js)
+}
+
+func put(w http.ResponseWriter, r *http.Request) {
+
+	// Global goon instance
+	ctx := appengine.NewContext(r)
+	ds := goon.FromContext(ctx)
+
+	// Check the datastore for the user
+	currentUser := user.Current(ctx)
+
+	u := newUser(currentUser)
+	if err := ds.Get(u); err != nil {
+		ReturnError(w, err)
+		return
+	}
+
+	// Dig json out of the sent data
+	nu := &User{}
+	decoder := json.NewDecoder(r.Body)
+	if err := decoder.Decode(nu); err != nil {
+		ReturnError(w, err)
+		return
+	}
+
+	// Update the fields that are updatable
+	u.GivenName = nu.GivenName
+	u.Nickname = nu.Nickname
+	u.Surname = nu.Surname
+	u.FavoriteTeam = nu.FavoriteTeam
+
+	// Send the update
+	ds.Put(u)
+
+	// Done
+	return
+
 }
 
 func newUser(in *user.User) *User {
