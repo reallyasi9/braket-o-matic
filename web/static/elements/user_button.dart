@@ -30,9 +30,8 @@ class UserButton extends PolymerElement {
   }
 
   @Observe('user.pictureURL')
-  updatePictureURL(User newUser) async {
+  updatePictureURL(String pictureURL) async {
     IronImage ii = $["iron-image"];
-    print(newUser.pictureURL);
-    ii.setAttribute("src", newUser.pictureURL);
+    ii.setAttribute("src", pictureURL);
   }
 }

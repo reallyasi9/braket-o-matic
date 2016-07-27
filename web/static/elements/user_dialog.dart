@@ -23,21 +23,13 @@ class UserDialog extends PolymerElement {
     UserDialog.created() : super.created();
 
     @Property(notify: true)
-    String givenName;
-
-    @Property(notify: true)
-    String surname;
-
-    @Property(notify: true)
-    String nickname;
-
-    @Property(notify: true)
-    String picture;
+    User user;
 
     @property
     bool withBackdrop = false;
 
     Timer _debounceTimer = new Timer(_TIMEOUT, () => {});
+
 
     @reflectable
     openDialog() async {
@@ -54,6 +46,7 @@ class UserDialog extends PolymerElement {
         }
     }
 
+
     @reflectable
     clearInput(CustomEventWrapper e, [_]) async {
         PaperIconButton b = e.target;
@@ -61,18 +54,20 @@ class UserDialog extends PolymerElement {
         i.updateValueAndPreserveCaret("");
     }
 
+
     @reflectable
     clearPicture(CustomEventWrapper e, [_]) async {
         // TODO
     }
 
-    @reflectable
-    handleChange(CustomEventWrapper e, [_]) async {
+
+    @Observe('user.givenName, user.surname, user.nickname')
+    handleChange(String givenName, String surname, String nickname) async {
         // For now, handle all values
-        this.set("givenName", ($["given-name-input"] as PaperInput).value);
-        this.set("surname", ($["surname-input"] as PaperInput).value);
-        this.set("nickname", ($["nickname-input"] as PaperInput).value);
-        // I guess this works, but it doesn't propogate up...
+        user.givenName = givenName;
+        user.surname = surname;
+        user.nickname = nickname;
+        this.notifyPath("user");
 
         if (_debounceTimer.isActive) {
             this._debounceTimer.cancel();
@@ -83,9 +78,8 @@ class UserDialog extends PolymerElement {
     }
 
     _upload() async {
-        User u = new User(this.surname, this.givenName, this.nickname, null /* for now */);
         try {
-            HttpRequest.request("/backend/user", method: "PUT", sendData: u);
+            HttpRequest.request("/backend/user", method: "PUT", sendData: this.user);
         } catch (err) {
             print("Shoot!  Couldn't write user data!");
         }

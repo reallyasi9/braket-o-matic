@@ -43,10 +43,10 @@ class BraketAppLayout extends PolymerElement {
         Map<String, dynamic> userReturn = JSON.decode(jsonMessage);
         this.set("user", new User.fromMap(userReturn["User"]));
         // notification isn't smart enough to do this yet...
-         this.notifyPath('user.surname', user.surname);
-         this.notifyPath('user.givenName', user.givenName);
-         this.notifyPath('user.nickname', user.nickname);
-         this.notifyPath('user.pictureURL', user.pictureURL);
+        this.notifyPath('user.surname', user.surname);
+        this.notifyPath('user.givenName', user.givenName);
+        this.notifyPath('user.nickname', user.nickname);
+        this.notifyPath('user.pictureURL', user.pictureURL);
     }
 
     @reflectable
