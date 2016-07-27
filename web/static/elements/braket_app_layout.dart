@@ -24,10 +24,10 @@ import '../lib/user.dart';
 class BraketAppLayout extends PolymerElement {
     BraketAppLayout.created() : super.created();
 
-    @property
+    @Property(notify: true)
     String page = "braket";
 
-    @property
+    @Property(notify: true)
     User user;
 
     void ready() {
@@ -43,10 +43,10 @@ class BraketAppLayout extends PolymerElement {
         Map<String, dynamic> userReturn = JSON.decode(jsonMessage);
         this.set("user", new User.fromMap(userReturn["User"]));
         // notification isn't smart enough to do this yet...
-        this.notifyPath('user.surname', user.surname);
-        this.notifyPath('user.givenName', user.givenName);
-        this.notifyPath('user.nickname', user.nickname);
-        this.notifyPath('user.pictureURL', user.pictureURL);
+         this.notifyPath('user.surname', user.surname);
+         this.notifyPath('user.givenName', user.givenName);
+         this.notifyPath('user.nickname', user.nickname);
+         this.notifyPath('user.pictureURL', user.pictureURL);
     }
 
     @reflectable
@@ -55,22 +55,4 @@ class BraketAppLayout extends PolymerElement {
         ud.openDialog();
     }
 
-    @reflectable
-    onTabSelect(CustomEventWrapper e, [_]) async {
-        BraketPageLayout pages = $["page-layout"];
-        PaperTabs tabs = $["tabs"];
-        pages.set("page", tabs.selected);
-    }
-
-    @reflectable
-    String fullDisplayName(User user) {
-        if (user.nickname.isNotEmpty) {
-          return '${user.givenName} "${user.nickname}" ${user.surname}';
-        }
-        String fullName = '${user.givenName} ${user.surname}';
-        if (fullName.trim().isEmpty) {
-          return 'an unnamed bracketeer';
-        }
-        return fullName;
-    }
 }

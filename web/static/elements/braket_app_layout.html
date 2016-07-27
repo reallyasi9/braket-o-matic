@@ -32,15 +32,15 @@
         }
         </style>
 
-        <user-dialog id="user-dialog" with-backdrop surname="{{user.surname}}" given-name="{{user.givenName}}" nickname="{{user.nickname}}" picture-url="{{user.pictureURL}}"></user-dialog>
+        <user-dialog id="user-dialog" with-backdrop given-name="{{user.givenName}}" surname="{{user.surname}}" nickname="{{user.nickname}}"></user-dialog>
 
         <app-header condenses reveals fixed effects="waterfall">
             <app-toolbar>
                 <div main-title>&lt;braket|o|matic&gt;</div>
-                <user-button id="user-button" on-click="openUserDialog" user-name="[[fullDisplayName(user)]]" picture="[[user.pictureURL]]"></user-button>
+                <user-button id="user-button" on-click="openUserDialog" user="{{user}}"></user-button>
             </app-toolbar>
 
-            <paper-tabs id="tabs" selected="{{page}}" attr-for-selected="tab-title" autoselect on-iron-select="onTabSelect">
+            <paper-tabs id="tabs" selected="{{page}}" attr-for-selected="tab-title" autoselect>
                 <paper-tab tab-title="braket">Bracket</paper-tab>
                 <paper-tab tab-title="standings">Standings</paper-tab>
                 <paper-tab tab-title="predict">&lt;predict|o|matic&gt;</paper-tab>

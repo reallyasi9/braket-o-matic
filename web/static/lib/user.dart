@@ -19,6 +19,8 @@ class User extends JsProxy with Exportable{
 	@export
 	String pictureURL;
 
+	String get displayName => (nickname.isNotEmpty) ? '${givenName} "${nickname}" ${surname}' : '${givenName} ${surname}'.trim();
+
 	User(String this.surname, String this.givenName, String this.nickname, String this.favoriteTeam);
 
 	User.fromMap(Map<String, dynamic> obj) {

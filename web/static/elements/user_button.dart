@@ -14,16 +14,25 @@ import '../lib/user.dart';
 class UserButton extends PolymerElement {
   UserButton.created() : super.created();
 
-  @property
-  String userName = "calculating name...";
-
-  @Property(notify: true, observer: "changePicture")
-  String pictureURL;
+  @Property(notify: true)
+  User user;
 
   @reflectable
-  changePicture(String newPictureURL, [_]) async {
+  String makeDisplayName(String givenName, String surname, String nickname) {
+    if (nickname.isNotEmpty) {
+      return '$givenName "$nickname" $surname'.trim();
+    }
+    String fullName = '$givenName $surname'.trim();
+    if (fullName.isEmpty) {
+      return 'an unnamed user';
+    }
+    return fullName;
+  }
+
+  @Observe('user.pictureURL')
+  updatePictureURL(User newUser) async {
     IronImage ii = $["iron-image"];
-    print(newPictureURL);
-    ii.setAttribute("src", newPictureURL);
+    print(newUser.pictureURL);
+    ii.setAttribute("src", newUser.pictureURL);
   }
 }

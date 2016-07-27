@@ -2,6 +2,7 @@
 library braket.user_dialog;
 
 import 'dart:html';
+import 'dart:async';
 
 import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart' show HtmlImport;
@@ -15,27 +16,28 @@ import 'package:polymer_elements/paper_listbox.dart';
 import 'package:polymer_elements/paper_item.dart';
 import '../lib/user.dart';
 
+const Duration _TIMEOUT = const Duration(seconds: 1);
+
 @PolymerRegister('user-dialog')
 class UserDialog extends PolymerElement {
     UserDialog.created() : super.created();
 
-    @property
-    String surname;
-
-    @property
+    @Property(notify: true)
     String givenName;
 
-    @property
+    @Property(notify: true)
+    String surname;
+
+    @Property(notify: true)
     String nickname;
 
-    @property
-    String pictureURL;
-
-    @property
-    String favoriteTeam;
+    @Property(notify: true)
+    String picture;
 
     @property
     bool withBackdrop = false;
+
+    Timer _debounceTimer = new Timer(_TIMEOUT, () => {});
 
     @reflectable
     openDialog() async {
@@ -66,11 +68,25 @@ class UserDialog extends PolymerElement {
 
     @reflectable
     handleChange(CustomEventWrapper e, [_]) async {
+        // For now, handle all values
+        this.set("givenName", ($["given-name-input"] as PaperInput).value);
+        this.set("surname", ($["surname-input"] as PaperInput).value);
+        this.set("nickname", ($["nickname-input"] as PaperInput).value);
         // I guess this works, but it doesn't propogate up...
-        User u = new User(this.surname, this.givenName, this.nickname, this.favoriteTeam);
+
+        if (_debounceTimer.isActive) {
+            this._debounceTimer.cancel();
+        }
+        _debounceTimer = new Timer(_TIMEOUT, () {
+            this._upload();
+        });
+    }
+
+    _upload() async {
+        User u = new User(this.surname, this.givenName, this.nickname, null /* for now */);
         try {
             HttpRequest.request("/backend/user", method: "PUT", sendData: u);
-        } catch (e) {
+        } catch (err) {
             print("Shoot!  Couldn't write user data!");
         }
     }

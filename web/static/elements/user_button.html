@@ -24,8 +24,8 @@
         </style>
 
         <paper-button raised>
-            <iron-image id="iron-image" sizing="cover" preload fade src="[[pictureURL]]"></iron-image>
-            <span>[[userName]]</span>
+            <iron-image id="iron-image" sizing="cover" preload fade src="{{user.pictureURL}}"></iron-image>
+            <span>{{makeDisplayName(user.givenName, user.surname, user.nickname)}}</span>
         </paper-button>
 
     </template>
