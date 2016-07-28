@@ -1,4 +1,4 @@
-application: braketomatic
+application: braket-o-matic
 
 dispatch:
   - url: "*/backend/*"
