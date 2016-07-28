@@ -4,28 +4,53 @@
 
     <template>
         <style>
+        iron-image {
+            width: 100px;
+            height: 100px;
+            background-color: var(--paper-grey-100);
+            padding: 0 !important;
+            border-radius: 100px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        file-upload {
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+        paper-dialog-scrollable {
+            @apply(--layout-vertical);
+            @apply(--layout-center-justified);
+        }
         </style>
 
         <!-- modal is broken right now... -->
-        <paper-dialog with-backdrop={{withBackdrop}} id="dialog"> <!-- modal on-iron-overlay-opened="patchOverlay" -->
+        <paper-dialog with-backdrop={{withBackdrop}} id="dialog">
             <h2>Edit user information</h2>
-            <file-upload raised>Upload a file?</file-upload>
-            <paper-input label="Given name" name="givenName" id="given-name-input" value="{{user.givenName}}">
-                <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
-            </paper-input>
-            <paper-input label="Surname" name="surname" id="surname-input" value="{{user.surname}}">
-                <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
-            </paper-input>
-            <paper-input label="Nickname" name="nickname" id="nickname-input" value="{{user.nickname}}">
-                <div prefix>“</div>
-                <div suffix>”</div>
-                <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
-            </paper-input>
-            <paper-dropdown-menu label="Favorite team" id="favorite-input">
-                <paper-listbox class="dropdown-content">
-                    <paper-item>University of Michigan Wolverines</paper-item>
-                </paper-listbox>
-            </paper-dropdown-menu>
+            <paper-dialog-scrollable>
+                <iron-image id="iron-image" sizing="cover" preload fade src="{{user.pictureURL}}"></iron-image>
+                <file-upload raised target="/backend/user-picture" method="POST" accept="image/png,image/jpeg,image/gif">Upload a picture</file-upload>
+                <paper-input label="Given name" name="givenName" id="given-name-input" value="{{user.givenName}}">
+                    <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
+                </paper-input>
+                <paper-input label="Surname" name="surname" id="surname-input" value="{{user.surname}}">
+                    <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
+                </paper-input>
+                <paper-input label="Nickname" name="nickname" id="nickname-input" value="{{user.nickname}}">
+                    <div prefix>“</div>
+                    <div suffix>”</div>
+                    <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
+                </paper-input>
+                <paper-dropdown-menu label="Favorite team" id="favorite-input">
+                    <paper-listbox class="dropdown-content">
+                        <paper-item>University of Michigan Wolverines</paper-item>
+                    </paper-listbox>
+                </paper-dropdown-menu>
+                <paper-icon-button suffix on-click="clearFavorite" icon="clear" alt="clear" title="clear"></paper-icon-button>
+            </paper-dialog-scrollable>
         </paper-dialog>
 
     </template>

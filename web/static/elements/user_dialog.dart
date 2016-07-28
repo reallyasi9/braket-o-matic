@@ -8,12 +8,15 @@ import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart' show HtmlImport;
 
 import 'package:polymer_elements/paper_dialog.dart';
+import 'package:polymer_elements/paper_dialog_scrollable.dart';
 import 'file_upload.dart';
 import 'package:polymer_elements/paper_input.dart';
 import 'package:polymer_elements/paper_icon_button.dart';
 import 'package:polymer_elements/paper_dropdown_menu.dart';
 import 'package:polymer_elements/paper_listbox.dart';
 import 'package:polymer_elements/paper_item.dart';
+import 'package:polymer_elements/iron_image.dart';
+import 'package:polymer_elements/iron_flex_layout.dart';
 import '../lib/user.dart';
 
 const Duration _TIMEOUT = const Duration(seconds: 1);
@@ -56,6 +59,12 @@ class UserDialog extends PolymerElement {
 
 
     @reflectable
+    clearFavorite(CustomEventWrapper e, [_]) async {
+        // TODO
+    }
+
+
+    @reflectable
     clearPicture(CustomEventWrapper e, [_]) async {
         // TODO
     }
@@ -83,6 +92,12 @@ class UserDialog extends PolymerElement {
         } catch (err) {
             print("Shoot!  Couldn't write user data!");
         }
+    }
+
+    @Observe('user.pictureURL')
+    updatePictureURL(String pictureURL) async {
+      IronImage ii = $["iron-image"];
+      ii.setAttribute("src", pictureURL);
     }
 
 }
