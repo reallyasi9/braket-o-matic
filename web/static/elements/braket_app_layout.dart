@@ -46,7 +46,6 @@ class BraketAppLayout extends PolymerElement {
         this.notifyPath('user.surname', user.surname);
         this.notifyPath('user.givenName', user.givenName);
         this.notifyPath('user.nickname', user.nickname);
-        this.notifyPath('user.pictureURL', user.pictureURL);
     }
 
     @reflectable

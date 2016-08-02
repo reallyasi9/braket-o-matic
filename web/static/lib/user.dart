@@ -16,10 +16,9 @@ class User extends JsProxy with Exportable{
 	@export
 	String favoriteTeam; // TODO make this a new object.
 
-	@export
-	String pictureURL;
+	String get displayName => (nickname.isNotEmpty) ? '${givenName} "${nickname}" ${surname}'.trim() : '${givenName} ${surname}'.trim();
 
-	String get displayName => (nickname.isNotEmpty) ? '${givenName} "${nickname}" ${surname}' : '${givenName} ${surname}'.trim();
+	String get initial => (givenName.isNotEmpty) ? givenName.substring(0, 1) : (surname.isNotEmpty) ? surname.substring(0, 1) : (nickname.isNotEmpty) ? nickname.substring(0, 1) : "?";
 
 	User(String this.surname, String this.givenName, String this.nickname, String this.favoriteTeam);
 
@@ -28,6 +27,5 @@ class User extends JsProxy with Exportable{
 		this.givenName = obj["GivenName"];
 		this.nickname = obj["Nickname"];
 		this.favoriteTeam = obj["FavoriteTeam"];
-		this.pictureURL = obj["PictureURL"];
 	}
 }

@@ -9,13 +9,11 @@ import 'package:web_components/web_components.dart' show HtmlImport;
 
 import 'package:polymer_elements/paper_dialog.dart';
 import 'package:polymer_elements/paper_dialog_scrollable.dart';
-import 'file_upload.dart';
 import 'package:polymer_elements/paper_input.dart';
 import 'package:polymer_elements/paper_icon_button.dart';
 import 'package:polymer_elements/paper_dropdown_menu.dart';
 import 'package:polymer_elements/paper_listbox.dart';
 import 'package:polymer_elements/paper_item.dart';
-import 'package:polymer_elements/iron_image.dart';
 import 'package:polymer_elements/iron_flex_layout.dart';
 import '../lib/user.dart';
 
@@ -64,18 +62,12 @@ class UserDialog extends PolymerElement {
     }
 
 
-    @reflectable
-    clearPicture(CustomEventWrapper e, [_]) async {
-        // TODO
-    }
-
-
     @Observe('user.givenName, user.surname, user.nickname')
     handleChange(String givenName, String surname, String nickname) async {
         // For now, handle all values
-        user.givenName = givenName;
-        user.surname = surname;
-        user.nickname = nickname;
+        user.givenName = givenName.trim();
+        user.surname = surname.trim();
+        user.nickname = nickname.replaceAll(new RegExp(r"\s+|[\u0022\u0027\u2018\u2019\u201c\u201d\u0060\u00b4]+"), "");
         this.notifyPath("user");
 
         if (_debounceTimer.isActive) {
@@ -86,18 +78,13 @@ class UserDialog extends PolymerElement {
         });
     }
 
+
     _upload() async {
         try {
             HttpRequest.request("/backend/user", method: "PUT", sendData: this.user);
         } catch (err) {
             print("Shoot!  Couldn't write user data!");
         }
-    }
-
-    @Observe('user.pictureURL')
-    updatePictureURL(String pictureURL) async {
-      IronImage ii = $["iron-image"];
-      ii.setAttribute("src", pictureURL);
     }
 
 }

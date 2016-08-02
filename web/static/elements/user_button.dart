@@ -7,7 +7,7 @@ import 'package:web_components/web_components.dart' show HtmlImport;
 import 'package:polymer_elements/color.dart';
 import 'package:polymer_elements/iron_flex_layout.dart';
 import 'package:polymer_elements/paper_button.dart';
-import 'package:polymer_elements/iron_image.dart';
+import 'user_icon.dart';
 import '../lib/user.dart';
 
 @PolymerRegister('user-button')
@@ -29,9 +29,4 @@ class UserButton extends PolymerElement {
     return fullName;
   }
 
-  @Observe('user.pictureURL')
-  updatePictureURL(String pictureURL) async {
-    IronImage ii = $["iron-image"];
-    ii.setAttribute("src", pictureURL);
-  }
 }

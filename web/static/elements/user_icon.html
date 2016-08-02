@@ -1,0 +1,37 @@
+<link rel="import" href="../packages/polymer/polymer.html">
+
+<dom-module id="user-icon">
+
+    <template>
+        <style>
+            :host {
+            }
+
+            div {
+                position: relative;
+            }
+
+            span {
+                height: inherit;
+                white-space: nowrap;
+                left: 50%;
+                margin-left: -25%;
+                text-transform: capitalize;
+                position: absolute;
+                color: var(--user-icon-text-color);
+            }
+
+            iron-icon {
+                /*margin-right: 0.57em;*/
+                position: absolute;
+                --iron-icon-fill-color: var(--user-icon-background-color);
+            }
+        </style>
+        <div style$="width: [[size]]px; height: [[size]]px">
+            <iron-icon id="icon" icon="braket-icon-set:circle" style$="height: [[size]]px; width: [[size]]px; border-radius: calc([[size]]px * 0.5)"></iron-icon>
+            <span style$="line-height: [[size]]px; font-size: calc([[size]]px * 0.9);">{{makeInitial(user.givenName, user.surname, user.nickname)}}</span>
+        </div>
+
+    </template>
+
+</dom-module>

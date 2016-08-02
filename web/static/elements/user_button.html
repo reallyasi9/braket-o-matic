@@ -15,17 +15,13 @@
                 line-height: 32px;
                 white-space: nowrap;
             }
-            iron-image {
-                width: 32px;
-                height: 32px;
-                background-color: var(--paper-grey-100);
+            user-icon {
                 margin-right: 0.57em;
-                border-radius: 32px;
             }
         </style>
 
         <paper-button raised>
-            <iron-image id="iron-image" sizing="cover" preload fade src="{{user.pictureURL}}"></iron-image>
+            <user-icon id="icon" user="{{user}}" size="32"></user-icon>
             <span>{{makeDisplayName(user.givenName, user.surname, user.nickname)}}</span>
         </paper-button>
 

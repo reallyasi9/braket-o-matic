@@ -4,23 +4,6 @@
 
     <template>
         <style>
-        iron-image {
-            width: 100px;
-            height: 100px;
-            background-color: var(--paper-grey-100);
-            padding: 0 !important;
-            border-radius: 100px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        file-upload {
-            margin-left: auto;
-            margin-right: auto;
-            display: block;
-        }
-
         paper-dialog-scrollable {
             @apply(--layout-vertical);
             @apply(--layout-center-justified);
@@ -31,8 +14,7 @@
         <paper-dialog with-backdrop={{withBackdrop}} id="dialog">
             <h2>Edit user information</h2>
             <paper-dialog-scrollable>
-                <iron-image id="iron-image" sizing="cover" preload fade src="{{user.pictureURL}}"></iron-image>
-                <file-upload raised target="/backend/user-picture" method="POST" accept="image/png,image/jpeg,image/gif">Upload a picture</file-upload>
+                <user-icon user="{{user}}" size="100"></user-icon>
                 <paper-input label="Given name" name="givenName" id="given-name-input" value="{{user.givenName}}">
                     <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
                 </paper-input>
