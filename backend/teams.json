@@ -1,0 +1,3569 @@
+[
+{
+  "SchoolName": "University of Akron",
+  "TeamName": "Akron Zips",
+  "Nickname": "Zips",
+  "ID": 0,
+  "Colors": [
+    "#002147",
+    "#917B4C"
+  ]
+},
+{
+  "SchoolName": "University of Alabama",
+  "TeamName": "Alabama Crimson Tide",
+  "Nickname": "Crimson Tide",
+  "ID": 1,
+  "Colors": [
+    "#9E1B32",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Alabama A&M University",
+  "TeamName": "Alabama A&M Bulldogs and Lady Bulldogs",
+  "Nickname": "Bulldogs",
+  "ID": 2,
+  "Colors": [
+    "#660000",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Alabama at Birmingham",
+  "TeamName": "UAB Blazers",
+  "Nickname": "Blazers",
+  "ID": 3,
+  "Colors": [
+    "#1E6B52",
+    "#D2C780"
+  ]
+},
+{
+  "SchoolName": "Alabama State University",
+  "TeamName": "Alabama State Hornets and Lady Hornets",
+  "Nickname": "Hornets",
+  "ID": 4,
+  "Colors": [
+    "#000000",
+    "#C29B33"
+  ]
+},
+{
+  "SchoolName": "University at Albany",
+  "TeamName": "UAlbany Great Danes",
+  "Nickname": "Great Danes",
+  "ID": 5,
+  "Colors": [
+    "#46166B",
+    "#EEB111"
+  ]
+},
+{
+  "SchoolName": "Alcorn State University",
+  "TeamName": "Alcorn State Braves and Lady Braves",
+  "Nickname": "Braves",
+  "ID": 6,
+  "Colors": [
+    "#512D6D",
+    "#CC8A00"
+  ]
+},
+{
+  "SchoolName": "American University",
+  "TeamName": "American University Eagles",
+  "Nickname": "Eagles",
+  "ID": 7,
+  "Colors": [
+    "#003C8B",
+    "#FFFFFF",
+    "#CD1734"
+  ]
+},
+{
+  "SchoolName": "Appalachian State University",
+  "TeamName": "Appalachian State Mountaineers",
+  "Nickname": "Mountaineers",
+  "ID": 8,
+  "Colors": [
+    "#222222",
+    "#FFCC00"
+  ]
+},
+{
+  "SchoolName": "University of Arizona",
+  "TeamName": "Arizona Wildcats",
+  "Nickname": "Wildcats",
+  "ID": 9,
+  "Colors": [
+    "#AB0520",
+    "#0C234B"
+  ]
+},
+{
+  "SchoolName": "Arizona State University",
+  "TeamName": "Arizona State Sun Devils",
+  "Nickname": "Sun Devils",
+  "ID": 10,
+  "Colors": [
+    "#990033",
+    "#FFB310"
+  ]
+},
+{
+  "SchoolName": "University of Arkansas",
+  "TeamName": "Arkansas Razorbacks",
+  "Nickname": "Razorbacks",
+  "ID": 11,
+  "Colors": [
+    "#9D2235",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Arkansas at Little Rock",
+  "TeamName": "Arkansas–Little Rock Trojans",
+  "Nickname": "Trojans",
+  "ID": 12,
+  "Colors": [
+    "#6E2639",
+    "#FFFFFF",
+    "#A7A9AC"
+  ]
+},
+{
+  "SchoolName": "University of Arkansas at Pine Bluff",
+  "TeamName": "Arkansas–Pine Bluff Golden Lions and Lady Lions",
+  "Nickname": "Golden Lions",
+  "ID": 13,
+  "Colors": [
+    "#000000",
+    "#EEB310"
+  ]
+},
+{
+  "SchoolName": "Arkansas State University",
+  "TeamName": "Arkansas State Red Wolves",
+  "Nickname": "Red Wolves",
+  "ID": 14,
+  "Colors": [
+    "#CC092F",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "Auburn University",
+  "TeamName": "Auburn Tigers",
+  "Nickname": "Tigers",
+  "ID": 15,
+  "Colors": [
+    "#0C2340",
+    "#F26522"
+  ]
+},
+{
+  "SchoolName": "Austin Peay State University",
+  "TeamName": "Austin Peay Governors and Lady Govs",
+  "Nickname": "Governors",
+  "ID": 16,
+  "Colors": [
+    "#C41E3A",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Ball State University",
+  "TeamName": "Ball State Cardinals",
+  "Nickname": "Cardinals",
+  "ID": 17,
+  "Colors": [
+    "#BA0C2F",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Baylor University",
+  "TeamName": "Baylor Bears and Lady Bears",
+  "Nickname": "Bears",
+  "ID": 18,
+  "Colors": [
+    "#003015",
+    "#FECB00"
+  ]
+},
+{
+  "SchoolName": "Belmont University",
+  "TeamName": "Belmont Bruins",
+  "Nickname": "Bruins",
+  "ID": 19,
+  "Colors": [
+    "#002469",
+    "#FFFFFF",
+    "#C9262D"
+  ]
+},
+{
+  "SchoolName": "Bethune-Cookman University",
+  "TeamName": "Bethune-Cookman Wildcats",
+  "Nickname": "Wildcats",
+  "ID": 20,
+  "Colors": [
+    "#6A3547",
+    "#E4A41D"
+  ]
+},
+{
+  "SchoolName": "Binghamton University",
+  "TeamName": "Binghamton Bearcats",
+  "Nickname": "Bearcats",
+  "ID": 21,
+  "Colors": [
+    "#005A43",
+    "#FFFFFF",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "Boise State University",
+  "TeamName": "Boise State Broncos",
+  "Nickname": "Broncos",
+  "ID": 22,
+  "Colors": [
+    "#09347A",
+    "#F1632A"
+  ]
+},
+{
+  "SchoolName": "Boston College",
+  "TeamName": "Boston College Eagles",
+  "Nickname": "Eagles",
+  "ID": 23,
+  "Colors": [
+    "#73000A",
+    "#CBB677"
+  ]
+},
+{
+  "SchoolName": "Boston University",
+  "TeamName": "Boston University Terriers",
+  "Nickname": "Terriers",
+  "ID": 24,
+  "Colors": [
+    "#CC0000",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Bowling Green State University",
+  "TeamName": "Bowling Green Falcons",
+  "Nickname": "Falcons",
+  "ID": 25,
+  "Colors": [
+    "#4F2C1D",
+    "#FF7300"
+  ]
+},
+{
+  "SchoolName": "Bradley University",
+  "TeamName": "Bradley Braves",
+  "Nickname": "Braves",
+  "ID": 26,
+  "Colors": [
+    "#A50000",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Brigham Young University",
+  "TeamName": "BYU Cougars",
+  "Nickname": "Cougars",
+  "ID": 27,
+  "Colors": [
+    "#002255",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Brown University",
+  "TeamName": "Brown Bears",
+  "Nickname": "Bears",
+  "ID": 28,
+  "Colors": [
+    "#381C00",
+    "#FFFFFF",
+    "#E4002B"
+  ]
+},
+{
+  "SchoolName": "Bryant University",
+  "TeamName": "Bryant Bulldogs",
+  "Nickname": "Bulldogs",
+  "ID": 29,
+  "Colors": [
+    "#231F20",
+    "#B09863"
+  ]
+},
+{
+  "SchoolName": "Bucknell University",
+  "TeamName": "Bucknell Bison",
+  "Nickname": "The Bison",
+  "ID": 30,
+  "Colors": [
+    "#002D72",
+    "#FF5E17"
+  ]
+},
+{
+  "SchoolName": "State University of New York at Buffalo",
+  "TeamName": "Buffalo Bulls",
+  "Nickname": "Bulls",
+  "ID": 31,
+  "Colors": [
+    "#005BBB",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Butler University",
+  "TeamName": "Butler Bulldogs",
+  "Nickname": "Bulldogs",
+  "ID": 32,
+  "Colors": [
+    "#13294B",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of California",
+  "TeamName": "California Golden Bears",
+  "Nickname": "Golden Bears",
+  "ID": 33,
+  "Colors": [
+    "#041E42",
+    "#FFC72C"
+  ]
+},
+{
+  "SchoolName": "University of California, Davis",
+  "TeamName": "UC Davis Aggies",
+  "Nickname": "Gunrock",
+  "ID": 34,
+  "Colors": [
+    "#002855",
+    "#C99700"
+  ]
+},
+{
+  "SchoolName": "University of California, Irvine",
+  "TeamName": "UC Irvine Anteaters",
+  "Nickname": "Anteaters",
+  "ID": 35,
+  "Colors": [
+    "#0C2340",
+    "#FFC72C"
+  ]
+},
+{
+  "SchoolName": "University of California, Los Angeles",
+  "TeamName": "UCLA Bruins",
+  "Nickname": "Bruins",
+  "ID": 36,
+  "Colors": [
+    "#0073CF",
+    "#FFB300"
+  ]
+},
+{
+  "SchoolName": "California Polytechnic State University",
+  "TeamName": "Cal Poly Mustangs",
+  "Nickname": "Mustangs",
+  "ID": 37,
+  "Colors": [
+    "#003831",
+    "#FFE395",
+    "#B38F4F"
+  ]
+},
+{
+  "SchoolName": "University of California, Riverside",
+  "TeamName": "UC Riverside Highlanders",
+  "Nickname": "Highlanders",
+  "ID": 38,
+  "Colors": [
+    "#2D6CC0",
+    "#F1AB00"
+  ]
+},
+{
+  "SchoolName": "University of California, Santa Barbara",
+  "TeamName": "UC Santa Barbara Gauchos",
+  "Nickname": "Gauchos",
+  "ID": 39,
+  "Colors": [
+    "#0055FA",
+    "#FFB300"
+  ]
+},
+{
+  "SchoolName": "CSU Bakersfield",
+  "TeamName": "Cal State Bakersfield Roadrunners",
+  "Nickname": "Roadrunners",
+  "ID": 40,
+  "Colors": [
+    "#005DAA",
+    "#FFD200"
+  ]
+},
+{
+  "SchoolName": "California State University, Fresno",
+  "TeamName": "Fresno State Bulldogs",
+  "Nickname": "Bulldogs",
+  "ID": 41,
+  "Colors": [
+    "#C41230",
+    "#002C76"
+  ]
+},
+{
+  "SchoolName": "CSUF",
+  "TeamName": "CSUF Titans",
+  "Nickname": "Titans",
+  "ID": 42,
+  "Colors": [
+    "#00274C",
+    "#E17000"
+  ]
+},
+{
+  "SchoolName": "California State University, Long Beach",
+  "TeamName": "Long Beach State 49ers",
+  "Nickname": "49ers",
+  "ID": 43,
+  "Colors": [
+    "#000000",
+    "#FFC61E"
+  ]
+},
+{
+  "SchoolName": "California State University, Northridge",
+  "TeamName": "Cal State Northridge Matadors",
+  "Nickname": "Matadors",
+  "ID": 44,
+  "Colors": [
+    "#CE1126",
+    "#FFFFFF",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "California State University, Sacramento",
+  "TeamName": "Sacramento State Hornets",
+  "Nickname": "Hornets",
+  "ID": 45,
+  "Colors": [
+    "#043927",
+    "#B3A369"
+  ]
+},
+{
+  "SchoolName": "Campbell University",
+  "TeamName": "Campbell Fighting Camels and Lady Camels",
+  "Nickname": "Camels",
+  "ID": 46,
+  "Colors": [
+    "#000000",
+    "#E87722"
+  ]
+},
+{
+  "SchoolName": "Canisius College",
+  "TeamName": "Canisius Golden Griffins",
+  "Nickname": "Golden Griffins",
+  "ID": 47,
+  "Colors": [
+    "#0E2756",
+    "#FFBA00"
+  ]
+},
+{
+  "SchoolName": "University of Central Arkansas",
+  "TeamName": "Central Arkansas Bears and Sugar Bears",
+  "Nickname": "Bears",
+  "ID": 48,
+  "Colors": [
+    "#4F2D7F",
+    "#818A8F"
+  ]
+},
+{
+  "SchoolName": "Central Connecticut State University",
+  "TeamName": "Central Connecticut Blue Devils",
+  "Nickname": "Blue Devils",
+  "ID": 49,
+  "Colors": [
+    "#1A4784",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Central Florida",
+  "TeamName": "UCF Knights",
+  "Nickname": "Knights",
+  "ID": 50,
+  "Colors": [
+    "#000000",
+    "#BD9B60"
+  ]
+},
+{
+  "SchoolName": "Central Michigan University",
+  "TeamName": "Central Michigan Chippewas",
+  "Nickname": "Chippewas",
+  "ID": 51,
+  "Colors": [
+    "#6A0032",
+    "#FFC82E"
+  ]
+},
+{
+  "SchoolName": "College of Charleston",
+  "TeamName": "Charleston Cougars",
+  "Nickname": "Cougars",
+  "ID": 52,
+  "Colors": [
+    "#7F0C00",
+    "#C4B582"
+  ]
+},
+{
+  "SchoolName": "Charleston Southern",
+  "TeamName": "Charleston Southern Buccaneers",
+  "Nickname": "Buccaneers",
+  "ID": 53,
+  "Colors": [
+    "#002855",
+    "#A89968"
+  ]
+},
+{
+  "SchoolName": "Chicago State University",
+  "TeamName": "Chicago State Cougars",
+  "Nickname": "Cougars",
+  "ID": 54,
+  "Colors": [
+    "#006666",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Cincinnati",
+  "TeamName": "Cincinnati Bearcats",
+  "Nickname": "Bearcats",
+  "ID": 55,
+  "Colors": [
+    "#000000",
+    "#E00122"
+  ]
+},
+{
+  "SchoolName": "The Citadel, The Military College of South Carolina",
+  "TeamName": "The Citadel Bulldogs",
+  "Nickname": "Bulldogs",
+  "ID": 56,
+  "Colors": [
+    "#4D90CD",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Clemson University",
+  "TeamName": "Clemson Tigers",
+  "Nickname": "Tigers",
+  "ID": 57,
+  "Colors": [
+    "#F56600",
+    "#522D80"
+  ]
+},
+{
+  "SchoolName": "Cleveland State University",
+  "TeamName": "Cleveland State Vikings",
+  "Nickname": "Vikings",
+  "ID": 58,
+  "Colors": [
+    "#006A4D",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Coastal Carolina University",
+  "TeamName": "Coastal Carolina Chanticleers",
+  "Nickname": "Chanticleers (Chants)",
+  "ID": 59,
+  "Colors": [
+    "#007073",
+    "#916B4A",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "Colgate University",
+  "TeamName": "Colgate Raiders",
+  "Nickname": "Raiders",
+  "ID": 60,
+  "Colors": [
+    "#862633",
+    "#FFFFFF",
+    "#B4B6B9"
+  ]
+},
+{
+  "SchoolName": "University of Colorado Boulder",
+  "TeamName": "Colorado Buffaloes",
+  "Nickname": "Buffaloes",
+  "ID": 61,
+  "Colors": [
+    "#000000",
+    "#CFB87C",
+    "#A2A4A3"
+  ]
+},
+{
+  "SchoolName": "Colorado State University",
+  "TeamName": "Colorado State Rams",
+  "Nickname": "Rams",
+  "ID": 62,
+  "Colors": [
+    "#2C5234",
+    "#B3A369"
+  ]
+},
+{
+  "SchoolName": "Columbia University",
+  "TeamName": "Columbia Lions",
+  "Nickname": "Lions",
+  "ID": 63,
+  "Colors": [
+    "#75AADB",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Connecticut",
+  "TeamName": "Connecticut Huskies",
+  "Nickname": "Huskies",
+  "ID": 64,
+  "Colors": [
+    "#000E2F",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Coppin State University",
+  "TeamName": "Coppin State Eagles",
+  "Nickname": "Eagles",
+  "ID": 65,
+  "Colors": [
+    "#0057A0",
+    "#FFCD00"
+  ]
+},
+{
+  "SchoolName": "Cornell University",
+  "TeamName": "Cornell Big Red",
+  "Nickname": "Big Red, The",
+  "ID": 66,
+  "Colors": [
+    "#B31B1B",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Creighton University",
+  "TeamName": "Creighton Bluejays",
+  "Nickname": "Bluejays, Jays",
+  "ID": 67,
+  "Colors": [
+    "#005CA9",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Dartmouth College",
+  "TeamName": "Dartmouth Big Green",
+  "Nickname": "Big Green",
+  "ID": 68,
+  "Colors": [
+    "#00693E",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Davidson College",
+  "TeamName": "Davidson Wildcats",
+  "Nickname": "Wildcats",
+  "ID": 69,
+  "Colors": [
+    "#000000",
+    "#C8102E"
+  ]
+},
+{
+  "SchoolName": "University of Dayton",
+  "TeamName": "Dayton Flyers",
+  "Nickname": "Flyers",
+  "ID": 70,
+  "Colors": [
+    "#CE1141",
+    "#004B8D"
+  ]
+},
+{
+  "SchoolName": "University of Delaware",
+  "TeamName": "Delaware Fightin' Blue Hens",
+  "Nickname": "The Blue Hens",
+  "ID": 71,
+  "Colors": [
+    "#00539F",
+    "#FFD200"
+  ]
+},
+{
+  "SchoolName": "Delaware State University",
+  "TeamName": "Delaware State Hornets",
+  "Nickname": "Hornets",
+  "ID": 72,
+  "Colors": [
+    "#FF0000",
+    "#9BDDFF"
+  ]
+},
+{
+  "SchoolName": "University of Denver",
+  "TeamName": "Denver Pioneers",
+  "Nickname": "Pioneers",
+  "ID": 73,
+  "Colors": [
+    "#8B2332",
+    "#8B6F4B"
+  ]
+},
+{
+  "SchoolName": "DePaul University",
+  "TeamName": "DePaul Blue Demons",
+  "Nickname": "Blue Demons",
+  "ID": 74,
+  "Colors": [
+    "#005EB8",
+    "#E4002B"
+  ]
+},
+{
+  "SchoolName": "University of Detroit Mercy",
+  "TeamName": "Detroit Titans",
+  "Nickname": "Titans",
+  "ID": 75,
+  "Colors": [
+    "#AC1A2F",
+    "#FFFFFF",
+    "#002C76"
+  ]
+},
+{
+  "SchoolName": "Drake University",
+  "TeamName": "Drake Bulldogs",
+  "Nickname": "Bulldogs",
+  "ID": 76,
+  "Colors": [
+    "#004477",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Drexel University",
+  "TeamName": "Drexel Dragons",
+  "Nickname": "Dragons",
+  "ID": 77,
+  "Colors": [
+    "#07294D",
+    "#FFC600"
+  ]
+},
+{
+  "SchoolName": "Duke University",
+  "TeamName": "Duke Blue Devils",
+  "Nickname": "Blue Devils",
+  "ID": 78,
+  "Colors": [
+    "#0736A4",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Duquesne University",
+  "TeamName": "Duquesne Dukes",
+  "Nickname": "Dukes",
+  "ID": 79,
+  "Colors": [
+    "#BA0C2F",
+    "#041E42"
+  ]
+},
+{
+  "SchoolName": "East Carolina University",
+  "TeamName": "East Carolina Pirates",
+  "Nickname": "Pirates",
+  "ID": 80,
+  "Colors": [
+    "#592A8A",
+    "#FDC82F"
+  ]
+},
+{
+  "SchoolName": "East Tennessee State University",
+  "TeamName": "East Tennessee State Buccaneers and Lady Buccaneers",
+  "Nickname": "Buccaneers",
+  "ID": 81,
+  "Colors": [
+    "#041E42",
+    "#FFC72C"
+  ]
+},
+{
+  "SchoolName": "Eastern Illinois University",
+  "TeamName": "Eastern Illinois Panthers",
+  "Nickname": "Panthers",
+  "ID": 82,
+  "Colors": [
+    "#113596",
+    "#BBBDBA"
+  ]
+},
+{
+  "SchoolName": "Eastern Kentucky University",
+  "TeamName": "Eastern Kentucky Colonels and Lady Colonels",
+  "Nickname": "Colonels",
+  "ID": 83,
+  "Colors": [
+    "#5E213B",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Eastern Michigan University",
+  "TeamName": "Eastern Michigan Eagles",
+  "Nickname": "Eagles",
+  "ID": 84,
+  "Colors": [
+    "#006633",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Eastern Washington University",
+  "TeamName": "Eastern Washington Eagles",
+  "Nickname": "Eagles",
+  "ID": 85,
+  "Colors": [
+    "#A10022",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Elon University",
+  "TeamName": "Elon Phoenix",
+  "Nickname": "Phoenix",
+  "ID": 86,
+  "Colors": [
+    "#73000A",
+    "#B59A57"
+  ]
+},
+{
+  "SchoolName": "University of Evansville",
+  "TeamName": "Evansville Purple Aces",
+  "Nickname": "Purple Aces",
+  "ID": 87,
+  "Colors": [
+    "#5C068C",
+    "#FFFFFF",
+    "#FF6D00"
+  ]
+},
+{
+  "SchoolName": "Fairfield University",
+  "TeamName": "Fairfield Stags",
+  "Nickname": "Stags",
+  "ID": 88,
+  "Colors": [
+    "#E03A3E"
+  ]
+},
+{
+  "SchoolName": "Fairleigh Dickinson University",
+  "TeamName": "Fairleigh Dickinson Knights",
+  "Nickname": "Knights",
+  "ID": 89,
+  "Colors": [
+    "#9D2235",
+    "#1B4677"
+  ]
+},
+{
+  "SchoolName": "University of Florida",
+  "TeamName": "Florida Gators",
+  "Nickname": "Gators",
+  "ID": 90,
+  "Colors": [
+    "#0021A5",
+    "#FA4616"
+  ]
+},
+{
+  "SchoolName": "Florida A&M University",
+  "TeamName": "Florida A&M Rattlers and Lady Rattlers",
+  "Nickname": "Rattlers",
+  "ID": 91,
+  "Colors": [
+    "#008344",
+    "#F4811F"
+  ]
+},
+{
+  "SchoolName": "Florida Atlantic University",
+  "TeamName": "Florida Atlantic Owls",
+  "Nickname": "Owls",
+  "ID": 92,
+  "Colors": [
+    "#003366",
+    "#CC0000"
+  ]
+},
+{
+  "SchoolName": "Florida Gulf Coast University",
+  "TeamName": "Florida Gulf Coast Eagles",
+  "Nickname": "Eagles",
+  "ID": 93,
+  "Colors": [
+    "#00287A",
+    "#00885A"
+  ]
+},
+{
+  "SchoolName": "Florida International University",
+  "TeamName": "FIU Panthers",
+  "Nickname": "Panthers",
+  "ID": 94,
+  "Colors": [
+    "#081E3F",
+    "#B6862C"
+  ]
+},
+{
+  "SchoolName": "Florida State University",
+  "TeamName": "Florida State Seminoles",
+  "Nickname": "Noles",
+  "ID": 95,
+  "Colors": [
+    "#782F40",
+    "#CEB888"
+  ]
+},
+{
+  "SchoolName": "Fordham University",
+  "TeamName": "Fordham Rams",
+  "Nickname": "Rams",
+  "ID": 96,
+  "Colors": [
+    "#95003A",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Furman University",
+  "TeamName": "Furman Paladins",
+  "Nickname": "Paladins",
+  "ID": 97,
+  "Colors": [
+    "#582C83",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Gardner–Webb University",
+  "TeamName": "Gardner–Webb Runnin' Bulldogs",
+  "Nickname": "Runnin' Bulldogs",
+  "ID": 98,
+  "Colors": [
+    "#A6192E",
+    "#FFFFFF",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "George Mason University",
+  "TeamName": "George Mason Patriots",
+  "Nickname": "Patriots",
+  "ID": 99,
+  "Colors": [
+    "#006633",
+    "#FFCC33"
+  ]
+},
+{
+  "SchoolName": "George Washington University",
+  "TeamName": "George Washington Colonials",
+  "Nickname": "Colonials",
+  "ID": 100,
+  "Colors": [
+    "#E7D5A2",
+    "#002F62"
+  ]
+},
+{
+  "SchoolName": "Georgetown University",
+  "TeamName": "Georgetown Hoyas",
+  "Nickname": "The Hoyas",
+  "ID": 101,
+  "Colors": [
+    "#00205C",
+    "#C6BCB6"
+  ]
+},
+{
+  "SchoolName": "University of Georgia",
+  "TeamName": "Georgia Bulldogs and Lady Bulldogs",
+  "Nickname": "Bulldogs",
+  "ID": 102,
+  "Colors": [
+    "#DA291C",
+    "#2C2A29"
+  ]
+},
+{
+  "SchoolName": "Georgia Institute of Technology",
+  "TeamName": "Georgia Tech Yellow Jackets",
+  "Nickname": "Yellow Jackets, Ramblin' Wreck",
+  "ID": 103,
+  "Colors": [
+    "#C59353",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Georgia Southern University",
+  "TeamName": "Georgia Southern Eagles",
+  "Nickname": "Eagles",
+  "ID": 104,
+  "Colors": [
+    "#000066",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Georgia State University",
+  "TeamName": "Georgia State Panthers",
+  "Nickname": "Panthers",
+  "ID": 105,
+  "Colors": [
+    "#0039A6",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Gonzaga University",
+  "TeamName": "Gonzaga Bulldogs",
+  "Nickname": "Bulldogs (official) / Zags",
+  "ID": 106,
+  "Colors": [
+    "#002D72",
+    "#FFFFFF",
+    "#CC0033"
+  ]
+},
+{
+  "SchoolName": "Grambling State University",
+  "TeamName": "Grambling State Tigers",
+  "Nickname": "Tigers/Lady Tigers",
+  "ID": 107,
+  "Colors": [
+    "#191919",
+    "#E5AE26"
+  ]
+},
+{
+  "SchoolName": "Hampton University",
+  "TeamName": "Hampton Pirates",
+  "Nickname": "Pirates",
+  "ID": 108,
+  "Colors": [
+    "#00216E",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Hartford",
+  "TeamName": "Hartford Hawks",
+  "Nickname": "Hawks",
+  "ID": 109,
+  "Colors": [
+    "#CC0000",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Harvard University",
+  "TeamName": "Harvard Crimson",
+  "Nickname": "Crimson",
+  "ID": 110,
+  "Colors": [
+    "#A51C30",
+    "#FFFFFF",
+    "#1E1E1E"
+  ]
+},
+{
+  "SchoolName": "University of Hawaiʻi at Mānoa",
+  "TeamName": "Hawaii Rainbow Warriors and Rainbow Wahine",
+  "Nickname": "Rainbow Warriors",
+  "ID": 111,
+  "Colors": [
+    "#024731",
+    "#FFFFFF",
+    "#000000",
+    "#BBBCBC"
+  ]
+},
+{
+  "SchoolName": "High Point University",
+  "TeamName": "High Point Panthers",
+  "Nickname": "Panthers",
+  "ID": 112,
+  "Colors": [
+    "#330072",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Hofstra University",
+  "TeamName": "Hofstra Pride",
+  "Nickname": "Pride",
+  "ID": 113,
+  "Colors": [
+    "#003591",
+    "#FFFFFF",
+    "#FDC82F"
+  ]
+},
+{
+  "SchoolName": "College of the Holy Cross",
+  "TeamName": "Holy Cross Crusaders",
+  "Nickname": "Crusaders",
+  "ID": 114,
+  "Colors": [
+    "#602D89"
+  ]
+},
+{
+  "SchoolName": "University of Houston",
+  "TeamName": "Houston Cougars",
+  "Nickname": "Cougars",
+  "ID": 115,
+  "Colors": [
+    "#C92A39",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Houston Baptist University",
+  "TeamName": "Houston Baptist Huskies",
+  "Nickname": "Huskies",
+  "ID": 116,
+  "Colors": [
+    "#00529C",
+    "#ED3F01"
+  ]
+},
+{
+  "SchoolName": "Howard University",
+  "TeamName": "Howard Bison",
+  "Nickname": "Bison",
+  "ID": 117,
+  "Colors": [
+    "#003A63",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Idaho",
+  "TeamName": "Idaho Vandals",
+  "Nickname": "Vandals",
+  "ID": 118,
+  "Colors": [
+    "#B18E5F",
+    "#9F9D9D"
+  ]
+},
+{
+  "SchoolName": "Idaho State University",
+  "TeamName": "Idaho State Bengals",
+  "Nickname": "Bengals",
+  "ID": 119,
+  "Colors": [
+    "#000000",
+    "#F47920"
+  ]
+},
+{
+  "SchoolName": "University of Illinois at Chicago",
+  "TeamName": "UIC Flames",
+  "Nickname": "Flames",
+  "ID": 120,
+  "Colors": [
+    "#001E62",
+    "#D50032"
+  ]
+},
+{
+  "SchoolName": "Illinois State University",
+  "TeamName": "Illinois State Redbirds",
+  "Nickname": "Redbirds",
+  "ID": 121,
+  "Colors": [
+    "#CE1126",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Illinois at Urbana–Champaign",
+  "TeamName": "Illinois Fighting Illini",
+  "Nickname": "Fighting Illini",
+  "ID": 122,
+  "Colors": [
+    "#E04E39",
+    "#13294B"
+  ]
+},
+{
+  "SchoolName": "Indiana University Bloomington",
+  "TeamName": "Indiana Hoosiers",
+  "Nickname": "Hoosiers",
+  "ID": 123,
+  "Colors": [
+    "#7D110C",
+    "#E1D8B7"
+  ]
+},
+{
+  "SchoolName": "Indiana State University",
+  "TeamName": "Indiana State Sycamores",
+  "Nickname": "Sycamores",
+  "ID": 124,
+  "Colors": [
+    "#0142BC",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Indiana University – Purdue University Fort Wayne",
+  "TeamName": "IPFW Mastodons",
+  "Nickname": "Mastodons",
+  "ID": 125,
+  "Colors": [
+    "#003F87",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "IUPUI",
+  "TeamName": "IUPUI Jaguars",
+  "Nickname": "Jaguars",
+  "ID": 126,
+  "Colors": [
+    "#7D110C",
+    "#C59217",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "Iona College",
+  "TeamName": "Iona Gaels",
+  "Nickname": "Gaels",
+  "ID": 127,
+  "Colors": [
+    "#6F2C3F",
+    "#F2A900"
+  ]
+},
+{
+  "SchoolName": "University of Iowa",
+  "TeamName": "Iowa Hawkeyes",
+  "Nickname": "Hawks",
+  "ID": 128,
+  "Colors": [
+    "#000000",
+    "#FFE100"
+  ]
+},
+{
+  "SchoolName": "Iowa State University",
+  "TeamName": "Iowa State Cyclones",
+  "Nickname": "Cyclones",
+  "ID": 129,
+  "Colors": [
+    "#A71930",
+    "#FDC82F"
+  ]
+},
+{
+  "SchoolName": "Jackson State University",
+  "TeamName": "Jackson State Tigers",
+  "Nickname": "Tigers",
+  "ID": 130,
+  "Colors": [
+    "#002147",
+    "#FFFFFF",
+    "#898D8D"
+  ]
+},
+{
+  "SchoolName": "Jacksonville University",
+  "TeamName": "Jacksonville Dolphins",
+  "Nickname": "Dolphins",
+  "ID": 131,
+  "Colors": [
+    "#004E42",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Jacksonville State University",
+  "TeamName": "Jacksonville State Gamecocks",
+  "Nickname": "Gamecocks",
+  "ID": 132,
+  "Colors": [
+    "#CC0000",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "James Madison University",
+  "TeamName": "James Madison Dukes",
+  "Nickname": "Dukes",
+  "ID": 133,
+  "Colors": [
+    "#450084",
+    "#CBB677"
+  ]
+},
+{
+  "SchoolName": "University of Kansas",
+  "TeamName": "Kansas Jayhawks",
+  "Nickname": "Jayhawks",
+  "ID": 134,
+  "Colors": [
+    "#E8000D",
+    "#0051BA"
+  ]
+},
+{
+  "SchoolName": "Kansas State University",
+  "TeamName": "Kansas State Wildcats",
+  "Nickname": "Wildcats",
+  "ID": 135,
+  "Colors": [
+    "#512888",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Kennesaw State University",
+  "TeamName": "Kennesaw State Owls",
+  "Nickname": "Lady Owls",
+  "ID": 136,
+  "Colors": [
+    "#000000",
+    "#FFD700"
+  ]
+},
+{
+  "SchoolName": "Kent State University",
+  "TeamName": "Kent State Golden Flashes",
+  "Nickname": "Golden Flashes",
+  "ID": 137,
+  "Colors": [
+    "#002664",
+    "#EAAB00"
+  ]
+},
+{
+  "SchoolName": "University of Kentucky",
+  "TeamName": "Kentucky Wildcats",
+  "Nickname": "Wildcats",
+  "ID": 138,
+  "Colors": [
+    "#0033A0",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "La Salle University",
+  "TeamName": "La Salle Explorers",
+  "Nickname": "The Explorers",
+  "ID": 139,
+  "Colors": [
+    "#003057",
+    "#F1C400"
+  ]
+},
+{
+  "SchoolName": "Lafayette College",
+  "TeamName": "Lafayette Leopards",
+  "Nickname": "Leopards",
+  "ID": 140,
+  "Colors": [
+    "#910039",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Lamar University",
+  "TeamName": "Lamar Cardinals and Lady Cardinals",
+  "Nickname": "Cardinals",
+  "ID": 141,
+  "Colors": [
+    "#C50E18",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Lehigh University",
+  "TeamName": "Lehigh Mountain Hawks",
+  "Nickname": "Mountain Hawks",
+  "ID": 142,
+  "Colors": [
+    "#4B2913",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Liberty University",
+  "TeamName": "Liberty Flames and Lady Flames",
+  "Nickname": "Flames",
+  "ID": 143,
+  "Colors": [
+    "#990000",
+    "#FFFFFF",
+    "#0A254E"
+  ]
+},
+{
+  "SchoolName": "Lipscomb University",
+  "TeamName": "Lipscomb Bisons",
+  "Nickname": "Bisons",
+  "ID": 144,
+  "Colors": [
+    "#331E54",
+    "#F4AA00"
+  ]
+},
+{
+  "SchoolName": "LIU Brooklyn",
+  "TeamName": "LIU Brooklyn Blackbirds",
+  "Nickname": "Blackbirds",
+  "ID": 145,
+  "Colors": [
+    "#231F20",
+    "#C3C5C7"
+  ]
+},
+{
+  "SchoolName": "Longwood University",
+  "TeamName": "Longwood Lancers",
+  "Nickname": "Lancers",
+  "ID": 146,
+  "Colors": [
+    "#041E42",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Louisiana at Lafayette",
+  "TeamName": "Louisiana–Lafayette Ragin' Cajuns",
+  "Nickname": "Ragin' Cajuns",
+  "ID": 147,
+  "Colors": [
+    "#CE181E",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Louisiana at Monroe",
+  "TeamName": "Louisiana–Monroe Warhawks",
+  "Nickname": "Warhawks",
+  "ID": 148,
+  "Colors": [
+    "#8F1336",
+    "#BD955A"
+  ]
+},
+{
+  "SchoolName": "Louisiana State University",
+  "TeamName": "LSU Tigers and Lady Tigers",
+  "Nickname": "Tigers",
+  "ID": 149,
+  "Colors": [
+    "#461D7C",
+    "#FDD023"
+  ]
+},
+{
+  "SchoolName": "Louisiana Tech University",
+  "TeamName": "Louisiana Tech Bulldogs and Lady Techsters",
+  "Nickname": "Bulldogs",
+  "ID": 150,
+  "Colors": [
+    "#002F8B",
+    "#E21B23"
+  ]
+},
+{
+  "SchoolName": "University of Louisville",
+  "TeamName": "Louisville Cardinals",
+  "Nickname": "Cardinals",
+  "ID": 151,
+  "Colors": [
+    "#AD0000",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "Loyola University Chicago",
+  "TeamName": "Loyola Ramblers",
+  "Nickname": "Ramblers",
+  "ID": 152,
+  "Colors": [
+    "#571F1F",
+    "#F3A01B"
+  ]
+},
+{
+  "SchoolName": "Loyola University Maryland",
+  "TeamName": "Loyola Greyhounds",
+  "Nickname": "Greyhounds",
+  "ID": 153,
+  "Colors": [
+    "#00694E",
+    "#CACAC8"
+  ]
+},
+{
+  "SchoolName": "Loyola Marymount University",
+  "TeamName": "Loyola Marymount Lions",
+  "Nickname": "Lions",
+  "ID": 154,
+  "Colors": [
+    "#862633",
+    "#00263E"
+  ]
+},
+{
+  "SchoolName": "University of Maine",
+  "TeamName": "Maine Black Bears",
+  "Nickname": "Black Bears",
+  "ID": 155,
+  "Colors": [
+    "#003263",
+    "#FFFFFF",
+    "#B0D7FF"
+  ]
+},
+{
+  "SchoolName": "Manhattan College",
+  "TeamName": "Manhattan Jaspers and Lady Jaspers",
+  "Nickname": "Jaspers",
+  "ID": 156,
+  "Colors": [
+    "#00703C",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Marist College",
+  "TeamName": "Marist Red Foxes",
+  "Nickname": "Red Foxes",
+  "ID": 157,
+  "Colors": [
+    "#C8102E",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Marquette University",
+  "TeamName": "Marquette Golden Eagles",
+  "Nickname": "Golden Eagles",
+  "ID": 158,
+  "Colors": [
+    "#003366",
+    "#FFCC00"
+  ]
+},
+{
+  "SchoolName": "Marshall University",
+  "TeamName": "Marshall Thundering Herd",
+  "Nickname": "Thundering Herd",
+  "ID": 159,
+  "Colors": [
+    "#04954A",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Maryland, Baltimore County",
+  "TeamName": "UMBC Retrievers",
+  "Nickname": "Retrievers",
+  "ID": 160,
+  "Colors": [
+    "#000000",
+    "#FFC20E"
+  ]
+},
+{
+  "SchoolName": "University of Maryland",
+  "TeamName": "Maryland Terrapins",
+  "Nickname": "Terps",
+  "ID": 161,
+  "Colors": [
+    "#FF0017",
+    "#FFD90F",
+    "#000000",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Maryland Eastern Shore",
+  "TeamName": "Maryland Eastern Shore Hawks",
+  "Nickname": "Hawks",
+  "ID": 162,
+  "Colors": [
+    "#822433",
+    "#8B8D8E"
+  ]
+},
+{
+  "SchoolName": "University of Massachusetts Amherst",
+  "TeamName": "UMass Minutemen",
+  "Nickname": "Minutemen/Minutewomen",
+  "ID": 163,
+  "Colors": [
+    "#881C1C",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "McNeese State University",
+  "TeamName": "McNeese State Cowboys",
+  "Nickname": "Cowboys",
+  "ID": 164,
+  "Colors": [
+    "#00529B",
+    "#FFD204"
+  ]
+},
+{
+  "SchoolName": "University of Memphis",
+  "TeamName": "Memphis Tigers",
+  "Nickname": "Tigers",
+  "ID": 165,
+  "Colors": [
+    "#0D3182",
+    "#888C8F"
+  ]
+},
+{
+  "SchoolName": "Mercer University",
+  "TeamName": "Mercer Bears",
+  "Nickname": "Bears",
+  "ID": 166,
+  "Colors": [
+    "#000000",
+    "#CB5307"
+  ]
+},
+{
+  "SchoolName": "University of Miami",
+  "TeamName": "Miami Hurricanes",
+  "Nickname": "Hurricanes",
+  "ID": 167,
+  "Colors": [
+    "#005030",
+    "#F47321"
+  ]
+},
+{
+  "SchoolName": "Miami University",
+  "TeamName": "Miami RedHawks",
+  "Nickname": "RedHawks",
+  "ID": 168,
+  "Colors": [
+    "#B61E2E",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Michigan",
+  "TeamName": "Michigan Wolverines",
+  "Nickname": "Wolverines",
+  "ID": 169,
+  "Colors": [
+    "#FFCB05",
+    "#00274C"
+  ]
+},
+{
+  "SchoolName": "Michigan State University",
+  "TeamName": "Michigan State Spartans",
+  "Nickname": "Spartans",
+  "ID": 170,
+  "Colors": [
+    "#18453B",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Middle Tennessee State University",
+  "TeamName": "Middle Tennessee Blue Raiders",
+  "Nickname": "Blue Raiders",
+  "ID": 171,
+  "Colors": [
+    "#0066CC",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Minnesota",
+  "TeamName": "Minnesota Golden Gophers",
+  "Nickname": "Golden Gophers",
+  "ID": 172,
+  "Colors": [
+    "#7A0019",
+    "#FFCC33"
+  ]
+},
+{
+  "SchoolName": "University of Mississippi",
+  "TeamName": "Ole Miss Rebels",
+  "Nickname": "Rebels",
+  "ID": 173,
+  "Colors": [
+    "#13294B",
+    "#C8102E"
+  ]
+},
+{
+  "SchoolName": "Mississippi State University",
+  "TeamName": "Mississippi State Bulldogs",
+  "Nickname": "Bulldogs (Dawgs)",
+  "ID": 174,
+  "Colors": [
+    "#660000",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Mississippi Valley State University",
+  "TeamName": "Mississippi Valley State Delta Devils and Devilettes",
+  "Nickname": "Delta Devils",
+  "ID": 175,
+  "Colors": [
+    "#166539",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Missouri",
+  "TeamName": "Missouri Tigers",
+  "Nickname": "Tigers",
+  "ID": 176,
+  "Colors": [
+    "#2C2A29",
+    "#C69214"
+  ]
+},
+{
+  "SchoolName": "University of Missouri - Kansas City",
+  "TeamName": "UMKC Kangaroos",
+  "Nickname": "Kangaroos",
+  "ID": 177,
+  "Colors": [
+    "#005EB8",
+    "#F2CD00"
+  ]
+},
+{
+  "SchoolName": "Missouri State University",
+  "TeamName": "Missouri State Bears and Lady Bears",
+  "Nickname": "Bears",
+  "ID": 178,
+  "Colors": [
+    "#5E0009",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Monmouth University",
+  "TeamName": "Monmouth Hawks",
+  "Nickname": "Hawks",
+  "ID": 179,
+  "Colors": [
+    "#041E42",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Montana",
+  "TeamName": "Montana Grizzlies",
+  "Nickname": "Grizzlies, Griz, Lady Griz",
+  "ID": 180,
+  "Colors": [
+    "#5E001D",
+    "#8C8E90"
+  ]
+},
+{
+  "SchoolName": "Montana State University",
+  "TeamName": "Montana State Bobcats",
+  "Nickname": "Bobcats",
+  "ID": 181,
+  "Colors": [
+    "#00205B",
+    "#B08A42"
+  ]
+},
+{
+  "SchoolName": "Morehead State University",
+  "TeamName": "Morehead State Eagles",
+  "Nickname": "Eagles",
+  "ID": 182,
+  "Colors": [
+    "#005BAC",
+    "#FFCF00"
+  ]
+},
+{
+  "SchoolName": "Morgan State University",
+  "TeamName": "Morgan State Bears",
+  "Nickname": "Bears",
+  "ID": 183,
+  "Colors": [
+    "#1B4383",
+    "#F47937"
+  ]
+},
+{
+  "SchoolName": "Mount St. Mary's University",
+  "TeamName": "Mount St. Mary's Mountaineers",
+  "Nickname": "Mountaineers",
+  "ID": 184,
+  "Colors": [
+    "#002F6C",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Murray State University",
+  "TeamName": "Murray State Racers",
+  "Nickname": "Racers",
+  "ID": 185,
+  "Colors": [
+    "#002144",
+    "#ECAC00"
+  ]
+},
+{
+  "SchoolName": "University of Nebraska",
+  "TeamName": "Nebraska Cornhuskers",
+  "Nickname": "Cornhuskers",
+  "ID": 186,
+  "Colors": [
+    "#D00000",
+    "#F5F1E7"
+  ]
+},
+{
+  "SchoolName": "University of Nebraska Omaha",
+  "TeamName": "Omaha Mavericks",
+  "Nickname": "Mavericks",
+  "ID": 187,
+  "Colors": [
+    "#D71920",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "University of Nevada-Las Vegas",
+  "TeamName": "UNLV Rebels",
+  "Nickname": "Rebels",
+  "ID": 188,
+  "Colors": [
+    "#B10202",
+    "#666666"
+  ]
+},
+{
+  "SchoolName": "University of Nevada, Reno",
+  "TeamName": "Nevada Wolf Pack",
+  "Nickname": "Wolf Pack",
+  "ID": 189,
+  "Colors": [
+    "#003366",
+    "#999999"
+  ]
+},
+{
+  "SchoolName": "University of New Hampshire",
+  "TeamName": "New Hampshire Wildcats",
+  "Nickname": "Wildcats",
+  "ID": 190,
+  "Colors": [
+    "#003591",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "New Jersey Institute of Technology",
+  "TeamName": "NJIT Highlanders",
+  "Nickname": "Highlanders",
+  "ID": 191,
+  "Colors": [
+    "#CC0000",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of New Mexico",
+  "TeamName": "New Mexico Lobos",
+  "Nickname": "Lobo",
+  "ID": 192,
+  "Colors": [
+    "#B71234",
+    "#C3C8C8"
+  ]
+},
+{
+  "SchoolName": "New Mexico State University",
+  "TeamName": "New Mexico State Aggies",
+  "Nickname": "Aggies",
+  "ID": 193,
+  "Colors": [
+    "#8C0B42",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of New Orleans",
+  "TeamName": "New Orleans Privateers",
+  "Nickname": "Privateers",
+  "ID": 194,
+  "Colors": [
+    "#005DA6",
+    "#A3A9AD",
+    "#003366"
+  ]
+},
+{
+  "SchoolName": "Niagara University",
+  "TeamName": "Niagara Purple Eagles",
+  "Nickname": "Purple Eagles",
+  "ID": 195,
+  "Colors": [
+    "#582C83",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Nicholls State University",
+  "TeamName": "Nicholls State Colonels",
+  "Nickname": "Colonels",
+  "ID": 196,
+  "Colors": [
+    "#A6192E",
+    "#7C878E"
+  ]
+},
+{
+  "SchoolName": "Norfolk State University",
+  "TeamName": "Norfolk State Spartans",
+  "Nickname": "Spartans",
+  "ID": 197,
+  "Colors": [
+    "#1C7A5F",
+    "#EBB00E"
+  ]
+},
+{
+  "SchoolName": "North Carolina A&T State University",
+  "TeamName": "North Carolina A&T Aggies",
+  "Nickname": "Aggies",
+  "ID": 198,
+  "Colors": [
+    "#004684",
+    "#FDB927"
+  ]
+},
+{
+  "SchoolName": "University of North Carolina at Asheville",
+  "TeamName": "UNC Asheville Bulldogs",
+  "Nickname": "Bulldogs",
+  "ID": 199,
+  "Colors": [
+    "#003C77",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "North Carolina Central University",
+  "TeamName": "North Carolina Central Eagles",
+  "Nickname": "Eagles",
+  "ID": 200,
+  "Colors": [
+    "#8B2331",
+    "#8E908F"
+  ]
+},
+{
+  "SchoolName": "University of North Carolina at Chapel Hill",
+  "TeamName": "North Carolina Tar Heels",
+  "Nickname": "Tar Heels",
+  "ID": 201,
+  "Colors": [
+    "#7BAFD4",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of North Carolina at Charlotte",
+  "TeamName": "Charlotte 49ers",
+  "Nickname": "49ers",
+  "ID": 202,
+  "Colors": [
+    "#00703C",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "UNC Greensboro",
+  "TeamName": "UNC Greensboro Spartans",
+  "Nickname": "Spartans",
+  "ID": 203,
+  "Colors": [
+    "#003366",
+    "#FFFFFF",
+    "#FFCC00"
+  ]
+},
+{
+  "SchoolName": "North Carolina State University",
+  "TeamName": "North Carolina State Wolfpack",
+  "Nickname": "Wolfpack",
+  "ID": 204,
+  "Colors": [
+    "#CC0000",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of North Carolina, Wilmington",
+  "TeamName": "UNC Wilmington Seahawks",
+  "Nickname": "Seahawks",
+  "ID": 205,
+  "Colors": [
+    "#006666",
+    "#FFD600",
+    "#003366"
+  ]
+},
+{
+  "SchoolName": "University of North Dakota",
+  "TeamName": "North Dakota Fighting Hawks",
+  "Nickname": "Fighting Hawks",
+  "ID": 206,
+  "Colors": [
+    "#009A44",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "North Dakota State University",
+  "TeamName": "North Dakota State Bison",
+  "Nickname": "Bison",
+  "ID": 207,
+  "Colors": [
+    "#005643",
+    "#FFC82E"
+  ]
+},
+{
+  "SchoolName": "University of North Florida",
+  "TeamName": "North Florida Ospreys",
+  "Nickname": "Ospreys",
+  "ID": 208,
+  "Colors": [
+    "#00246B",
+    "#D9D9D9"
+  ]
+},
+{
+  "SchoolName": "University of North Texas",
+  "TeamName": "North Texas Mean Green",
+  "Nickname": "Mean Green",
+  "ID": 209,
+  "Colors": [
+    "#00853E",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Northeastern University",
+  "TeamName": "Northeastern Huskies",
+  "Nickname": "Huskies",
+  "ID": 210,
+  "Colors": [
+    "#CC0000",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "Northern Arizona University",
+  "TeamName": "Northern Arizona Lumberjacks",
+  "Nickname": "Lumberjacks",
+  "ID": 211,
+  "Colors": [
+    "#003466",
+    "#FFCC00"
+  ]
+},
+{
+  "SchoolName": "University of Northern Colorado",
+  "TeamName": "Northern Colorado Bears",
+  "Nickname": "Bears",
+  "ID": 212,
+  "Colors": [
+    "#013C65",
+    "#F6B000"
+  ]
+},
+{
+  "SchoolName": "Northern Illinois University",
+  "TeamName": "Northern Illinois Huskies",
+  "Nickname": "Huskies",
+  "ID": 213,
+  "Colors": [
+    "#CC0000",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "University of Northern Iowa",
+  "TeamName": "Northern Iowa Panthers",
+  "Nickname": "Panthers",
+  "ID": 214,
+  "Colors": [
+    "#4B116F",
+    "#EAAA00"
+  ]
+},
+{
+  "SchoolName": "Northern Kentucky University",
+  "TeamName": "Northern Kentucky Norse",
+  "Nickname": "Norse",
+  "ID": 215,
+  "Colors": [
+    "#000000",
+    "#FFFFFF",
+    "#FFC72C"
+  ]
+},
+{
+  "SchoolName": "Northwestern University",
+  "TeamName": "Northwestern Wildcats",
+  "Nickname": "Wildcats",
+  "ID": 216,
+  "Colors": [
+    "#4E2A84",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Northwestern State University",
+  "TeamName": "Northwestern State Demons",
+  "Nickname": "Demons",
+  "ID": 217,
+  "Colors": [
+    "#663399",
+    "#FFFFFF",
+    "#FF6600"
+  ]
+},
+{
+  "SchoolName": "University of Notre Dame",
+  "TeamName": "Notre Dame Fighting Irish",
+  "Nickname": "Fighting Irish",
+  "ID": 218,
+  "Colors": [
+    "#0C2340",
+    "#C99700"
+  ]
+},
+{
+  "SchoolName": "Oakland University",
+  "TeamName": "Oakland Golden Grizzlies",
+  "Nickname": "Golden Grizzlies",
+  "ID": 219,
+  "Colors": [
+    "#000000",
+    "#B59A57"
+  ]
+},
+{
+  "SchoolName": "Ohio University",
+  "TeamName": "Ohio Bobcats",
+  "Nickname": "Bobcats",
+  "ID": 220,
+  "Colors": [
+    "#00694E",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "The Ohio State University",
+  "TeamName": "Ohio State Buckeyes",
+  "Nickname": "Buckeyes",
+  "ID": 221,
+  "Colors": [
+    "#BB0000",
+    "#666666"
+  ]
+},
+{
+  "SchoolName": "University of Oklahoma",
+  "TeamName": "Oklahoma Sooners",
+  "Nickname": "Sooners",
+  "ID": 222,
+  "Colors": [
+    "#841617",
+    "#FDF9D8"
+  ]
+},
+{
+  "SchoolName": "Oklahoma State University–Stillwater",
+  "TeamName": "Oklahoma State Cowboys and Cowgirls",
+  "Nickname": "Cowboys",
+  "ID": 223,
+  "Colors": [
+    "#E55303",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "Old Dominion University",
+  "TeamName": "Old Dominion Monarchs and Lady Monarchs",
+  "Nickname": "Monarchs",
+  "ID": 224,
+  "Colors": [
+    "#004887",
+    "#8A8D8F",
+    "#92C1E9"
+  ]
+},
+{
+  "SchoolName": "Oral Roberts University",
+  "TeamName": "Oral Roberts Golden Eagles",
+  "Nickname": "Golden Eagles",
+  "ID": 225,
+  "Colors": [
+    "#002F60",
+    "#FFFFFF",
+    "#CFB67C"
+  ]
+},
+{
+  "SchoolName": "University of Oregon",
+  "TeamName": "Oregon Ducks",
+  "Nickname": "Ducks",
+  "ID": 226,
+  "Colors": [
+    "#006241",
+    "#FEE123"
+  ]
+},
+{
+  "SchoolName": "Oregon State University",
+  "TeamName": "Oregon State Beavers",
+  "Nickname": "Beavers",
+  "ID": 227,
+  "Colors": [
+    "#000000",
+    "#F56600"
+  ]
+},
+{
+  "SchoolName": "University of the Pacific",
+  "TeamName": "Pacific Tigers",
+  "Nickname": "Tigers",
+  "ID": 228,
+  "Colors": [
+    "#000000",
+    "#E35205"
+  ]
+},
+{
+  "SchoolName": "University of Pennsylvania",
+  "TeamName": "Penn Quakers",
+  "Nickname": "Quakers",
+  "ID": 229,
+  "Colors": [
+    "#011F5B",
+    "#990000"
+  ]
+},
+{
+  "SchoolName": "Pennsylvania State University",
+  "TeamName": "Penn State Nittany Lions",
+  "Nickname": "Nittany Lions (and Lady Lions)",
+  "ID": 230,
+  "Colors": [
+    "#002D62",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Pepperdine University",
+  "TeamName": "Pepperdine Waves",
+  "Nickname": "Waves",
+  "ID": 231,
+  "Colors": [
+    "#00205C",
+    "#FFFFFF",
+    "#EE7624"
+  ]
+},
+{
+  "SchoolName": "University of Pittsburgh",
+  "TeamName": "Pittsburgh Panthers",
+  "Nickname": "Panthers",
+  "ID": 232,
+  "Colors": [
+    "#1C2957",
+    "#CDB87D"
+  ]
+},
+{
+  "SchoolName": "University of Portland",
+  "TeamName": "Portland Pilots",
+  "Nickname": "Pilots",
+  "ID": 233,
+  "Colors": [
+    "#25205E",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Portland State University",
+  "TeamName": "Portland State Vikings",
+  "Nickname": "Vikings",
+  "ID": 234,
+  "Colors": [
+    "#154734",
+    "#FFFFFF",
+    "#A5ACAF"
+  ]
+},
+{
+  "SchoolName": "Prairie View A&M University",
+  "TeamName": "Prairie View A&M Panthers and Lady Panthers",
+  "Nickname": "Panthers",
+  "ID": 235,
+  "Colors": [
+    "#330066",
+    "#FFCC33"
+  ]
+},
+{
+  "SchoolName": "Presbyterian College",
+  "TeamName": "Presbyterian Blue Hose",
+  "Nickname": "Blue Hose",
+  "ID": 236,
+  "Colors": [
+    "#0060A9",
+    "#9D2235"
+  ]
+},
+{
+  "SchoolName": "Princeton University",
+  "TeamName": "Princeton Tigers",
+  "Nickname": "Tigers",
+  "ID": 237,
+  "Colors": [
+    "#231F20",
+    "#FF671F"
+  ]
+},
+{
+  "SchoolName": "Providence College",
+  "TeamName": "Providence Friars",
+  "Nickname": "Friars",
+  "ID": 238,
+  "Colors": [
+    "#000000",
+    "#FFFFFF",
+    "#8A8D8F"
+  ]
+},
+{
+  "SchoolName": "Purdue University",
+  "TeamName": "Purdue Boilermakers",
+  "Nickname": "Boilermakers",
+  "ID": 239,
+  "Colors": [
+    "#000000",
+    "#CEB888"
+  ]
+},
+{
+  "SchoolName": "Quinnipiac University",
+  "TeamName": "Quinnipiac Bobcats",
+  "Nickname": "Bobcats",
+  "ID": 240,
+  "Colors": [
+    "#0C2340",
+    "#B58500"
+  ]
+},
+{
+  "SchoolName": "Radford University",
+  "TeamName": "Radford Highlanders",
+  "Nickname": "Highlanders",
+  "ID": 241,
+  "Colors": [
+    "#C2011B",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Rhode Island",
+  "TeamName": "Rhode Island Rams",
+  "Nickname": "Rams",
+  "ID": 242,
+  "Colors": [
+    "#75B2DD",
+    "#FFFFFF",
+    "#002147"
+  ]
+},
+{
+  "SchoolName": "Rice University",
+  "TeamName": "Rice Owls",
+  "Nickname": "Owls",
+  "ID": 243,
+  "Colors": [
+    "#002469",
+    "#5E6062"
+  ]
+},
+{
+  "SchoolName": "University of Richmond",
+  "TeamName": "Richmond Spiders",
+  "Nickname": "Spiders",
+  "ID": 244,
+  "Colors": [
+    "#000066",
+    "#990000"
+  ]
+},
+{
+  "SchoolName": "Rider University",
+  "TeamName": "Rider Broncs",
+  "Nickname": "Broncs",
+  "ID": 245,
+  "Colors": [
+    "#981E32",
+    "#FFFFFF",
+    "#6C6F70"
+  ]
+},
+{
+  "SchoolName": "Robert Morris University",
+  "TeamName": "Robert Morris Colonials",
+  "Nickname": "Colonials",
+  "ID": 246,
+  "Colors": [
+    "#14234B",
+    "#FFFFFF",
+    "#A6192E"
+  ]
+},
+{
+  "SchoolName": "Rutgers, The State University of New Jersey",
+  "TeamName": "Rutgers Scarlet Knights",
+  "Nickname": "Scarlet Knights",
+  "ID": 247,
+  "Colors": [
+    "#CC0033"
+  ]
+},
+{
+  "SchoolName": "Sacred Heart University",
+  "TeamName": "Sacred Heart Pioneers",
+  "Nickname": "Pioneers",
+  "ID": 248,
+  "Colors": [
+    "#990000",
+    "#999999"
+  ]
+},
+{
+  "SchoolName": "St. Bonaventure University",
+  "TeamName": "St. Bonaventure Bonnies",
+  "Nickname": "Bonnies",
+  "ID": 249,
+  "Colors": [
+    "#54261A",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "St. Francis College",
+  "TeamName": "St. Francis Brooklyn Terriers",
+  "Nickname": "Terriers",
+  "ID": 250,
+  "Colors": [
+    "#0038A8",
+    "#CE1126"
+  ]
+},
+{
+  "SchoolName": "Saint Francis University",
+  "TeamName": "Saint Francis Red Flash",
+  "Nickname": "Red Flash",
+  "ID": 251,
+  "Colors": [
+    "#BD1F25",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "St. John's University",
+  "TeamName": "St. John's Red Storm",
+  "Nickname": "Red Storm",
+  "ID": 252,
+  "Colors": [
+    "#CF102D",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Saint Joseph's University",
+  "TeamName": "Saint Joseph's Hawks",
+  "Nickname": "The Hawks",
+  "ID": 253,
+  "Colors": [
+    "#9B0C27",
+    "#504E4F"
+  ]
+},
+{
+  "SchoolName": "Saint Louis University",
+  "TeamName": "Saint Louis Billikens",
+  "Nickname": "Billikens",
+  "ID": 254,
+  "Colors": [
+    "#003DA5",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Saint Mary's College of California",
+  "TeamName": "Saint Mary's Gaels",
+  "Nickname": "Gaels",
+  "ID": 255,
+  "Colors": [
+    "#06315B",
+    "#D80024",
+    "#8A8D8F"
+  ]
+},
+{
+  "SchoolName": "Saint Peter's University",
+  "TeamName": "Saint Peter's Peacocks and Peahens",
+  "Nickname": "Peacocks",
+  "ID": 256,
+  "Colors": [
+    "#0072CE",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Sam Houston State University",
+  "TeamName": "Sam Houston State Bearkats",
+  "Nickname": "Bearkats",
+  "ID": 257,
+  "Colors": [
+    "#FFFFFF",
+    "#F78E1E"
+  ]
+},
+{
+  "SchoolName": "Samford University",
+  "TeamName": "Samford Bulldogs",
+  "Nickname": "Bulldogs",
+  "ID": 258,
+  "Colors": [
+    "#002649",
+    "#B11116"
+  ]
+},
+{
+  "SchoolName": "University of San Diego",
+  "TeamName": "San Diego Toreros",
+  "Nickname": "Toreros",
+  "ID": 259,
+  "Colors": [
+    "#003B70",
+    "#FFFFFF",
+    "#75BEE9"
+  ]
+},
+{
+  "SchoolName": "San Diego State University",
+  "TeamName": "San Diego State Aztecs",
+  "Nickname": "Aztecs",
+  "ID": 260,
+  "Colors": [
+    "#C41230",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "University of San Francisco",
+  "TeamName": "San Francisco Dons",
+  "Nickname": "Dons",
+  "ID": 261,
+  "Colors": [
+    "#00543C",
+    "#FDBB30"
+  ]
+},
+{
+  "SchoolName": "San José State University",
+  "TeamName": "San Jose State Spartans",
+  "Nickname": "Spartans",
+  "ID": 262,
+  "Colors": [
+    "#0055A2",
+    "#FFFFFF",
+    "#E5A823"
+  ]
+},
+{
+  "SchoolName": "Santa Clara University",
+  "TeamName": "Santa Clara Broncos",
+  "Nickname": "Broncos",
+  "ID": 263,
+  "Colors": [
+    "#B30738",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Savannah State University",
+  "TeamName": "Savannah State Tigers",
+  "Nickname": "Lady Tigers",
+  "ID": 264,
+  "Colors": [
+    "#CC5500",
+    "#0000FF",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Seattle University",
+  "TeamName": "Seattle Redhawks",
+  "Nickname": "Redhawks",
+  "ID": 265,
+  "Colors": [
+    "#AA0000",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Seton Hall University",
+  "TeamName": "Seton Hall Pirates",
+  "Nickname": "Pirates",
+  "ID": 266,
+  "Colors": [
+    "#004488",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Siena College",
+  "TeamName": "Siena Saints",
+  "Nickname": "Saints",
+  "ID": 267,
+  "Colors": [
+    "#006747",
+    "#FFC20F"
+  ]
+},
+{
+  "SchoolName": "University of South Alabama",
+  "TeamName": "South Alabama Jaguars",
+  "Nickname": "Jaguars",
+  "ID": 268,
+  "Colors": [
+    "#00205B",
+    "#FFFFFF",
+    "#BF0D3E"
+  ]
+},
+{
+  "SchoolName": "University of South Carolina",
+  "TeamName": "South Carolina Gamecocks",
+  "Nickname": "Gamecocks",
+  "ID": 269,
+  "Colors": [
+    "#73000A",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "South Carolina State University",
+  "TeamName": "South Carolina State Bulldogs",
+  "Nickname": "Bulldogs",
+  "ID": 270,
+  "Colors": [
+    "#993333",
+    "#003366"
+  ]
+},
+{
+  "SchoolName": "University of South Carolina Upstate",
+  "TeamName": "USC Upstate Spartans",
+  "Nickname": "Spartans",
+  "ID": 271,
+  "Colors": [
+    "#046A38",
+    "#FFFFFF",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "University of South Dakota",
+  "TeamName": "South Dakota Coyotes",
+  "Nickname": "Coyotes",
+  "ID": 272,
+  "Colors": [
+    "#AD0000",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "South Dakota State University",
+  "TeamName": "South Dakota State Jackrabbits",
+  "Nickname": "Jackrabbits",
+  "ID": 273,
+  "Colors": [
+    "#0032A0",
+    "#FFD100"
+  ]
+},
+{
+  "SchoolName": "University of South Florida",
+  "TeamName": "South Florida Bulls",
+  "Nickname": "Bulls",
+  "ID": 274,
+  "Colors": [
+    "#006747",
+    "#CFC493"
+  ]
+},
+{
+  "SchoolName": "Southeast Missouri State University",
+  "TeamName": "Southeast Missouri State Redhawks",
+  "Nickname": "Redhawks",
+  "ID": 275,
+  "Colors": [
+    "#C8102E",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "Southeastern Louisiana University",
+  "TeamName": "Southeastern Louisiana Lions",
+  "Nickname": "Lions",
+  "ID": 276,
+  "Colors": [
+    "#006341",
+    "#EAAA00"
+  ]
+},
+{
+  "SchoolName": "Southern University",
+  "TeamName": "Southern Jaguars and Lady Jaguars",
+  "Nickname": "Jaguars",
+  "ID": 277,
+  "Colors": [
+    "#FFC72C",
+    "#69B3E7"
+  ]
+},
+{
+  "SchoolName": "University of Southern California",
+  "TeamName": "USC Trojans",
+  "Nickname": "Trojans",
+  "ID": 278,
+  "Colors": [
+    "#990000",
+    "#FFCC00"
+  ]
+},
+{
+  "SchoolName": "Southern Illinois University",
+  "TeamName": "Southern Illinois Salukis",
+  "Nickname": "Salukis",
+  "ID": 279,
+  "Colors": [
+    "#660000",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Southern Illinois University Edwardsville",
+  "TeamName": "SIU Edwardsville Cougars",
+  "Nickname": "Cougars",
+  "ID": 280,
+  "Colors": [
+    "#CC0000",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Southern Methodist University",
+  "TeamName": "SMU Mustangs",
+  "Nickname": "Mustangs",
+  "ID": 281,
+  "Colors": [
+    "#C60C30",
+    "#0039A6"
+  ]
+},
+{
+  "SchoolName": "University of Southern Mississippi",
+  "TeamName": "Southern Miss Golden Eagles and Lady Eagles",
+  "Nickname": "Golden Eagles",
+  "ID": 282,
+  "Colors": [
+    "#000000",
+    "#FFC73B"
+  ]
+},
+{
+  "SchoolName": "Southern Utah University",
+  "TeamName": "Southern Utah Thunderbirds",
+  "Nickname": "Thunderbirds",
+  "ID": 283,
+  "Colors": [
+    "#C41425",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Stanford University",
+  "TeamName": "Stanford Cardinal",
+  "Nickname": "Cardinal",
+  "ID": 284,
+  "Colors": [
+    "#8C1515",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Stephen F. Austin State University",
+  "TeamName": "Stephen F. Austin Lumberjacks and Ladyjacks",
+  "Nickname": "Lumberjacks",
+  "ID": 285,
+  "Colors": [
+    "#5F259F",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Stetson University",
+  "TeamName": "Stetson Hatters",
+  "Nickname": "Hatters",
+  "ID": 286,
+  "Colors": [
+    "#006747",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Stony Brook University",
+  "TeamName": "Stony Brook Seawolves",
+  "Nickname": "Seawolves",
+  "ID": 287,
+  "Colors": [
+    "#990000",
+    "#17438A",
+    "#A8ADB2"
+  ]
+},
+{
+  "SchoolName": "Syracuse University",
+  "TeamName": "Syracuse Orange",
+  "Nickname": "Orange",
+  "ID": 288,
+  "Colors": [
+    "#D44500"
+  ]
+},
+{
+  "SchoolName": "Temple University",
+  "TeamName": "Temple Owls",
+  "Nickname": "The Owls",
+  "ID": 289,
+  "Colors": [
+    "#990033",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Tennessee",
+  "TeamName": "Tennessee Volunteers",
+  "Nickname": "Volunteers (Vols)",
+  "ID": 290,
+  "Colors": [
+    "#FF8200",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Tennessee at Chattanooga",
+  "TeamName": "Chattanooga Mocs",
+  "Nickname": "Mocs",
+  "ID": 291,
+  "Colors": [
+    "#00386B",
+    "#E0AA0F",
+    "#ADAFAA"
+  ]
+},
+{
+  "SchoolName": "University of Tennessee at Martin",
+  "TeamName": "Tennessee–Martin Skyhawks",
+  "Nickname": "Skyhawks",
+  "ID": 292,
+  "Colors": [
+    "#002649",
+    "#F77F00"
+  ]
+},
+{
+  "SchoolName": "Tennessee State University",
+  "TeamName": "Tennessee State Tigers and Lady Tigers",
+  "Nickname": "Tigers",
+  "ID": 293,
+  "Colors": [
+    "#00539F",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Tennessee Technological University",
+  "TeamName": "Tennessee Tech Golden Eagles",
+  "Nickname": "Golden Eagles",
+  "ID": 294,
+  "Colors": [
+    "#660099",
+    "#FFCC00"
+  ]
+},
+{
+  "SchoolName": "Texas A&M University",
+  "TeamName": "Texas A&M Aggies",
+  "Nickname": "Aggies",
+  "ID": 295,
+  "Colors": [
+    "#500000",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Texas A&M University–Corpus Christi",
+  "TeamName": "Texas A&M–Corpus Christi Islanders",
+  "Nickname": "Islanders",
+  "ID": 296,
+  "Colors": [
+    "#0067C5",
+    "#FFFFFF",
+    "#007F3E"
+  ]
+},
+{
+  "SchoolName": "University of Texas at Arlington",
+  "TeamName": "Texas–Arlington Mavericks",
+  "Nickname": "Mavericks",
+  "ID": 297,
+  "Colors": [
+    "#0064B1",
+    "#FFFFFF",
+    "#F58025"
+  ]
+},
+{
+  "SchoolName": "University of Texas at Austin",
+  "TeamName": "Texas Longhorns",
+  "Nickname": "Longhorns",
+  "ID": 298,
+  "Colors": [
+    "#BF5700",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Texas Christian University",
+  "TeamName": "TCU Horned Frogs",
+  "Nickname": "Horned Frogs",
+  "ID": 299,
+  "Colors": [
+    "#4D1979",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Texas at El Paso",
+  "TeamName": "UTEP Miners and Lady Miners",
+  "Nickname": "Miners",
+  "ID": 300,
+  "Colors": [
+    "#002147",
+    "#FF5600",
+    "#B2B4B3"
+  ]
+},
+{
+  "SchoolName": "University of Texas Rio Grande Valley",
+  "TeamName": "UTRGV Vaqueros",
+  "Nickname": "Vaquero",
+  "ID": 301,
+  "Colors": [
+    "#00C21D",
+    "#00246B",
+    "#F05023"
+  ]
+},
+{
+  "SchoolName": "University of Texas at San Antonio",
+  "TeamName": "UTSA Roadrunners",
+  "Nickname": "Roadrunners",
+  "ID": 302,
+  "Colors": [
+    "#0C2340",
+    "#FFFFFF",
+    "#F15A22"
+  ]
+},
+{
+  "SchoolName": "Texas Southern University",
+  "TeamName": "Texas Southern Tigers",
+  "Nickname": "Tigers",
+  "ID": 303,
+  "Colors": [
+    "#6F263D",
+    "#A2AAAD"
+  ]
+},
+{
+  "SchoolName": "Texas State University",
+  "TeamName": "Texas State Bobcats",
+  "Nickname": "Bobcats",
+  "ID": 304,
+  "Colors": [
+    "#501214",
+    "#8D734A"
+  ]
+},
+{
+  "SchoolName": "Texas Tech University",
+  "TeamName": "Texas Tech Red Raiders and Lady Raiders",
+  "Nickname": "Red Raiders",
+  "ID": 305,
+  "Colors": [
+    "#CC0000",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "University of Toledo",
+  "TeamName": "Toledo Rockets",
+  "Nickname": "Rockets",
+  "ID": 306,
+  "Colors": [
+    "#002569",
+    "#FFCE00"
+  ]
+},
+{
+  "SchoolName": "Towson University",
+  "TeamName": "Towson Tigers",
+  "Nickname": "Tigers",
+  "ID": 307,
+  "Colors": [
+    "#000000",
+    "#FFCC00"
+  ]
+},
+{
+  "SchoolName": "Troy University",
+  "TeamName": "Troy Trojans",
+  "Nickname": "Trojans",
+  "ID": 308,
+  "Colors": [
+    "#862633",
+    "#8A8D8F",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "Tulane University",
+  "TeamName": "Tulane Green Wave",
+  "Nickname": "Green Wave",
+  "ID": 309,
+  "Colors": [
+    "#003300",
+    "#4388CC"
+  ]
+},
+{
+  "SchoolName": "University of Tulsa",
+  "TeamName": "Tulsa Golden Hurricane",
+  "Nickname": "Golden Hurricane",
+  "ID": 310,
+  "Colors": [
+    "#D4C581",
+    "#002D72",
+    "#C8102E"
+  ]
+},
+{
+  "SchoolName": "United States Air Force Academy",
+  "TeamName": "Air Force Falcons",
+  "Nickname": "Falcons",
+  "ID": 311,
+  "Colors": [
+    "#00308F",
+    "#A6A6A8"
+  ]
+},
+{
+  "SchoolName": "United States Military Academy",
+  "TeamName": "Army Black Knights",
+  "Nickname": "Black Knights",
+  "ID": 312,
+  "Colors": [
+    "#000000",
+    "#D4BF91",
+    "#B2B4B3"
+  ]
+},
+{
+  "SchoolName": "United States Naval Academy",
+  "TeamName": "Navy Midshipmen",
+  "Nickname": "Midshipmen",
+  "ID": 313,
+  "Colors": [
+    "#00205B",
+    "#C5B783"
+  ]
+},
+{
+  "SchoolName": "University of Utah",
+  "TeamName": "Utah Utes",
+  "Nickname": "Utes",
+  "ID": 314,
+  "Colors": [
+    "#CC0000",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Utah State University",
+  "TeamName": "Utah State Aggies",
+  "Nickname": "Aggies",
+  "ID": 315,
+  "Colors": [
+    "#0F2439",
+    "#FFFFFF",
+    "#9D968D"
+  ]
+},
+{
+  "SchoolName": "Utah Valley University",
+  "TeamName": "Utah Valley Wolverines",
+  "Nickname": "Wolverines",
+  "ID": 316,
+  "Colors": [
+    "#004715",
+    "#FFFFFF",
+    "#C2A224"
+  ]
+},
+{
+  "SchoolName": "Valparaiso University",
+  "TeamName": "Valparaiso Crusaders",
+  "Nickname": "Crusaders",
+  "ID": 317,
+  "Colors": [
+    "#381E0E",
+    "#FFCC00"
+  ]
+},
+{
+  "SchoolName": "Vanderbilt University",
+  "TeamName": "Vanderbilt Commodores",
+  "Nickname": "Commodores",
+  "ID": 318,
+  "Colors": [
+    "#000000",
+    "#997F3D"
+  ]
+},
+{
+  "SchoolName": "University of Vermont",
+  "TeamName": "Vermont Catamounts",
+  "Nickname": "Catamounts",
+  "ID": 319,
+  "Colors": [
+    "#005610",
+    "#FFC20F"
+  ]
+},
+{
+  "SchoolName": "Villanova University",
+  "TeamName": "Villanova Wildcats",
+  "Nickname": "Wildcats",
+  "ID": 320,
+  "Colors": [
+    "#00205B",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Virginia",
+  "TeamName": "Virginia Cavaliers",
+  "Nickname": "Cavaliers",
+  "ID": 321,
+  "Colors": [
+    "#002654",
+    "#F36F21"
+  ]
+},
+{
+  "SchoolName": "Virginia Commonwealth University",
+  "TeamName": "VCU Rams",
+  "Nickname": "Rams",
+  "ID": 322,
+  "Colors": [
+    "#000000",
+    "#FFBA00"
+  ]
+},
+{
+  "SchoolName": "Virginia Military Institute",
+  "TeamName": "VMI Keydets",
+  "Nickname": "Keydets",
+  "ID": 323,
+  "Colors": [
+    "#A71E24",
+    "#FFFFFF",
+    "#F0BF18"
+  ]
+},
+{
+  "SchoolName": "Virginia Polytechnic Institute and State University",
+  "TeamName": "Virginia Tech Hokies",
+  "Nickname": "Hokies",
+  "ID": 324,
+  "Colors": [
+    "#660000",
+    "#FF6600"
+  ]
+},
+{
+  "SchoolName": "Wagner College",
+  "TeamName": "Wagner Seahawks",
+  "Nickname": "Seahawks",
+  "ID": 325,
+  "Colors": [
+    "#004331",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Wake Forest University",
+  "TeamName": "Wake Forest Demon Deacons",
+  "Nickname": "Demon Deacons",
+  "ID": 326,
+  "Colors": [
+    "#000000",
+    "#9E7E38"
+  ]
+},
+{
+  "SchoolName": "University of Washington",
+  "TeamName": "Washington Huskies",
+  "Nickname": "Huskies",
+  "ID": 327,
+  "Colors": [
+    "#363C74",
+    "#E8D3A2"
+  ]
+},
+{
+  "SchoolName": "Washington State University",
+  "TeamName": "Washington State Cougars",
+  "Nickname": "Cougars",
+  "ID": 328,
+  "Colors": [
+    "#981E32",
+    "#5E6A71"
+  ]
+},
+{
+  "SchoolName": "Weber State University",
+  "TeamName": "Weber State Wildcats",
+  "Nickname": "Wildcats",
+  "ID": 329,
+  "Colors": [
+    "#492365",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "West Virginia University",
+  "TeamName": "West Virginia Mountaineers",
+  "Nickname": "Mountaineers",
+  "ID": 330,
+  "Colors": [
+    "#002855",
+    "#EAAA00"
+  ]
+},
+{
+  "SchoolName": "Western Carolina University",
+  "TeamName": "Western Carolina Catamounts",
+  "Nickname": "Catamounts",
+  "ID": 331,
+  "Colors": [
+    "#592C88",
+    "#B9975B"
+  ]
+},
+{
+  "SchoolName": "Western Illinois University",
+  "TeamName": "Western Illinois Leathernecks",
+  "Nickname": "Leathernecks",
+  "ID": 332,
+  "Colors": [
+    "#663399",
+    "#FFCC00"
+  ]
+},
+{
+  "SchoolName": "Western Kentucky University",
+  "TeamName": "Western Kentucky Hilltoppers and Lady Toppers",
+  "Nickname": "Hilltoppers",
+  "ID": 333,
+  "Colors": [
+    "#B01E24",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Western Michigan University",
+  "TeamName": "Western Michigan Broncos",
+  "Nickname": "Broncos",
+  "ID": 334,
+  "Colors": [
+    "#663300",
+    "#BC9B6A"
+  ]
+},
+{
+  "SchoolName": "Wichita State University",
+  "TeamName": "Wichita State Shockers",
+  "Nickname": "Shockers",
+  "ID": 335,
+  "Colors": [
+    "#000000",
+    "#FFCD00"
+  ]
+},
+{
+  "SchoolName": "The College of William & Mary",
+  "TeamName": "William & Mary Tribe",
+  "Nickname": "Tribe",
+  "ID": 336,
+  "Colors": [
+    "#115740",
+    "#F0B323",
+    "#D0D3D4"
+  ]
+},
+{
+  "SchoolName": "Winthrop University",
+  "TeamName": "Winthrop Eagles",
+  "Nickname": "Eagles",
+  "ID": 337,
+  "Colors": [
+    "#9E1B32",
+    "#FFCC33"
+  ]
+},
+{
+  "SchoolName": "University of Wisconsin–Green Bay",
+  "TeamName": "Green Bay Phoenix",
+  "Nickname": "Phoenix",
+  "ID": 338,
+  "Colors": [
+    "#006633",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Wisconsin–Madison",
+  "TeamName": "Wisconsin Badgers",
+  "Nickname": "Badgers",
+  "ID": 339,
+  "Colors": [
+    "#B70101",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "University of Wisconsin–Milwaukee",
+  "TeamName": "Milwaukee Panthers",
+  "Nickname": "Panthers",
+  "ID": 340,
+  "Colors": [
+    "#000000",
+    "#FFBD00"
+  ]
+},
+{
+  "SchoolName": "Wofford College",
+  "TeamName": "Wofford Terriers",
+  "Nickname": "Terriers",
+  "ID": 341,
+  "Colors": [
+    "#000000",
+    "#886E4C"
+  ]
+},
+{
+  "SchoolName": "Wright State University",
+  "TeamName": "Wright State Raiders",
+  "Nickname": "Raiders",
+  "ID": 342,
+  "Colors": [
+    "#006F51",
+    "#E7A014"
+  ]
+},
+{
+  "SchoolName": "University of Wyoming",
+  "TeamName": "Wyoming Cowboys and Cowgirls",
+  "Nickname": "Cowboys",
+  "ID": 343,
+  "Colors": [
+    "#492F24",
+    "#FFC425"
+  ]
+},
+{
+  "SchoolName": "Xavier University",
+  "TeamName": "Xavier Musketeers",
+  "Nickname": "Musketeers",
+  "ID": 344,
+  "Colors": [
+    "#21304E",
+    "#FFFFFF",
+    "#A5A7A8"
+  ]
+},
+{
+  "SchoolName": "Yale University",
+  "TeamName": "Yale Bulldogs",
+  "Nickname": "Bulldogs",
+  "ID": 345,
+  "Colors": [
+    "#00356B",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Youngstown State University",
+  "TeamName": "Youngstown State Penguins",
+  "Nickname": "Penguins",
+  "ID": 346,
+  "Colors": [
+    "#C8102E",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Abilene Christian University",
+  "TeamName": "Abilene Christian Wildcats",
+  "Nickname": "Wildcats",
+  "ID": 347,
+  "Colors": [
+    "#461D7C",
+    "#FFFFFF"
+  ]
+},
+{
+  "SchoolName": "Grand Canyon University",
+  "TeamName": "Grand Canyon Antelopes",
+  "Nickname": "Lopes",
+  "ID": 348,
+  "Colors": [
+    "#522398",
+    "#FFFFFF",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "University of the Incarnate Word",
+  "TeamName": "Incarnate Word Cardinals",
+  "Nickname": "Cardinals",
+  "ID": 349,
+  "Colors": [
+    "#CB333B",
+    "#FFFFFF",
+    "#000000"
+  ]
+},
+{
+  "SchoolName": "University of Massachusetts Lowell",
+  "TeamName": "UMass Lowell River Hawks",
+  "Nickname": "River Hawks",
+  "ID": 350,
+  "Colors": [
+    "#00549F",
+    "#FFFFFF",
+    "#CF202F"
+  ]
+}
+]
