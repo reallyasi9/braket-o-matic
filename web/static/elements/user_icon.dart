@@ -5,7 +5,6 @@ import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart' show HtmlImport;
 
 import 'package:polymer_elements/color.dart';
-import 'package:polymer_elements/iron_icon.dart';
 import 'braket_icon_set.dart';
 import '../lib/user.dart';
 
@@ -21,7 +20,16 @@ class UserIcon extends PolymerElement {
 
   @reflectable
   String makeInitial(String givenName, String surname, String nickname) {
-    return (givenName.isNotEmpty) ? givenName.substring(0, 1) : (surname.isNotEmpty) ? surname.substring(0, 1) : (nickname.isNotEmpty) ? nickname.substring(0, 1) : "?";
+    if (givenName.isNotEmpty && surname.isNotEmpty) {
+      return givenName.substring(0,1) + surname.substring(0,1);
+    } else if (givenName.isNotEmpty) {
+      return givenName.substring(0,1);
+    } else if (surname.isNotEmpty) {
+      return surname.substring(0,1);
+    } else if (nickname.isNotEmpty) {
+      return nickname.substring(0,1);
+    }
+    return "?";
   }
 
 }

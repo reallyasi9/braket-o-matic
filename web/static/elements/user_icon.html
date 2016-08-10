@@ -5,20 +5,22 @@
     <template>
         <style>
             :host {
+                position: relative;
             }
 
             div {
                 position: relative;
+                background: linear-gradient(45deg, rgb(30, 30, 30), rgb(200, 200, 200));
+                white-space: nowrap;
+                text-transform: capitalize;
+                text-align: center;
+                vertical-align: middle;
+                color: white;
+                text-shadow: 0px 0px 2px black;
             }
 
             span {
-                height: inherit;
-                white-space: nowrap;
-                left: 50%;
-                margin-left: -25%;
-                text-transform: capitalize;
-                position: absolute;
-                color: var(--user-icon-text-color);
+
             }
 
             iron-icon {
@@ -27,10 +29,7 @@
                 --iron-icon-fill-color: var(--user-icon-background-color);
             }
         </style>
-        <div style$="width: [[size]]px; height: [[size]]px">
-            <iron-icon id="icon" icon="braket-icon-set:circle" style$="height: [[size]]px; width: [[size]]px; border-radius: calc([[size]]px * 0.5)"></iron-icon>
-            <span style$="line-height: [[size]]px; font-size: calc([[size]]px * 0.9);">{{makeInitial(user.givenName, user.surname, user.nickname)}}</span>
-        </div>
+        <div style$="width: [[size]]px; height: [[size]]px; border-radius: calc([[size]]px * 0.5); line-height: [[size]]px; font-size: calc([[size]]px * 0.5);">{{makeInitial(user.givenName, user.surname, user.nickname)}}</div>
 
     </template>
 
