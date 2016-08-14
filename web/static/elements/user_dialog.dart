@@ -3,6 +3,7 @@ library braket.user_dialog;
 
 import 'dart:html';
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart' show HtmlImport;
@@ -16,6 +17,7 @@ import 'package:polymer_elements/paper_listbox.dart';
 import 'package:polymer_elements/paper_item.dart';
 import 'package:polymer_elements/iron_flex_layout.dart';
 import '../lib/user.dart';
+import '../lib/team.dart';
 
 const Duration _TIMEOUT = const Duration(seconds: 1);
 
@@ -29,8 +31,26 @@ class UserDialog extends PolymerElement {
     @property
     bool withBackdrop = false;
 
+    @property
+    List<Team> favoriteTeams = new List<Team>();
+
     Timer _debounceTimer = new Timer(_TIMEOUT, () => {});
 
+
+    void ready() {
+        try {
+            HttpRequest.getString("/backend/teams").then(_onTeamsLoaded);
+        } catch (e) {
+            print("Shoot!  Couldn't access the teams URL!");
+        }
+    }
+
+    _onTeamsLoaded(String jsonMessage) async {
+        List<Map<String, dynamic>> teams = JSON.decode(jsonMessage);
+        for (Map<String, dynamic> jsonMap in teams) {
+            favoriteTeams.add(new Team.fromMap(jsonMap));
+        }
+    }
 
     @reflectable
     openDialog() async {

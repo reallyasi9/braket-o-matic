@@ -36,21 +36,21 @@ type returnMessage struct {
 }
 
 func init() {
-	http.HandleFunc("/backend/user", dispatch)
+	http.HandleFunc("/backend/user", dispatchUser)
 }
 
-func dispatch(w http.ResponseWriter, r *http.Request) {
+func dispatchUser(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	default:
 		ReturnError(w, http.ErrNotSupported)
 	case http.MethodGet:
-		get(w, r)
+		getUser(w, r)
 	case http.MethodPut:
-		put(w, r)
+		putUser(w, r)
 	}
 }
 
-func get(w http.ResponseWriter, r *http.Request) {
+func getUser(w http.ResponseWriter, r *http.Request) {
 
 	// Global goon instance
 	ctx := appengine.NewContext(r)
@@ -83,7 +83,7 @@ func get(w http.ResponseWriter, r *http.Request) {
 	w.Write(js)
 }
 
-func put(w http.ResponseWriter, r *http.Request) {
+func putUser(w http.ResponseWriter, r *http.Request) {
 
 	// Global goon instance
 	ctx := appengine.NewContext(r)

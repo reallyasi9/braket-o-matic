@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="438"
+   height="517"
+   id="svg2">
+  <defs
+     id="defs6" />
+  <path
+     d="m 0,0 0,169.3125 c 0,216.5029 146.19766,303.46755 219,345.5 72.80234,-42.03245 219,-128.9971 219,-345.5 L 438,0 219,0 0,0 z"
+     id="path2818"
+     style="fill:#1E1E1E;stroke:none" />
+  <path
+     d="m 17.5,17.5 0,151.8125 C 17.5,370.30508 144.78469,451.36024 219,494.5 293.21531,451.36024 420.5,370.30508 420.5,169.3125 l 0,-151.8125 -201.5,0 -201.5,0 z"
+     id="path3641"
+     style="fill:#A51C30;fill-opacity:1;stroke:none" />
+  <path
+     d="m 112,60 0,42 13.9375,0 0,201 -13.9375,0 0,42 72,0 0,-42 -13.9375,0 0,-78.4375 97.875,0 0,78.4375 -13.9375,0 0,42 72,0 0,-42 -13.9375,0 0,-201 13.9375,0 0,-42 -72,0 0,42 13.9375,0 0,78.4375 -97.875,0 0,-78.4375 13.9375,0 0,-42 -72,0 z"
+     id="rect3614"
+     style="fill:#ffffff;fill-opacity:1;stroke:#1E1E1E;stroke-width:9;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+  <path
+     d="m 4,4 0,2.5 0,162.8125 c 0,211.79562 140.13025,297.50555 213.75,340.09375 l 1.25,0.71875 1.25,-0.71875 C 293.86975,466.81805 434,381.10812 434,169.3125 L 434,6.5 434,4 431.5,4 219,4 6.5,4 4,4 z m 5,5 210,0 210,0 0,160.3125 C 429,377.8238 292.76938,461.62268 219,504.34375 145.23062,461.62268 9,377.8238 9,169.3125 L 9,9 z"
+     id="path3632"
+     style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;color:#000000;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Andale Mono;-inkscape-font-specification:Andale Mono" />
+</svg>

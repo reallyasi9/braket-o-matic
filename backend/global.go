@@ -1,7 +1,6 @@
 package braket
 
 import (
-	"fmt"
 	"net/http"
 
 	"google.golang.org/appengine"
@@ -37,13 +36,6 @@ var teamList = [nTeams]Team{}
 
 var seedsList = [nTeamsPerRegion]int{
 	1, 16, 8, 9, 5, 12, 4, 13, 6, 11, 3, 14, 7, 10, 2, 15,
-}
-
-func init() {
-	for i := 0; i < nTeams; i++ {
-		name := fmt.Sprintf("Team%d", i)
-		teamList[i] = Team{i, name, seedsList[i%nTeamsPerRegion], 0.}
-	}
 }
 
 func EnableCORS(w http.ResponseWriter, r *http.Request) {
