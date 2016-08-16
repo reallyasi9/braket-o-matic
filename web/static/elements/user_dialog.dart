@@ -47,8 +47,23 @@ class UserDialog extends PolymerElement {
 
     _onTeamsLoaded(String jsonMessage) async {
         List<Map<String, dynamic>> teams = JSON.decode(jsonMessage);
+        if (teams == null) {
+            print("Shoot!  Nothing returned from teams query!");
+            return;
+        }
         for (Map<String, dynamic> jsonMap in teams) {
             favoriteTeams.add(new Team.fromMap(jsonMap));
+        }
+        // Now fill the list with these data
+        _fillFavorites();
+    }
+
+    _fillFavorites() async {
+        PaperListbox listbox = $['favorite-list'] as PaperListbox;
+        for (Team team in this.favoriteTeams) {
+            PaperItem item = new PaperItem();
+            item.appendText("${team.schoolName} ${team.nickname}");
+            listbox.append(item);
         }
     }
 

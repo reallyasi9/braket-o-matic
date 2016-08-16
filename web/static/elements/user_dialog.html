@@ -10,7 +10,6 @@
         }
         </style>
 
-        <!-- modal is broken right now... -->
         <paper-dialog with-backdrop={{withBackdrop}} id="dialog">
             <h2>Edit user information</h2>
             <paper-dialog-scrollable>
@@ -27,8 +26,8 @@
                     <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
                 </paper-input>
                 <paper-dropdown-menu label="Favorite team" id="favorite-input">
-                    <paper-listbox class="dropdown-content">
-                        <paper-item>University of Michigan Wolverines</paper-item>
+                    <paper-listbox class="dropdown-content" id="favorite-list">
+                        <paper-item>{{item.nickname}}</paper-item>
                     </paper-listbox>
                 </paper-dropdown-menu>
                 <paper-icon-button suffix on-click="clearFavorite" icon="clear" alt="clear" title="clear"></paper-icon-button>
