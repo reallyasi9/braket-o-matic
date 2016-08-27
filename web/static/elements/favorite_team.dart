@@ -4,8 +4,11 @@ library braket.favorite_team;
 import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart' show HtmlImport;
 
+import '../lib/team.dart';
+
 @PolymerRegister('favorite-team')
 class FavoriteTeam extends PolymerElement {
-  FavoriteTeam.created() : super.created();
+    FavoriteTeam.created() : super.created();
 
+    Team team;
 }

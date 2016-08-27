@@ -1,0 +1,78 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+
+Converted to Dart by Phil Killewald, 2016.
+-->
+<link rel="import" href="../packages/polymer/polymer.html">
+
+
+<dom-module id="team-selector">
+<style>
+:host {
+    display: block;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.input-wrapper {
+    @apply(--layout-horizontal);
+}
+.input-wrapper paper-input {
+    @apply(--layout-flex);
+}
+#suggestionsWrapper {
+    display: none;
+    background-color: white;
+    max-height:252px;
+    overflow-y:scroll;
+    width: 100%;
+    position: absolute;
+    z-index: 1000;
+}
+:host[suggestions-in-overlay="true"] #suggestionsWrapper {
+}
+paper-item {
+    position: relative;
+    line-height:18px;
+}
+paper-item:hover{
+    background:#eee;
+    color:#333;
+    cursor:pointer;
+}
+
+paper-item.active{
+    background:#eee;
+    color:#333;
+}
+#clear{
+    display: none;
+    margin-top:auto;
+}
+:host {
+    --paper-input-container-focus-color: #2196f3;
+    --paper-item-min-height: 36px;
+}
+</style>
+
+<template>
+    <div class="input-wrapper">
+        <paper-input id="input" label="[[label]]" no-label-float="[[noLabelFloat]]" on-keyup="_onKeypress" on-focus="_onFocus" on-blur="_onBlur" disabled="{{disabled}}" auto-validate$="[[autoValidate]]" error-message$="[[errorMessage]]" required$="[[required]]" value="{{text}}"></paper-input>
+        <paper-icon-button id="clear" icon="clear" on-click="_clear"></paper-icon-button>
+    </div>
+    <paper-material elevation="1" id="suggestionsWrapper">
+        <template is="dom-repeat" items="{{_suggestions}}">
+            <paper-item on-click="_onSelect">
+                <div>{{item.text}}</div>
+                <paper-ripple></paper-ripple>
+            </paper-item>
+        </template>
+    </paper-material>
+</template>
+</dom-module>

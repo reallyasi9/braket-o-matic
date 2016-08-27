@@ -25,6 +25,9 @@ class Team extends JsProxy with Exportable{
 	@export
 	List<String> colors;
 
+	@export
+	String imageName;
+
 	Team.fromMap(Map<String, dynamic> obj) {
 		this.id = obj["ID"];
 		this.seed = obj["Seed"];
@@ -33,5 +36,6 @@ class Team extends JsProxy with Exportable{
 		this.schoolShortName = obj["SchoolShortName"];
 		this.nickname = obj["Nickname"];
 		this.colors = obj["Colors"];
+		this.imageName = obj["ImageName"];
 	}
 }
