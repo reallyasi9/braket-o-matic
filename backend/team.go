@@ -43,7 +43,7 @@ func updateElo(ra float64, rb float64) (float64, float64) {
 }
 
 func init() {
-	http.HandleFunc("/backend/admin/build_teams", buildTeams)
+	http.HandleFunc("/backend/admin/build-teams", buildTeams)
 	http.HandleFunc("/backend/teams", getTeams)
 	http.HandleFunc("/backend/search-teams", searchTeams)
 }
@@ -82,8 +82,9 @@ func buildTeams(w http.ResponseWriter, r *http.Request) {
 	json.Unmarshal(teamf, &teams)
 
 	// Add the ancestor
-	for _, team := range teams {
-		team.Tournament = tournamentKey
+	// Note: range makes a copy, so have to use the index.
+	for i := range teams {
+		teams[i].Tournament = tournamentKey
 	}
 
 	// Send the update
@@ -184,36 +185,42 @@ func searchTeams(w http.ResponseWriter, r *http.Request) {
 	found := 0
 	for _, team := range teams {
 
+		// Only return 5 (for brevity)
+		if found >= 5 {
+			break
+		}
+
 		// First up:  match beginning of school name
 		if strings.HasPrefix(team.SchoolName, s) {
 			schoolBegTeams = append(schoolBegTeams, team)
 			found++
+			continue
 		} else if strings.Contains(team.SchoolName, s) {
 			schoolAnyTeams = append(schoolAnyTeams, team)
 			found++
+			continue
 		}
 
 		// Match beginning of short school name
 		if strings.HasPrefix(team.SchoolShortName, s) {
 			shortBegTeams = append(shortBegTeams, team)
 			found++
+			continue
 		} else if strings.Contains(team.SchoolShortName, s) {
-			schoolAnyTeams = append(shortAnyTeams, team)
+			shortAnyTeams = append(shortAnyTeams, team)
 			found++
+			continue
 		}
 
 		// Match beginning of team nickname
 		if strings.HasPrefix(team.Nickname, s) {
 			nickBegTeams = append(nickBegTeams, team)
 			found++
+			continue
 		} else if strings.Contains(team.Nickname, s) {
-			schoolAnyTeams = append(nickAnyTeams, team)
+			nickAnyTeams = append(nickAnyTeams, team)
 			found++
-		}
-
-		// Finally, only return 5 (for brevity)
-		if found >= 5 {
-			break
+			continue
 		}
 	}
 
