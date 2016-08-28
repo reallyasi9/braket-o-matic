@@ -166,11 +166,7 @@ class TeamSelector extends PolymerElement {
     _updateSuggestions(String jsonMessage) async {
         this._suggestions.clear();
         List<Team> suggestedTeams = JSON.decode(jsonMessage);
-        for (Team team in suggestedTeams) {
-            FavoriteTeam favTeam = document.createElement('favorite-team') as FavoriteTeam;
-            favTeam.set('team', team);
-            this._suggestions.add(favTeam);
-        }
+        suggestedTeams.forEach((Team team) => this._suggestions.add(new FavoriteTeam(team)));
     }
 
 
