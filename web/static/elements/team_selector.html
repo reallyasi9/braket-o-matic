@@ -63,13 +63,13 @@ paper-item.active{
 
 <template>
     <div class="input-wrapper">
-        <paper-input id="input" label="[[label]]" no-label-float="[[noLabelFloat]]" on-keyup="_onKeypress" on-focus="_onFocus" on-blur="_onBlur" disabled="{{disabled}}" auto-validate$="[[autoValidate]]" error-message$="[[errorMessage]]" required$="[[required]]" value="{{text}}"></paper-input>
+        <paper-input id="input" label="[[label]]" no-label-float="[[noLabelFloat]]" on-keyup="_onKeypress" on-focus="_onFocus" on-blur="_onBlur" disabled="{{disabled}}" auto-validate$="[[autoValidate]]" error-message$="[[errorMessage]]" required$="[[required]]" value="{{team.SchoolShortName}}"></paper-input>
         <paper-icon-button id="clear" icon="clear" on-click="_clear"></paper-icon-button>
     </div>
     <paper-material elevation="1" id="suggestionsWrapper">
         <template is="dom-repeat" items="{{_suggestions}}">
             <paper-item on-click="_onSelect">
-                <div>{{item.text}}</div>
+                <favorite-team team="{{item}}"></favorite-team>
                 <paper-ripple></paper-ripple>
             </paper-item>
         </template>

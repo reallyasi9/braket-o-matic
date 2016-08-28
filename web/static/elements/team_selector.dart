@@ -8,16 +8,12 @@ import 'dart:html';
 import 'dart:collection';
 import 'dart:convert';
 import 'package:polymer_elements/paper_input.dart';
+import 'package:polymer_elements/paper_material.dart';
+import 'package:polymer_elements/paper_item.dart';
+import 'package:polymer_elements/paper_ripple.dart';
 import '../lib/team.dart';
 import 'favorite_team.dart';
 
-
-class AutoselectOption {
-    AutoselectOption(String this.text, FavoriteTeam this.team);
-
-    String text;
-    FavoriteTeam team;
-}
 
 
 @PolymerRegister('team-selector')
@@ -25,22 +21,16 @@ class TeamSelector extends PolymerElement {
   TeamSelector.created() : super.created();
 
     /**
-    * `autoValidate` Set to true to auto-validate the input value.
-    */
-    @property
-    bool autoValidate = false;
-
-    /**
     * `errorMessage` The error message to display when the input is invalid.
     */
     @property
-    String errorMessage;
+    String errorMessage = "Please select a team";
 
     /**
      * `label` Text to display as the input label
      */
     @property
-    String label;
+    String label = "Favorite team";
 
     /**
      * `noLabelFloat` Set to true to disable the floating label.
@@ -55,59 +45,28 @@ class TeamSelector extends PolymerElement {
     bool required = false;
 
     /**
-     * `source` Array of objects with the options to execute the autocomplete feature
-     * TODO: Still working this out...
-     */
-    @property
-    Map<String, FavoriteTeam> source = new SplayTreeMap<String, FavoriteTeam>();
-
-    /**
-     *
-     */
-    @property
-    String textProperty = 'text';
-
-    @property
-    String valueProperty = 'value';
-
-    /**
      * `value` Selected object from the suggestions
-     * TODO: Still working this out...
      */
     @Property(notify: true)
-    FavoriteTeam team;
-
-    @Property(notify: true)
-    String text;
+    Team team;
 
     @property
-    bool disableShowClear = false;
-
-    @property
-    bool remoteSource = false;
-
-    @property
-    String eventNamespace = '-';
-
-    @property
-    int minLength = 1;
+    int minLength = 3;
 
     /**
      * `_suggestions` Array with the actual suggestions to display
      */
-    List<FavoriteTeam> _suggestions = new List<FavoriteTeam>();
+    List<Team> _suggestions = new List<Team>();
 
     int _currentIndex = -1;
 
     int _scrollIndex = 0;
 
-    int _maxViewableItems = 7;
+    int _maxViewableItems = 5;
 
     double _itemHeight = 36.0;
 
-    FavoriteTeam _team = null;
-
-    String _text = null;
+    Team _team = null;
 
 
     // Element Lifecycle
