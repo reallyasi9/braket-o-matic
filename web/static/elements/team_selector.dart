@@ -7,6 +7,8 @@ import 'package:web_components/web_components.dart' show HtmlImport;
 import 'dart:html';
 import 'dart:collection';
 import 'dart:convert';
+import 'dart:async';
+
 import 'package:polymer_elements/paper_input.dart';
 import 'package:polymer_elements/paper_material.dart';
 import 'package:polymer_elements/paper_item.dart';
@@ -14,6 +16,8 @@ import 'package:polymer_elements/paper_ripple.dart';
 import '../lib/team.dart';
 import 'favorite_team.dart';
 
+
+const Duration _TIMEOUT = const Duration(milliseconds: 300);
 
 
 @PolymerRegister('team-selector')
@@ -64,9 +68,15 @@ class TeamSelector extends PolymerElement {
 
     int _maxViewableItems = 5;
 
-    double _itemHeight = 36.0;
+    // In pixels
+    // TODO: get this from the displayed element instead of fixing the value here.
+    int _itemHeight = 36;
 
+    // The actual selected team
     Team _team = null;
+
+    // A timer to clear the selection window
+    Timer _hideTimer = new Timer(_TIMEOUT, () => {});
 
 
     // Element Lifecycle
@@ -81,16 +91,16 @@ class TeamSelector extends PolymerElement {
         int which = event.which;
         if (which == 40) {
             // scroll down
-            this._keydown();
+            _keydown();
         } else if (which==38) {
             // scroll up
-            this._keyup(event);
+            _keyup();
         } else if (which==13) {
             // finalize selection
-            this._keyenter();
+            _keyenter();
         } else {
             // get suggestions
-            this._fetchSuggestions(event);
+            _fetchSuggestions(event);
         }
     }
 
@@ -101,7 +111,7 @@ class TeamSelector extends PolymerElement {
         String searchValue = target.value;
 
         if (searchValue.length >= this.minLength) {
-            this._fireEvent(this.getOption(), 'change'); // TODO send the search?
+            _fireEvent('change'); // TODO send the search?
         } else {
             $['clear'].style.display = 'none';
             this._suggestions.clear();
@@ -125,7 +135,7 @@ class TeamSelector extends PolymerElement {
     _updateSuggestions(String jsonMessage) async {
         this._suggestions.clear();
         List<Team> suggestedTeams = JSON.decode(jsonMessage);
-        suggestedTeams.forEach((Team team) => this._suggestions.add(new FavoriteTeam(team)));
+        _bindSuggestions(suggestedTeams);
     }
 
 
@@ -134,11 +144,10 @@ class TeamSelector extends PolymerElement {
     */
     void _clear() {
         this.team = this._team;
-        this.text = this._text;
         $['clear'].style.display = 'none';
-        this._hideSuggestionsWrapper();
-        this._emptyItems();
-        this._fireEvent(this.getOption(), 'reset');
+        _hideSuggestionsWrapper();
+        _emptyItems();
+        _fireEvent('reset');
     }
 
 
@@ -149,27 +158,16 @@ class TeamSelector extends PolymerElement {
         $['suggestionsWrapper'].style.display = 'none';
     }
 
-
-    void _handleSuggestions(event) {
-        if (!this.remoteSource) {
-            this._createSuggestions(event);
-        } else {
-            this._remoteSuggestions(event);
-        }
-    }
-
-
-
-
-
-    void _bindSuggestions(List<FavoriteTeam> arr) {
+    /**
+     * Set the given list of teams as the suggested teams, and reset the
+     * displayed list (called after the suggested teams have been determined).
+     */
+    void _bindSuggestions(List<Team> arr) {
         if (arr.isNotEmpty) {
             this._suggestions = arr;
             this._currentIndex = -1;
             this._scrollIndex = 0;
-            if (!this.disableShowClear) {
-                $['clear'].style.display = 'block';
-            }
+            $['clear'].style.display = 'block';
             $['suggestionsWrapper'].style.display = 'block';
         } else {
             $['clear'].style.display = 'none';
@@ -177,208 +175,179 @@ class TeamSelector extends PolymerElement {
         }
     }
 
-    void _createSuggestions(event) {
-        this._currentIndex = -1;
-        this._scrollIndex = 0;
-        String value = event.target.value.toLowerCase(); // TODO
-        var minLength = this.minLength;
 
-        if (value.length >= minLength) {
-            // Shows the clear button.
-            if (!this.disableShowClear) {
-                $['clear'].style.display = 'block';
-            }
+    void _selection(int index) {
+        this._team = this._suggestions[index];
+        this.team = this._team;
+        //this.text = selectedTeam.schoolShortName;
+        $['clear'].style.display = 'none';
+        _emptyItems();
+        _fireEvent('selected');
+        hideSuggestions();
+    }
 
-            // Search for the word in the source properties.
-            var length = this.source.length;
-            if (length > 0) {
-                this._suggestions.clear();
 
-                String objText = '';
-                String objValue = '';
+    // Get all of the suggestions as elements
+    ElementList<Element> _getItems() {
+        return querySelectorAll('paper-item');
+    }
 
-                for (T item in this.source) { // TODO
-                    objText = item[this.textProperty];
-                    objValue = item[this.valueProperty];
-                    if(objText.toLowerCase().startsWith(value)){
-                        // Adds the item to the suggestions list.
-                        this.push('_suggestions', {text : objText , value : objValue}); // TODO
-                    }
-                }
-                if (this._suggestions.length > 0) {
-                    $['suggestionsWrapper'].style.display = 'block';
-                }else{
-                    this._hideSuggestionsWrapper();
-                }
-            }
-        } else {
-            $['clear'].style.display = 'none';
-            this._suggestions.clear();
+
+    // Clear all the suggestions.
+    void _emptyItems() {
+        this._suggestions.clear();
+    }
+
+
+    // The the ID of this element (why?)
+    String _getId(){
+        String id = getAttribute('id');
+        if (id.isEmpty) {
+            // Allows access to custom elements of object?
+            id = this.dataset['id'];
+        }
+        return id;
+    }
+
+
+    // Remove the "active" class from the given elements.
+    void _removeActive(ElementList<Element> items) {
+        items.forEach((Element e) {
+            e.classes.remove('active');
+        });
+    }
+
+
+    // Pressing down arrow will select the next suggestion
+    void _keydown() {
+        ElementList<Element> items = _getItems();
+        int length = items.length - 1;
+        if (this._currentIndex < length) {
+            _removeActive(items);
+            this._currentIndex++;
+            items[this._currentIndex].classes.add('active');
+            _scrollDown();
         }
     }
 
-  _selection : function(index) {
-    var selectedOption = this._suggestions[index];
-    var self = this;
-    this.text = selectedOption.text;
-    this.value = selectedOption.value;
-    this._value=this.value;
-    this._text=this.text;
-    this.$.clear.style.display = 'none';
-    this._emptyItems();
-    this._fireEvent(selectedOption,'selected');
-    setTimeout(function() {
-      self._hideSuggestionsWrapper();
-    }, 300);
-  },
 
-  _getItems:function(){
-    return this.querySelectorAll('paper-item');
-  },
-
-  _emptyItems:function(){
-    this._suggestions = [];
-  },
-
-  String _getId(){
-    String id = this.getAttribute('id');
-    if (id.isEmpty) {
-        // Allows access to custom elements of object?
-        id = this.dataset['id'];
+    // Pressing up arrow will select the previous suggestion
+    void _keyup() {
+        ElementList<Element> items = _getItems();
+        if (this._currentIndex > 0) {
+            _removeActive(items);
+            this._currentIndex--;
+            items[this._currentIndex].classes.add('active');
+            _scrollUp();
+        }
     }
-    return id;
-  }
 
-  _removeActive:function(items){
-    for(var i=0;i<items.length;i++){
-      items[i].classList.remove('active');
+
+    // Pressing enter will confirm your selection.
+    void _keyenter() {
+        if ($['suggestionsWrapper'].style.display == 'block' && this._currentIndex > -1) {
+            this._selection(this._currentIndex);
+        }
     }
-  },
 
-  _keydown:function(){
-    var items=this._getItems();
-    var length=items.length;
-    length--;
-    if(this._currentIndex < length){
-      this._removeActive(items);
-      this._currentIndex++;
-      items[this._currentIndex].classList.add('active');
-      this._scrollDown();
+
+    // Scroll to the next item, if we are doing that scroll thing.
+    void _scrollDown() {
+        int viewIndex = this._currentIndex - this._scrollIndex;
+        if (viewIndex >= this._maxViewableItems) {
+            this._scrollIndex++;
+            int scrollTop = (this._scrollIndex * this._itemHeight);
+            PaperMaterial pm = this.querySelector('paper-material');
+            pm.scrollTop = scrollTop;
+        }
     }
-  },
 
-  _keyup:function(){
-    var items=this._getItems();
-    if(this._currentIndex >0){
-      this._removeActive(items);
-      this._currentIndex--;
-      items[this._currentIndex].classList.add('active');
-      this._scrollUp();
+
+    // Scroll to the previous item, if we are doing that scroll thing.
+    void _scrollUp() {
+        int viewIndex = this._currentIndex - this._scrollIndex;
+        if (viewIndex < 0) {
+            this._scrollIndex--;
+            int scrollTop = (this._scrollIndex * this._itemHeight);
+            PaperMaterial pm = this.querySelector('paper-material');
+            pm.scrollTop = scrollTop;
+        }
     }
-  },
 
-  _keyenter:function(){
-    if(this.$.suggestionsWrapper.style.display == 'block' && this._currentIndex > -1){
-      var index=this._currentIndex;
-      this._selection(index);
+
+    // A custom way to fire an event (why?)
+    void _fireEvent(String evt) {
+        String eventString = 'autocomplete-$evt';
+        this.fire(eventString, detail: {
+            "id": this._getId(),
+            "option": this._team,
+            "target": this
+        });
     }
-  },
 
-  _scrollDown:function(){
-    var viewIndex=this._currentIndex-this._scrollIndex;
-    if(viewIndex >= this._maxViewableItems){
-      this._scrollIndex++;
-      var scrollTop=(this._scrollIndex * this._itemHeight);
-      var paperMaterial=this.querySelector('paper-material');
-      paperMaterial.scrollTop=scrollTop;
+
+    // When the selection changes
+    @reflectable
+    void _onSelect(event, [_]) {
+        // I really hope this is there...
+        int index = event.model.index;
+        this._selection(index);
     }
-  },
 
-  _scrollUp:function(){
-    var viewIndex=this._currentIndex-this._scrollIndex;
-    if(viewIndex < 0){
-      this._scrollIndex--;
-      var scrollTop=(this._scrollIndex * this._itemHeight);
-      var paperMaterial=this.querySelector('paper-material');
-      paperMaterial.scrollTop=scrollTop;
+
+    // When you click out of the input
+    @reflectable
+    void _onBlur(event, [_]) {
+        _fireEvent('blur');
+        hideSuggestions();
     }
-  },
-
-  void _fireEvent(AutocompleteItem option, String evt) {
-    String id = this._getId();
-    String eventString = 'autocomplete' + this.eventNamespace + evt;
-    this.fire(eventString, detail: {
-        "id": id,
-        "option": option,
-        "target": this
-    });
-  }
 
 
-
-  @reflectable
-  void _onSelect(event, [_]) {
-    var index = event.model.index;
-    this._selection(index);
-  }
-
-  @reflectable
-  void _onBlur(event, [_]) {
-    var self = this;
-
-    this._fireEvent(this.getOption(), 'blur');
-    setTimeout(function() { // TODO
-      self.$.clear.style.display = 'none';
-      self._hideSuggestionsWrapper();
-    }, 300);
-  }
-
-  @reflectable
-  void _onFocus(event, [_]) {
-    this._fireEvent(this.getOption(), 'focus');
-  }
+    // When you focus on the input
+    @reflectable
+    void _onFocus(event, [_]) {
+        _fireEvent('focus');
+    }
 
 
-  AutocompleteItem getOption() {
-    return new AutocompleteItem(this.text, this.value);
-  }
+    // Disable the input and hide the suggestions wrapper
+    void disable() {
+        _hideSuggestionsWrapper();
+        $['input'].disabled = true;
+    }
 
 
-  void setOption(AutocompleteItem option) {
-     this.text=option.text;
-     this.value=option.element;
-  }
+    // Enable the input
+    void enable() {
+        $['input'].disabled = false;
+    }
 
 
-  void disable() {
-    //this.disabled = true; // TODO ?
-    $['input'].disabled=true;
-  }
+    // Set suggestions (exported as a function for others to use)
+    void suggestions(List<Team> arr) {
+        this._bindSuggestions(arr);
+    }
 
-  void enable() {
-    //this.disabled = false; // TODO ?
-    $['input'].disabled=false;
-  }
 
-  void suggestions(List<FavoriteTeam> arr) {
-    this._bindSuggestions(arr);
-  }
+    // In case validation is a thing
+    bool validate() {
+        return $['input'].validate();
+    }
 
-  bool validate() {
-    return $['input'].validate();
-  }
 
-  void reset() {
-    this._value = null;
-    this._text = '';
-  }
+    // Deselect the team
+    void reset() {
+        this.team = this._team;
+    }
 
-  void hideSuggestions() {
-    var self=this;
-    setTimeout(function() { // TODO
-      self.$.clear.style.display = 'none';
-      self._hideSuggestionsWrapper();
-    }, 300);
-  }
+    // Hide the suggestion window after a timeout
+    void hideSuggestions() {
+        if (_hideTimer.isActive) {
+            _hideTimer.cancel();
+        }
+        _hideTimer = new Timer(_TIMEOUT, () {
+            _hideSuggestionsWrapper();
+        });
+    }
 
 }
