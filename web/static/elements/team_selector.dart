@@ -13,6 +13,8 @@ import 'package:polymer_elements/paper_input.dart';
 import 'package:polymer_elements/paper_material.dart';
 import 'package:polymer_elements/paper_item.dart';
 import 'package:polymer_elements/paper_ripple.dart';
+import 'package:polymer_elements/paper_icon_button.dart';
+import 'package:polymer_elements/iron_icons.dart';
 import '../lib/team.dart';
 import 'favorite_team.dart';
 
@@ -86,9 +88,10 @@ class TeamSelector extends PolymerElement {
 
 
     // Callback after typing something
-    @reflectable
-    void _onKeypress(KeyEvent event, [_]) {
-        int which = event.which;
+    @Listen('keyup')
+    void handleKeypress(CustomEventWrapper event, [_]) {
+        KeyboardEvent ke = event.original as KeyboardEvent;
+        int which = ke.which;
         if (which == 40) {
             // scroll down
             _keydown();
@@ -100,18 +103,17 @@ class TeamSelector extends PolymerElement {
             _keyenter();
         } else {
             // get suggestions
-            _fetchSuggestions(event);
+            _fetchSuggestions(ke);
         }
     }
 
 
     // Either ask for suggestions or wait until there are enough characters to search
-    void _fetchSuggestions(KeyEvent event) {
-        PaperInput target = event.target as PaperInput;
-        String searchValue = target.value;
+    void _fetchSuggestions(KeyboardEvent event) {
+        String searchValue = $['input'].value;
 
         if (searchValue.length >= this.minLength) {
-            _fireEvent('change'); // TODO send the search?
+            handleChange(searchValue);
         } else {
             $['clear'].style.display = 'none';
             this._suggestions.clear();
@@ -120,9 +122,7 @@ class TeamSelector extends PolymerElement {
 
 
     // Ask the backend for suggestions
-    @reflectable
-    void _onChange(PolymerEvent event, dynamic detail) {
-        String search = detail.option.text;
+    handleChange(String search) async {
         try {
             HttpRequest.getString("/backend/search-teams?s=$search").then(_updateSuggestions);
         } catch (e) {
@@ -142,12 +142,14 @@ class TeamSelector extends PolymerElement {
     /**
     * Clears the input text
     */
-    void _clear() {
+    @reflectable
+    void handleClear(CustomEventWrapper event, [_]) {
         this.team = this._team;
         $['clear'].style.display = 'none';
         _hideSuggestionsWrapper();
         _emptyItems();
         _fireEvent('reset');
+        print("CLEAR HAPPENED?");
     }
 
 
@@ -163,12 +165,13 @@ class TeamSelector extends PolymerElement {
      * displayed list (called after the suggested teams have been determined).
      */
     void _bindSuggestions(List<Team> arr) {
-        if (arr.isNotEmpty) {
+        if (arr != null && arr.isNotEmpty) {
             this._suggestions = arr;
             this._currentIndex = -1;
             this._scrollIndex = 0;
             $['clear'].style.display = 'block';
             $['suggestionsWrapper'].style.display = 'block';
+            print("SUGGESTIONS BOUND?");
         } else {
             $['clear'].style.display = 'none';
             this._suggestions.clear();
@@ -202,7 +205,7 @@ class TeamSelector extends PolymerElement {
     // The the ID of this element (why?)
     String _getId(){
         String id = getAttribute('id');
-        if (id.isEmpty) {
+        if (id == null || id.isEmpty) {
             // Allows access to custom elements of object?
             id = this.dataset['id'];
         }
@@ -287,25 +290,25 @@ class TeamSelector extends PolymerElement {
 
 
     // When the selection changes
-    @reflectable
-    void _onSelect(event, [_]) {
+    @Listen('select')
+    void handleSelect(CustomEventWrapper event, [_]) {
         // I really hope this is there...
-        int index = event.model.index;
+        int index = event.detail.index;
         this._selection(index);
     }
 
 
     // When you click out of the input
-    @reflectable
-    void _onBlur(event, [_]) {
+    @Listen('blur')
+    void handleBlur(CustomEventWrapper event, [_]) {
         _fireEvent('blur');
         hideSuggestions();
     }
 
 
     // When you focus on the input
-    @reflectable
-    void _onFocus(event, [_]) {
+    @Listen('focus')
+    void handleFocus(CustomEventWrapper event, [_]) {
         _fireEvent('focus');
     }
 

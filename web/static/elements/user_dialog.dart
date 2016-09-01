@@ -16,8 +16,10 @@ import 'package:polymer_elements/paper_dropdown_menu.dart';
 import 'package:polymer_elements/paper_listbox.dart';
 import 'package:polymer_elements/paper_item.dart';
 import 'package:polymer_elements/iron_flex_layout.dart';
+import 'package:polymer_elements/iron_icons.dart';
 import '../lib/user.dart';
 import '../lib/team.dart';
+import 'team_selector.dart';
 
 const Duration _TIMEOUT = const Duration(seconds: 1);
 
@@ -31,41 +33,8 @@ class UserDialog extends PolymerElement {
     @property
     bool withBackdrop = false;
 
-    @property
-    List<Team> favoriteTeams = new List<Team>();
-
     Timer _debounceTimer = new Timer(_TIMEOUT, () => {});
 
-
-    void ready() {
-        try {
-            HttpRequest.getString("/backend/teams").then(_onTeamsLoaded);
-        } catch (e) {
-            print("Shoot!  Couldn't access the teams URL!");
-        }
-    }
-
-    _onTeamsLoaded(String jsonMessage) async {
-        List<Map<String, dynamic>> teams = JSON.decode(jsonMessage);
-        if (teams == null) {
-            print("Shoot!  Nothing returned from teams query!");
-            return;
-        }
-        for (Map<String, dynamic> jsonMap in teams) {
-            favoriteTeams.add(new Team.fromMap(jsonMap));
-        }
-        // Now fill the list with these data
-        _fillFavorites();
-    }
-
-    _fillFavorites() async {
-        PaperListbox listbox = $['favorite-list'] as PaperListbox;
-        for (Team team in this.favoriteTeams) {
-            PaperItem item = new PaperItem();
-            item.appendText("${team.schoolName} ${team.nickname}");
-            listbox.append(item);
-        }
-    }
 
     @reflectable
     openDialog() async {

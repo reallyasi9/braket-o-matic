@@ -25,11 +25,7 @@
                     <div suffix>”</div>
                     <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
                 </paper-input>
-                <paper-dropdown-menu label="Favorite team" id="favorite-input">
-                    <paper-listbox class="dropdown-content" id="favorite-list">
-                        <paper-item>{{item.nickname}}</paper-item>
-                    </paper-listbox>
-                </paper-dropdown-menu>
+                <team-selector team="{{favoriteTeam}}"></team-selector>
                 <paper-icon-button suffix on-click="clearFavorite" icon="clear" alt="clear" title="clear"></paper-icon-button>
             </paper-dialog-scrollable>
         </paper-dialog>

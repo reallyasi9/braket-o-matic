@@ -137,7 +137,7 @@ func getTeams(w http.ResponseWriter, r *http.Request) {
 func searchTeams(w http.ResponseWriter, r *http.Request) {
 
 	// Just in case, make sure the search term is reasonable
-	s := r.FormValue("s")
+	s := strings.ToLower(r.FormValue("s"))
 	if len(s) < 3 {
 		var fakeTeams []Team
 		js, err := json.Marshal(fakeTeams) // Empty
@@ -191,33 +191,36 @@ func searchTeams(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// First up:  match beginning of school name
-		if strings.HasPrefix(team.SchoolName, s) {
+		check := strings.ToLower(team.SchoolName)
+		if strings.HasPrefix(check, s) {
 			schoolBegTeams = append(schoolBegTeams, team)
 			found++
 			continue
-		} else if strings.Contains(team.SchoolName, s) {
+		} else if strings.Contains(check, s) {
 			schoolAnyTeams = append(schoolAnyTeams, team)
 			found++
 			continue
 		}
 
 		// Match beginning of short school name
-		if strings.HasPrefix(team.SchoolShortName, s) {
+		check = strings.ToLower(team.SchoolShortName)
+		if strings.HasPrefix(check, s) {
 			shortBegTeams = append(shortBegTeams, team)
 			found++
 			continue
-		} else if strings.Contains(team.SchoolShortName, s) {
+		} else if strings.Contains(check, s) {
 			shortAnyTeams = append(shortAnyTeams, team)
 			found++
 			continue
 		}
 
 		// Match beginning of team nickname
-		if strings.HasPrefix(team.Nickname, s) {
+		check = strings.ToLower(team.Nickname)
+		if strings.HasPrefix(check, s) {
 			nickBegTeams = append(nickBegTeams, team)
 			found++
 			continue
-		} else if strings.Contains(team.Nickname, s) {
+		} else if strings.Contains(check, s) {
 			nickAnyTeams = append(nickAnyTeams, team)
 			found++
 			continue
