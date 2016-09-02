@@ -14,7 +14,9 @@ class FavoriteTeam extends PolymerElement {
     factory FavoriteTeam(Team team) {
         FavoriteTeam ft = document.createElement('favorite-team');
         ft.set('team', team);
+        return ft;
     }
 
+    @property
     Team team;
 }

@@ -24,7 +24,7 @@ const Duration _TIMEOUT = const Duration(milliseconds: 300);
 
 @PolymerRegister('team-selector')
 class TeamSelector extends PolymerElement {
-  TeamSelector.created() : super.created();
+    TeamSelector.created() : super.created();
 
     /**
     * `errorMessage` The error message to display when the input is invalid.
@@ -33,26 +33,26 @@ class TeamSelector extends PolymerElement {
     String errorMessage = "Please select a team";
 
     /**
-     * `label` Text to display as the input label
-     */
+    * `label` Text to display as the input label
+    */
     @property
     String label = "Favorite team";
 
     /**
-     * `noLabelFloat` Set to true to disable the floating label.
-     */
+    * `noLabelFloat` Set to true to disable the floating label.
+    */
     @property
     bool noLabelFloat = false;
 
-     /**
-     * `required` Set to true to mark the input as required.
-     */
+    /**
+    * `required` Set to true to mark the input as required.
+    */
     @property
     bool required = false;
 
     /**
-     * `value` Selected object from the suggestions
-     */
+    * `value` Selected object from the suggestions
+    */
     @Property(notify: true)
     Team team;
 
@@ -60,9 +60,10 @@ class TeamSelector extends PolymerElement {
     int minLength = 3;
 
     /**
-     * `_suggestions` Array with the actual suggestions to display
-     */
-    List<Team> _suggestions = new List<Team>();
+    * `suggestions` Array with the actual suggestions to display
+    */
+    @Property(notify: true)
+    List<Team> suggestions = new List<Team>();
 
     int _currentIndex = -1;
 
@@ -103,26 +104,26 @@ class TeamSelector extends PolymerElement {
             _keyenter();
         } else {
             // get suggestions
-            _fetchSuggestions(ke);
+            _fetchSuggestions();
         }
     }
 
 
     // Either ask for suggestions or wait until there are enough characters to search
-    void _fetchSuggestions(KeyboardEvent event) {
+    void _fetchSuggestions() {
         String searchValue = $['input'].value;
 
         if (searchValue.length >= this.minLength) {
-            handleChange(searchValue);
+            _handleChange(searchValue);
         } else {
             $['clear'].style.display = 'none';
-            this._suggestions.clear();
+            this.suggestions.clear();
         }
     }
 
 
     // Ask the backend for suggestions
-    handleChange(String search) async {
+    _handleChange(String search) async {
         try {
             HttpRequest.getString("/backend/search-teams?s=$search").then(_updateSuggestions);
         } catch (e) {
@@ -133,7 +134,7 @@ class TeamSelector extends PolymerElement {
 
     // Parse the returned suggestions and build the elements to select
     _updateSuggestions(String jsonMessage) async {
-        this._suggestions.clear();
+        this.suggestions.clear();
         List<Team> suggestedTeams = JSON.decode(jsonMessage);
         _bindSuggestions(suggestedTeams);
     }
@@ -161,26 +162,27 @@ class TeamSelector extends PolymerElement {
     }
 
     /**
-     * Set the given list of teams as the suggested teams, and reset the
-     * displayed list (called after the suggested teams have been determined).
-     */
+    * Set the given list of teams as the suggested teams, and reset the
+    * displayed list (called after the suggested teams have been determined).
+    */
     void _bindSuggestions(List<Team> arr) {
         if (arr != null && arr.isNotEmpty) {
-            this._suggestions = arr;
+            this.suggestions = arr;
+            this.notifyPath('suggestions', this.suggestions);
             this._currentIndex = -1;
             this._scrollIndex = 0;
             $['clear'].style.display = 'block';
             $['suggestionsWrapper'].style.display = 'block';
-            print("SUGGESTIONS BOUND?");
         } else {
             $['clear'].style.display = 'none';
-            this._suggestions.clear();
+            this.suggestions.clear();
+            this.notifyPath('suggestions', this.suggestions);
         }
     }
 
 
     void _selection(int index) {
-        this._team = this._suggestions[index];
+        this._team = this.suggestions[index];
         this.team = this._team;
         //this.text = selectedTeam.schoolShortName;
         $['clear'].style.display = 'none';
@@ -198,7 +200,7 @@ class TeamSelector extends PolymerElement {
 
     // Clear all the suggestions.
     void _emptyItems() {
-        this._suggestions.clear();
+        this.suggestions.clear();
     }
 
 
@@ -323,12 +325,6 @@ class TeamSelector extends PolymerElement {
     // Enable the input
     void enable() {
         $['input'].disabled = false;
-    }
-
-
-    // Set suggestions (exported as a function for others to use)
-    void suggestions(List<Team> arr) {
-        this._bindSuggestions(arr);
     }
 
 

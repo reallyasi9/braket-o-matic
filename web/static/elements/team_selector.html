@@ -67,7 +67,7 @@ paper-item.active{
         <paper-icon-button id="clear" icon="clear" on-click="handleClear"></paper-icon-button>
     </div>
     <paper-material elevation="1" id="suggestionsWrapper">
-        <template is="dom-repeat" items="{{_suggestions}}">
+        <template is="dom-repeat" items="{{suggestions}}">
             <paper-item on-click="_onSelect">
                 <favorite-team team="{{item}}"></favorite-team>
                 <paper-ripple></paper-ripple>
