@@ -29,7 +29,7 @@
 ],
 "SchoolName": "Alabama A&M University",
 "SchoolShortName": "Albama A&M",
-"Nickname": "Bulldogs/Lady Bulldogs",
+"Nickname": "Bulldogs",
 "ID": 3
 },
 {
@@ -51,7 +51,7 @@
 ],
 "SchoolName": "Alabama State University",
 "SchoolShortName": "Alabama St",
-"Nickname": "Hornets/Lady Hornets",
+"Nickname": "Hornets",
 "ID": 5
 },
 {
@@ -73,7 +73,7 @@
 ],
 "SchoolName": "Alcorn State University",
 "SchoolShortName": "Alcorn St",
-"Nickname": "Braves/Lady Braves",
+"Nickname": "Braves",
 "ID": 7
 },
 {
@@ -152,7 +152,7 @@
 ],
 "SchoolName": "University of Arkansas at Pine Bluff",
 "SchoolShortName": "AR-Pine Bluff",
-"Nickname": "Golden Lions/Lady Lions",
+"Nickname": "Golden Lions",
 "ID": 14
 },
 {
@@ -185,7 +185,7 @@
 ],
 "SchoolName": "Austin Peay State University",
 "SchoolShortName": "Austin Peay",
-"Nickname": "Governors/Lady Govs",
+"Nickname": "Governors",
 "ID": 17
 },
 {
@@ -207,7 +207,7 @@
 ],
 "SchoolName": "Baylor University",
 "SchoolShortName": "Baylor",
-"Nickname": "Bears/Lady Bears",
+"Nickname": "Bears",
 "ID": 19
 },
 {
@@ -520,7 +520,7 @@
 ],
 "SchoolName": "Campbell University",
 "SchoolShortName": "Campbell",
-"Nickname": "Camels/Lady Camels",
+"Nickname": "Camels",
 "ID": 47
 },
 {
@@ -909,7 +909,7 @@
 ],
 "SchoolName": "East Tennessee State University",
 "SchoolShortName": "E Tennessee St",
-"Nickname": "Buccaneers/Lady Buccaneers",
+"Nickname": "Buccaneers",
 "ID": 82
 },
 {
@@ -931,7 +931,7 @@
 ],
 "SchoolName": "Eastern Kentucky University",
 "SchoolShortName": "E Kentucky",
-"Nickname": "Colonels/Lady Colonels",
+"Nickname": "Colonels",
 "ID": 84
 },
 {
@@ -1019,7 +1019,7 @@
 ],
 "SchoolName": "Florida A&M University",
 "SchoolShortName": "Florida A&M",
-"Nickname": "Rattlers/Lady Rattlers",
+"Nickname": "Rattlers",
 "ID": 92
 },
 {
@@ -1141,7 +1141,7 @@
 ],
 "SchoolName": "University of Georgia",
 "SchoolShortName": "Georgia",
-"Nickname": "Bulldogs/Lady Bulldogs",
+"Nickname": "Bulldogs",
 "ID": 103
 },
 {
@@ -1200,7 +1200,7 @@
 ],
 "SchoolName": "Grambling State University",
 "SchoolShortName": "Grambling St",
-"Nickname": "Tigers/Lady Tigers",
+"Nickname": "Tigers",
 "ID": 108
 },
 {
@@ -1553,7 +1553,7 @@
 ],
 "SchoolName": "Kennesaw State University",
 "SchoolShortName": "Kennesaw St",
-"Nickname": "Lady Owls",
+"Nickname": "Owls",
 "ID": 137
 },
 {
@@ -1613,7 +1613,7 @@
 ],
 "SchoolName": "Lamar University",
 "SchoolShortName": "Lamar",
-"Nickname": "Cardinals/Lady Cardinals",
+"Nickname": "Cardinals",
 "ID": 142
 },
 {
@@ -1638,7 +1638,7 @@
 ],
 "SchoolName": "Liberty University",
 "SchoolShortName": "Liberty",
-"Nickname": "Flames/Lady Flames",
+"Nickname": "Flames",
 "ID": 144
 },
 {
@@ -1710,7 +1710,7 @@
 ],
 "SchoolName": "Louisiana State University",
 "SchoolShortName": "LSU",
-"Nickname": "Tigers/Lady Tigers",
+"Nickname": "Tigers",
 "ID": 150
 },
 {
@@ -1722,7 +1722,7 @@
 ],
 "SchoolName": "Louisiana Tech University",
 "SchoolShortName": "LA Tech",
-"Nickname": "Bulldogs/Lady Techsters",
+"Nickname": "Bulldogs",
 "ID": 151
 },
 {
@@ -1795,7 +1795,7 @@
 ],
 "SchoolName": "Manhattan College",
 "SchoolShortName": "Manhattan",
-"Nickname": "Jaspers/Lady Jaspers",
+"Nickname": "Jaspers",
 "ID": 157
 },
 {
@@ -2061,7 +2061,7 @@
 ],
 "SchoolName": "Missouri State University",
 "SchoolShortName": "Missouri St",
-"Nickname": "Bears/Lady Bears",
+"Nickname": "Bears",
 "ID": 179
 },
 {
@@ -2085,7 +2085,7 @@
 ],
 "SchoolName": "University of Montana",
 "SchoolShortName": "Montana",
-"Nickname": "Grizzlies, Griz, Lady Griz",
+"Nickname": "Grizzlies",
 "ID": 181
 },
 {
@@ -2619,7 +2619,7 @@
 ],
 "SchoolName": "Old Dominion University",
 "SchoolShortName": "Old Dominion",
-"Nickname": "Monarchs/Lady Monarchs",
+"Nickname": "Monarchs",
 "ID": 225
 },
 {
@@ -2692,7 +2692,7 @@
 ],
 "SchoolName": "Pennsylvania State University",
 "SchoolShortName": "Penn St",
-"Nickname": "Nittany Lions (and Lady Lions)",
+"Nickname": "Nittany Lions",
 "ID": 231
 },
 {
@@ -2754,7 +2754,7 @@
 ],
 "SchoolName": "Prairie View A&M University",
 "SchoolShortName": "Prairie View A&M",
-"Nickname": "Panthers/Lady Panthers",
+"Nickname": "Panthers",
 "ID": 236
 },
 {
@@ -3109,7 +3109,7 @@
 ],
 "SchoolName": "Savannah State University",
 "SchoolShortName": "Savannah St",
-"Nickname": "Lady Tigers",
+"Nickname": "Tigers",
 "ID": 265
 },
 {
@@ -3267,7 +3267,7 @@
 ],
 "SchoolName": "Southern University",
 "SchoolShortName": "Southern U",
-"Nickname": "Jaguars/Lady Jaguars",
+"Nickname": "Jaguars",
 "ID": 278
 },
 {
@@ -3327,7 +3327,7 @@
 ],
 "SchoolName": "University of Southern Mississippi",
 "SchoolShortName": "S Mississippi",
-"Nickname": "Golden Eagles/Lady Eagles",
+"Nickname": "Golden Eagles",
 "ID": 283
 },
 {
@@ -3460,7 +3460,7 @@
 ],
 "SchoolName": "Tennessee State University",
 "SchoolShortName": "Tennessee St",
-"Nickname": "Tigers/Lady Tigers",
+"Nickname": "Tigers",
 "ID": 294
 },
 {
@@ -3547,7 +3547,7 @@
 ],
 "SchoolName": "University of Texas at El Paso",
 "SchoolShortName": "TX-El Paso",
-"Nickname": "Miners/Lady Miners",
+"Nickname": "Miners",
 "ID": 301
 },
 {
@@ -3609,7 +3609,7 @@
 ],
 "SchoolName": "Texas Tech University",
 "SchoolShortName": "Texas Tech",
-"Nickname": "Red Raiders/Lady Raiders",
+"Nickname": "Red Raiders",
 "ID": 306
 },
 {
