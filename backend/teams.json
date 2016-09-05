@@ -743,7 +743,7 @@
 ],
 "SchoolName": "Cornell University",
 "SchoolShortName": "Cornell",
-"Nickname": "Big Red, The",
+"Nickname": "Big Red",
 "ID": 67
 },
 {
@@ -754,7 +754,7 @@
 ],
 "SchoolName": "Creighton University",
 "SchoolShortName": "Creighton",
-"Nickname": "Bluejays, Jays",
+"Nickname": "Bluejays",
 "ID": 68
 },
 {
@@ -2680,7 +2680,7 @@
 ],
 "SchoolName": "University of Pennsylvania",
 "SchoolShortName": "Penn",
-"Nickname": "Quakers, The Red & Blue",
+"Nickname": "Quakers",
 "ID": 230
 },
 {
