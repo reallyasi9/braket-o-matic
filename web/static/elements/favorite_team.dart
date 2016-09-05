@@ -11,11 +11,6 @@ import '../lib/team.dart';
 class FavoriteTeam extends PolymerElement {
     FavoriteTeam.created() : super.created();
 
-    factory FavoriteTeam(Team team) {
-        FavoriteTeam ft = document.createElement('favorite-team');
-        ft.set('team', team);
-        return ft;
-    }
 
     @property
     Team team;

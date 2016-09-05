@@ -15,11 +15,12 @@ import 'package:polymer_elements/paper_icon_button.dart';
 import 'package:polymer_elements/paper_dropdown_menu.dart';
 import 'package:polymer_elements/paper_listbox.dart';
 import 'package:polymer_elements/paper_item.dart';
+import 'package:polymer_elements/paper_ripple.dart';
 import 'package:polymer_elements/iron_flex_layout.dart';
 import 'package:polymer_elements/iron_icons.dart';
 import '../lib/user.dart';
 import '../lib/team.dart';
-import 'team_selector.dart';
+import 'favorite_team.dart';
 
 const Duration _TIMEOUT = const Duration(seconds: 1);
 
@@ -27,13 +28,34 @@ const Duration _TIMEOUT = const Duration(seconds: 1);
 class UserDialog extends PolymerElement {
     UserDialog.created() : super.created();
 
+
+    /**
+     * Factory constructor to prevent user upload from being triggered on
+     * creation.
+     */
+    factory UserDialog(User user) {
+        UserDialog ud = document.createElement('user-dialog');
+        ud.user = user;
+        return ud;
+    }
+
+
     @Property(notify: true)
     User user;
 
-    @property
-    bool withBackdrop = false;
+    @Property(notify: true)
+    List<Team> teams = new List<Team>();
 
     Timer _debounceTimer = new Timer(_TIMEOUT, () => {});
+
+
+    void ready() {
+        try {
+            HttpRequest.getString("/backend/teams?sorted=1").then(_updateTeams);
+        } catch (e) {
+            print("Shoot!  Couldn't access teams! $e");
+        }
+    }
 
 
     @reflectable
@@ -42,27 +64,12 @@ class UserDialog extends PolymerElement {
         pd.open();
     }
 
-    // Modal dialogs that are not direct children of the <body> element are broken.
-    @reflectable
-    patchOverlay(CustomEventWrapper e, [_]) async {
-        PaperDialog d = e.target;
-        if (d.withBackdrop) {
-            d.parentNode.insertBefore(d.backdropElement, d);
-        }
-    }
-
 
     @reflectable
     clearInput(CustomEventWrapper e, [_]) async {
         PaperIconButton b = e.target;
         PaperInput i = b.parentNode;
         i.updateValueAndPreserveCaret("");
-    }
-
-
-    @reflectable
-    clearFavorite(CustomEventWrapper e, [_]) async {
-        // TODO
     }
 
 
@@ -89,6 +96,15 @@ class UserDialog extends PolymerElement {
         } catch (err) {
             print("Shoot!  Couldn't write user data!");
         }
+    }
+
+
+    _updateTeams(String jsonMessage) async {
+        List<Team> jsonTeams = JSON.decode(jsonMessage);
+        this.teams.clear();
+        this.teams.addAll(jsonTeams);
+        this.notifyPath('teams', jsonTeams);
+        // Probably don't have to notify...
     }
 
 }

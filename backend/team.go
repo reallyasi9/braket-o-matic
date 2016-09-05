@@ -101,6 +101,8 @@ func buildTeams(w http.ResponseWriter, r *http.Request) {
 
 func getTeams(w http.ResponseWriter, r *http.Request) {
 
+	sorted := r.FormValue("sorted")
+
 	// Global goon instance
 	ctx := appengine.NewContext(r)
 	ds := goon.FromContext(ctx)
@@ -113,6 +115,9 @@ func getTeams(w http.ResponseWriter, r *http.Request) {
 
 	// Get them all!
 	q := datastore.NewQuery("Team").Ancestor(tournamentKey)
+	if len(sorted) > 0 {
+		q = q.Order("SchoolShortName")
+	}
 	var teams []Team
 	_, err = ds.GetAll(q, &teams)
 

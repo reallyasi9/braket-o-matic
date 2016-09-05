@@ -48,9 +48,10 @@ class BraketAppLayout extends PolymerElement {
         this.notifyPath('user.nickname', user.nickname);
     }
 
+
     @reflectable
     openUserDialog(CustomEventWrapper e, [_]) async {
-        UserDialog ud = $["user-dialog"];
+        UserDialog ud = $$("#user-dialog");
         ud.openDialog();
     }
 

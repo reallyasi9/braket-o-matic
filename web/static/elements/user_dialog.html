@@ -10,14 +10,14 @@
         }
         </style>
 
-        <paper-dialog with-backdrop={{withBackdrop}} id="dialog">
+        <paper-dialog id="dialog">
             <h2>Edit user information</h2>
             <paper-dialog-scrollable>
                 <user-icon user="{{user}}" size="100"></user-icon>
-                <paper-input label="Given name" name="givenName" id="given-name-input" value="{{user.givenName}}">
+                <paper-input label="First name" name="givenName" id="given-name-input" value="{{user.givenName}}">
                     <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
                 </paper-input>
-                <paper-input label="Surname" name="surname" id="surname-input" value="{{user.surname}}">
+                <paper-input label="Last name" name="surname" id="surname-input" value="{{user.surname}}">
                     <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
                 </paper-input>
                 <paper-input label="Nickname" name="nickname" id="nickname-input" value="{{user.nickname}}">
@@ -25,8 +25,17 @@
                     <div suffix>”</div>
                     <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
                 </paper-input>
+                <paper-dropdown-menu label="Favorite team" name="favorite" id="favorite-team" value="{{user.favoriteTeam}}">
+                    <paper-listbox class="dropdown-content">
+                        <template is="dom-repeat" items="{{teams}}">
+                            <paper-item label="{{item.Id}}">
+                                <favorite-team team="{{item}}"></favorite-team>
+                                <paper-ripple></paper-ripple>
+                            </paper-item>
+                        </template>
+                    </paper-listbox>
+                </paper-dropdown-menu>
                 <team-selector team="{{favoriteTeam}}"></team-selector>
-                <paper-icon-button suffix on-click="clearFavorite" icon="clear" alt="clear" title="clear"></paper-icon-button>
             </paper-dialog-scrollable>
         </paper-dialog>
 
