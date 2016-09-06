@@ -19,6 +19,8 @@ import (
 
 const salt = "<braket|o|matic>"
 
+const defaultTeam = int64(170)
+
 // User represents a user, yo.
 type User struct {
 	ID              string `datastore:"-" goon:"id"`
@@ -27,7 +29,7 @@ type User struct {
 	Nickname        string
 	Email           string
 	FirstAccessDate time.Time
-	FavoriteTeam    *datastore.Key
+	FavoriteTeamID  int64
 }
 
 type returnMessage struct {
@@ -113,7 +115,7 @@ func putUser(w http.ResponseWriter, r *http.Request) {
 		return unicode.IsSpace(r) || unicode.In(r, unicode.Properties["Quotation_Mark"])
 	})
 	u.Surname = strings.TrimSpace(nu.Surname)
-	u.FavoriteTeam = nu.FavoriteTeam
+	u.FavoriteTeamID = nu.FavoriteTeamID
 
 	// Send the update
 	ds.Put(u)
@@ -134,6 +136,7 @@ func newUser(in *user.User) *User {
 		Email:           in.Email,
 		Nickname:        strings.Split(in.Email, "@")[0],
 		FirstAccessDate: time.Now(),
+		FavoriteTeamID:  defaultTeam,
 	}
 
 	return u

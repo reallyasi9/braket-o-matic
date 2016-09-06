@@ -104,7 +104,13 @@ class UserDialog extends PolymerElement {
         this.teams.clear();
         this.teams.addAll(jsonTeams);
         this.notifyPath('teams', jsonTeams);
-        // Probably don't have to notify...
+
+        // Now we determine which item is selected
+        for (Team team in this.teams) {
+            if (team.id == user.favoriteTeam.id) {
+                // TODO
+            }
+        }
     }
 
 }

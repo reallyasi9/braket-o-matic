@@ -1,5 +1,6 @@
 import 'package:polymer/polymer.dart';
 import 'package:exportable/exportable.dart';
+import 'team.dart';
 
 @export
 class User extends JsProxy with Exportable{
@@ -14,7 +15,7 @@ class User extends JsProxy with Exportable{
 	String nickname;
 
 	@export
-	String favoriteTeam; // TODO make this a new object.
+	Team favoriteTeam;
 
 	String get displayName => (nickname.isNotEmpty) ? '${givenName} "${nickname}" ${surname}'.trim() : '${givenName} ${surname}'.trim();
 
