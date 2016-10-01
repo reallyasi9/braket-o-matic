@@ -4,9 +4,19 @@
 
     <template>
         <style>
+        span {
+            color: white;
+            text-shadow: 0px 0px 2px black;
+        }
+        #school-name {
+            font-size: 10pt;
+        }
+        #nickname {
+            font-size: 14pt;
+        }
         </style>
-        <span id="school-name">{{team.SchoolShortName}}</span>
-        <span id="nickname">{{team.Nickname}}</span>
+        <span id="school-name">{{schoolShortName}}</span><br />
+        <span id="nickname">{{nickname}}</span>
     </template>
 
 </dom-module>

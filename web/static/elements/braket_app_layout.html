@@ -32,6 +32,10 @@
         }
         </style>
 
+        <iron-ajax auto url="/backend/user" handle-as="json" on-response="handleUser" on-error="handleError"></iron-ajax>
+        <iron-ajax auto url="/backend/user-logout-url" handle-as="json" last-response="{{logoutURL}}" on-error="handleError"></iron-ajax>
+        <iron-ajax auto url="/backend/teams" params='{"sorted":1}' handle-as="json" on-response="handleTeams" on-error="handleError"></iron-ajax>
+
         <user-dialog id="user-dialog" user="{{user}}"></user-dialog>
 
         <app-header id="app-header" condenses reveals fixed effects="waterfall">

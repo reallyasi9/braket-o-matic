@@ -28,7 +28,7 @@
                 <paper-dropdown-menu label="Favorite team" name="favorite" id="favorite-team" value="{{user.favoriteTeam}}">
                     <paper-listbox class="dropdown-content">
                         <template is="dom-repeat" items="{{teams}}">
-                            <paper-item label="{{item.Id}}">
+                            <paper-item label="{{item.id}}">
                                 <favorite-team team="{{item}}"></favorite-team>
                                 <paper-ripple></paper-ripple>
                             </paper-item>

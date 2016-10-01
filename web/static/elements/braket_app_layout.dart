@@ -17,42 +17,56 @@ import 'user_button.dart';
 import 'package:polymer_elements/paper_tabs.dart';
 import 'package:polymer_elements/paper_tab.dart';
 import 'braket_page_layout.dart';
+import 'package:polymer_elements/iron_ajax.dart';
+import 'package:polymer_elements/iron_request.dart';
+import 'package:exportable/exportable.dart';
 
 import '../lib/user.dart';
+import '../lib/team.dart';
 
 @PolymerRegister('braket-app-layout')
 class BraketAppLayout extends PolymerElement {
-    BraketAppLayout.created() : super.created();
+  BraketAppLayout.created() : super.created();
 
-    @Property(notify: true)
-    String page = "braket";
+  @Property(notify: true)
+  String page = "braket";
 
-    @Property(notify: true)
-    User user;
+  @Property(notify: true)
+  String logoutURL;
 
-    void ready() {
-        try {
-            HttpRequest.getString("/backend/user").then(_onUserLoaded);
-        } catch (e) {
-            print("Shoot!  Couldn't access the login URL!");
-        }
-    }
+  @Property(notify: true)
+  User user;
 
-    _onUserLoaded(String jsonMessage) async {
-        // I seriously can't believe this just works.
-        Map<String, dynamic> userReturn = JSON.decode(jsonMessage);
-        this.set("user", new User.fromMap(userReturn["User"]));
-        // notification isn't smart enough to do this yet...
-        this.notifyPath('user.surname', user.surname);
-        this.notifyPath('user.givenName', user.givenName);
-        this.notifyPath('user.nickname', user.nickname);
-    }
+  @Property(notify: true)
+  List<Team> teams;
 
+  @reflectable
+  handleUser(CustomEventWrapper e, IronRequest detail) async {
+    // Automatic JSON construction of cusom classes isn't a thing in dart.
+    this.set('user', new User()..initFromJson(detail.response));
+  }
 
-    @reflectable
-    openUserDialog(CustomEventWrapper e, [_]) async {
-        UserDialog ud = $$("#user-dialog");
-        ud.openDialog();
-    }
+  @reflectable
+  handleTeams(CustomEventWrapper e, IronRequest detail) async {
+    teams = new List<Team>();
+    List<Object> l = convertToDart(detail.response);
+    teams.addAll(l.map((Object o) => new Team()..initFromMap(o)));
+    this.notifyPath('teams', teams);
+  }
 
+  // @reflectable
+  // onTeamChange(List<Team> newTeams, List<Team> oldTeams) {
+  //   print("Team change! $oldTeams -> $newTeams");
+  // }
+
+  @reflectable
+  openUserDialog(CustomEventWrapper e, [_]) async {
+    UserDialog ud = $$("#user-dialog");
+    ud.openDialog();
+  }
+
+  @reflectable
+  handleError(CustomEventWrapper e, IronRequest detail) async {
+    print("Error, yo: $detail");
+  }
 }

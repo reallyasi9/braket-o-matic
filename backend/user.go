@@ -23,22 +23,18 @@ const defaultTeam = int64(170)
 
 // User represents a user, yo.
 type User struct {
-	ID              string `datastore:"-" goon:"id"`
-	Surname         string
-	GivenName       string
-	Nickname        string
-	Email           string
-	FirstAccessDate time.Time
-	FavoriteTeamID  int64
-}
-
-type returnMessage struct {
-	User      *User
-	LogoutURL string
+	ID              string    `datastore:"-" goon:"id" json:"-"`
+	Surname         string    `json:"surname"`
+	GivenName       string    `json:"givenName"`
+	Nickname        string    `json:"nickname"`
+	Email           string    `json:"-"`
+	FirstAccessDate time.Time `json:"-"`
+	FavoriteTeamID  int64     `json:"favoriteTeamID"`
 }
 
 func init() {
 	http.HandleFunc("/backend/user", dispatchUser)
+	http.HandleFunc("/backend/user-logout-url", getLogoutURL)
 }
 
 func dispatchUser(w http.ResponseWriter, r *http.Request) {
@@ -74,14 +70,23 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	lou, _ := user.LogoutURL(ctx, "/")
-	rm := returnMessage{User: u, LogoutURL: lou}
-	js, err := json.Marshal(rm)
+	js, err := json.Marshal(u)
 	if err != nil {
 		ReturnError(w, err)
 		return
 	}
 
+	w.Write(js)
+}
+
+func getLogoutURL(w http.ResponseWriter, r *http.Request) {
+	ctx := appengine.NewContext(r)
+	lou, _ := user.LogoutURL(ctx, "/")
+	js, err := json.Marshal(lou)
+	if err != nil {
+		ReturnError(w, err)
+		return
+	}
 	w.Write(js)
 }
 

@@ -14,15 +14,15 @@ import (
 
 // Team represents a single team in the tournament.
 type Team struct {
-	ID              int64 `datastore:"-" goon:"id"`
-	Seed            int64
-	Elo             float64
-	SchoolName      string
-	SchoolShortName string
-	Nickname        string
-	Colors          []string
-	ImageName       string
-	Tournament      *datastore.Key `datastore:"-" goon:"parent"`
+	ID              int64          `datastore:"-" goon:"id" json:"id"`
+	Seed            int64          `json:"seed"`
+	Elo             float64        `json:"elo"`
+	SchoolName      string         `json:"schoolName"`
+	SchoolShortName string         `json:"schoolShortName"`
+	Nickname        string         `json:"nickname"`
+	Colors          []string       `json:"colors"`
+	ImageName       string         `json:"imageName"`
+	Tournament      *datastore.Key `datastore:"-" goon:"parent" json:"-"`
 }
 
 // eloK is the maximum amount Elo can change per game.
@@ -151,6 +151,7 @@ func searchTeams(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		w.Write(js)
+
 		return
 	}
 
