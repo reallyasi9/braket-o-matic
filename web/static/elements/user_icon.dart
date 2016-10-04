@@ -16,20 +16,14 @@ class UserIcon extends PolymerElement {
   User user;
 
   @property
+  String initials;
+
+  @property
   int size = 24;
 
-  @reflectable
-  String makeInitial(String givenName, String surname, String nickname) {
-    if (givenName.isNotEmpty && surname.isNotEmpty) {
-      return givenName.substring(0,1) + surname.substring(0,1);
-    } else if (givenName.isNotEmpty) {
-      return givenName.substring(0,1);
-    } else if (surname.isNotEmpty) {
-      return surname.substring(0,1);
-    } else if (nickname.isNotEmpty) {
-      return nickname.substring(0,1);
-    }
-    return "?";
+  @Observe("user.*")
+  makeInitials(Map changeRecord) {
+    this.set('initials', user.initials());
   }
 
 }

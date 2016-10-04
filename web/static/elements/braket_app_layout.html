@@ -32,16 +32,17 @@
         }
         </style>
 
-        <iron-ajax auto url="/backend/user" handle-as="json" on-response="handleUser" on-error="handleError"></iron-ajax>
-        <iron-ajax auto url="/backend/user-logout-url" handle-as="json" last-response="{{logoutURL}}" on-error="handleError"></iron-ajax>
-        <iron-ajax auto url="/backend/teams" params='{"sorted":1}' handle-as="json" on-response="handleTeams" on-error="handleError"></iron-ajax>
+        <iron-ajax id="user-get" url="/backend/user" on-response="handleUser" on-error="handleError"></iron-ajax>
+        <iron-ajax id="user-put" url="/backend/user" method="PUT" debounce-duration="500" on-error="handleError"></iron-ajax>
+        <iron-ajax auto url="/backend/user-logout-url" last-response="{{logoutURL}}" on-error="handleError"></iron-ajax>
+        <iron-ajax auto url="/backend/teams" params='{"sorted":1}' last-response="{{teams}}" on-error="handleError"></iron-ajax>
 
-        <user-dialog id="user-dialog" user="{{user}}"></user-dialog>
+        <user-dialog id="user-dialog" user="{{user}}" teams="{{teams}}"></user-dialog>
 
         <app-header id="app-header" condenses reveals fixed effects="waterfall">
             <app-toolbar>
                 <div main-title>&lt;braket|o|matic&gt;</div>
-                <user-button id="user-button" on-click="openUserDialog" user="{{user}}"></user-button>
+                <user-button id="user-button" on-click="openUserDialog" user="[[user]]"></user-button>
             </app-toolbar>
 
             <paper-tabs id="tabs" selected="{{page}}" attr-for-selected="tab-title" autoselect>

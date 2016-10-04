@@ -21,8 +21,8 @@
         </style>
 
         <paper-button raised>
-            <user-icon id="icon" user="{{user}}" size="32"></user-icon>
-            <span>{{makeDisplayName(user.givenName, user.surname, user.nickname)}}</span>
+            <user-icon id="icon" user="[[user]]" size="32"></user-icon>
+            <span>{{displayName}}</span>
         </paper-button>
 
     </template>

@@ -131,6 +131,7 @@ func getTeams(w http.ResponseWriter, r *http.Request) {
 		ReturnError(w, err)
 		return
 	}
+
 	js, err := json.Marshal(teams)
 	if err != nil {
 		ReturnError(w, err)

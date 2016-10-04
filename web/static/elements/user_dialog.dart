@@ -1,10 +1,6 @@
 @HtmlImport('user_dialog.html')
 library braket.user_dialog;
 
-import 'dart:html';
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart' show HtmlImport;
 
@@ -28,31 +24,11 @@ const Duration _TIMEOUT = const Duration(seconds: 1);
 class UserDialog extends PolymerElement {
   UserDialog.created() : super.created();
 
-  /**
-     * Factory constructor to prevent user upload from being triggered on
-     * creation.
-     */
-  factory UserDialog(User user) {
-    UserDialog ud = document.createElement('user-dialog');
-    ud.user = user;
-    return ud;
-  }
-
   @Property(notify: true)
   User user;
 
   @Property(notify: true)
-  List<Team> teams = new List<Team>();
-
-  Timer _debounceTimer = new Timer(_TIMEOUT, () => {});
-
-  void ready() {
-    // try {
-    //   HttpRequest.getString("/backend/teams?sorted=1").then(_updateTeams);
-    // } catch (e) {
-    //   print("Shoot!  Couldn't access teams! $e");
-    // }
-  }
+  List<Object> teams = [];
 
   @reflectable
   openDialog() async {
@@ -65,32 +41,6 @@ class UserDialog extends PolymerElement {
     PaperIconButton b = e.target;
     PaperInput i = b.parentNode;
     i.updateValueAndPreserveCaret("");
-  }
-
-  @Observe('user.givenName, user.surname, user.nickname')
-  handleChange(String givenName, String surname, String nickname) async {
-    // For now, handle all values
-    user.givenName = givenName.trim();
-    user.surname = surname.trim();
-    user.nickname = nickname.replaceAll(
-        new RegExp(r"\s+|[\u0022\u0027\u2018\u2019\u201c\u201d\u0060\u00b4]+"),
-        "");
-    this.notifyPath("user");
-
-    if (_debounceTimer.isActive) {
-      this._debounceTimer.cancel();
-    }
-    _debounceTimer = new Timer(_TIMEOUT, () {
-      this._upload();
-    });
-  }
-
-  _upload() async {
-    try {
-      HttpRequest.request("/backend/user", method: "PUT", sendData: this.user);
-    } catch (err) {
-      print("Shoot!  Couldn't write user data!");
-    }
   }
 
   // _updateTeams(String jsonMessage) async {

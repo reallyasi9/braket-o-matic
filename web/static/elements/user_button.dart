@@ -17,16 +17,12 @@ class UserButton extends PolymerElement {
   @Property(notify: true)
   User user;
 
-  @reflectable
-  String makeDisplayName(String givenName, String surname, String nickname) {
-    if (nickname.isNotEmpty) {
-      return '$givenName "$nickname" $surname'.trim();
-    }
-    String fullName = '$givenName $surname'.trim();
-    if (fullName.isEmpty) {
-      return 'an unnamed user';
-    }
-    return fullName;
+  @property
+  String displayName;
+
+  @Observe('user.*')
+  handleUserChange(Map changeRecord){
+    this.set('displayName', user.displayName());
   }
 
 }

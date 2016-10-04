@@ -2,29 +2,36 @@ import 'package:polymer/polymer.dart';
 import 'package:exportable/exportable.dart';
 
 @export
-class Team extends JsProxy with Exportable{
+class Team extends JsProxy with Exportable {
+  @reflectable
+  @export
+  int id;
 
-	@export
-	int id;
+  @reflectable
+  @export
+  int seed;
 
-	@export
-	int seed;
+  @reflectable
+  @export
+  double elo;
 
-	@export
-	double elo;
+  @reflectable
+  @export
+  String schoolName;
 
-	@export
-	String schoolName;
+  @reflectable
+  @export
+  String schoolShortName;
 
-	@export
-	String schoolShortName;
+  @reflectable
+  @export
+  String nickname;
 
-	@export
-	String nickname;
+  @reflectable
+  @export
+  List<String> colors;
 
-	@export
-	List<String> colors;
-
-	@export
-	String imageName;
+  @reflectable
+  @export
+  String imageName;
 }

@@ -38,30 +38,38 @@ class BraketAppLayout extends PolymerElement {
   User user;
 
   @Property(notify: true)
-  List<Team> teams;
+  List<Object> teams = [];
+
+  ready() {
+    $['user-get'].generateRequest();
+  }
 
   @reflectable
   handleUser(CustomEventWrapper e, IronRequest detail) async {
     // Automatic JSON construction of cusom classes isn't a thing in dart.
-    this.set('user', new User()..initFromJson(detail.response));
+    this.set('user', new User()..initFromMap(convertToDart(detail.response)));
+    IronAjax e = $['user-put'] as IronAjax;
+    e.set('auto', true);
   }
 
-  @reflectable
-  handleTeams(CustomEventWrapper e, IronRequest detail) async {
-    teams = new List<Team>();
-    List<Object> l = convertToDart(detail.response);
-    teams.addAll(l.map((Object o) => new Team()..initFromMap(o)));
-    this.notifyPath('teams', teams);
+  @Observe('user.*')
+  onUserChange(Map changeRecord) {
+    user.cleanName();
+    IronAjax e = $['user-put'] as IronAjax;
+    e.set('body', user.toJson());
   }
 
   // @reflectable
-  // onTeamChange(List<Team> newTeams, List<Team> oldTeams) {
-  //   print("Team change! $oldTeams -> $newTeams");
+  // handleTeams(CustomEventWrapper e, IronRequest detail) async {
+  //   this.clear('teams');
+  //   this.addAll('teams', detail.response.map((dynamic o) => new Team()..initFromMap(convertToDart(o))));
+  //   this.notifyPath('teams', teams);
+  //   print("${teams.first} (${teams.first.runtimeType.toString()})");
   // }
 
   @reflectable
   openUserDialog(CustomEventWrapper e, [_]) async {
-    UserDialog ud = $$("#user-dialog");
+    UserDialog ud = $["user-dialog"];
     ud.openDialog();
   }
 
@@ -69,4 +77,5 @@ class BraketAppLayout extends PolymerElement {
   handleError(CustomEventWrapper e, IronRequest detail) async {
     print("Error, yo: $detail");
   }
+
 }
