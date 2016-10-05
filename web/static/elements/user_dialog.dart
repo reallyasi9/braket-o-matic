@@ -18,7 +18,6 @@ import '../lib/user.dart';
 import '../lib/team.dart';
 import 'favorite_team.dart';
 
-const Duration _TIMEOUT = const Duration(seconds: 1);
 
 @PolymerRegister('user-dialog')
 class UserDialog extends PolymerElement {
@@ -28,7 +27,7 @@ class UserDialog extends PolymerElement {
   User user;
 
   @Property(notify: true)
-  List<Object> teams = [];
+  List<Team> teams;
 
   @reflectable
   openDialog() async {

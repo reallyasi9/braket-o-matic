@@ -13,4 +13,19 @@ class FavoriteTeam extends PolymerElement {
 
     @property
     Team team;
+
+    @property
+    String background;
+
+    @Observe("team")
+    handleTeam(Team newTeam) {
+        if (newTeam.colors.isEmpty) {
+            this.setAttribute('style', "background: #888888");
+        } else if (newTeam.colors.length == 1) {
+            this.setAttribute('style', "background: ${newTeam.colors[0]}");
+        } else {
+            String colors = newTeam.colors.join(",");
+            this.setAttribute('style', "background: linear-gradient(100deg,$colors)");
+        }
+    }
 }

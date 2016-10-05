@@ -35,7 +35,7 @@
         <iron-ajax id="user-get" url="/backend/user" on-response="handleUser" on-error="handleError"></iron-ajax>
         <iron-ajax id="user-put" url="/backend/user" method="PUT" debounce-duration="500" on-error="handleError"></iron-ajax>
         <iron-ajax auto url="/backend/user-logout-url" last-response="{{logoutURL}}" on-error="handleError"></iron-ajax>
-        <iron-ajax auto url="/backend/teams" params='{"sorted":1}' last-response="{{teams}}" on-error="handleError"></iron-ajax>
+        <iron-ajax auto url="/backend/teams" params='{"sorted":1}' on-response="handleTeams" on-error="handleError"></iron-ajax>
 
         <user-dialog id="user-dialog" user="{{user}}" teams="{{teams}}"></user-dialog>
 

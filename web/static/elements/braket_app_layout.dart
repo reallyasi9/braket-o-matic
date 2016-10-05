@@ -38,7 +38,7 @@ class BraketAppLayout extends PolymerElement {
   User user;
 
   @Property(notify: true)
-  List<Object> teams = [];
+  List<Team> teams = [];
 
   ready() {
     $['user-get'].generateRequest();
@@ -59,13 +59,13 @@ class BraketAppLayout extends PolymerElement {
     e.set('body', user.toJson());
   }
 
-  // @reflectable
-  // handleTeams(CustomEventWrapper e, IronRequest detail) async {
-  //   this.clear('teams');
-  //   this.addAll('teams', detail.response.map((dynamic o) => new Team()..initFromMap(convertToDart(o))));
-  //   this.notifyPath('teams', teams);
-  //   print("${teams.first} (${teams.first.runtimeType.toString()})");
-  // }
+  @reflectable
+  handleTeams(CustomEventWrapper e, IronRequest detail) async {
+    for (Object o in detail.response) {
+      Team t = new Team()..initFromMap(convertToDart(o));
+      this.add("teams", t);
+    }
+  }
 
   @reflectable
   openUserDialog(CustomEventWrapper e, [_]) async {
