@@ -542,7 +542,7 @@
 ],
 "SchoolName": "University of Central Arkansas",
 "SchoolShortName": "C Arkansas",
-"Nickname": "Bears/Sugar Bears",
+"Nickname": "Bears",
 "ID": 49
 },
 {
@@ -664,7 +664,7 @@
 ],
 "SchoolName": "Coastal Carolina University",
 "SchoolShortName": "Coast Carolina",
-"Nickname": "Chanticleers (Chants)",
+"Nickname": "Chanticleers",
 "ID": 60
 },
 {
@@ -1251,7 +1251,7 @@
 ],
 "SchoolName": "University of Hawaiʻi at Mānoa",
 "SchoolShortName": "Hawaiʻi",
-"Nickname": "Rainbow Warriors/Rainbow Wahine",
+"Nickname": "Rainbow Warriors",
 "ID": 112
 },
 {
@@ -1857,7 +1857,7 @@
 ],
 "SchoolName": "University of Maryland",
 "SchoolShortName": "Maryland",
-"Nickname": "Terps",
+"Nickname": "Terrapins",
 "ID": 162
 },
 {
@@ -1881,7 +1881,7 @@
 ],
 "SchoolName": "University of Massachusetts Amherst",
 "SchoolShortName": "U Mass",
-"Nickname": "Minutemen/Minutewomen",
+"Nickname": "Minutemen",
 "ID": 164
 },
 {
@@ -2013,7 +2013,7 @@
 ],
 "SchoolName": "Mississippi State University",
 "SchoolShortName": "Mississippi St",
-"Nickname": "Bulldogs (Dawgs)",
+"Nickname": "Bulldogs",
 "ID": 175
 },
 {
@@ -2025,7 +2025,7 @@
 ],
 "SchoolName": "Mississippi Valley State University",
 "SchoolShortName": "Mississippi Val St",
-"Nickname": "Delta Devils/Devilettes",
+"Nickname": "Delta Devils",
 "ID": 176
 },
 {
@@ -2606,7 +2606,7 @@
 ],
 "SchoolName": "Oklahoma State University",
 "SchoolShortName": "Oklahoma St",
-"Nickname": "Cowboys/Cowgirls",
+"Nickname": "Cowboys",
 "ID": 224
 },
 {
@@ -3010,7 +3010,7 @@
 ],
 "SchoolName": "Saint Peter's University",
 "SchoolShortName": "St. Peter's",
-"Nickname": "Peacocks/Peahens",
+"Nickname": "Peacocks",
 "ID": 257
 },
 {
@@ -3363,7 +3363,7 @@
 ],
 "SchoolName": "Stephen F. Austin State University",
 "SchoolShortName": "Stephen F Austin",
-"Nickname": "Lumberjacks/Ladyjacks",
+"Nickname": "Lumberjacks",
 "ID": 286
 },
 {
@@ -3423,7 +3423,7 @@
 ],
 "SchoolName": "University of Tennessee",
 "SchoolShortName": "Tennessee",
-"Nickname": "Volunteers (Vols)",
+"Nickname": "Volunteers",
 "ID": 291
 },
 {
@@ -3951,7 +3951,7 @@
 ],
 "SchoolName": "Western Kentucky University",
 "SchoolShortName": "W Kentucky",
-"Nickname": "Hilltoppers/Lady Toppers",
+"Nickname": "Hilltoppers",
 "ID": 334
 },
 {
@@ -4072,7 +4072,7 @@
 ],
 "SchoolName": "University of Wyoming",
 "SchoolShortName": "Wyoming",
-"Nickname": "Cowboys/Cowgirls",
+"Nickname": "Cowboys",
 "ID": 344
 },
 {
