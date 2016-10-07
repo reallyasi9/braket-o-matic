@@ -29,9 +29,12 @@ class UserDialog extends PolymerElement {
   @Property(notify: true)
   List<Team> teams;
 
+  @property
+  Object chosenTeam;
+
   @reflectable
   openDialog() async {
-    PaperDialog pd = $["dialog"];
+    PaperDialog pd = $["dialog"] as PaperDialog;
     pd.open();
   }
 
@@ -40,6 +43,12 @@ class UserDialog extends PolymerElement {
     PaperIconButton b = e.target;
     PaperInput i = b.parentNode;
     i.updateValueAndPreserveCaret("");
+  }
+
+  @Observe('chosenTeam')
+  handleTeam(Object newTeam) async {
+    // user.favoriteTeamID = newTeam;
+    print(newTeam);
   }
 
   // _updateTeams(String jsonMessage) async {

@@ -25,7 +25,7 @@
                     <div suffix>”</div>
                     <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
                 </paper-input>
-                <paper-dropdown-menu label="Favorite team" name="favorite" id="favorite-team" value="{{user.favoriteTeam}}">
+                <paper-dropdown-menu label="Favorite team" name="favorite" id="favorite-team" selected-item="{{chosenTeam}}">
                     <paper-listbox class="dropdown-content">
                         <template is="dom-repeat" items="{{teams}}">
                             <paper-item label="{{item.id}}">

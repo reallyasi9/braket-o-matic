@@ -44,9 +44,9 @@ class User extends JsProxy with Exportable {
   }
 
   String initials() {
-    String mySurname = surname.trim();
-    String myGivenName = givenName.trim();
-    String myNickname = nickname.replaceAll(_nickRE, "");
+    String mySurname = surname.trim().toUpperCase();
+    String myGivenName = givenName.trim().toUpperCase();
+    String myNickname = nickname.replaceAll(_nickRE, "").toUpperCase();
 
     if (myGivenName.isNotEmpty && mySurname.isNotEmpty) {
       return myGivenName.substring(0,1) + mySurname.substring(0,1);
