@@ -30,7 +30,9 @@ class UserDialog extends PolymerElement {
   List<Team> teams;
 
   @property
-  Object chosenTeam;
+  String selectedItemLabel;
+
+  Map<String, Team> _teamMap = new Map<String, Team>();
 
   @reflectable
   openDialog() async {
@@ -45,24 +47,36 @@ class UserDialog extends PolymerElement {
     i.updateValueAndPreserveCaret("");
   }
 
-  @Observe('chosenTeam')
-  handleTeam(Object newTeam) async {
-    // user.favoriteTeamID = newTeam;
-    print(newTeam);
+  @Observe("selectedItemLabel")
+  handleTeam(String newLabel) async {
+    Team t = _teamMap[newLabel];
+    if (t == null) {
+      return;
+    }
+    set("user.favoriteTeamID", t.id);
   }
 
-  // _updateTeams(String jsonMessage) async {
-  //   List<Map> mapTeams = JSON.decode(jsonMessage);
-  //   List<Team> jsonTeams = mapTeams.map((Map m) => new Team.fromMap(m));
-  //   this.teams.clear();
-  //   this.teams.addAll(jsonTeams);
-  //   this.notifyPath('teams', jsonTeams); // Not working?  I'm not sure here...
-  //
-  //   // Now we determine which item is selected
-  //   for (Team team in this.teams) {
-  //     if (team.id == user.favoriteTeamID) {
-  //       // TODO
-  //     }
-  //   }
-  // }
+  @Observe("teams.splices")
+  handleTeams(Map changeRecord) async {
+    if (changeRecord == null) {
+      return;
+    }
+    changeRecord['indexSplices'].forEach( (Map s) {
+      s['removed'].forEach( (Team t) {
+        _teamMap.remove(t.schoolShortName);
+      });
+      int iStart = s['index'];
+      int n = s['addedCount'];
+      for (Team t in teams.sublist(iStart).take(n)) {
+        _teamMap[t.schoolShortName] = t;
+      }
+    });
+  }
+
+  @Observe("user.favoriteTeamID")
+  handleNewFavorite(int newID) {
+    print(newID);
+    // TODO: put the correct element in the select box.
+  }
+
 }
