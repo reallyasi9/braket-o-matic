@@ -5,7 +5,6 @@ import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart' show HtmlImport;
 
 import 'package:polymer_elements/color.dart';
-import 'braket_icon_set.dart';
 import '../lib/user.dart';
 
 @PolymerRegister('user-icon')
@@ -23,7 +22,7 @@ class UserIcon extends PolymerElement {
 
   @Observe("user.*")
   makeInitials(Map changeRecord) {
-    this.set('initials', user.initials());
+    this.set('initials', user.initials);
   }
 
 }

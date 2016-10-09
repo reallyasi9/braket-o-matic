@@ -1,5 +1,6 @@
 import 'package:polymer/polymer.dart';
 import 'package:exportable/exportable.dart';
+import 'team.dart';
 
 @export
 class User extends JsProxy with Exportable {
@@ -22,7 +23,7 @@ class User extends JsProxy with Exportable {
   static RegExp _nickRE = new RegExp(
       r"^(\s+|^[\u0022\u0027\u2018\u2019\u201c\u201d\u0060\u00b4]+)|(\s+|^[\u0022\u0027\u2018\u2019\u201c\u201d\u0060\u00b4]+)$");
 
-  String displayName() {
+  String get displayName {
     String mySurname = surname.trim();
     String myGivenName = givenName.trim();
     String myNickname = nickname.replaceAll(_nickRE, "");
@@ -43,7 +44,7 @@ class User extends JsProxy with Exportable {
     nickname = nickname.replaceAll(_nickRE, "");
   }
 
-  String initials() {
+  String get initials {
     String mySurname = surname.trim().toUpperCase();
     String myGivenName = givenName.trim().toUpperCase();
     String myNickname = nickname.replaceAll(_nickRE, "").toUpperCase();

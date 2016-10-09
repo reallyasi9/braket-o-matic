@@ -9,23 +9,16 @@ import '../lib/team.dart';
 
 @PolymerRegister('favorite-team')
 class FavoriteTeam extends PolymerElement {
-    FavoriteTeam.created() : super.created();
+  FavoriteTeam.created() : super.created();
 
-    @property
-    Team team;
+  @property
+  Team team;
 
-    @property
-    String background;
+  @property
+  String background;
 
-    @Observe("team")
-    handleTeam(Team newTeam) {
-        if (newTeam.colors.isEmpty) {
-            this.setAttribute('style', "background: #888888");
-        } else if (newTeam.colors.length == 1) {
-            this.setAttribute('style', "background: ${newTeam.colors[0]}");
-        } else {
-            String colors = newTeam.colors.join(",");
-            this.setAttribute('style', "background: linear-gradient(100deg,$colors)");
-        }
-    }
+  @Observe("team")
+  handleTeam(Team newTeam) {
+    this.setAttribute("style", newTeam.backgroundString);
+  }
 }

@@ -29,14 +29,21 @@ class UserDialog extends PolymerElement {
   @Property(notify: true)
   List<Team> teams;
 
-  @property
+  @Property(notify: true)
   String selectedItemLabel;
 
-  Map<String, Team> _teamMap = new Map<String, Team>();
+  Map<int, Team> _teamsById = new Map<int, Team>();
+
+  Map<String, Team> _teamsByName = new Map<String, Team>();
 
   @reflectable
   openDialog() async {
-    PaperDialog pd = $["dialog"] as PaperDialog;
+    PaperDialog pd = $["dialog"];
+    // Make sure the favorite team is correct
+    // print(_teamsById[user.favoriteTeamID].schoolShortName);
+    // PaperListbox pl = $["listbox"];
+    // pl.select(_teamsById[user.favoriteTeamID].schoolShortName);
+    // this.set("selectedItemLabel", _teamsById[user.favoriteTeamID].schoolShortName);
     pd.open();
   }
 
@@ -49,7 +56,7 @@ class UserDialog extends PolymerElement {
 
   @Observe("selectedItemLabel")
   handleTeam(String newLabel) async {
-    Team t = _teamMap[newLabel];
+    Team t = _teamsByName[newLabel];
     if (t == null) {
       return;
     }
@@ -63,20 +70,22 @@ class UserDialog extends PolymerElement {
     }
     changeRecord['indexSplices'].forEach( (Map s) {
       s['removed'].forEach( (Team t) {
-        _teamMap.remove(t.schoolShortName);
+        _teamsByName.remove(t.schoolShortName);
+        _teamsById.remove(t.id);
       });
       int iStart = s['index'];
       int n = s['addedCount'];
       for (Team t in teams.sublist(iStart).take(n)) {
-        _teamMap[t.schoolShortName] = t;
+        _teamsByName[t.schoolShortName] = t;
+        _teamsById[t.id] = t;
       }
     });
   }
 
-  @Observe("user.favoriteTeamID")
-  handleNewFavorite(int newID) {
-    print(newID);
-    // TODO: put the correct element in the select box.
-  }
+  // @Observe("user.favoriteTeamID")
+  // handleNewFavorite(int newID) {
+  //   // TODO: put the correct element in the select box.
+  //   print(_teamsById[newID]);
+  // }
 
 }
