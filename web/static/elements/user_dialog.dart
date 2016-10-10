@@ -39,11 +39,10 @@ class UserDialog extends PolymerElement {
   @reflectable
   openDialog() async {
     PaperDialog pd = $["dialog"];
-    // Make sure the favorite team is correct
-    // print(_teamsById[user.favoriteTeamID].schoolShortName);
-    // PaperListbox pl = $["listbox"];
-    // pl.select(_teamsById[user.favoriteTeamID].schoolShortName);
-    // this.set("selectedItemLabel", _teamsById[user.favoriteTeamID].schoolShortName);
+    // Make sure the favorite team is correctly selected
+    PaperListbox pl = $["listbox"];
+    int idx = teams.indexOf(_teamsById[user.favoriteTeamID]);
+    pl.selectIndex(idx);
     pd.open();
   }
 

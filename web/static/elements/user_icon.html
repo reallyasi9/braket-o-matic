@@ -10,7 +10,6 @@
 
             div {
                 position: relative;
-                background: linear-gradient(45deg, rgb(30, 30, 30), rgb(200, 200, 200));
                 white-space: nowrap;
                 text-transform: capitalize;
                 text-align: center;
@@ -24,7 +23,7 @@
             }
 
         </style>
-        <div style$="width: [[size]]px; height: [[size]]px; border-radius: calc([[size]]px * 0.5); line-height: [[size]]px; font-size: calc([[size]]px * 0.5);">{{initials}}</div>
+        <div id="icon" style$="[[iconStyle]]">{{initials}}</div>
 
     </template>
 

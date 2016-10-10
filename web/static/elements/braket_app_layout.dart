@@ -47,23 +47,31 @@ class BraketAppLayout extends PolymerElement {
   @reflectable
   handleUser(CustomEventWrapper e, IronRequest detail) async {
     // Automatic JSON construction of cusom classes isn't a thing in dart.
-    this.set('user', new User()..initFromMap(convertToDart(detail.response)));
-    IronAjax e = $['user-put'] as IronAjax;
-    e.set('auto', true);
+    set('user', new User()..initFromMap(convertToDart(detail.response)));
+    IronAjax up = $['user-put'];
+    up.set('auto', true);
   }
 
   @Observe('user.*')
-  onUserChange(Map changeRecord) {
+  onUserChange(Map changeRecord) async {
     user.cleanName();
-    IronAjax e = $['user-put'] as IronAjax;
-    e.set('body', user.toJson());
+    IronAjax up = $['user-put'];
+    up.set('body', user.toJson());
+  }
+
+  @Observe('teams.*,user.favoriteTeamID')
+  onFavoriteTeamChange(_, int newID) async {
+    for (Team favTeam in teams.where((Team t) => t.id == newID)) {
+      set('user.favoriteTeam', favTeam);
+      break;
+    }
   }
 
   @reflectable
   handleTeams(CustomEventWrapper e, IronRequest detail) async {
     List<Team> newTeams = detail.response.map((Object o) => new Team()..initFromMap(convertToDart(o)));
-    this.clear('teams');
-    this.addAll('teams', newTeams);
+    clear('teams');
+    addAll('teams', newTeams);
   }
 
   @reflectable
