@@ -22,7 +22,7 @@ class UserButton extends PolymerElement {
 
   @Observe('user.*')
   handleUserChange(Map changeRecord){
-    this.set('displayName', user.displayName);
+    set('displayName', user.displayName);
   }
 
 }
