@@ -1,0 +1,26 @@
+<link rel="import" href="../packages/polymer/polymer.html">
+
+<dom-module id="admin-page-layout">
+
+    <template>
+
+        <style>
+        :host {
+            display: block;
+        }
+
+        iron-pages .iron-selected {
+            margin-top: 132px;
+        }
+        </style>
+
+        <iron-pages id="pages" selected="{{page}}" attr-for-selected="page-selection">
+            <admin-users-page page-selection="users"></admin-users-page>
+            <admin-teams-page page-selection="teams"></admin-teams-page>
+            <admin-games-page page-selection="games"></admin-games-page>
+            <admin-tournament-page page-selection="tournament"></admin-tournament-page>
+        </iron-pages>
+
+    </template>
+
+</dom-module>

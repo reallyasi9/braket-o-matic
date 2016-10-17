@@ -1,0 +1,57 @@
+<link rel="import" href="../packages/polymer/polymer.html">
+
+<dom-module id="braket-admin-layout">
+
+    <template>
+        <style>
+        app-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 132px;
+            color: #fff;
+            background-color: var(--paper-red-400);
+            --app-header-background-rear-layer: {
+                background-color: var(--paper-pink-400);
+            };
+        }
+        paper-tabs {
+            --paper-tabs-selection-bar-color: var(--paper-purple-300);
+        }
+        app-header paper-button {
+            text-transform: none;
+            font-size: 10pt;
+        }
+        app-toolbar {
+            margin-bottom: 20px;
+            @apply(--layout-horizontal);
+        }
+        app-toolbar [main-title] {
+            @apply(--layout-flex);
+        }
+        </style>
+
+        <!-- <iron-ajax id="user-get" url="/backend/user" on-response="handleUser" on-error="handleError"></iron-ajax> -->
+        <!-- <iron-ajax id="user-put" url="/backend/user" method="PUT" debounce-duration="500" on-error="handleError"></iron-ajax> -->
+        <!-- <iron-ajax auto url="/backend/user-logout-url" last-response="{{logoutURL}}" on-error="handleError"></iron-ajax> -->
+        <!-- <iron-ajax auto url="/backend/teams" params='{"sorted":1}' on-response="handleTeams" on-error="handleError"></iron-ajax> -->
+
+        <app-header id="app-header" condenses reveals fixed effects="waterfall">
+            <app-toolbar>
+                <div main-title>&lt;admin|o|matic&gt;</div>
+            </app-toolbar>
+
+            <paper-tabs id="tabs" selected="{{page}}" attr-for-selected="tab-title" autoselect>
+                <paper-tab tab-title="users">Users</paper-tab>
+                <paper-tab tab-title="teams">Teams</paper-tab>
+                <paper-tab tab-title="games">Games</paper-tab>
+                <paper-tab tab-title="tournament">Tournament</paper-tab>
+            </paper-tabs>
+        </app-header>
+
+        <admin-page-layout id="page-layout" page="{{page}}"></admin-page-layout>
+
+    </template>
+
+</dom-module>

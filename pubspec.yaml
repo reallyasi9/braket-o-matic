@@ -12,3 +12,4 @@ transformers:
 - polymer:
     entry_points:
       - web/static/index.html
+      - web/static/admin.html

@@ -33,3 +33,10 @@ handlers:
   upload: static/index.html
   login: required
   secure: always
+
+# Admin tools
+- url: /admin
+  static_files: static/admin.html
+  upload: static/admin.html
+  login: admin
+  secure: always
