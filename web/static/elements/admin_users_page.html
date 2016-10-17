@@ -13,13 +13,8 @@
 
         <paper-listbox>
             <template is="dom-repeat" items="{{users}}">
-                <paper-item label="{{user.id}}">
-                    <!-- TODO: make this its own element so I can pass user to it -->
-                    <user-icon id="icon" user="[[user]]" size="32" item-icon></user-icon>
-                    <paper-item-body two-line>
-                        <div>{{user.givenName}}</div>
-                        <div secondary>{{user.email}}</div>
-                    </paper-item-body>
+                <paper-item label="{{item.id}}">
+                    <admin-list-user user="{{item}}"></admin-list-user>
                 </paper-item>
             </template>
         </paper-listbox>

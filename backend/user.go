@@ -19,8 +19,6 @@ import (
 
 const salt = "<braket|o|matic>"
 
-const defaultTeam = int64(170)
-
 // User represents a user, yo.
 type User struct {
 	ID              string    `datastore:"-" goon:"id" json:"id"`
@@ -172,7 +170,7 @@ func newUser(in *user.User) *User {
 		Email:           in.Email,
 		Nickname:        strings.Split(in.Email, "@")[0],
 		FirstAccessDate: time.Now(),
-		FavoriteTeamID:  defaultTeam,
+		FavoriteTeamID:  -1,
 	}
 
 	return u

@@ -1,0 +1,19 @@
+<link rel="import" href="../packages/polymer/polymer.html">
+
+<dom-module id="admin-list-user">
+
+    <template>
+        <style>
+        :host {
+        }
+        </style>
+
+        <user-icon id="icon" user="[[user]]" size="32" item-icon></user-icon>
+        <paper-item-body two-line>
+            <div><span>{{user.givenName}}</span> "<span>{{user.nickname}}</span>" <span>{{user.surname}}</span></div>
+            <div secondary>{{user.email}}</div>
+            <paper-toggle-button>Registered</paper-toggle-button>
+        </paper-item-body>
+    </template>
+
+</dom-module>

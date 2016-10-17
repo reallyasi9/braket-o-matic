@@ -81,10 +81,4 @@ class UserDialog extends PolymerElement {
     });
   }
 
-  // @Observe("user.favoriteTeamID")
-  // handleNewFavorite(int newID) {
-  //   // TODO: put the correct element in the select box.
-  //   print(_teamsById[newID]);
-  // }
-
 }
