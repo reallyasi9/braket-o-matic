@@ -23,17 +23,18 @@ const defaultTeam = int64(170)
 
 // User represents a user, yo.
 type User struct {
-	ID              string    `datastore:"-" goon:"id" json:"-"`
+	ID              string    `datastore:"-" goon:"id" json:"id"`
 	Surname         string    `json:"surname"`
 	GivenName       string    `json:"givenName"`
 	Nickname        string    `json:"nickname"`
-	Email           string    `json:"-"`
+	Email           string    `json:"email"`
 	FirstAccessDate time.Time `json:"-"`
 	FavoriteTeamID  int64     `json:"favoriteTeamID"`
 }
 
 func init() {
 	http.HandleFunc("/backend/user", dispatchUser)
+	http.HandleFunc("/backend/admin/users", getUsers)
 	http.HandleFunc("/backend/user-logout-url", getLogoutURL)
 }
 
@@ -76,6 +77,36 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	w.Write(js)
+}
+
+func getUsers(w http.ResponseWriter, r *http.Request) {
+
+	// Global goon instance
+	ctx := appengine.NewContext(r)
+	ds := goon.FromContext(ctx)
+
+	// Get them all!
+	q := datastore.NewQuery("User")
+	var users []User
+	_, err := ds.GetAll(q, &users)
+
+	if err != nil {
+		ReturnError(w, err)
+		return
+	}
+
+	err = ds.GetMulti(users)
+	if err != nil {
+		ReturnError(w, err)
+		return
+	}
+
+	js, err := json.Marshal(users)
+	if err != nil {
+		ReturnError(w, err)
+		return
+	}
 	w.Write(js)
 }
 

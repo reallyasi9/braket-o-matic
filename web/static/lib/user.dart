@@ -4,6 +4,17 @@ import 'team.dart';
 
 @export
 class User extends JsProxy with Exportable {
+
+  // TODO: read-only?
+  @export
+  @reflectable
+  String id = "";
+
+  // TODO: read-only?
+  @export
+  @reflectable
+  String email = "";
+
   @export
   @reflectable
   String surname = "";
