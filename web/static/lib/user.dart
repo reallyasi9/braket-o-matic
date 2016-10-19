@@ -1,10 +1,9 @@
 import 'package:polymer/polymer.dart';
 import 'package:exportable/exportable.dart';
-import 'team.dart';
+import 'colors.dart';
 
 @export
 class User extends JsProxy with Exportable {
-
   // TODO: read-only?
   @export
   @reflectable
@@ -31,8 +30,23 @@ class User extends JsProxy with Exportable {
   @reflectable
   int favoriteTeamID = 170; // go Blue
 
+  @export
   @reflectable
-  Team favoriteTeam = null;
+  List<String> favoriteColors = ["#cccccc", "#2222222"];
+
+  String _backgroundString = "";
+
+  String get backgroundString {
+    if (!_backgroundString.isEmpty) {
+      return _backgroundString;
+    }
+    _backgroundString = generateBackground(favoriteColors);
+    return _backgroundString;
+  }
+
+  void resetBackgroundString() {
+    _backgroundString = "";
+  }
 
   static RegExp _nickRE = new RegExp(
       r"^(\s+|^[\u0022\u0027\u2018\u2019\u201c\u201d\u0060\u00b4]+)|(\s+|^[\u0022\u0027\u2018\u2019\u201c\u201d\u0060\u00b4]+)$");
@@ -64,13 +78,13 @@ class User extends JsProxy with Exportable {
     String myNickname = nickname.replaceAll(_nickRE, "").toUpperCase();
 
     if (myGivenName.isNotEmpty && mySurname.isNotEmpty) {
-      return myGivenName.substring(0,1) + mySurname.substring(0,1);
+      return myGivenName.substring(0, 1) + mySurname.substring(0, 1);
     } else if (myGivenName.isNotEmpty) {
-      return myGivenName.substring(0,1);
+      return myGivenName.substring(0, 1);
     } else if (mySurname.isNotEmpty) {
-      return mySurname.substring(0,1);
+      return mySurname.substring(0, 1);
     } else if (myNickname.isNotEmpty) {
-      return myNickname.substring(0,1);
+      return myNickname.substring(0, 1);
     }
     return "?";
   }

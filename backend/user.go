@@ -28,6 +28,7 @@ type User struct {
 	Email           string    `json:"email"`
 	FirstAccessDate time.Time `json:"-"`
 	FavoriteTeamID  int64     `json:"favoriteTeamID"`
+	FavoriteColors  []string  `json:"favoriteColors"`
 }
 
 func init() {
@@ -57,6 +58,8 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 	currentUser := user.Current(ctx)
 
 	u := newUser(currentUser)
+	// No user with that ID?  Make a new one!
+	// There is no registration process.  Once you access it, you are registered.
 	if err := ds.Get(u); err != nil {
 		if err != datastore.ErrNoSuchEntity {
 			ReturnError(w, err)
@@ -150,6 +153,7 @@ func putUser(w http.ResponseWriter, r *http.Request) {
 	})
 	u.Surname = strings.TrimSpace(nu.Surname)
 	u.FavoriteTeamID = nu.FavoriteTeamID
+	u.FavoriteColors = nu.FavoriteColors
 
 	// Send the update
 	ds.Put(u)
@@ -171,6 +175,7 @@ func newUser(in *user.User) *User {
 		Nickname:        strings.Split(in.Email, "@")[0],
 		FirstAccessDate: time.Now(),
 		FavoriteTeamID:  -1,
+		FavoriteColors:  []string{"#cccccc", "#2222222"},
 	}
 
 	return u

@@ -5,7 +5,6 @@ import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart' show HtmlImport;
 
 import '../lib/user.dart';
-import '../lib/team.dart';
 
 @PolymerRegister('user-icon')
 class UserIcon extends PolymerElement {
@@ -32,12 +31,16 @@ class UserIcon extends PolymerElement {
     set('initials', user.initials);
   }
 
-  @Observe("user.favoriteTeam")
-  updateColors(Team newTeam) {
-    if (newTeam == null) {
+  @Observe("user.favoriteColors.splices")
+  handleColors(Map changeRecord) async {
+
+    if (changeRecord == null) {
       return;
     }
-    set('iconStyle', "background: linear-gradient(45deg, rgb(30, 30, 30), rgb(200, 200, 200)); width: ${size}px; height: ${size}px; border-radius: ${size * 0.5}px; line-height: ${size}px; font-size: ${size * 0.5}px; ${newTeam.backgroundString}");
+
+    set('iconStyle', "background: linear-gradient(45deg, rgb(30, 30, 30), rgb(200, 200, 200)); width: ${size}px; height: ${size}px; border-radius: ${size * 0.5}px; line-height: ${size}px; font-size: ${size * 0.5}px; ${user.backgroundString}");
+
   }
+
 
 }
