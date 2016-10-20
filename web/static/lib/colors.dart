@@ -1,11 +1,11 @@
 String generateBackground(List<String> colors) {
   if (colors.isEmpty) {
-    return "background: #888888";
+    return "#888888";
   } else if (colors.length == 1) {
-    return "background: ${colors[0]}";
+    return "${colors[0]}";
   } else {
     List<String> cStrings = [];
-    cStrings.add(colors[0]);
+    cStrings.add("${colors[0]} 0%");
     cStrings.add("${colors[0]} 50%");
     cStrings.add("${colors[1]} 50%");
     int step = (50 / (colors.length - 1)).floor();
@@ -15,6 +15,6 @@ String generateBackground(List<String> colors) {
       cStrings.add("${colors[i]} ${50+step*(i-1)}%");
     }
     String c = cStrings.join(",");
-    return "background: linear-gradient(100deg,$c)";
+    return "linear-gradient(100deg,$c)";
   }
 }

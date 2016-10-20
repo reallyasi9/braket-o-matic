@@ -8,7 +8,8 @@
                 position: relative;
             }
 
-            div {
+            #icon {
+                background: linear-gradient(45deg, rgb(30, 30, 30), rgb(200, 200, 200));
                 position: relative;
                 white-space: nowrap;
                 text-transform: capitalize;
@@ -23,7 +24,7 @@
             }
 
         </style>
-        <div id="icon" style$="[[iconStyle]]">{{initials}}</div>
+        <div id="icon" size="[[size]]">{{initials}}</div>
 
     </template>
 

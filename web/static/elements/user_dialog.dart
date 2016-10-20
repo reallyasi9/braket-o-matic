@@ -60,7 +60,8 @@ class UserDialog extends PolymerElement {
       return;
     }
     set("user.favoriteTeamID", t.id);
-    set("user.favoriteColors", t.colors);
+    clear("user.favoriteColors");
+    addAll("user.favoriteColors", t.colors);
     user.resetBackgroundString();
   }
 

@@ -19,6 +19,6 @@ class FavoriteTeam extends PolymerElement {
 
   @Observe("team")
   handleTeam(Team newTeam) {
-    setAttribute("style", newTeam.backgroundString);
+    style..background = newTeam.backgroundString;
   }
 }
