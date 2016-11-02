@@ -6,6 +6,7 @@ import 'package:web_components/web_components.dart' show HtmlImport;
 
 import 'package:polymer_elements/paper_item_body.dart';
 import 'package:polymer_elements/paper_toggle_button.dart';
+import 'package:polymer_elements/iron_flex_layout.dart';
 import 'user_icon.dart';
 
 import '../lib/user.dart';

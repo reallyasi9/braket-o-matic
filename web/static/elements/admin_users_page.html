@@ -5,19 +5,31 @@
     <template>
         <style>
         :host {
+            @apply(--layout-vertical);
+            @apply(--layout-center);
+        }
+
+        paper-material {
+            margin-top: 32px;
+        }
+
+        paper-item {
             display: block;
+            min-width: 500px;
         }
         </style>
 
         <iron-ajax id="users-get" url="/backend/admin/users" on-response="handleUsers" on-error="handleError" auto></iron-ajax>
 
-        <paper-listbox>
-            <template is="dom-repeat" items="{{users}}">
-                <paper-item label="{{item.id}}">
-                    <admin-list-user user="{{item}}"></admin-list-user>
-                </paper-item>
-            </template>
-        </paper-listbox>
+        <paper-material>
+            <paper-listbox>
+                <template is="dom-repeat" items="{{users}}">
+                    <paper-item label="{{item.id}}">
+                        <admin-list-user user="{{item}}"></admin-list-user>
+                    </paper-item>
+                </template>
+            </paper-listbox>
+        </paper-material>
     </template>
 
 </dom-module>

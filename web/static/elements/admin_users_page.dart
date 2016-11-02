@@ -6,9 +6,10 @@ import 'package:web_components/web_components.dart' show HtmlImport;
 
 import 'package:polymer_elements/iron_ajax.dart';
 import 'package:polymer_elements/iron_request.dart';
+import 'package:polymer_elements/iron_flex_layout.dart';
 import 'package:polymer_elements/paper_listbox.dart';
 import 'package:polymer_elements/paper_item.dart';
-import 'package:polymer_elements/paper_item_body.dart';
+import 'package:polymer_elements/paper_material.dart';
 import 'user_icon.dart';
 import 'admin_list_user.dart';
 
