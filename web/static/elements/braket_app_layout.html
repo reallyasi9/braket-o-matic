@@ -30,6 +30,17 @@
         app-toolbar [main-title] {
             @apply(--layout-flex);
         }
+        .right-container {
+            @apply(--layout-vertical);
+            @apply(--layout-center);
+            padding-top: 20px;
+        }
+        #logout {
+            font-size: 8pt;
+            font-weight: normal;
+            color: white;
+            margin-top: 6px;
+        }
         </style>
 
         <iron-ajax id="user-get" url="/backend/user" on-response="handleUser" on-error="handleError"></iron-ajax>
@@ -42,7 +53,10 @@
         <app-header id="app-header" condenses reveals fixed effects="waterfall">
             <app-toolbar>
                 <div main-title>&lt;braket|o|matic&gt;</div>
-                <user-button id="user-button" on-click="openUserDialog" user="[[user]]"></user-button>
+                <div class="right-container">
+                    <user-button id="user-button" on-click="openUserDialog" user="[[user]]"></user-button>
+                    <a id="logout">log out</a>
+                </div>
             </app-toolbar>
 
             <paper-tabs id="tabs" selected="{{page}}" attr-for-selected="tab-title" autoselect>

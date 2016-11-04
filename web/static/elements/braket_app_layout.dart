@@ -74,6 +74,11 @@ class BraketAppLayout extends PolymerElement {
     addAll('teams', newTeams);
   }
 
+  @Observe('logoutURL')
+  handleLogoutURL(String newURL) async {
+    $["logout"].attributes["href"] = newURL;
+  }
+
   @reflectable
   openUserDialog(CustomEventWrapper e, [_]) async {
     UserDialog ud = $["user-dialog"];

@@ -32,7 +32,7 @@ class User extends JsProxy with Exportable {
 
   @export
   @reflectable
-  List<String> favoriteColors = ["#cccccc", "#2222222"];
+  List<String> favoriteColors = [];
 
   String _backgroundString = "";
 
