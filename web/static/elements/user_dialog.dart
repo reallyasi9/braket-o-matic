@@ -60,12 +60,6 @@ class UserDialog extends PolymerElement {
       return;
     }
     set("user.favoriteTeamID", t.id);
-    print(user);
-    clear("user.favoriteColors");
-    print(user);
-    addAll("user.favoriteColors", t.colors);
-    print(user);
-    user.resetBackgroundString();
   }
 
   @Observe("teams.splices")

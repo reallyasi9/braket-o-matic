@@ -153,7 +153,7 @@ func putUser(w http.ResponseWriter, r *http.Request) {
 	})
 	u.Surname = strings.TrimSpace(nu.Surname)
 	u.FavoriteTeamID = nu.FavoriteTeamID
-	u.FavoriteColors = nu.FavoriteColors
+	// u.FavoriteColors = nu.FavoriteColors
 
 	// Send the update
 	ds.Put(u)
@@ -169,13 +169,23 @@ func newUser(in *user.User) *User {
 	sum := sha3.Sum512(id)
 	hash := base64.StdEncoding.EncodeToString(sum[:])
 
+	// Custom user color: first three bytes of the sum
+	r1, g1, b1 := sum[0], sum[1], sum[2]
+	// take 180-degree complement for second color
+	h1, s1, v1 := HSV(r1, g1, b1)
+	h2 := h1 + 180
+	if h2 > 360 {
+		h2--
+	}
+	r2, g2, b2 := RGB(h2, s1, v1)
+
 	u := &User{
 		ID:              hash,
 		Email:           in.Email,
 		Nickname:        strings.Split(in.Email, "@")[0],
 		FirstAccessDate: time.Now(),
 		FavoriteTeamID:  -1,
-		FavoriteColors:  []string{"#cccccc", "#2222222"},
+		FavoriteColors:  []string{RGBHex(r1, g1, b1), RGBHex(r2, g2, b2)},
 	}
 
 	return u

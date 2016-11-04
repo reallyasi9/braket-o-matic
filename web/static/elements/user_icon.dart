@@ -36,19 +36,18 @@ class UserIcon extends PolymerElement {
 
   @Observe("user")
   handleUser(User newUser) async {
-    print("Hey, ${user.backgroundString}");
     $['icon'].style
       ..background = user.backgroundString;
   }
 
-  @Observe("user.favoriteColors.splices")
-  handleColors(Map changeRecord) async {
-    if (changeRecord == null) {
-      return;
-    }
-    $['icon'].style
-      ..background = user.backgroundString;
-  }
+  // @Observe("user.favoriteColors.splices")
+  // handleColors(Map changeRecord) async {
+  //   if (changeRecord == null) {
+  //     return;
+  //   }
+  //   $['icon'].style
+  //     ..background = user.backgroundString;
+  // }
 
 
 }
