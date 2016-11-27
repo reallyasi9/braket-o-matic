@@ -28,7 +28,8 @@ type User struct {
 	Email           string    `json:"email"`
 	FirstAccessDate time.Time `json:"-"`
 	FavoriteTeamID  int64     `json:"favoriteTeamID"`
-	FavoriteColors  []string  `json:"favoriteColors"`
+	FavoriteColor1  string    `json:"favoriteColor1"`
+	FavoriteColor2  string    `json:"favoriteColor2"`
 }
 
 func init() {
@@ -185,7 +186,8 @@ func newUser(in *user.User) *User {
 		Nickname:        strings.Split(in.Email, "@")[0],
 		FirstAccessDate: time.Now(),
 		FavoriteTeamID:  -1,
-		FavoriteColors:  []string{RGBHex(r1, g1, b1), RGBHex(r2, g2, b2)},
+		FavoriteColor1:  RGBHex(r1, g1, b1),
+		FavoriteColor2:  RGBHex(r2, g2, b2),
 	}
 
 	return u

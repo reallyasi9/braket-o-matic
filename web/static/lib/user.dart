@@ -28,11 +28,15 @@ class User extends JsProxy with Exportable {
 
   @export
   @reflectable
-  int favoriteTeamID = 170; // go Blue
+  int favoriteTeamID = 170; // go Michigan
 
   @export
   @reflectable
-  List<String> favoriteColors = [];
+  String favoriteColor1 = "#FFCB05"; // go Maize
+
+  @export
+  @reflectable
+  String favoriteColor2 = "#00274C"; // go Blue
 
   String _backgroundString = "";
 
@@ -40,7 +44,7 @@ class User extends JsProxy with Exportable {
     if (!_backgroundString.isEmpty) {
       return _backgroundString;
     }
-    _backgroundString = generateBackground(favoriteColors);
+    _backgroundString = generateBackground([favoriteColor1, favoriteColor2]);
     return _backgroundString;
   }
 

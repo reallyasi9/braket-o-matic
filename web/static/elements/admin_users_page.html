@@ -15,8 +15,11 @@
 
         paper-item {
             display: block;
-            min-width: 500px;
+            min-width: 600px;
+            --paper-item-selected-weight: normal;
+            border-bottom: solid thin var(--paper-grey-200);
         }
+
         </style>
 
         <iron-ajax id="users-get" url="/backend/admin/users" on-response="handleUsers" on-error="handleError" auto></iron-ajax>

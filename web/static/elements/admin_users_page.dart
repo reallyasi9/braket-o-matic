@@ -4,6 +4,7 @@ library braket.admin_users_page;
 import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart' show HtmlImport;
 
+import 'package:polymer_elements/color.dart';
 import 'package:polymer_elements/iron_ajax.dart';
 import 'package:polymer_elements/iron_request.dart';
 import 'package:polymer_elements/iron_flex_layout.dart';

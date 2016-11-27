@@ -11,6 +11,12 @@
         .flexchild {
             @apply(--layout-flex);
         }
+        paper-icon-button.delete {
+            color: var(--paper-red-700);
+        }
+        paper-icon-button.edit {
+            color: var(--paper-blue-700);
+        }
         </style>
 
         <user-icon id="icon" user="[[user]]" size="32" item-icon></user-icon>
@@ -19,6 +25,8 @@
             <div secondary>{{user.email}}</div>
         </paper-item-body>
         <paper-toggle-button>Registered</paper-toggle-button>
+        <paper-icon-button icon="delete" title="delete user" alt="delete user" class="delete"></paper-icon-button>
+        <paper-icon-button icon="create" title="edit user" alt="edit user" class="edit"></paper-icon-button>
     </template>
 
 </dom-module>
