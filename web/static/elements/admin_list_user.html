@@ -12,21 +12,26 @@
             @apply(--layout-flex);
         }
         paper-icon-button.delete {
-            color: var(--paper-red-700);
+            /*color: var(--paper-red-700);*/
+            color: var(--paper-grey-300);
         }
         paper-icon-button.edit {
-            color: var(--paper-blue-700);
+            /*color: var(--paper-blue-700);*/
+            color: var(--paper-grey-300);
         }
         </style>
+
+        <!-- TODO: get the registrations globally and properly display them? -->
+        <iron-ajax id="register-user" url="/backend/admin/register-user" on-error="handleError"></iron-ajax>
 
         <user-icon id="icon" user="[[user]]" size="32" item-icon></user-icon>
         <paper-item-body two-line class="flexchild">
             <div><span>{{user.givenName}}</span> "<span>{{user.nickname}}</span>" <span>{{user.surname}}</span></div>
             <div secondary>{{user.email}}</div>
         </paper-item-body>
-        <paper-toggle-button>Registered</paper-toggle-button>
-        <paper-icon-button icon="delete" title="delete user" alt="delete user" class="delete"></paper-icon-button>
-        <paper-icon-button icon="create" title="edit user" alt="edit user" class="edit"></paper-icon-button>
+        <paper-toggle-button checked="{{isRegistered}}" id="registered">Registered</paper-toggle-button>
+        <paper-icon-button icon="delete" title="delete user" alt="delete user" class="delete" disabled></paper-icon-button>
+        <paper-icon-button icon="create" title="edit user" alt="edit user" class="edit" disabled></paper-icon-button>
     </template>
 
 </dom-module>

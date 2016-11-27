@@ -120,7 +120,6 @@ func getTeams(w http.ResponseWriter, r *http.Request) {
 	}
 	var teams []Team
 	_, err = ds.GetAll(q, &teams)
-
 	if err != nil {
 		ReturnError(w, err)
 		return
