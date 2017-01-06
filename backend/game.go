@@ -1,9 +1,5 @@
 package braket
 
-import (
-	"math"
-)
-
 // Game represents a matchup between two teams in the tournament.
 type Game struct {
 	Teams           [2]*Team
@@ -67,15 +63,15 @@ func gamesUpNext(played int64) int64 {
 
 const beta float64 = 0.003946837612242661
 
-func topWinProb(g *Game) float64 {
-	if g.Winner != nil {
-		return float64(1 - g.WinnerTopBottom)
-	}
-
-	if g.Teams[0] == nil || g.Teams[1] == nil {
-		return 0
-	}
-
-	delo := g.Teams[0].Elo - g.Teams[1].Elo
-	return 1 / (1 + math.Exp(-beta*delo))
-}
+// func topWinProb(g *Game) float64 {
+// 	if g.Winner != nil {
+// 		return float64(1 - g.WinnerTopBottom)
+// 	}
+//
+// 	if g.Teams[0] == nil || g.Teams[1] == nil {
+// 		return 0
+// 	}
+//
+// 	delo := g.Teams[0].Elo - g.Teams[1].Elo
+// 	return 1 / (1 + math.Exp(-beta*delo))
+// }

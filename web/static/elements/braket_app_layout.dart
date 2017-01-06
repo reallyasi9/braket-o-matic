@@ -69,7 +69,7 @@ class BraketAppLayout extends PolymerElement {
 
   @reflectable
   handleTeams(CustomEventWrapper e, IronRequest detail) async {
-    List<Team> newTeams = detail.response.map((Object o) => new Team()..initFromMap(convertToDart(o)));
+    List<Team> newTeams = detail.response.map((Object o) => new Team()..initFromMap(convertToDart(o))).toList();
     clear('teams');
     addAll('teams', newTeams);
   }

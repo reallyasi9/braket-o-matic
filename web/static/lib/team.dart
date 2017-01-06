@@ -10,14 +10,6 @@ class Team extends JsProxy with Exportable {
 
   @reflectable
   @export
-  int seed;
-
-  @reflectable
-  @export
-  double elo;
-
-  @reflectable
-  @export
   String schoolName;
 
   @reflectable

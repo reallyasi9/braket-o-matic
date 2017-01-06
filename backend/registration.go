@@ -1,6 +1,7 @@
 package braket
 
 import (
+	"encoding/json"
 	"errors"
 	"net/http"
 
@@ -11,13 +12,43 @@ import (
 
 // Registration represents a registration for a User to a particular Tournament.
 type Registration struct {
-	ID         int64          `datastore:"-" goon:"id" json:"id"`
+	ID         int64          `datastore:"-" goon:"id" json:"-"`
 	User       string         `json:"userID"`
 	Tournament *datastore.Key `datastore:"-" goon:"parent" json:"tournamentID"`
 }
 
 func init() {
 	http.HandleFunc("/backend/admin/register-user", registerUser)
+	http.HandleFunc("/backend/admin/registrations", registrations)
+}
+
+func registrations(w http.ResponseWriter, r *http.Request) {
+	// Global goon instance
+	ctx := appengine.NewContext(r)
+	ds := goon.FromContext(ctx)
+
+	// Need the current tournament
+	tournamentKey, _, err := latestTournament(ds)
+	if err != nil {
+		ReturnError(w, err)
+		return
+	}
+
+	// Get those registrations!
+	q := datastore.NewQuery("Registration").Ancestor(tournamentKey)
+	var regs []Registration
+	_, err = ds.GetAll(q, &regs)
+	if err != nil {
+		ReturnError(w, err)
+		return
+	}
+
+	js, err := json.Marshal(regs)
+	if err != nil {
+		ReturnError(w, err)
+		return
+	}
+	w.Write(js)
 }
 
 func registerUser(w http.ResponseWriter, r *http.Request) {

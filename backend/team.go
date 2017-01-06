@@ -14,15 +14,12 @@ import (
 
 // Team represents a single team in the tournament.
 type Team struct {
-	ID              int64          `datastore:"-" goon:"id" json:"id"`
-	Seed            int64          `json:"seed"`
-	Elo             float64        `json:"elo"`
-	SchoolName      string         `json:"schoolName"`
-	SchoolShortName string         `json:"schoolShortName"`
-	Nickname        string         `json:"nickname"`
-	Colors          []string       `json:"colors"`
-	ImageName       string         `json:"imageName"`
-	Tournament      *datastore.Key `datastore:"-" goon:"parent" json:"-"`
+	ID              int64    `datastore:"-" goon:"id" json:"id"`
+	SchoolName      string   `json:"schoolName"`
+	SchoolShortName string   `json:"schoolShortName"`
+	Nickname        string   `json:"nickname"`
+	Colors          []string `json:"colors"`
+	ImageName       string   `json:"imageName"`
 }
 
 // eloK is the maximum amount Elo can change per game.
@@ -53,19 +50,14 @@ func buildTeams(w http.ResponseWriter, r *http.Request) {
 	// Global goon instance
 	ctx := appengine.NewContext(r)
 	ds := goon.FromContext(ctx)
-	tournamentKey, _, err := latestTournament(ds)
-	if err != nil {
-		ReturnError(w, err)
-		return
-	}
 
-	q := datastore.NewQuery("Team").Ancestor(tournamentKey)
+	q := datastore.NewQuery("Team")
 	keys, _ := ds.GetAll(q, nil)
 	// Type might not exist at all, in which case this would be an error
 	// But I guess I don't care...
 
 	// Wipe them all!
-	err = ds.DeleteMulti(keys)
+	err := ds.DeleteMulti(keys)
 	if err != nil {
 		ReturnError(w, err)
 		return
@@ -80,12 +72,6 @@ func buildTeams(w http.ResponseWriter, r *http.Request) {
 
 	var teams []Team
 	json.Unmarshal(teamf, &teams)
-
-	// Add the ancestor
-	// Note: range makes a copy, so have to use the index.
-	for i := range teams {
-		teams[i].Tournament = tournamentKey
-	}
 
 	// Send the update
 	_, err = ds.PutMulti(teams)
@@ -107,19 +93,13 @@ func getTeams(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 	ds := goon.FromContext(ctx)
 
-	tournamentKey, _, err := latestTournament(ds)
-	if err != nil {
-		ReturnError(w, err)
-		return
-	}
-
 	// Get them all!
-	q := datastore.NewQuery("Team").Ancestor(tournamentKey)
+	q := datastore.NewQuery("Team")
 	if len(sorted) > 0 {
 		q = q.Order("SchoolShortName")
 	}
 	var teams []Team
-	_, err = ds.GetAll(q, &teams)
+	_, err := ds.GetAll(q, &teams)
 	if err != nil {
 		ReturnError(w, err)
 		return
@@ -159,16 +139,10 @@ func searchTeams(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 	ds := goon.FromContext(ctx)
 
-	tournamentKey, _, err := latestTournament(ds)
-	if err != nil {
-		ReturnError(w, err)
-		return
-	}
-
 	// Get them all!
-	q := datastore.NewQuery("Team").Ancestor(tournamentKey)
+	q := datastore.NewQuery("Team")
 	var teams []Team
-	_, err = ds.GetAll(q, &teams)
+	_, err := ds.GetAll(q, &teams)
 	if err != nil {
 		ReturnError(w, err)
 		return

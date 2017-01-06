@@ -25,13 +25,13 @@ class AdminUsersPage extends PolymerElement {
 
   @reflectable
   handleUsers(CustomEventWrapper e, IronRequest detail) async {
-    List<User> newUsers = detail.response.map((Object o) => new User()..initFromMap(convertToDart(o)));
     clear('users');
+    List<User> newUsers = detail.response.map((Object o) => new User()..initFromMap(convertToDart(o))).toList();
     addAll('users', newUsers);
   }
 
   @reflectable
-  handleError(CustomEventWrapper e, IronRequest detail) async {
+  handleError(CustomEventWrapper e, Map detail) async {
     print("Error, yo: $detail");
   }
 
