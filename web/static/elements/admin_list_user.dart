@@ -38,7 +38,7 @@ class AdminListUser extends PolymerElement {
   }
 
   @reflectable
-  handleError(CustomEventWrapper e, IronRequest detail) async {
+  handleError(CustomEventWrapper e, Map detail) async {
     print("Error, yo: $detail");
   }
 

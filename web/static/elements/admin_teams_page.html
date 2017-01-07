@@ -5,11 +5,36 @@
     <template>
         <style>
         :host {
-            display: block;
+            @apply(--layout-vertical);
+            @apply(--layout-center);
         }
+
+        paper-material {
+            margin-top: 32px;
+        }
+
+        paper-item {
+            display: block;
+            min-width: 600px;
+            --paper-item-selected-weight: normal;
+            /*border-bottom: solid thin var(--paper-grey-200);*/
+        }
+
         </style>
 
-        <div>I am the admin teams page</div>
+        <iron-ajax id="build-teams" url="/backend/admin/build-teams" on-response="teamsBuilt" on-error="handleError"></iron-ajax>
+
+        <iron-ajax id="teams-get" url="/backend/teams?sorted=1" on-response="handleTeams" on-error="handleError" auto></iron-ajax>
+
+        <paper-material>
+            <paper-listbox>
+                <template is="dom-repeat" items="{{teams}}">
+                    <paper-item label="{{item.id}}">
+                        <admin-list-team team="{{item}}"></admin-list-team>
+                    </paper-item>
+                </template>
+            </paper-listbox>
+        </paper-material>
     </template>
 
 </dom-module>

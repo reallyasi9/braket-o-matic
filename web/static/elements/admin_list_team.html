@@ -1,0 +1,30 @@
+<link rel="import" href="../packages/polymer/polymer.html">
+
+<dom-module id="admin-list-team">
+
+    <template>
+        <style>
+        :host {
+            @apply(--layout-horizontal);
+            @apply(--layout-center);
+        }
+        .flexchild {
+            @apply(--layout-flex);
+        }
+        paper-icon-button.edit {
+            /*color: var(--paper-blue-700);*/
+            color: var(--paper-grey-300);
+        }
+        </style>
+
+        <!-- TODO: display team icons -->
+        <!-- TODO: colors? -->
+        <!-- <user-icon id="icon" user="[[user]]" size="32" item-icon></user-icon> -->
+        <paper-item-body two-line class="flexchild">
+            <div><span>{{team.schoolShortName}} {{team.nickname}}</span></div>
+            <div secondary>{{team.schoolName}}</div>
+        </paper-item-body>
+        <paper-icon-button icon="create" title="edit team" alt="edit team" class="edit" disabled></paper-icon-button>
+    </template>
+
+</dom-module>
