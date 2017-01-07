@@ -29,14 +29,14 @@ class AdminTeamsPage extends PolymerElement {
 
   @reflectable
   handleTeams(CustomEventWrapper e, IronRequest detail) async {
-    clear('teams');
-    List<Team> newTeams = detail.response.map((Object o) => new Team()..initFromMap(convertToDart(o))).toList();
-
-    if (newTeams.isEmpty) {
-      ($['build-teams'] as IronAjax).generateRequest();
-    } else {
-      addAll('teams', newTeams);
+    if (detail.response == null) {
+      return ($['build-teams'] as IronAjax).generateRequest();
     }
+    clear('teams');
+    List<Team> newTeams = detail.response
+        .map((Object o) => new Team()..initFromMap(convertToDart(o)))
+        .toList();
+    addAll('teams', newTeams);
   }
 
   @reflectable

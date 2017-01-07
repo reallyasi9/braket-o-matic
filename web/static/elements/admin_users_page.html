@@ -17,18 +17,18 @@
             display: block;
             min-width: 600px;
             --paper-item-selected-weight: normal;
-            border-bottom: solid thin var(--paper-grey-200);
         }
 
         </style>
 
         <iron-ajax id="users-get" url="/backend/admin/users" on-response="handleUsers" on-error="handleError" auto></iron-ajax>
+        <iron-ajax id="registrations-get" url="/backend/admin/registrations" on-response="handleRegistrations" on-error="handleError"></iron-ajax>
 
         <paper-material>
             <paper-listbox>
                 <template is="dom-repeat" items="{{users}}">
                     <paper-item label="{{item.id}}">
-                        <admin-list-user user="{{item}}"></admin-list-user>
+                        <admin-list-user user="{{item}}" id="{{item.id}}"></admin-list-user>
                     </paper-item>
                 </template>
             </paper-listbox>

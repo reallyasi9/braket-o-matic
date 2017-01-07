@@ -37,6 +37,10 @@ class AdminListUser extends PolymerElement {
     up.generateRequest();
   }
 
+  register([bool registered = true]) {
+      this.set("isRegistered", registered); // I hope this doesn't bubble...
+  }
+
   @reflectable
   handleError(CustomEventWrapper e, Map detail) async {
     print("Error, yo: $detail");

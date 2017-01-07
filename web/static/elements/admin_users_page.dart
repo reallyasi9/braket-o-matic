@@ -11,6 +11,7 @@ import 'package:polymer_elements/iron_flex_layout.dart';
 import 'package:polymer_elements/paper_listbox.dart';
 import 'package:polymer_elements/paper_item.dart';
 import 'package:polymer_elements/paper_material.dart';
+import 'dart:js';
 import 'user_icon.dart';
 import 'admin_list_user.dart';
 
@@ -28,6 +29,21 @@ class AdminUsersPage extends PolymerElement {
     clear('users');
     List<User> newUsers = detail.response.map((Object o) => new User()..initFromMap(convertToDart(o))).toList();
     addAll('users', newUsers);
+    ($['registrations-get'] as IronAjax).generateRequest();
+  }
+
+  @reflectable
+  handleRegistrations(CustomEventWrapper e, IronRequest detail) {
+      if (detail.response == null) {
+          // No registered users
+          return;
+      }
+      for (JsObject reg in detail.response) {
+          String userID = reg['userID'];
+          // Needed because ID selection does not quite work...
+          AdminListUser alu = $$('admin-list-user[id="$userID"]');
+          alu.register(true);
+      }
   }
 
   @reflectable

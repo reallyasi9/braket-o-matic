@@ -3,10 +3,10 @@ description: >
   Front-end for a bracket-style tournament manager.
 dependencies:
   browser: ^0.10.0
-  polymer: ^1.0.0-rc.16
+  polymer: ^1.0.0-rc.19
   polymer_elements: ^1.0.0-rc.9
-  web_components: ^0.12.0
-  js: ^0.6.0
+  web_components: ^0.12.5
+  js: ^0.6.1
   exportable: any
 transformers:
 - polymer:
