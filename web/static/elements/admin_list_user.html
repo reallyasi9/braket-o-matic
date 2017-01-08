@@ -12,8 +12,7 @@
             @apply(--layout-flex);
         }
         paper-icon-button.delete {
-            /*color: var(--paper-red-700);*/
-            color: var(--paper-grey-300);
+            color: var(--paper-red-700);
         }
         paper-icon-button.edit {
             /*color: var(--paper-blue-700);*/
@@ -22,7 +21,9 @@
         </style>
 
         <!-- TODO: get the registrations globally and properly display them? -->
-        <iron-ajax id="register-user" url="/backend/admin/register-user" on-error="handleError"></iron-ajax>
+        <iron-ajax id="register-user" url="/backend/admin/registration" method="PUT" on-error="handleError"></iron-ajax>
+        <iron-ajax id="unregister-user" url="/backend/admin/registration" method="DELETE" on-error="handleError"></iron-ajax>
+        <iron-ajax id="delete-user" url="/backend/admin/user" method="DELETE" on-error="handleError"></iron-ajax>
 
         <user-icon id="icon" user="[[user]]" size="32" item-icon></user-icon>
         <paper-item-body two-line class="flexchild">
@@ -30,7 +31,7 @@
             <div secondary>{{user.email}}</div>
         </paper-item-body>
         <paper-toggle-button checked="{{isRegistered}}" id="registered">Registered</paper-toggle-button>
-        <paper-icon-button icon="delete" title="delete user" alt="delete user" class="delete" disabled></paper-icon-button>
+        <paper-icon-button icon="delete" title="delete user" alt="delete user" class="delete" on-click="delete"></paper-icon-button>
         <paper-icon-button icon="create" title="edit user" alt="edit user" class="edit" disabled></paper-icon-button>
     </template>
 

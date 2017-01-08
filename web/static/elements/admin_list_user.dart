@@ -28,22 +28,36 @@ class AdminListUser extends PolymerElement {
 
   @Listen('registered.change')
   onChecked(CustomEventWrapper event, _) async {
-    IronAjax up = $['register-user'];
-    Map<String, String> params = {
-      "userID": user.id,
-      "register": isRegistered
-    };
+    IronAjax up;
+    if (isRegistered) {
+      up = $['register-user'];
+    } else {
+      up = $['unregister-user'];
+    }
+    Map<String, String> params = {"userID": user.id};
     up.set('params', params);
     up.generateRequest();
   }
 
+  @reflectable
+  delete(CustomEventWrapper event, _) async {
+    // Manual unregister
+    IronAjax up = $['unregister-user'];
+    Map<String, String> params = {"userID": user.id};
+    up.set('params', params);
+    await up.generateRequest();
+
+    IronAjax ia = $['delete-user'];
+    ia.set('params', params);
+    ia.generateRequest();
+  }
+
   register([bool registered = true]) {
-      this.set("isRegistered", registered); // I hope this doesn't bubble...
+    this.set("isRegistered", registered); // I hope this doesn't bubble...
   }
 
   @reflectable
   handleError(CustomEventWrapper e, Map detail) async {
     print("Error, yo: $detail");
   }
-
 }

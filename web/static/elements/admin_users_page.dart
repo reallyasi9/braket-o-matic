@@ -33,7 +33,7 @@ class AdminUsersPage extends PolymerElement {
   }
 
   @reflectable
-  handleRegistrations(CustomEventWrapper e, IronRequest detail) {
+  handleRegistrations(CustomEventWrapper e, IronRequest detail) async {
       if (detail.response == null) {
           // No registered users
           return;

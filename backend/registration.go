@@ -18,7 +18,7 @@ type Registration struct {
 }
 
 func init() {
-	http.HandleFunc("/backend/admin/register-user", registerUser)
+	http.HandleFunc("/backend/admin/registration", registerUser)
 	http.HandleFunc("/backend/admin/registrations", registrations)
 }
 
@@ -67,14 +67,15 @@ func registerUser(w http.ResponseWriter, r *http.Request) {
 	// Need the target user
 	userID := r.FormValue("userID")
 
-	// Need to know if I am registering or unregistering
-	doReg := r.FormValue("register")
+    switch r.Method {
+    default:
+        ReturnError(w, http.ErrNotSupported)
+    case http.MethodPut:
+        err = register(ds, tournamentKey, userID)
+    case http.MethodDelete:
+        err = unregister(ds, tournamentKey, userID)
+    }
 
-	if doReg == "true" {
-		err = register(ds, tournamentKey, userID)
-	} else {
-		err = unregister(ds, tournamentKey, userID)
-	}
 	if err != nil {
 		ReturnError(w, err)
 		return

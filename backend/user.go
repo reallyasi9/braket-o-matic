@@ -3,6 +3,7 @@ package braket
 import (
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strings"
 	"time"
@@ -34,6 +35,7 @@ type User struct {
 
 func init() {
 	http.HandleFunc("/backend/user", dispatchUser)
+	http.HandleFunc("/backend/admin/user", dispatchUserAdmin)
 	http.HandleFunc("/backend/admin/users", getUsers)
 	http.HandleFunc("/backend/user-logout-url", getLogoutURL)
 }
@@ -47,6 +49,59 @@ func dispatchUser(w http.ResponseWriter, r *http.Request) {
 	case http.MethodPut:
 		putUser(w, r)
 	}
+}
+
+func dispatchUserAdmin(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	default:
+		ReturnError(w, http.ErrNotSupported)
+	case http.MethodDelete:
+		deleteUser(w, r)
+	case http.MethodPut:
+		putUserAdmin(w, r)
+	}
+}
+
+func deleteUser(w http.ResponseWriter, r *http.Request) {
+	//TODO
+	// Global goon instance
+	ctx := appengine.NewContext(r)
+	ds := goon.FromContext(ctx)
+
+	// Get the datastore representation of you
+	currentUser := user.Current(ctx)
+	u := newUser(currentUser)
+	if err := ds.Get(u); err != nil {
+		// You had better exist as a user if you made it this far...
+		ReturnError(w, err)
+		return
+	}
+
+	// Need the target user
+	userID := r.FormValue("userID")
+	if u.ID == userID {
+		ReturnError(w, errors.New("You cannot delete yourself!"))
+		return
+	}
+
+	// Use the datastore to get the key
+	targetu := &User{ID: userID}
+	key, err := ds.KeyError(targetu)
+	if err != nil {
+		ReturnError(w, err)
+		return
+	}
+
+	// Delete the target
+	err = ds.Delete(key)
+	if err != nil {
+		ReturnError(w, err)
+		return
+	}
+}
+
+func putUserAdmin(w http.ResponseWriter, r *http.Request) {
+	//TODO
 }
 
 func getUser(w http.ResponseWriter, r *http.Request) {
