@@ -20,11 +20,25 @@
         <!-- TODO: display team icons -->
         <!-- TODO: colors? -->
         <!-- <user-icon id="icon" user="[[user]]" size="32" item-icon></user-icon> -->
+        <iron-ajax id="team-put" url="/backend/admin/team" method="PUT" debounce-duration="500" on-error="handleError"></iron-ajax>
+
         <paper-item-body two-line class="flexchild">
             <div><span>{{team.schoolShortName}} {{team.nickname}}</span></div>
             <div secondary>{{team.schoolName}}</div>
+
+            <iron-collapse id="collapse">
+                <paper-input label="School name" name="schoolName" value="{{team.schoolName}}">
+                    <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
+                </paper-input>
+                <paper-input label="School short name" name="schoolShortName" value="{{team.schoolShortName}}">
+                    <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
+                </paper-input>
+                <paper-input label="Nickname" name="nickname" value="{{team.nickname}}">
+                    <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
+                </paper-input>
+            </iron-collapse>
         </paper-item-body>
-        <paper-icon-button icon="create" title="edit team" alt="edit team" class="edit" disabled></paper-icon-button>
+        <paper-icon-button id="toggle-button" suffix on-click="toggleCollapse" icon="expand-more" alt="toggle collapse" title="toggle collapse"></paper-icon-button>
     </template>
 
 </dom-module>

@@ -43,6 +43,34 @@ func init() {
 	http.HandleFunc("/backend/admin/build-teams", buildTeams)
 	http.HandleFunc("/backend/teams", getTeams)
 	http.HandleFunc("/backend/search-teams", searchTeams)
+	http.HandleFunc("/backend/admin/team", dispatchTeamAdmin)
+}
+
+func dispatchTeamAdmin(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	default:
+		ReturnError(w, http.ErrNotSupported)
+	case http.MethodPut:
+		putTeamAdmin(w, r)
+	}
+}
+
+func putTeamAdmin(w http.ResponseWriter, r *http.Request) {
+	// Global goon instance
+	ctx := appengine.NewContext(r)
+	ds := goon.FromContext(ctx)
+
+	// Dig json out of the sent data
+	t := &Team{}
+	decoder := json.NewDecoder(r.Body)
+	if err := decoder.Decode(t); err != nil {
+		ReturnError(w, err)
+		return
+	}
+
+	// No need to filter things out?  Just update?
+	ds.Put(t)
+	return
 }
 
 func buildTeams(w http.ResponseWriter, r *http.Request) {

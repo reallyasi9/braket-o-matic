@@ -40,14 +40,5 @@ class UserIcon extends PolymerElement {
       ..background = user.backgroundString;
   }
 
-  // @Observe("user.favoriteColors.splices")
-  // handleColors(Map changeRecord) async {
-  //   if (changeRecord == null) {
-  //     return;
-  //   }
-  //   $['icon'].style
-  //     ..background = user.backgroundString;
-  // }
-
 
 }
