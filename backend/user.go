@@ -101,7 +101,23 @@ func deleteUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func putUserAdmin(w http.ResponseWriter, r *http.Request) {
-	//TODO
+	// Global goon instance
+	ctx := appengine.NewContext(r)
+	ds := goon.FromContext(ctx)
+
+	// Dig json out of the sent data
+	nu := &User{}
+	decoder := json.NewDecoder(r.Body)
+	if err := decoder.Decode(nu); err != nil {
+		ReturnError(w, err)
+		return
+	}
+
+	// Send the update
+	ds.Put(nu)
+
+	// Done
+	return
 }
 
 func getUser(w http.ResponseWriter, r *http.Request) {

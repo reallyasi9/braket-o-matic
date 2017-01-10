@@ -18,12 +18,19 @@
             /*color: var(--paper-blue-700);*/
             color: var(--paper-grey-300);
         }
+        user-icon {
+            margin-right: 5px;
+        }
+        iron-collapse {
+            display: block;
+        }
         </style>
 
         <!-- TODO: get the registrations globally and properly display them? -->
         <iron-ajax id="register-user" url="/backend/admin/registration" method="PUT" on-error="handleError"></iron-ajax>
         <iron-ajax id="unregister-user" url="/backend/admin/registration" method="DELETE" on-error="handleError"></iron-ajax>
         <iron-ajax id="delete-user" url="/backend/admin/user" method="DELETE" on-error="handleError"></iron-ajax>
+        <iron-ajax id="user-put" url="/backend/admin/user" method="PUT" debounce-duration="500" on-error="handleError"></iron-ajax>
 
         <user-icon id="icon" user="[[user]]" size="32" item-icon></user-icon>
         <paper-item-body two-line class="flexchild">
@@ -31,8 +38,21 @@
             <div secondary>{{user.email}}</div>
         </paper-item-body>
         <paper-toggle-button checked="{{isRegistered}}" id="registered">Registered</paper-toggle-button>
-        <paper-icon-button icon="delete" title="delete user" alt="delete user" class="delete" on-click="delete"></paper-icon-button>
-        <paper-icon-button icon="create" title="edit user" alt="edit user" class="edit" disabled></paper-icon-button>
+        <iron-collapse id="collapse">
+            <paper-input label="First name" name="givenName" id="given-name-input" value="{{user.givenName}}">
+                <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
+            </paper-input>
+            <paper-input label="Last name" name="surname" id="surname-input" value="{{user.surname}}">
+                <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
+            </paper-input>
+            <paper-input label="Nickname" name="nickname" id="nickname-input" value="{{user.nickname}}">
+                <div prefix>“</div>
+                <div suffix>”</div>
+                <paper-icon-button suffix on-click="clearInput" icon="clear" alt="clear" title="clear"></paper-icon-button>
+            </paper-input>
+            <paper-button on-click="delete"><iron-icon icon="delete" title="delete user" alt="delete user" class="delete"></iron-icon>Delete user</paper-button>
+        </iron-collapse>
+        <paper-icon-button id="toggle-button" suffix on-click="toggleCollapse" icon="expand-more" alt="toggle collapse" title="toggle collapse"></paper-icon-button>
     </template>
 
 </dom-module>

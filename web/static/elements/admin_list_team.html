@@ -15,6 +15,11 @@
             /*color: var(--paper-blue-700);*/
             color: var(--paper-grey-300);
         }
+        iron-image {
+            height: 62px;
+            width: 62px;
+            margin: 5px;
+        }
         </style>
 
         <!-- TODO: display team icons -->
@@ -22,6 +27,7 @@
         <!-- <user-icon id="icon" user="[[user]]" size="32" item-icon></user-icon> -->
         <iron-ajax id="team-put" url="/backend/admin/team" method="PUT" debounce-duration="500" on-error="handleError"></iron-ajax>
 
+        <iron-image src="images/teams/{{team.imageName}}" sizing="contain" preload></iron-image>
         <paper-item-body two-line class="flexchild">
             <div><span>{{team.schoolShortName}} {{team.nickname}}</span></div>
             <div secondary>{{team.schoolName}}</div>

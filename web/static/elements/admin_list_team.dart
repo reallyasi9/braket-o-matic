@@ -12,6 +12,7 @@ import 'package:polymer_elements/iron_flex_layout.dart';
 import 'package:polymer_elements/iron_collapse.dart';
 import 'package:polymer_elements/paper_input.dart';
 import 'package:polymer_elements/iron_ajax.dart';
+import 'package:polymer_elements/iron_image.dart';
 
 import '../lib/team.dart';
 
@@ -49,7 +50,6 @@ class AdminListTeam extends PolymerElement {
     pib.disabled = false;
   }
 
-  // TODO: De-bounce the first load of this, because I am sending 300 puts...
   @Observe('team.*')
   onTeamChange(Map changeRecord) async {
     if (isFirst) {
