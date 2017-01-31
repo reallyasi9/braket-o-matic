@@ -12,8 +12,10 @@ import 'package:polymer_elements/paper_dropdown_menu.dart';
 import 'package:polymer_elements/paper_listbox.dart';
 import 'package:polymer_elements/paper_item.dart';
 import 'package:polymer_elements/paper_ripple.dart';
+import 'package:polymer_elements/paper_button.dart';
 import 'package:polymer_elements/iron_flex_layout.dart';
 import 'package:polymer_elements/iron_icons.dart';
+import 'package:polymer_elements/iron_icon.dart';
 import '../lib/user.dart';
 import '../lib/team.dart';
 import 'favorite_team.dart';
@@ -44,6 +46,12 @@ class UserDialog extends PolymerElement {
     int idx = teams.indexOf(_teamsById[user.favoriteTeamID]);
     pl.selectIndex(idx);
     pd.open();
+  }
+
+  @reflectable
+  closeDialog(CustomEventWrapper e, [_]) async {
+    PaperDialog pd = $["dialog"];
+    pd.close();
   }
 
   @reflectable

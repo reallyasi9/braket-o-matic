@@ -8,6 +8,20 @@
             @apply(--layout-vertical);
             @apply(--layout-center-justified);
         }
+        .button-container {
+            @apply(--layout-horizontal);
+            @apply(--layout-center);
+            @apply(--layout-end-justified);
+        }
+        paper-button.indigo {
+            background-color: var(--paper-indigo-500);
+            color: white;
+        }
+        .hint {
+            color: var(--paper-grey-500);
+            font-size: smaller;
+            /*display: none;*/
+        }
         </style>
 
         <paper-dialog id="dialog">
@@ -37,6 +51,10 @@
                 </paper-dropdown-menu>
                 <team-selector team="{{favoriteTeam}}"></team-selector>
             </paper-dialog-scrollable>
+            <div class="button-container">
+                <span class="hint">changes saved automatically</span>
+                <paper-button class="indigo" raised on-click="closeDialog"><iron-icon icon="done"></iron-icon>Done</paper-button>
+            </div>
         </paper-dialog>
 
     </template>
