@@ -40,5 +40,11 @@ class UserIcon extends PolymerElement {
       ..background = user.backgroundString;
   }
 
+  @Observe("user.favoriteColor1,user.favoriteColor2")
+  handleColors(String favoriteColor1, String favoriteColor2) async {
+    $['icon'].style
+      ..background = user.ResetBackgroundString();
+  }
+
 
 }

@@ -48,6 +48,11 @@ class User extends JsProxy with Exportable {
     return _backgroundString;
   }
 
+  String ResetBackgroundString() {
+    _backgroundString = generateBackground([favoriteColor1, favoriteColor2]);
+    return _backgroundString;
+  }
+
   static RegExp _nickRE = new RegExp(
       r"^(\s+|^[\u0022\u0027\u2018\u2019\u201c\u201d\u0060\u00b4]+)|(\s+|^[\u0022\u0027\u2018\u2019\u201c\u201d\u0060\u00b4]+)$");
 

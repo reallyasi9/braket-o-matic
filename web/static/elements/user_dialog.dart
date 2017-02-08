@@ -67,6 +67,8 @@ class UserDialog extends PolymerElement {
     if (t == null) {
       return;
     }
+    set("user.favoriteColor1", t.colors.first);
+    set("user.favoriteColor2", t.colors.last); // I guess?
     set("user.favoriteTeamID", t.id);
   }
 

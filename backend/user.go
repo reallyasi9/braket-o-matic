@@ -225,7 +225,8 @@ func putUser(w http.ResponseWriter, r *http.Request) {
 	})
 	u.Surname = strings.TrimSpace(nu.Surname)
 	u.FavoriteTeamID = nu.FavoriteTeamID
-	// u.FavoriteColors = nu.FavoriteColors
+	u.FavoriteColor1 = nu.FavoriteColor1
+	u.FavoriteColor2 = nu.FavoriteColor2
 
 	// Send the update
 	ds.Put(u)
