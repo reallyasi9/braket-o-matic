@@ -1,17 +1,81 @@
 package braket
 
+import (
+	"net/http"
+
+	"github.com/mjibson/goon"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
+)
+
 // Game represents a matchup between two teams in the tournament.
 type Game struct {
-	Teams           [2]*Team
-	Winner          *Team
-	WinnerTopBottom int
-	Game            int
-	Round           int
-	GameInRound     int
+	ID              int64          `datastore:"-" goon:"id" json:"id"`
+	Tournament      *datastore.Key `datastore:"-" goon:"parent" json:"tournamentID"`
+	Teams           []int64        `json:"teams"`
+	Winner          int64          `json:"winner"`
+	WinnerTopBottom int            `json:"winnerTopBottom"`
+	Game            int            `json:"game"`
+	Round           int            `json:"round"`
+	GameInRound     int            `json:"gameInRound"`
+}
+
+func init() {
+	http.HandleFunc("/backend/admin/build-games", buildGames)
+}
+
+func buildGames(w http.ResponseWriter, r *http.Request) {
+
+	// Global goon instance
+	ctx := appengine.NewContext(r)
+	ds := goon.FromContext(ctx)
+
+	q := datastore.NewQuery("Game")
+	keys, _ := ds.GetAll(q, nil)
+	// Type might not exist at all, in which case this would be an error
+	// But I guess I don't care...
+
+	// Wipe them all?
+	err := ds.DeleteMulti(keys)
+	if err != nil {
+		ReturnError(w, err)
+		return
+	}
+
+	// Now build them from scratch.
+	tk, _, err := latestTournament(ds)
+	if err != nil {
+		ReturnError(w, err)
+		return
+	}
+
+	games := make([]Game, nGamesTotal)
+	g := 0
+	for iR := 0; iR < nRounds; iR++ {
+		for iG := 0; iG < nGames[iR]; iG++ {
+			games[g] = Game{
+				Tournament:  tk,
+				Game:        g,
+				Round:       iR,
+				GameInRound: iG,
+			}
+
+			g++
+		}
+	}
+	_, err = ds.PutMulti(games)
+	if err != nil {
+		ReturnError(w, err)
+		return
+	}
+
+	return
+
 }
 
 // selectedGames returns a list of Games that are implied by a given selection.
 func selectedGames(sel int64) [nGamesTotal]Game {
+	//TODO: make teamList a parameter?
 	teams := make([]Team, len(teamList))
 	copy(teams, teamList[:])
 
@@ -22,9 +86,16 @@ func selectedGames(sel int64) [nGamesTotal]Game {
 			t1 := &teams[2*iGame]
 			t2 := &teams[2*iGame+1]
 			wtb := sel & 1
-			ta := [2]*Team{t1, t2}
+			// ta := make([]*Team, 2
+			ta := []int64{t1.ID, t2.ID}
 			tw := ta[wtb]
-			games[i] = Game{ta, tw, int(wtb), i, iRound, iGame}
+			games[i] = Game{
+				Teams:           ta,
+				Winner:          tw,
+				WinnerTopBottom: int(wtb),
+				Game:            i,
+				Round:           iRound,
+				GameInRound:     iGame}
 
 			i++
 			sel >>= 1

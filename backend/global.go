@@ -38,6 +38,8 @@ var seedsList = [nTeamsPerRegion]int{
 	1, 16, 8, 9, 5, 12, 4, 13, 6, 11, 3, 14, 7, 10, 2, 15,
 }
 
+// EnableCORS enables cross-origin resource sharing, in case I have to send
+// resources from the backend to the frontend.
 func EnableCORS(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 
@@ -59,6 +61,7 @@ func EnableCORS(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Access-Control-Allow-Origin", "http://"+hn)
 }
 
+// ReturnError will write a go error object to the ResponseWriter stream.
 func ReturnError(w http.ResponseWriter, err error) {
 	http.Error(w, err.Error(), http.StatusInternalServerError)
 }
