@@ -9,7 +9,9 @@
         }
         </style>
 
-        <div>I am the admin games page</div>
+        <iron-ajax id="games-get" url="/backend/games" handle-as="json" on-response="handleGames" on-error="handleError" auto></iron-ajax>
+
+        <round-scroller games="{{games}}"></round-scroller>
     </template>
 
 </dom-module>

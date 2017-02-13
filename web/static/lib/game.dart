@@ -9,9 +9,9 @@ class Game extends JsProxy with Exportable {
   int id;
 
   // Do I need the parent?
-  @reflectable
-  @export
-  int tournamentID;
+  // @reflectable
+  // @export
+  // int tournamentID;
 
   @reflectable
   @export
