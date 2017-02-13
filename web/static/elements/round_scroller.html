@@ -1,0 +1,17 @@
+<link rel="import" href="../packages/polymer/polymer.html">
+
+<dom-module id="round-scroller">
+
+    <template>
+        <style>
+        :host {
+            display: block;
+        }
+        </style>
+
+        <template is="dom-repeat" items="{{games}}" filter="inCurrentRound">
+            <div>{{item.game}}</div>
+        </template>
+    </template>
+
+</dom-module>
