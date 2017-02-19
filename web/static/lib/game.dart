@@ -48,4 +48,20 @@ class Game extends JsProxy with Exportable {
   @reflectable
   @export
   int gameInRound;
+
+  @reflectable
+  @export
+  int topSeed;
+
+  @reflectable
+  @export
+  int bottomSeed;
+
+  @reflectable
+  @export
+  int topScore;
+
+  @reflectable
+  @export
+  int bottomScore;
 }

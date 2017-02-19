@@ -22,6 +22,10 @@ type Game struct {
 	Game              int            `json:"game"`
 	Round             int            `json:"round"`
 	GameInRound       int            `json:"gameInRound"`
+	TopSeed           int            `json:"topSeed"`
+	BottomSeed        int            `json:"bottomSeed"`
+	TopScore          int            `json:"topScore"`
+	BottomScore       int            `json:"bottomScore"`
 }
 
 func init() {

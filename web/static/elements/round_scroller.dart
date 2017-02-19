@@ -4,6 +4,7 @@ library braket.round_scroller;
 import 'package:polymer/polymer.dart';
 import 'package:web_components/web_components.dart' show HtmlImport;
 
+import 'game_container.dart';
 import '../lib/game.dart';
 
 @PolymerRegister('round-scroller')

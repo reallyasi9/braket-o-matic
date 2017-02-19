@@ -1,6 +1,6 @@
 <link rel="import" href="../packages/polymer/polymer.html">
 
-<dom-module id="round-scroller">
+<dom-module id="slot-container">
 
     <template>
         <style>
@@ -9,9 +9,11 @@
         }
         </style>
 
-        <template is="dom-repeat" items="{{games}}" filter="inCurrentRound">
-            <game-container game="[[item]]"></game-container>
-        </template>
+        <div>
+            <span>[[seed]]</span>
+            <span>[[team]]</span>
+            <span>[[score]]</span>
+        </div>
     </template>
 
 </dom-module>

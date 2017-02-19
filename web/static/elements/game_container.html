@@ -1,0 +1,18 @@
+<link rel="import" href="../packages/polymer/polymer.html">
+
+<dom-module id="game-container">
+
+    <template>
+        <style>
+        :host {
+            display: block;
+        }
+        </style>
+
+        <div>
+            <slot-container team="[[game.topTeam]]" seed="[[game.topSeed]]" score="[[game.topScore]]"></slot-container>
+            <slot-container team="[[game.bottomTeam]]" seed="[[game.bottomSeed]]" score="[[game.bottomScore]]"></slot-container>
+        </div>
+    </template>
+
+</dom-module>
