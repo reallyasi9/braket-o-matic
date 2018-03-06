@@ -156,7 +156,7 @@ packages:
       name: polymer_elements
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-rc.9"
+    version: "1.0.0-rc.10"
   polymer_interop:
     description:
       name: polymer_interop
