@@ -1,0 +1,69 @@
+{
+  "2018": {
+    "regionals": [
+      {
+        "name": "East",
+        "locale": "Boston, Massachusetts",
+        "seedOrder": [
+          [1, 16],
+          [8, 9],
+          [5, 12],
+          [4, 13],
+          [6, 11],
+          [3, 14],
+          [7, 10],
+          [2, 15]
+        ]
+      },
+      {
+        "name": "West",
+        "locale": "Los Angeles, California",
+        "seedOrder": [
+          [1, 16],
+          [8, 9],
+          [5, 12],
+          [4, 13],
+          [6, 11],
+          [3, 14],
+          [7, 10],
+          [2, 15]
+        ]
+      },
+      {
+        "name": "Midwest",
+        "locale": "Omaha, Nebraska",
+        "seedOrder": [
+          [1, 16],
+          [8, 9],
+          [5, 12],
+          [4, 13],
+          [6, 11],
+          [3, 14],
+          [7, 10],
+          [2, 15]
+        ]
+      },
+      {
+        "name": "South",
+        "locale": "Atlanta, Georgia",
+        "seedOrder": [
+          [1, 16],
+          [8, 9],
+          [5, 12],
+          [4, 13],
+          [6, 11],
+          [3, 14],
+          [7, 10],
+          [2, 15]
+        ]
+      }
+    ],
+    "finals": {
+      "locale": "San Antonio, Texas",
+      "regionOrder": [
+        ["East", "West"],
+        ["Midwest", "South"]
+      ]
+    }
+  }
+}
