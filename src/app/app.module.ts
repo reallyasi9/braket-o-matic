@@ -10,10 +10,13 @@ import { RouterModule } from '@angular/router';
 import { firebase, firebaseui, FirebaseUIModule } from 'firebaseui-angular';
 import { environment } from 'src/environments/environment';
 
+import { MatToolbarModule } from '@angular/material/toolbar';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserButtonComponent } from './user-button/user-button.component';
 import { UserLoginComponent } from './user-login/user-login.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -40,6 +43,8 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     FirebaseUIModule.forRoot(firebaseUiAuthConfig),
+    BrowserAnimationsModule,
+    MatToolbarModule,
   ],
   providers: [
     {
