@@ -11,6 +11,7 @@ import { firebase, firebaseui, FirebaseUIModule } from 'firebaseui-angular';
 import { environment } from 'src/environments/environment';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -45,6 +46,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     FirebaseUIModule.forRoot(firebaseUiAuthConfig),
     BrowserAnimationsModule,
     MatToolbarModule,
+    MatButtonModule,
   ],
   providers: [
     {
