@@ -6,14 +6,13 @@ import {
 } from '@angular/fire/auth';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
 import { firebase, firebaseui, FirebaseUIModule } from 'firebaseui-angular';
 import { environment } from 'src/environments/environment';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserButtonComponent } from './user-button/user-button.component';
 import { UserLoginComponent } from './user-login/user-login.component';
@@ -35,11 +34,6 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
   declarations: [AppComponent, UserButtonComponent, UserLoginComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    RouterModule.forRoot([
-      { path: 'login', component: UserLoginComponent },
-      { path: '', redirectTo: '/login', pathMatch: 'full' },
-    ]),
     FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
@@ -47,6 +41,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
+    MatDialogModule,
   ],
   providers: [
     {

@@ -1,0 +1,2 @@
+<span *ngIf="afAuth.user | async">Logged in</span>
+<button *ngIf="!(afAuth.user | async)" mat-button (click)="openDialog()">Log in</button>
