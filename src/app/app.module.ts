@@ -1,13 +1,19 @@
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule, USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/auth';
+import {
+  AngularFireAuthModule,
+  USE_EMULATOR as USE_AUTH_EMULATOR,
+} from '@angular/fire/auth';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { firebase, firebaseui, FirebaseUIModule } from 'firebaseui-angular';
 import { environment } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { UserButtonComponent } from './user-button/user-button.component';
+import { UserLoginComponent } from './user-login/user-login.component';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -22,10 +28,14 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
 };
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, UserButtonComponent, UserLoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    RouterModule.forRoot([
+      { path: 'login', component: UserLoginComponent },
+      { path: '', redirectTo: '/login', pathMatch: 'full' },
+    ]),
     FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
