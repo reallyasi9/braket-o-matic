@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: 'AIzaSyDXMjo60_LR61muuHmi9FoAdI5uQhizvuU',
+    apiKey: 'add-me-later',
     authDomain: 'braket-o-matic-2.firebaseapp.com',
     projectId: 'braket-o-matic-2',
     storageBucket: 'braket-o-matic-2.appspot.com',
