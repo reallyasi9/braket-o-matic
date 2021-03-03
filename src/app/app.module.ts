@@ -1,12 +1,7 @@
 import { NgModule } from '@angular/core';
-import { AngularFireModule } from '@angular/fire';
-import {
-  AngularFireAuthModule,
-  USE_EMULATOR as USE_AUTH_EMULATOR,
-} from '@angular/fire/auth';
-import { FormsModule } from '@angular/forms';
+import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/auth';
 import { BrowserModule } from '@angular/platform-browser';
-import { firebase, firebaseui, FirebaseUIModule } from 'firebaseui-angular';
+import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { environment } from 'src/environments/environment';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -17,31 +12,40 @@ import { AppComponent } from './app.component';
 import { UserButtonComponent } from './user-button/user-button.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule, Routes } from '@angular/router';
+import { UserRegisterComponent } from './user-register/user-register.component';
 
-const firebaseUiAuthConfig: firebaseui.auth.Config = {
-  signInFlow: 'popup',
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
-  ],
-  // tosUrl: '<your-tos-link>',
-  // privacyPolicyUrl: '<your-privacyPolicyUrl-link>',
-  credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO,
-};
+// const firebaseUiAuthConfig: firebaseui.auth.Config = {
+//   signInFlow: 'popup',
+//   signInOptions: [
+//     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+//     firebase.auth.EmailAuthProvider.PROVIDER_ID,
+//     firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
+//   ],
+//   // tosUrl: '<your-tos-link>',
+//   // privacyPolicyUrl: '<your-privacyPolicyUrl-link>',
+//   credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO,
+// };
+
+const routes: Routes = [
+  { path: 'login', component: UserLoginComponent },
+  { path: 'register', component: UserRegisterComponent },
+];
 
 @NgModule({
-  declarations: [AppComponent, UserButtonComponent, UserLoginComponent],
+  declarations: [
+    AppComponent,
+    UserButtonComponent,
+    UserLoginComponent,
+    UserRegisterComponent,
+  ],
   imports: [
     BrowserModule,
-    FormsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule,
-    FirebaseUIModule.forRoot(firebaseUiAuthConfig),
     BrowserAnimationsModule,
+    NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig),
     MatToolbarModule,
     MatButtonModule,
-    MatDialogModule,
+    RouterModule.forRoot(routes),
   ],
   providers: [
     {
