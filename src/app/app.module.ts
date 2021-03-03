@@ -12,13 +12,10 @@ import { AppComponent } from './app.component';
 import { UserButtonComponent } from './user-button/user-button.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule, Routes } from '@angular/router';
 import { UserRegisterComponent } from './user-register/user-register.component';
+import { AppRoutingModule } from './app-routing.module';
 
-const routes: Routes = [
-  { path: 'login', component: UserLoginComponent },
-  { path: 'register', component: UserRegisterComponent },
-];
+
 
 @NgModule({
   declarations: [
@@ -33,7 +30,7 @@ const routes: Routes = [
     NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig),
     MatToolbarModule,
     MatButtonModule,
-    RouterModule.forRoot(routes),
+    AppRoutingModule,
   ],
   providers: [
     {
