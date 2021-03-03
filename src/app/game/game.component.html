@@ -1,0 +1,6 @@
+<div *ngIf="!!game">
+    <div><span>id:</span> {{game.id}}</div>
+    <div><span>startDate:</span> {{game.startDate}}</div>
+    <div *ngFor="let team of game.teams; index as i"><app-team [team]="team"></app-team> {{game.scores[i]}}</div>
+    <div><span>complete:</span> {{game.complete}}</div>
+</div>

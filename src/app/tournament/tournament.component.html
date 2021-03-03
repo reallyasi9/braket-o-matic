@@ -1,0 +1,16 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Tournament Metadata</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div><span>ID:</span> {{tournament.id}}</div>
+        <div><span>startDate:</span> {{tournament.startDate}}</div>
+        <div><span>complete:</span> {{tournament.complete}}</div>
+    </mat-card-content>
+</mat-card>
+
+<mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let game of tournament.games">
+        <app-game [game]="game"></app-game>
+    </mat-list-item>
+</mat-list>
