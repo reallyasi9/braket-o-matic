@@ -3,7 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebaseConfig: {
+    apiKey: 'add-me-later',
+    authDomain: 'braket-o-matic-2.firebaseapp.com',
+    projectId: 'braket-o-matic-2',
+    storageBucket: 'braket-o-matic-2.appspot.com',
+    messagingSenderId: '143706616878',
+    appId: '1:143706616878:web:8979316344c377deab1bbf',
+    measurementId: 'G-J695GJ13R9',
+  },
 };
 
 /*
