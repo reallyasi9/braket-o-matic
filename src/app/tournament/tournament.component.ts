@@ -6,11 +6,15 @@ import { Team } from '../team';
 const team1: Team = {
   id: 1,
   name: 'Michigan',
+  primaryColor: '#00274C',
+  accentColor: '#FFCB05',
 };
 
 const team2: Team = {
   id: 2,
   name: 'Ohio State',
+  primaryColor: '#CE0F3D',
+  accentColor: '#B0B7BC',
 };
 
 const games: Game[] = [
@@ -19,27 +23,21 @@ const games: Game[] = [
     startDate: new Date(2001, 2, 3, 4, 5, 6),
     teams: [team1, team2],
     scores: [],
-    complete: false,
-    winner: undefined,
-    loser: undefined,
+    winner: -1,
   },
   {
     id: 2,
     startDate: new Date(2002, 3, 4, 5, 6, 7),
     teams: [team2, team1],
     scores: [6, 14],
-    complete: false,
-    winner: undefined,
-    loser: undefined,
+    winner: -1,
   },
   {
     id: 3,
     startDate: new Date(2003, 4, 5, 6, 7, 8),
     teams: [team1, team2],
     scores: [100, 0],
-    complete: true,
-    winner: undefined,
-    loser: undefined,
+    winner: 0,
   },
 ];
 

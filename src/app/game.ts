@@ -5,7 +5,5 @@ export interface Game {
     startDate: Date;
     teams: Team[];
     scores: number[];
-    complete: boolean;
-    winner: Team | undefined;
-    loser: Team | undefined;
+    winner: number;
 }
