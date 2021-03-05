@@ -1,10 +1,13 @@
-<div *ngIf="!!game">
-    <div><span>id:</span> {{game.id}}</div>
-    <div><span>startDate:</span> {{game.startDate}}</div>
-    <table>
-      <tr *ngFor="let team of game.teams; index as i">
-        <td class="name" [ngStyle]="teamStyle(i)">{{team.name}}</td>
-        <td class="score" [ngStyle]="scoreStyle(i)">{{game.scores[i]}}</td>
+<mat-card class="game-container">
+  <table mat-card-image class="game-table">
+    <thead>
+      <tr>
+        <th class="clock" colspan="2">{{gameClock()}}</th>
       </tr>
-    </table>
-</div>
+    </thead>
+    <tr *ngFor="let team of game.teams; index as i" [ngStyle]="teamStyle(i)">
+      <td class="name">{{team.name}}</td>
+      <td class="score">{{game.scores[i]}}</td>
+    </tr>
+  </table>
+</mat-card>

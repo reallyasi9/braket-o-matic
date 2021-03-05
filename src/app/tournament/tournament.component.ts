@@ -24,6 +24,8 @@ const games: Game[] = [
     teams: [team1, team2],
     scores: [],
     winner: -1,
+    clockSeconds: 0,
+    period: "Pregame",
   },
   {
     id: 2,
@@ -31,6 +33,8 @@ const games: Game[] = [
     teams: [team2, team1],
     scores: [6, 14],
     winner: -1,
+    clockSeconds: 712,
+    period: "2nd",
   },
   {
     id: 3,
@@ -38,6 +42,8 @@ const games: Game[] = [
     teams: [team1, team2],
     scores: [100, 0],
     winner: 0,
+    clockSeconds: 0,
+    period: "Final",
   },
 ];
 
