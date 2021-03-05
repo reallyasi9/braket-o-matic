@@ -1,0 +1,23 @@
+.game-container {
+  max-width: 192px;
+  min-width: 128px;
+  padding-bottom: 0px;
+  margin-bottom: 6px;
+}
+
+.game-table {
+  border-collapse: collapse;
+  border: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.score {
+  text-align: right;
+}
+
+.clock {
+  font-size: 75%;
+  font-weight: 300;
+}

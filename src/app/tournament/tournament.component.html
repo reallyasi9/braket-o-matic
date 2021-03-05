@@ -9,8 +9,4 @@
     </mat-card-content>
 </mat-card>
 
-<mat-list role="list">
-    <mat-list-item role="listitem" *ngFor="let game of tournament.games">
-        <app-game [game]="game"></app-game>
-    </mat-list-item>
-</mat-list>
+<app-game *ngFor="let game of tournament.games" [game]="game"></app-game>

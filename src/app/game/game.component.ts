@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Game } from '../game';
 import { Team } from '../team';
@@ -5,7 +6,7 @@ import { Team } from '../team';
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
-  styleUrls: ['./game.component.css'],
+  styleUrls: ['./game.component.scss'],
 })
 export class GameComponent implements OnInit {
   @Input() game: Game;
@@ -30,6 +31,8 @@ export class GameComponent implements OnInit {
       startDate: new Date(),
       winner: -1,
       scores: [0, 0],
+      clockSeconds: 0,
+      period: "Pregame",
     };
   }
 
@@ -66,6 +69,20 @@ export class GameComponent implements OnInit {
       };
     } else {
       return {};
+    }
+  }
+
+  // Return the start time of the game or the game clock.
+  gameClock(): string {
+    var now = new Date();
+    if (this.game.startDate > now) {
+      return formatDate(this.game.startDate, "MMM d @ h:mm a", "en-US");
+    } else if (this.game.clockSeconds > 0) {
+      var min = Math.floor(this.game.clockSeconds / 60).toString();
+      var sec = this.game.clockSeconds % 60;
+      return `${min}:${sec.toString().padStart(2, '0')} ${this.game.period}`;
+    } else {
+      return this.game.period;
     }
   }
 }
