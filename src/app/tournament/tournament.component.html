@@ -9,4 +9,7 @@
     </mat-card-content>
 </mat-card>
 
-<app-game *ngFor="let game of tournament.games" [game]="game"></app-game>
+<span class="column">
+    <app-game *ngFor="let game of tournament.games" [game]="game"></app-game>
+</span>
+<mat-divider [vertical]="true"></mat-divider>
