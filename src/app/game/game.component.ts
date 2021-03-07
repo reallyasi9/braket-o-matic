@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Game } from '../game';
+import { generateGame } from '../mock-games';
 import { Team } from '../team';
 
 @Component({
@@ -12,42 +13,26 @@ export class GameComponent implements OnInit {
   @Input() game: Game;
 
   constructor() {
-    this.game = {
-      id: -1,
-      teams: [
-        {
-          id: -1,
-          name: 'team1',
-          primaryColor: 'black',
-          accentColor: 'white',
-        },
-        {
-          id: -2,
-          name: 'team2',
-          primaryColor: 'blue',
-          accentColor: 'yellow',
-        },
-      ],
-      startDate: new Date(),
-      winner: -1,
-      scores: [0, 0],
-      clockSeconds: 0,
-      period: "Pregame",
-    };
+    this.game = generateGame(0, null, null);
   }
 
   ngOnInit(): void {}
 
   // Return CSS style definition for a given team.
   teamStyle(i: number) {
-    var team: Team = this.game.teams[i];
+    var team = i == 0 ? this.game.topTeam : this.game.bottomTeam;
+    if (!team) {
+      return {
+        color: '#bbbbbb',
+      };
+    }
     if (i == this.game.winner) {
       return {
         fontWeight: 900,
-        backgroundColor: team?.primaryColor,
-        color: team?.accentColor,
+        backgroundColor: team.primaryColor,
+        color: team.accentColor,
       };
-    } else if (this.game?.winner >= 0) {
+    } else if (this.game.winner >= 0) {
       return {
         color: '#bbbbbb',
       };
@@ -58,12 +43,17 @@ export class GameComponent implements OnInit {
 
   // Return CSS style definition for a given team.
   scoreStyle(i: number) {
-    var team: Team = this.game.teams[i];
+    var team = i == 0 ? this.game.topTeam : this.game.bottomTeam;
+    if (!team) {
+      return {
+        color: '#bbbbbb',
+      };
+    }
     if (i == this.game.winner) {
       return {
         fontWeight: 900,
       };
-    } else if (0 <= this.game?.winner) {
+    } else if (0 <= this.game.winner) {
       return {
         color: '#bbbbbb',
       };
