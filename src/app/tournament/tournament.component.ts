@@ -45,6 +45,15 @@ const games: Game[] = [
     clockSeconds: 0,
     period: "Final",
   },
+  {
+    id: 4,
+    startDate: new Date(2003, 4, 5, 6, 7, 8),
+    teams: [team1, team2],
+    scores: [99, 104],
+    winner: 1,
+    clockSeconds: 0,
+    period: "Final",
+  },
 ];
 
 const tournament: Tournament = {

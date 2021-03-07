@@ -1,8 +1,7 @@
 .game-container {
-  max-width: 192px;
-  min-width: 128px;
-  padding-bottom: 0px;
-  margin-bottom: 6px;
+  width: 128px;
+  padding-bottom: 4px;
+  margin-top: 6px;
 }
 
 .game-table {
@@ -11,13 +10,26 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  height: 44px;
+  font-size: 9pt;
+}
+
+.team {
+  height: 40%;
 }
 
 .score {
   text-align: right;
+  padding-right: 6px;
+}
+
+.name {
+  text-align: left;
+  padding-left: 6px;
 }
 
 .clock {
   font-size: 75%;
   font-weight: 300;
+  height: 20%;
 }

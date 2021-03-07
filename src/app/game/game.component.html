@@ -5,7 +5,7 @@
         <th class="clock" colspan="2">{{gameClock()}}</th>
       </tr>
     </thead>
-    <tr *ngFor="let team of game.teams; index as i" [ngStyle]="teamStyle(i)">
+    <tr *ngFor="let team of game.teams; index as i" [ngStyle]="teamStyle(i)" class="team">
       <td class="name">{{team.name}}</td>
       <td class="score">{{game.scores[i]}}</td>
     </tr>
