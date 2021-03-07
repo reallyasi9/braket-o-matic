@@ -5,9 +5,14 @@
         <th class="clock" colspan="2">{{gameClock()}}</th>
       </tr>
     </thead>
-    <tr *ngFor="let team of game.teams; index as i" [ngStyle]="teamStyle(i)" class="team">
-      <td class="name">{{team.name}}</td>
-      <td class="score">{{game.scores[i]}}</td>
+    <tr [ngStyle]="teamStyle(0)" class="team">
+      <td *ngIf="!!game.topTeam;else no_team" class="name">{{game.topTeam.name}}</td>
+      <td *ngIf="!!game.topTeam;else no_team" class="score">{{game.topScore}}</td>
     </tr>
+    <tr [ngStyle]="teamStyle(1)" class="team">
+      <td *ngIf="!!game.bottomTeam;else no_team" class="name">{{game.bottomTeam.name}}</td>
+      <td *ngIf="!!game.bottomTeam;else no_team" class="score">{{game.bottomScore}}</td>
+    </tr>
+    <ng-template #no_team></ng-template>
   </table>
 </mat-card>
