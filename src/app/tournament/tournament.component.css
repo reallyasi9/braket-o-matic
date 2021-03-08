@@ -2,4 +2,5 @@
     display: inline-block;
     width: 11vw;
     min-width: 128px;
+    max-width: 192px
 }
