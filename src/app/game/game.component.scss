@@ -3,7 +3,11 @@
   height: 4vh;
   padding: 4px 0px 4px 0px;
   margin-top: 6px;
-  
+  min-height: 48px;
+  border: 0px;
+  border-radius: 3px;
+  background-color: white;
+  box-shadow: 0px 1px 3px #cccccc;
 }
 
 .game-table {
@@ -16,12 +20,7 @@
 .team {
   height: 40%;
   width: 100%;
-}
-
-.score, .name {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 9pt;
 }
 
 .score {
@@ -31,13 +30,16 @@
 }
 
 .name {
-  width: 80%;
+  max-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   text-align: left;
   padding-left: 6px;
 }
 
 .clock {
-  font-size: 75%;
+  font-size: 7pt;
   font-weight: 300;
   height: 20%;
 }
