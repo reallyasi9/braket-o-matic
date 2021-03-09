@@ -11,6 +11,7 @@ import { Team } from '../team';
 })
 export class GameComponent implements OnInit {
   @Input() game: Game;
+  @Input() round: number = 0;
 
   constructor() {
     this.game = generateGame(0, null, null);
@@ -73,6 +74,13 @@ export class GameComponent implements OnInit {
       return `${min}:${sec.toString().padStart(2, '0')} ${this.game.period}`;
     } else {
       return this.game.period;
+    }
+  }
+
+  // Return a style for the game container based on the round number.
+  roundMargins() {
+    return {
+      "margin-top.px": this.round * 28 + 6,
     }
   }
 }
