@@ -1,15 +1,21 @@
 <mat-card>
-    <mat-card-header>
-        <mat-card-title>Tournament Metadata</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <div><span>ID:</span> {{tournament.id}}</div>
-        <div><span>startDate:</span> {{tournament.startDate}}</div>
-        <div><span>complete:</span> {{tournament.complete}}</div>
-    </mat-card-content>
+  <mat-card-header>
+    <mat-card-title>Tournament Metadata</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div><span>ID:</span> {{ tournament.id }}</div>
+    <div><span>startDate:</span> {{ tournament.startDate }}</div>
+    <div><span>complete:</span> {{ tournament.complete }}</div>
+  </mat-card-content>
 </mat-card>
 
-<span *ngFor="let column of gameColumns" class="column">
-    <app-game *ngFor="let gameNumber of column" [game]="tournament.games[gameNumber]"></app-game>
-</span>
-<mat-divider [vertical]="true"></mat-divider>
+<div class="container">
+  <span *ngFor="let column of gameColumns; index as i" class="column">
+    <app-game
+      *ngFor="let gameNumber of column"
+      [game]="tournament.games[gameNumber]"
+      [round]="columnToRound(i)"
+    ></app-game>
+    <mat-divider [vertical]="true"></mat-divider>
+  </span>
+</div>
