@@ -9,6 +9,7 @@ import { generateTournament } from '../mock-tournament';
 })
 export class TournamentComponent implements OnInit {
   tournament: Tournament = generateTournament(2021);
+  rounds: number = 5;
   gameColumns: Array<number[]> = [
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
     [32, 33, 34, 35, 36, 37, 38, 39],
@@ -29,5 +30,17 @@ export class TournamentComponent implements OnInit {
 
   columnToRound(col: number): number {
     return Math.min(col, this.gameColumns.length - col - 1);
+  }
+
+  // Return a style for the game container based on the round number.
+  gridLocation(column: number, row: number) {
+    const midCol = Math.floor(this.gameColumns.length / 2);
+    const round = this.columnToRound(column);
+    const startRow = (column == midCol) ? 2 ** (round - 1) - 1 : 2 ** round - 1;
+    const rowStride = (column == midCol) ? 2 ** (round - 1) : 2 ** (round + 1);
+    return {
+      gridColumn: `${column + 1} / span 1`,
+      gridRow: `${startRow + row * rowStride + 1} / span 2`,
+    };
   }
 }

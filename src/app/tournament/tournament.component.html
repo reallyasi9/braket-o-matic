@@ -10,12 +10,15 @@
 </mat-card>
 
 <div class="container">
-  <span *ngFor="let column of gameColumns; index as i" class="column">
-    <app-game
-      *ngFor="let gameNumber of column"
+  <ng-container *ngFor="let column of gameColumns; index as i">
+    <div *ngFor="let gameNumber of column; index as j" class="game" [ngStyle]="gridLocation(i, j)">
+      <app-game
       [game]="tournament.games[gameNumber]"
+      [column]="i"
+      [row]="j"
       [round]="columnToRound(i)"
+      [number]="gameNumber"
     ></app-game>
-    <mat-divider [vertical]="true"></mat-divider>
-  </span>
+    </div>
+  </ng-container>
 </div>
