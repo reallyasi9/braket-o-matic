@@ -11,7 +11,10 @@ import { Team } from '../team';
 })
 export class GameComponent implements OnInit {
   @Input() game: Game;
+  @Input() column: number = 0;
+  @Input() row: number = 0;
   @Input() round: number = 0;
+  @Input() number: number = 0;
 
   constructor() {
     this.game = generateGame(0, null, null);
@@ -67,7 +70,7 @@ export class GameComponent implements OnInit {
   gameClock(): string {
     var now = new Date();
     if (this.game.startDate > now) {
-      return formatDate(this.game.startDate, "MMM d @ h:mm a", "en-US");
+      return formatDate(this.game.startDate, 'MMM d @ h:mm a', 'en-US');
     } else if (this.game.clockSeconds > 0) {
       var min = Math.floor(this.game.clockSeconds / 60).toString();
       var sec = this.game.clockSeconds % 60;
@@ -77,10 +80,4 @@ export class GameComponent implements OnInit {
     }
   }
 
-  // Return a style for the game container based on the round number.
-  roundMargins() {
-    return {
-      "margin-top.px": this.round * 28 + 6,
-    }
-  }
 }
