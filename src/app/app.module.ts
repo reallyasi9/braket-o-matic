@@ -7,6 +7,8 @@ import { environment } from 'src/environments/environment';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import {MatListModule} from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
 
 import { AppComponent } from './app.component';
 import { UserButtonComponent } from './user-button/user-button.component';
@@ -14,6 +16,9 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserRegisterComponent } from './user-register/user-register.component';
 import { AppRoutingModule } from './app-routing.module';
+import { TeamComponent } from './team/team.component';
+import { GameComponent } from './game/game.component';
+import { TournamentComponent } from './tournament/tournament.component';
 
 
 
@@ -23,6 +28,9 @@ import { AppRoutingModule } from './app-routing.module';
     UserButtonComponent,
     UserLoginComponent,
     UserRegisterComponent,
+    TeamComponent,
+    GameComponent,
+    TournamentComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,6 +38,8 @@ import { AppRoutingModule } from './app-routing.module';
     NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig),
     MatToolbarModule,
     MatButtonModule,
+    MatCardModule,
+    MatListModule,
     AppRoutingModule,
   ],
   providers: [
