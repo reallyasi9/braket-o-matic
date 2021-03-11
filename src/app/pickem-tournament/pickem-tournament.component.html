@@ -1,0 +1,10 @@
+<div *ngIf="!!tournament" class="container">
+  <div *ngFor="let item of tournament.games | keyvalue" class="game" [ngStyle]="gridLocation(item.key)">
+    <app-pickem-game
+    [topTeam]="item.value.topTeam"
+    [bottomTeam]="item.value.bottomTeam"
+    [pick]="picks[item.key]"
+    (pickChange)="updatePick(item.value, $event)"
+  ></app-pickem-game>
+  </div>
+</div>
