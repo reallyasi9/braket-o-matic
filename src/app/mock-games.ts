@@ -3,7 +3,7 @@ import { Team } from './team';
 
 const PERIODS: string[] = ['Pregame', '1st', '2nd', 'OT', 'OT2', 'Final'];
 
-export function generateGame(id: number, team1?: Team, team2?: Team): Game {
+export function generateGame(id: string, team1?: Team, team2?: Team): Game {
 
   const seconds = Math.floor(Math.random() * 60*20);
   const period = PERIODS[Math.floor(Math.random() * PERIODS.length)];
