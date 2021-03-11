@@ -14,7 +14,7 @@ export function generateTournament(id: number): Tournament {
     games.push(generateGame(i, teams[i * 2], teams[i * 2 + 1]));
   }
   for (let i = 33; i <= 63; i++) {
-    games.push(generateGame(i, null, null));
+    games.push(generateGame(i));
   }
   console.log(games.length);
 
