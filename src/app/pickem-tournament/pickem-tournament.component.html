@@ -1,0 +1,10 @@
+<div class="container">
+  <ng-container *ngFor="let column of gameColumns; index as i">
+    <div *ngFor="let gameNumber of column; index as j" class="game" [ngStyle]="gridLocation(i, j)">
+      <app-pickem-game
+      [topTeam]="tournament.games[gameNumber].topTeam"
+      [bottomTeam]="tournament.games[gameNumber].bottomTeam"
+    ></app-pickem-game>
+    </div>
+  </ng-container>
+</div>
