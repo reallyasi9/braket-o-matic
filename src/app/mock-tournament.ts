@@ -4,24 +4,48 @@ import { generateTeam } from './mock-teams';
 import { Team } from './team';
 import { Tournament } from './tournament';
 
-export function generateTournament(id: number): Tournament {
-  var games: Game[] = [];
-  var teams: Team[] = [];
-  for (let i = 0; i < 64; i++) {
-    teams.push(generateTeam(i));
+// Generate a fake 64-team, 6-round, single-elimination tournament
+// that starts now and is not yet complete.
+export function generateTournament(id: string): Tournament {
+  var games: { [id: string]: Game } = {};
+  var cartilage: { [from: string]: { to: string; bottom: boolean } } = {};
+  var gridLocation: { [id: string]: { col: number; row: number } } = {};
+  const gamesPerRound = [32, 16, 8, 4, 2, 1];
+  var iGame = 0;
+  for (let round = 0; round < gamesPerRound.length; round++) {
+    const nGames = gamesPerRound[round];
+    for (let i = 0; i < nGames; i++) {
+      if (round == 0) {
+        games[iGame.toString()] = generateGame(
+          iGame.toString(),
+          generateTeam(iGame * 2),
+          generateTeam(iGame * 2 + 1)
+        );
+      } else {
+        games[iGame] = generateGame(iGame.toString());
+      }
+
+      const nextGame = nGames + Math.floor(i / 2);
+      const bottom = i % 2 == 1;
+      cartilage[iGame] = { to: nextGame.toString(), bottom: bottom };
+
+      const col = round >= 4 ? 4 : i >= nGames / 2 ? 8 - round : round;
+      const rowOffset = round >= 4 ? 2 ** (round - 1) - 1 : 2 ** round - 1;
+      const rowSpan = round >= 4 ? 2 ** round : 2 ** (round + 1);
+      // const rowCap = round >= 4 ? Infinity : nGames;
+      const row = rowOffset + ((i * rowSpan) % gamesPerRound[0]);
+      gridLocation[iGame] = { col: col, row: row };
+
+      iGame++;
+    }
   }
-  for (let i = 0; i < 32; i++) {
-    games.push(generateGame(i, teams[i * 2], teams[i * 2 + 1]));
-  }
-  for (let i = 33; i <= 63; i++) {
-    games.push(generateGame(i));
-  }
-  console.log(games.length);
 
   return {
-    id: id,
+    id: id.toString(),
     startDate: new Date(),
     complete: false,
     games: games,
+    cartilage: cartilage,
+    gridLocation: gridLocation,
   };
 }

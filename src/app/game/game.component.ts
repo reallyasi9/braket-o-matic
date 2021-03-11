@@ -13,7 +13,7 @@ export class GameComponent implements OnInit {
   @Input() game: Game;
 
   constructor() {
-    this.game = generateGame(0);
+    this.game = generateGame("0");
   }
 
   ngOnInit(): void {}

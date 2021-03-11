@@ -1,7 +1,7 @@
 import { Team } from './team';
 
 export interface Game {
-  id: number;
+  id: string;
   startDate?: Date;
   clockSeconds: number;
   period: string;

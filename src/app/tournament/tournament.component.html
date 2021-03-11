@@ -1,9 +1,7 @@
-<div class="container">
-  <ng-container *ngFor="let column of gameColumns; index as i">
-    <div *ngFor="let gameNumber of column; index as j" class="game" [ngStyle]="gridLocation(i, j)">
-      <app-game
-      [game]="tournament.games[gameNumber]"
-    ></app-game>
-    </div>
-  </ng-container>
+<div *ngIf="!!tournament" class="container">
+  <div *ngFor="let item of tournament.games | keyvalue" class="game" [ngStyle]="gridLocation(item.key)">
+    <app-game
+    [game]="item.value"
+  ></app-game>
+  </div>
 </div>
