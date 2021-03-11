@@ -19,6 +19,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { TeamComponent } from './team/team.component';
 import { GameComponent } from './game/game.component';
 import { TournamentComponent } from './tournament/tournament.component';
+import { PickemGameComponent } from './pickem-game/pickem-game.component';
+import { PickemTeamComponent } from './pickem-team/pickem-team.component';
+import { PickemTournamentComponent } from './pickem-tournament/pickem-tournament.component';
 
 
 
@@ -31,6 +34,9 @@ import { TournamentComponent } from './tournament/tournament.component';
     TeamComponent,
     GameComponent,
     TournamentComponent,
+    PickemGameComponent,
+    PickemTeamComponent,
+    PickemTournamentComponent,
   ],
   imports: [
     BrowserModule,

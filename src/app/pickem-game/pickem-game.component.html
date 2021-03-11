@@ -1,0 +1,20 @@
+<table>
+  <tr>
+    <td>
+      <app-pickem-team
+        [team]="topTeam"
+        [picked]="!!pick && topTeam == pick"
+        (pickedChange)="togglePick($event)"
+      ></app-pickem-team>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <app-pickem-team
+        [team]="bottomTeam"
+        [picked]="!!pick && bottomTeam == pick"
+        (pickedChange)="togglePick($event)"
+      ></app-pickem-team>
+    </td>
+  </tr>
+</table>
