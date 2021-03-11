@@ -3,10 +3,6 @@
     <div *ngFor="let gameNumber of column; index as j" class="game" [ngStyle]="gridLocation(i, j)">
       <app-game
       [game]="tournament.games[gameNumber]"
-      [column]="i"
-      [row]="j"
-      [round]="columnToRound(i)"
-      [number]="gameNumber"
     ></app-game>
     </div>
   </ng-container>
