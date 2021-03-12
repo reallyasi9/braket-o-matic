@@ -1,7 +1,15 @@
 .name {
   font-size: 9pt;
-  background-color: #ffffff;
+  background-color: none;
   color: #000000;
+  /* max-width: 0; */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
 }
 
 .picked {
