@@ -1,10 +1,9 @@
-<div (click)="togglePick()">
-  <span
-    *ngIf="!!team"
-    class="name"
-    [style.background-color]="picked ? team.primaryColor : ''"
-    [style.color]="picked ? team.accentColor : ''"
-    [ngClass]="{ picked: picked }"
-    >{{ team.name }}</span
-  >
+<div
+  (click)="togglePick()"
+  class="name"
+  [style.background-color]="(!!team && picked) ? team.primaryColor : ''"
+  [style.color]="(!!team && picked) ? team.accentColor : ''"
+  [ngClass]="{ picked: picked }"
+>
+  {{ team?.name }}
 </div>
