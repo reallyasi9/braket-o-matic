@@ -12,6 +12,9 @@ export const environment = {
     messagingSenderId: '143706616878',
     appId: '1:143706616878:web:8979316344c377deab1bbf',
     measurementId: 'G-J695GJ13R9',
+
+    authGuardFallback: '/',
+    authGuardLoggedInURL: '/',
   },
 };
 
