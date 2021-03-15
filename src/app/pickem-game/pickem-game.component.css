@@ -1,5 +1,6 @@
 .game-container {
   width: 100%;
+  min-width: 100px;
   height: 100%;
   border: 0px;
   border-radius: 3px;
