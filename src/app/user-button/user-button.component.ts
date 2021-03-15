@@ -1,6 +1,8 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MatDialog } from '@angular/material/dialog';
+import { TOURNAMENT_PATH } from '../app-routing.module';
 import { UserLoginComponent } from '../user-login/user-login.component';
 
 @Component({
@@ -9,7 +11,11 @@ import { UserLoginComponent } from '../user-login/user-login.component';
   styleUrls: ['./user-button.component.css'],
 })
 export class UserButtonComponent implements OnInit {
-  constructor(public afAuth: AngularFireAuth, public loginDialog: MatDialog) {}
+  constructor(
+    public afAuth: AngularFireAuth,
+    public loginDialog: MatDialog,
+    private location: Location,
+  ) {}
 
   ngOnInit(): void {}
 
@@ -18,6 +24,7 @@ export class UserButtonComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog: ${result}`);
+      location.reload();
     });
   }
 
@@ -25,9 +32,10 @@ export class UserButtonComponent implements OnInit {
     this.afAuth.signOut().then(
       () => {
         console.log('Logged out');
+        location.reload();
       },
       () => {
-        console.log('Logging out failed');
+        console.log('Logging out failed!');
       }
     );
   }
