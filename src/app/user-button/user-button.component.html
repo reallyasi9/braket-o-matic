@@ -1,2 +1,20 @@
-<button *ngIf="afAuth.user | async" mat-button (click)="logOut()">Log out</button>
-<button *ngIf="!(afAuth.user | async)" mat-button routerLink="/login">Log in</button>
+<button
+  *ngIf="afAuth.user | async; else notLoggedIn"
+  mat-flat-button
+  [disabled]="dialogOpen"
+  (click)="logOut()"
+>
+  Log out
+</button>
+<ng-template #notLoggedIn>
+  <button mat-flat-button [disabled]="dialogOpen" (click)="openDialog()">
+    <mat-progress-spinner
+      *ngIf="dialogOpen; else dialogClosed"
+      class="inline-spinner"
+      mode="indeterminate"
+      diameter="18"
+      color="accent"
+    ></mat-progress-spinner
+    ><ng-template #dialogClosed>Log in</ng-template>
+  </button>
+</ng-template>

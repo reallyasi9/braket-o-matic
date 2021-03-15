@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,25 +10,40 @@ import { UserLoginComponent } from '../user-login/user-login.component';
   styleUrls: ['./user-button.component.css'],
 })
 export class UserButtonComponent implements OnInit {
-  constructor(public afAuth: AngularFireAuth, public loginDialog: MatDialog) {}
+  dialogOpen: boolean = false;
+
+  constructor(
+    public afAuth: AngularFireAuth,
+    public loginDialog: MatDialog,
+    private location: Location,
+  ) {}
 
   ngOnInit(): void {}
 
   openDialog() {
     const dialogRef = this.loginDialog.open(UserLoginComponent);
+    dialogRef.afterOpened().subscribe(() => {
+      this.dialogOpen = true;
+    });
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog: ${result}`);
+      this.dialogOpen = false;
+      location.reload();
     });
   }
 
   logOut() {
+    this.dialogOpen = true;
     this.afAuth.signOut().then(
       () => {
         console.log('Logged out');
+        this.dialogOpen = false;
+        location.reload();
       },
       () => {
-        console.log('Logging out failed');
+        console.log('Logging out failed!');
+        this.dialogOpen = false;
       }
     );
   }

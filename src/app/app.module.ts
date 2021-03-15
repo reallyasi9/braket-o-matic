@@ -1,36 +1,31 @@
 import { NgModule } from '@angular/core';
 import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/auth';
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/firestore';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { environment } from 'src/environments/environment';
-
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import {MatListModule} from '@angular/material/list';
-import { MatCardModule } from '@angular/material/card';
-
-import { AppComponent } from './app.component';
-import { UserButtonComponent } from './user-button/user-button.component';
-import { UserLoginComponent } from './user-login/user-login.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UserRegisterComponent } from './user-register/user-register.component';
 import { AppRoutingModule } from './app-routing.module';
-import { TeamComponent } from './team/team.component';
+import { AppComponent } from './app.component';
 import { GameComponent } from './game/game.component';
-import { TournamentComponent } from './tournament/tournament.component';
 import { PickemGameComponent } from './pickem-game/pickem-game.component';
 import { PickemTeamComponent } from './pickem-team/pickem-team.component';
 import { PickemTournamentComponent } from './pickem-tournament/pickem-tournament.component';
-
-
+import { TeamComponent } from './team/team.component';
+import { TournamentComponent } from './tournament/tournament.component';
+import { UserButtonComponent } from './user-button/user-button.component';
+import { UserLoginComponent } from './user-login/user-login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserButtonComponent,
     UserLoginComponent,
-    UserRegisterComponent,
     TeamComponent,
     GameComponent,
     TournamentComponent,
@@ -46,6 +41,7 @@ import { PickemTournamentComponent } from './pickem-tournament/pickem-tournament
     MatButtonModule,
     MatCardModule,
     MatListModule,
+    MatProgressSpinnerModule,
     AppRoutingModule,
   ],
   providers: [
