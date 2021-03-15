@@ -2,13 +2,12 @@
   font-size: 9pt;
   background-color: none;
   color: #000000;
-  /* max-width: 0; */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: left;
   height: 100%;
-  width: 100%;
+  max-width: 140px;
   cursor: pointer;
 }
 
