@@ -14,7 +14,6 @@ import { AppComponent } from './app.component';
 import { UserButtonComponent } from './user-button/user-button.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UserRegisterComponent } from './user-register/user-register.component';
 import { AppRoutingModule } from './app-routing.module';
 import { TeamComponent } from './team/team.component';
 import { GameComponent } from './game/game.component';
@@ -30,7 +29,6 @@ import { PickemTournamentComponent } from './pickem-tournament/pickem-tournament
     AppComponent,
     UserButtonComponent,
     UserLoginComponent,
-    UserRegisterComponent,
     TeamComponent,
     GameComponent,
     TournamentComponent,

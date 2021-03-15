@@ -1,5 +1,7 @@
-<ngx-auth-firebaseui-login
+
+<ngx-auth-firebaseui
+  class="login"
   [providers]="[providers.Google]"
-  (onCreateAccountRequested)="register()"
+  [guestEnabled]="false"
   (onSuccess)="success()"
-></ngx-auth-firebaseui-login>
+></ngx-auth-firebaseui>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { MatDialogRef } from '@angular/material/dialog';
 import { AuthProvider } from 'ngx-auth-firebaseui';
 
 @Component({
@@ -10,15 +10,11 @@ import { AuthProvider } from 'ngx-auth-firebaseui';
 export class UserLoginComponent implements OnInit {
   providers = AuthProvider;
 
-  constructor(private router: Router) {}
+  constructor(public dialogRef: MatDialogRef<UserLoginComponent>) {}
 
   ngOnInit(): void {}
 
-  register(): void {
-    this.router.navigate(['/register']);
-  }
-
   success(): void {
-    this.router.navigate(['/']);
+    this.dialogRef.close();
   }
 }
