@@ -18,8 +18,8 @@ export function generateTournament(id: string): Tournament {
       if (round == 0) {
         games[iGame.toString()] = generateGame(
           iGame.toString(),
-          generateTeam(iGame * 2),
-          generateTeam(iGame * 2 + 1)
+          generateTeam((iGame * 2).toString()),
+          generateTeam((iGame * 2 + 1).toString())
         );
       } else {
         games[iGame] = generateGame(iGame.toString());

@@ -20,6 +20,7 @@ import { TeamComponent } from './team/team.component';
 import { TournamentComponent } from './tournament/tournament.component';
 import { UserButtonComponent } from './user-button/user-button.component';
 import { UserLoginComponent } from './user-login/user-login.component';
+import { TeamEditorComponent } from './team-editor/team-editor.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { UserLoginComponent } from './user-login/user-login.component';
     PickemGameComponent,
     PickemTeamComponent,
     PickemTournamentComponent,
+    TeamEditorComponent,
   ],
   imports: [
     BrowserModule,
