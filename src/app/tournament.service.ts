@@ -1,22 +1,36 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import {
+  AngularFirestore,
+  AngularFirestoreDocument,
+  DocumentReference,
+} from '@angular/fire/firestore';
+import { from, Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { generateTournament } from './mock-tournament';
 import { Tournament } from './tournament';
+
+const TOURNAMENT_KEY: string = 'tournaments';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TournamentService {
-  constructor() {}
+  private tournamentDoc: AngularFirestoreDocument<Tournament>;
+  tournament: Observable<Tournament|undefined>;
 
-  getActiveTournament(): Observable<Tournament> {
-    const year = new Date().getFullYear();
-    const tournament = of(generateTournament(year.toString()));
-    return tournament;
-  }
-
-  getTournament(id: string): Observable<Tournament> {
-    const tournament = of(generateTournament(id));
-    return tournament;
+  constructor(private firestore: AngularFirestore) {
+    const id = environment.tournamentId;
+    this.tournamentDoc = firestore.doc<Tournament>(
+      `${TOURNAMENT_KEY}/${id}`
+    );
+    this.tournamentDoc.ref.get().then(
+      (snapshot) => {
+        if (!snapshot.exists) {
+          const randomTournament = generateTournament(id);
+          this.tournamentDoc.set(randomTournament);
+        }
+      }
+    )
+    this.tournament = this.tournamentDoc.valueChanges();
   }
 }
