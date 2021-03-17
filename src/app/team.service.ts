@@ -16,7 +16,7 @@ export class TeamService {
 
   private cacheTeams(tournamentId: string) {
     this.tournamentId = tournamentId;
-    this.teamCollection = this.firestore.collection<Team>(`teams/${tournamentId}`);
+    this.teamCollection = this.firestore.collection<Team>(`tournament/${tournamentId}/teams`);
   }
 
   getTeams(tournamentId: string) : Observable<Team[]> {
