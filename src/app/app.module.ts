@@ -12,27 +12,30 @@ import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { GameComponent } from './game/game.component';
-import { PickemGameComponent } from './pickem-game/pickem-game.component';
-import { PickemTeamComponent } from './pickem-team/pickem-team.component';
-import { PickemTournamentComponent } from './pickem-tournament/pickem-tournament.component';
-import { TeamComponent } from './team/team.component';
-import { TournamentComponent } from './tournament/tournament.component';
+// import { GameComponent } from './game/game.component';
+// import { PickemGameComponent } from './pickem-game/pickem-game.component';
+// import { PickemTeamComponent } from './pickem-team/pickem-team.component';
+// import { PickemTournamentComponent } from './pickem-tournament/pickem-tournament.component';
+// import { TeamComponent } from './team/team.component';
+// import { TournamentComponent } from './tournament/tournament.component';
 import { UserButtonComponent } from './user-button/user-button.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { TeamEditorComponent } from './team-editor/team-editor.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserButtonComponent,
     UserLoginComponent,
-    TeamComponent,
-    GameComponent,
-    TournamentComponent,
-    PickemGameComponent,
-    PickemTeamComponent,
-    PickemTournamentComponent,
+    // TeamComponent,
+    // GameComponent,
+    // TournamentComponent,
+    // PickemGameComponent,
+    // PickemTeamComponent,
+    // PickemTournamentComponent,
     TeamEditorComponent,
   ],
   imports: [
@@ -43,7 +46,10 @@ import { TeamEditorComponent } from './team-editor/team-editor.component';
     MatButtonModule,
     MatCardModule,
     MatListModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatProgressSpinnerModule,
+    MatIconModule,
     AppRoutingModule,
   ],
   providers: [
