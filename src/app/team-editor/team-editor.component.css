@@ -1,0 +1,17 @@
+.team-card {
+  min-width: 200px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.team-form {
+  width: 100%;
+  display: grid;
+  grid-template-columns: [id] 5% [name] 1fr [color1] 12.5% [color2] 12.5% [delete] 10%;
+  grid-template-rows: 1fr;
+  column-gap: 4px;
+}
+
+.delete-button {
+  padding: 0px;
+}

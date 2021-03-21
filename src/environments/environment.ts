@@ -17,6 +17,8 @@ export const environment = {
     authGuardLoggedInURL: '/tournament',
   },
   tournamentId: '2021-ncaam-div1',
+  nGames: 63,
+  nTeams: 64,
 };
 
 /*
