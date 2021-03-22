@@ -6,12 +6,25 @@
 
 .team-form {
   width: 100%;
-  display: grid;
-  grid-template-columns: [id] 5% [name] 1fr [color1] 12.5% [color2] 12.5% [delete] 10%;
-  grid-template-rows: 1fr;
-  column-gap: 4px;
 }
 
-.delete-button {
+div.team-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: [id] 5% [name] 1fr [color1] 12.5% [color2] 12.5%;
+  grid-template-rows: 1fr;
+  column-gap: 4px;
+  align-items: end;
+}
+
+button.delete-button {
   padding: 0px;
+}
+
+span.button-spacer {
+  flex: 1 1 auto;
+}
+
+mat-checkbox.active {
+  padding-bottom: 17.5px;
 }

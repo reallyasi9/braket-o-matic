@@ -69,5 +69,6 @@ export function generateTeam(id?: string): Team {
     name: (prefix + ' ' + state + ' ' + suffix).trim(),
     primaryColor: primary,
     accentColor: accent,
+    active: true,
   };
 }

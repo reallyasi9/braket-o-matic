@@ -24,6 +24,8 @@ import { TeamEditorComponent } from './team-editor/team-editor.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { TournamentEditorComponent } from './tournament-editor/tournament-editor.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { MatIconModule } from '@angular/material/icon';
     // PickemTeamComponent,
     // PickemTournamentComponent,
     TeamEditorComponent,
+    TournamentEditorComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +53,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    MatCheckboxModule,
     AppRoutingModule,
   ],
   providers: [
