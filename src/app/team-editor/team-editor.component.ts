@@ -14,25 +14,27 @@ import { v4 as uuidv4 } from 'uuid';
 export class TeamEditorComponent implements OnInit {
   teams: Team[] = [];
 
-  constructor(private teamService: TeamService) {}
+  constructor(private ts: TeamService) {}
 
   ngOnInit(): void {
-    this.teamService.getTeams(environment.tournamentId).subscribe(
+    this.ts.getTeams(environment.tournamentId).subscribe(
       (teams) => (this.teams = teams),
       (error) => console.log(error)
     );
   }
 
   addTeam(): void {
-    const newTeam = generateTeam(this.genId());
+    const newTeam = {
+      id: "",
+      name: "",
+      primaryColor: "#000000",
+      accentColor: "#FFFFFF",
+      active: true,
+    }
     this.teams.push(newTeam);
   }
 
   deleteTeam(team: Team): void {
     this.teams = this.teams.filter(t => t != team);
-  }
-
-  genId(): string {
-    return uuidv4();
   }
 }
