@@ -1,0 +1,56 @@
+<mat-card *ngFor="let tournament of tournaments" class="tournament-card">
+  <form class="tournament-form">
+    <div class="tournament-grid">
+      <mat-form-field>
+        <mat-label>ID</mat-label>
+        <input matInput disabled value="{{ tournament.id }}" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="e.g. NCAAW 2035"
+          value="{{ tournament.name }}"
+        />
+      </mat-form-field>
+    </div>
+    <mat-checkbox
+      class="active"
+      disabled="true"
+      [checked]="!!activeTournament && tournament == activeTournament"
+      >Active</mat-checkbox
+    >
+  </form>
+  <mat-card-actions>
+    <button
+      mat-button
+      class="activate-button"
+      [disabled]="!!activeTournament && tournament == activeTournament"
+      (click)="activateTournament(tournament)"
+    >
+      <mat-icon aria-hidden="false" aria-label="Activate this tournament"
+        >check</mat-icon
+      >
+      Activate
+    </button>
+    <button
+      mat-button
+      class="delete-button"
+      (click)="deleteTournament(tournament)"
+    >
+      <mat-icon aria-hidden="false" aria-label="Delete this tournament"
+        >delete</mat-icon
+      >
+      Delete
+    </button>
+  </mat-card-actions>
+</mat-card>
+<button
+  mat-raised-button
+  aria-hidden="false"
+  area-label="Add a tournament"
+  (click)="addTournament()"
+>
+  Add a tournament
+</button>
