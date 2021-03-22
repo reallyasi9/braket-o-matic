@@ -19,7 +19,7 @@ export class TeamEditorComponent implements OnInit {
   ngOnInit(): void {
     this.ts.getTeams(environment.tournamentId).subscribe(
       (teams) => (this.teams = teams),
-      (error) => console.log(error)
+      (error) => console.error(error)
     );
   }
 
