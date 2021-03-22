@@ -55,6 +55,7 @@ export function generateTournament(id: string, gameIds: string[]): Tournament {
   return {
     id: id.toString(),
     name: "",
+    active: false,
     startDate: new Date(),
     complete: false,
     cartilage: cartilage,
