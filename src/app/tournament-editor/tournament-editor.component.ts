@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { handleError } from '../error-handling';
 import { Tournament } from '../tournament';
 import { TournamentService } from '../tournament.service';
 
@@ -9,40 +12,37 @@ import { TournamentService } from '../tournament.service';
   styleUrls: ['./tournament-editor.component.css'],
 })
 export class TournamentEditorComponent implements OnInit {
-  tournaments: Tournament[] = [];
-  activeTournament?: Tournament;
+  tournaments?: Observable<Tournament[]>;
+  activeTournament: Observable<Tournament | undefined> = new Observable<undefined>();
 
   constructor(private ts: TournamentService) {}
 
   ngOnInit(): void {
-    this.ts.getTournaments().subscribe(
-      (tournaments) => (this.tournaments = tournaments),
-      (error) => console.error(error)
-    );
+    this.tournaments = this.ts
+      .getTournaments()
+      .pipe(catchError(handleError<Tournament[]>('init', [])));
+    this.activeTournament = this.ts
+      .getActiveTournament()
+      .pipe(catchError(handleError<undefined>('init active')));
   }
 
   addTournament(): void {
     const newTournament: Tournament = {
       id: '',
       name: '',
-      active: false,
       startDate: new Date(),
       complete: false,
       cartilage: {},
       gridLocation: {},
     };
-    this.tournaments.push(newTournament);
+    this.ts.addTournament(newTournament);
   }
 
   deleteTournament(tournament: Tournament): void {
-    this.tournaments = this.tournaments.filter((t) => t != tournament);
+    this.ts.deleteTournament(tournament);
   }
 
   activateTournament(tournament: Tournament): void {
-    this.tournaments.map((t) => {
-      t.active = false;
-    });
-    this.activeTournament = tournament;
-    tournament.active = true;
+    this.ts.activateTournament(tournament);
   }
 }

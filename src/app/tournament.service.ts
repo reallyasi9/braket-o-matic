@@ -6,7 +6,9 @@ import {
   DocumentReference,
 } from '@angular/fire/firestore';
 import { from, Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { handleError } from './error-handling';
 import { Game } from './game';
 import { generateGame } from './mock-games';
 import { generateTeam } from './mock-teams';
@@ -23,59 +25,38 @@ const TEAM_KEY: string = 'teams';
 })
 export class TournamentService {
   private tournamentCollection: AngularFirestoreCollection<Tournament>;
-  // tournaments: Tournament[] = [];
-  // private tournamentDoc: AngularFirestoreDocument<Tournament>;
-  // tournament: Observable<Tournament|undefined>;
-  // private gamesCollection: AngularFirestoreCollection<Game>;
+  private activeTournament: AngularFirestoreDocument<Tournament>;
 
   constructor(private firestore: AngularFirestore) {
     this.tournamentCollection = this.firestore.collection<Tournament>(
       TOURNAMENT_KEY
     );
-    // const id = environment.tournamentId;
-    // this.tournamentDoc = firestore.doc<Tournament>(
-    //   `${TOURNAMENT_KEY}/${id}`
-    // );
-    // this.tournamentDoc.ref.get().then(
-    //   (snapshot) => {
-    //     if (!snapshot.exists) {
-    //       const randomTournament = generateTournament(id, this.generateGames());
-    //       this.tournamentDoc.set(randomTournament);
-    //     }
-    //   }
-    // );
-    // this.gamesCollection = this.tournamentDoc.collection<Game>(GAME_KEY);
-    // this.tournament = this.tournamentDoc.valueChanges();
+    this.activeTournament = this.tournamentCollection.doc(environment.tournamentId);
   }
 
   getTournaments(): Observable<Tournament[]> {
     return this.tournamentCollection.valueChanges({ idField: 'id' });
   }
 
-  // private generateGames(): string[] {
-  //   const gameIds: string[] = [];
-  //   for (let i = 0, team = 0; i < environment.nGames; i++) {
-  //     var topTeam: DocumentReference<Team> | undefined = undefined;
-  //     if (team < environment.nTeams) {
-  //       const top = generateTeam(team.toString());
-  //       const doc = this.firestore.doc<Team>(`${TOURNAMENT_KEY}/${environment.tournamentId}/${TEAM_KEY}/${team}`);
-  //       doc.set(top);
-  //       topTeam = doc.ref;
-  //       team++;
-  //     }
-  //     var bottomTeam: DocumentReference<Team> | undefined = undefined;
-  //     if (team < environment.nTeams) {
-  //       const bottom = generateTeam(team.toString());
-  //       const doc = this.firestore.doc<Team>(`${TOURNAMENT_KEY}/${environment.tournamentId}/${TEAM_KEY}/${team}`);
-  //       doc.set(bottom);
-  //       bottomTeam = doc.ref;
-  //       team++;
-  //     }
-  //     const game = generateGame(i.toString(), topTeam, bottomTeam);
-  //     const gameDoc = this.firestore.doc<Game>(`${TOURNAMENT_KEY}/${environment.tournamentId}/${GAME_KEY}/${game.id}`);
-  //     gameDoc.set(game);
-  //     gameIds.push(game.id);
-  //   }
-  //   return gameIds;
-  // }
+  getActiveTournament(): Observable<Tournament | undefined> {
+    return this.activeTournament.valueChanges();
+  }
+
+  addTournament(tournament: Tournament): void {
+    const id = this.firestore.createId();
+    tournament.id = id;
+    from(this.tournamentCollection.add(tournament)).pipe(catchError(handleError('addTournament'))).subscribe();
+  }
+
+  deleteTournament(tournament: Tournament | string): void {
+    const id = typeof tournament == 'string' ? tournament : tournament.id;
+    from(this.firestore.doc<Tournament>(`${TOURNAMENT_KEY}/${id}`).delete())
+      .pipe(catchError(handleError('deleteTournament')))
+      .subscribe();
+  }
+
+  activateTournament(tournament: Tournament | string): void {
+    const id = typeof tournament == 'string' ? tournament : tournament.id;
+    this.activeTournament = this.tournamentCollection.doc(id);
+  }
 }
