@@ -1,4 +1,4 @@
-<mat-card *ngFor="let tournament of tournaments" class="tournament-card">
+<mat-card *ngFor="let tournament of tournaments | async" class="tournament-card">
   <form class="tournament-form">
     <div class="tournament-grid">
       <mat-form-field>
@@ -18,7 +18,7 @@
     <mat-checkbox
       class="active"
       disabled="true"
-      [checked]="!!activeTournament && tournament == activeTournament"
+      [checked]="!!(activeTournament | async) && tournament == (activeTournament | async)"
       >Active</mat-checkbox
     >
   </form>
@@ -26,7 +26,7 @@
     <button
       mat-button
       class="activate-button"
-      [disabled]="!!activeTournament && tournament == activeTournament"
+      [disabled]="!!(activeTournament | async) && tournament == (activeTournament | async)"
       (click)="activateTournament(tournament)"
     >
       <mat-icon aria-hidden="false" aria-label="Activate this tournament"
