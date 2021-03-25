@@ -1,57 +1,36 @@
-<mat-card *ngFor="let team of teams" class="team-card">
-  <form class="team-form">
-    <div class="team-grid">
-      <mat-form-field>
-        <mat-label>ID</mat-label>
-        <input matInput disabled value="{{ team.id }}" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input
-          type="text"
-          matInput
-          placeholder="e.g. Michigan"
-          value="{{ team.name }}"
-        />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Primary color</mat-label>
-        <input
-          type="color"
-          matInput
-          placeholder="e.g. #123456"
-          value="{{ team.primaryColor }}"
-        />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Accent color</mat-label>
-        <input
-          type="color"
-          matInput
-          placeholder="e.g. #abcdef"
-          value="{{ team.accentColor }}"
-        />
-      </mat-form-field>
-    </div>
-    <mat-checkbox class="active" [checked]="team.active"
-      >Active (not eliminated)</mat-checkbox
-    >
-  </form>
-  <mat-card-actions>
-    <button
-      mat-button
-      class="delete-button"
-      (click)="deleteTeam(team)"
-    >
-      <mat-icon aria-hidden="false" aria-label="Delete team">delete</mat-icon> Delete
-    </button>
-  </mat-card-actions>
-</mat-card>
-<button
-  mat-raised-button
-  aria-hidden="false"
-  area-label="Add a team"
-  (click)="addTeam()"
->
-  Add a team
-</button>
+<div *ngIf="!!team" class="team-grid">
+  <mat-form-field>
+    <mat-label>ID</mat-label>
+    <input matInput disabled value="{{ team.id }}" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input
+      type="text"
+      matInput
+      placeholder="e.g. Michigan"
+      value="{{ team.name }}"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Primary color</mat-label>
+    <input
+      type="color"
+      matInput
+      placeholder="e.g. #123456"
+      value="{{ team.primaryColor }}"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Accent color</mat-label>
+    <input
+      type="color"
+      matInput
+      placeholder="e.g. #abcdef"
+      value="{{ team.accentColor }}"
+    />
+  </mat-form-field>
+  <mat-checkbox class="active" [checked]="team.active"
+    >Active (not eliminated)</mat-checkbox
+  >
+</div>

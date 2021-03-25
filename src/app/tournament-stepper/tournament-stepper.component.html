@@ -1,0 +1,67 @@
+<mat-horizontal-stepper linear>
+  <mat-step label="Set tournament rules">
+    <form>
+      <mat-form-field>
+        <mat-label>Tournament name</mat-label>
+        <input matInput type="text" name="name" placeholder="e.g. NCAAW 1982" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Start date</mat-label>
+        <input matInput type="date" name="startDate" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Start time</mat-label>
+        <input matInput type="time" name="startTime" />
+      </mat-form-field>
+      <mat-list>
+        <mat-list-item *ngFor="let value of roundValues; index as i">
+          <mat-form-field>
+            <mat-label>Round {{ i }} value</mat-label>
+            <input
+              matInput
+              type="number"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="roundValues[i]"
+            />
+          </mat-form-field>
+        </mat-list-item>
+        <button type="button" mat-button (click)="addRound()">Add round</button>
+        <button
+          type="button"
+          *ngIf="roundValues.length > 0"
+          mat-button
+          (click)="deleteRound()"
+        >
+          Delete round
+        </button>
+      </mat-list>
+    </form>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step label="Add teams">
+    <form>
+      <mat-list-item *ngFor="let team of teams; index as i">
+        <app-team-editor [team]="team"></app-team-editor>
+      </mat-list-item>
+      <button type="button" mat-button [disabled]="noMoreTeams()" (click)="addTeam()">Add team</button>
+    </form>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step label="Configure games">
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step label="Save and activate">
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button>Save and activate</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

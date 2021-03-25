@@ -13,11 +13,13 @@ import {
 import { pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TournamentEditorComponent } from './tournament-editor/tournament-editor.component';
+import { TournamentStepperComponent } from './tournament-stepper/tournament-stepper.component';
 
 export const TOURNAMENT_PATH: string = 'tournament';
 export const PICKEM_PATH: string = 'pickem';
 export const TEAM_EDIT_PATH: string = 'team-edit';
 export const TOURNAMENT_EDIT_PATH: string = 'tournament-edit';
+export const TOURNAMENT_BUILDER_PATH: string = 'tournament-builder';
 
 // const redirectUnauthorized = () => redirectUnauthorizedTo([TOURNAMENT_PATH]);
 const adminOnly = () =>
@@ -34,6 +36,12 @@ const routes: Routes = [
   //   component: PickemTournamentComponent,
   //   ...canActivate(redirectUnauthorized),
   // },
+  {
+    path: TOURNAMENT_BUILDER_PATH,
+    component: TournamentStepperComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: adminOnly },
+  },
   {
     path: TEAM_EDIT_PATH,
     component: TeamEditorComponent,

@@ -1,10 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { generateTeam } from '../mock-teams';
+import { Component, Input, OnInit } from '@angular/core';
 import { Team } from '../team';
-import { TeamService } from '../team.service';
-import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-team-editor',
@@ -12,29 +7,11 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./team-editor.component.css'],
 })
 export class TeamEditorComponent implements OnInit {
-  teams: Team[] = [];
+  @Input() team? : Team;
 
-  constructor(private ts: TeamService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.ts.getTeams(environment.tournamentId).subscribe(
-      (teams) => (this.teams = teams),
-      (error) => console.error(error)
-    );
   }
 
-  addTeam(): void {
-    const newTeam = {
-      id: "",
-      name: "",
-      primaryColor: "#000000",
-      accentColor: "#FFFFFF",
-      active: true,
-    }
-    this.teams.push(newTeam);
-  }
-
-  deleteTeam(team: Team): void {
-    this.teams = this.teams.filter(t => t != team);
-  }
 }

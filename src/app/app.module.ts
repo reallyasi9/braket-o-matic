@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,6 +27,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { TournamentEditorComponent } from './tournament-editor/tournament-editor.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { TournamentStepperComponent } from './tournament-stepper/tournament-stepper.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -40,9 +43,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     // PickemTournamentComponent,
     TeamEditorComponent,
     TournamentEditorComponent,
+    TournamentStepperComponent,
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     BrowserAnimationsModule,
     NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig),
     MatToolbarModule,
@@ -54,6 +59,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatProgressSpinnerModule,
     MatIconModule,
     MatCheckboxModule,
+    MatStepperModule,
     AppRoutingModule,
   ],
   providers: [
