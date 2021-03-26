@@ -1,0 +1,63 @@
+<div *ngIf="!!game" class="game-grid">
+  <mat-form-field>
+    <mat-label>ID</mat-label>
+    <input matInput disabled value="{{ game.id }}" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Round</mat-label>
+    <input
+      type="number"
+      matInput
+      value="{{ game.round }}"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Start date</mat-label>
+    <input
+      type="date"
+      matInput
+      value="{{ game.startDate }}"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Start time</mat-label>
+    <input
+      type="time"
+      matInput
+    />
+  </mat-form-field>
+  <mat-slide-toggle [(ngModel)]="topPlayIn">Top team play-in</mat-slide-toggle>
+  <span *ngIf="!topPlayIn">
+  <mat-form-field>
+    <mat-label>Top team</mat-label>
+    <mat-select name="topTeam">
+      <mat-option *ngFor="let team of teams" [value]="game.topTeam">{{team.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Top score</mat-label>
+    <input type="number" matInput [value]="game.topScore">
+  </mat-form-field>
+  </span>
+  <mat-slide-toggle [(ngModel)]="bottomPlayIn">Bottom team play-in</mat-slide-toggle>
+  <span *ngIf="!bottomPlayIn">
+  <mat-form-field *ngIf="!bottomPlayIn">
+    <mat-label>Bottom team</mat-label>
+    <mat-select name="bottomTeam">
+      <mat-option *ngFor="let team of teams" [value]="game.bottomTeam">{{team.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Bottom score</mat-label>
+    <input type="number" matInput [value]="game.topScore">
+  </mat-form-field>
+  </span>
+  <mat-form-field>
+    <mat-label>Period</mat-label>
+    <input matInput [value]="game.period">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Clock (seconds remaining)</mat-label>
+    <input type="number" matInput [value]="game.clockSeconds">
+  </mat-form-field>
+</div>

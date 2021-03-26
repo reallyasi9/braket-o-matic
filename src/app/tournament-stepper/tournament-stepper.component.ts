@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Game } from '../game';
+import { generateGame } from '../mock-games';
 import { generateTeam } from '../mock-teams';
 import { Team } from '../team';
 
@@ -46,6 +47,27 @@ export class TournamentStepperComponent implements OnInit {
     return (
       this.roundValues.length == 0 ||
       this.teams.length >= 2 ** this.roundValues.length
+    );
+  }
+
+  addGame(): void {
+    const id = this.games.reduce(
+      (max, game) => (parseInt(game.id) > max ? parseInt(game.id) : max),
+      -1
+    ) + 1;
+    const game = generateGame(id.toString());
+    this.games.push(game);
+  }
+
+  deleteGame(game: Game): void {
+    this.games = this.games.filter((g) => g !== game);
+  }
+
+  noMoreGames(): boolean {
+    return (
+      this.roundValues.length == 0 ||
+      this.teams.length == 0 ||
+      this.games.length >= this.teams.length - 1
     );
   }
 }
