@@ -17,6 +17,7 @@ export function generateGame(id: string, top?: DocumentReference<Team>, bottom?:
 
   return {
     id: id,
+    round: 0,
     startDate: startDate,
     clockSeconds: seconds,
     period: period,

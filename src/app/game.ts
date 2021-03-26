@@ -3,6 +3,7 @@ import { Team } from './team';
 
 export interface Game {
   id: string;
+  round: number;
   startDate?: Date;
   clockSeconds: number;
   period: string;
