@@ -44,8 +44,9 @@
     <form>
       <mat-list-item *ngFor="let team of teams; index as i">
         <app-team-editor [team]="team"></app-team-editor>
+        <button mat-icon-button type="button" (click)="deleteTeam(team)"><mat-icon>delete</mat-icon></button>
       </mat-list-item>
-      <button type="button" mat-button [disabled]="noMoreTeams()" (click)="addTeam()">Add team</button>
+      <button mat-button type="button" [disabled]="noMoreTeams()" (click)="addTeam()">Add team</button>
     </form>
     <div>
       <button mat-button matStepperPrevious>Back</button>
