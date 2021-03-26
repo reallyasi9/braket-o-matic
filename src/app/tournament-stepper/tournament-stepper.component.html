@@ -54,6 +54,13 @@
     </div>
   </mat-step>
   <mat-step label="Configure games">
+    <form>
+      <mat-list-item *ngFor="let game of games; index as i">
+        <app-game-editor [game]="game" [teams]="teams"></app-game-editor>
+        <button mat-icon-button type="button" (click)="deleteGame(game)"><mat-icon>delete</mat-icon></button>
+      </mat-list-item>
+      <button mat-button type="button" [disabled]="noMoreGames()" (click)="addGame()">Add game</button>
+    </form>
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button matStepperNext>Next</button>
