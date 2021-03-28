@@ -1,16 +1,7 @@
 <mat-horizontal-stepper linear>
   <mat-step label="Set tournament rules">
-    <form>
-      <app-tournament-editor [tournament]="tournament"></app-tournament-editor>
-      <button type="button" mat-button (click)="addRound()">Add round</button>
-      <button
-        type="button"
-        [disabled]="tournament.roundValues.length <= 1"
-        mat-button
-        (click)="deleteRound()"
-      >
-        Delete round
-      </button>
+    <form class="tournament-step">
+      <app-tournament-editor [(tournament)]="tournament"></app-tournament-editor>
     </form>
     <div>
       <button mat-button matStepperNext>Next</button>

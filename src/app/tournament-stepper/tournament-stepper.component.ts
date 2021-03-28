@@ -23,6 +23,7 @@ export class TournamentStepperComponent implements OnInit {
       startDate: new Date(),
       complete: false,
       roundValues: [1],
+      payouts: [-1],
       cartilage: {},
       gridLocation: {},
     }
