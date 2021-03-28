@@ -1,4 +1,4 @@
-<mat-card *ngFor="let tournament of tournaments | async" class="tournament-card">
+<mat-card *ngIf="!!tournament">
   <form class="tournament-form">
     <div class="tournament-grid">
       <mat-form-field>
@@ -14,43 +14,36 @@
           value="{{ tournament.name }}"
         />
       </mat-form-field>
+      <mat-form-field>
+        <mat-label>Start date</mat-label>
+        <input
+          type="date"
+          matInput
+          value="{{ tournament.startDate }}"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Start time</mat-label>
+        <input
+          type="time"
+          matInput
+          value="{{ tournament.startDate }}"
+        />
+      </mat-form-field>
+      <mat-list>
+        <mat-list-item *ngFor="let value of tournament.roundValues; index as i">
+          <mat-form-field>
+            <mat-label>Round {{ i }} value</mat-label>
+            <input
+              matInput
+              type="number"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="tournament.roundValues[i]"
+            />
+          </mat-form-field>
+        </mat-list-item>
+      </mat-list>
     </div>
-    <mat-checkbox
-      class="active"
-      disabled="true"
-      [checked]="!!(activeTournament | async) && tournament == (activeTournament | async)"
-      >Active</mat-checkbox
-    >
   </form>
-  <mat-card-actions>
-    <button
-      mat-button
-      class="activate-button"
-      [disabled]="!!(activeTournament | async) && tournament == (activeTournament | async)"
-      (click)="activateTournament(tournament)"
-    >
-      <mat-icon aria-hidden="false" aria-label="Activate this tournament"
-        >check</mat-icon
-      >
-      Activate
-    </button>
-    <button
-      mat-button
-      class="delete-button"
-      (click)="deleteTournament(tournament)"
-    >
-      <mat-icon aria-hidden="false" aria-label="Delete this tournament"
-        >delete</mat-icon
-      >
-      Delete
-    </button>
-  </mat-card-actions>
+
 </mat-card>
-<button
-  mat-raised-button
-  aria-hidden="false"
-  area-label="Add a tournament"
-  (click)="addTournament()"
->
-  Add a tournament
-</button>

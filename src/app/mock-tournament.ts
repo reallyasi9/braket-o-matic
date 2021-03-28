@@ -7,12 +7,14 @@ import { Tournament } from './tournament';
 // are used in the tournament and all others supplied in gameIds are ignored.
 export function generateTournament(id: string, gameIds: string[]): Tournament {
   const gamesPerRound: number[] = [];
+  const roundValues: number[] = [];
   for (
-    let nGames = 1, sumGames = 0;
+    let nGames = 1, sumGames = 0, iRound = 0;
     sumGames < gameIds.length;
     sumGames += nGames, nGames *= 2
   ) {
     gamesPerRound.push(nGames);
+    roundValues.push(2**iRound);
   }
   gamesPerRound.reverse();
   const nRounds = gamesPerRound.length;
@@ -57,6 +59,7 @@ export function generateTournament(id: string, gameIds: string[]): Tournament {
     name: "",
     startDate: new Date(),
     complete: false,
+    roundValues: roundValues,
     cartilage: cartilage,
     gridLocation: gridLocation,
   };

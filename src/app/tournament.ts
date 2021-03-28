@@ -6,6 +6,7 @@ export interface Tournament {
   name: string;
   startDate: Date;
   complete: boolean;
+  roundValues: number[];
   cartilage: { [from: string]: { to: string; bottom: boolean } };
   gridLocation: { [id: string]: { col: number; row: number } };
 }

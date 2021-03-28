@@ -3,6 +3,7 @@ import { Game } from '../game';
 import { generateGame } from '../mock-games';
 import { generateTeam } from '../mock-teams';
 import { Team } from '../team';
+import { Tournament } from '../tournament';
 
 @Component({
   selector: 'app-tournament-stepper',
@@ -10,23 +11,42 @@ import { Team } from '../team';
   styleUrls: ['./tournament-stepper.component.css'],
 })
 export class TournamentStepperComponent implements OnInit {
-  roundValues: number[] = [];
+  tournament: Tournament;
   teams: Team[] = [];
   games: Game[] = [];
   cartilage: { [from: string]: { to: string; bottom: boolean } } = {};
 
-  constructor() {}
+  constructor() {
+    this.tournament = {
+      id: "",
+      name: "",
+      startDate: new Date(),
+      complete: false,
+      roundValues: [1],
+      cartilage: {},
+      gridLocation: {},
+    }
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const topTeam = generateTeam("1");
+    const bottomTeam = generateTeam("2");
+    this.teams = [
+      topTeam,
+      bottomTeam,
+    ]; // two teams
+    const game = generateGame("1");
+    this.games = [generateGame("1")];
+  }
 
   addRound(): void {
-    const value = 2 ** this.roundValues.length;
-    this.roundValues.push(value);
+    const value = 2 ** this.tournament.roundValues.length;
+    this.tournament.roundValues.push(value);
   }
 
   deleteRound(): void {
-    if (this.roundValues.length > 0) {
-      this.roundValues.pop();
+    if (this.tournament.roundValues.length > 1) {
+      this.tournament.roundValues.pop();
     }
   }
 
@@ -45,8 +65,8 @@ export class TournamentStepperComponent implements OnInit {
 
   noMoreTeams(): boolean {
     return (
-      this.roundValues.length == 0 ||
-      this.teams.length >= 2 ** this.roundValues.length
+      this.tournament.roundValues.length == 0 ||
+      this.teams.length >= 2 ** this.tournament.roundValues.length
     );
   }
 
@@ -65,7 +85,7 @@ export class TournamentStepperComponent implements OnInit {
 
   noMoreGames(): boolean {
     return (
-      this.roundValues.length == 0 ||
+      this.tournament.roundValues.length == 0 ||
       this.teams.length == 0 ||
       this.games.length >= this.teams.length - 1
     );
