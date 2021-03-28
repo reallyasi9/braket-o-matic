@@ -60,6 +60,7 @@ export function generateTournament(id: string, gameIds: string[]): Tournament {
     startDate: new Date(),
     complete: false,
     roundValues: roundValues,
+    payouts: [-1],
     cartilage: cartilage,
     gridLocation: gridLocation,
   };
