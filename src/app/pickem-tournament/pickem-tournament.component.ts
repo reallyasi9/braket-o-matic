@@ -16,7 +16,7 @@ export class PickemTournamentComponent implements OnInit {
   constructor(private tournamentService: TournamentService) {}
 
   ngOnInit(): void {
-    this.tournamentService.getActiveTournament().subscribe(
+    this.tournamentService.tournament.subscribe(
       (tournament) => (this.tournament = tournament),
       (err) => console.log(`error getting active tournament: ${err}`)
     );

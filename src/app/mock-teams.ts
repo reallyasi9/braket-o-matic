@@ -55,7 +55,8 @@ const PREFIXES: string[] = ['Northern', 'Eastern', 'Western', 'Southern', ''];
 
 const SUFFIXES: string[] = ['State', 'Tech', 'A&M', 'University', ''];
 
-export function generateTeam(id: number): Team {
+export function generateTeam(id?: string): Team {
+  const teamId = (!!id) ? id : Math.random().toString();
   const state = STATES[Math.floor(Math.random() * STATES.length)];
   const prefix = PREFIXES[Math.floor(Math.random() * PREFIXES.length)];
   const suffix = SUFFIXES[Math.floor(Math.random() * SUFFIXES.length)];
@@ -64,9 +65,10 @@ export function generateTeam(id: number): Team {
   const accent =
     '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0');
   return {
-    id: id,
+    id: teamId,
     name: (prefix + ' ' + state + ' ' + suffix).trim(),
     primaryColor: primary,
     accentColor: accent,
+    active: true,
   };
 }

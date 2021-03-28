@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Tournament } from '../tournament';
 import { generateTournament } from '../mock-tournament';
 import { TournamentService } from '../tournament.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tournament',
@@ -14,7 +15,7 @@ export class TournamentComponent implements OnInit {
   constructor(private tournamentService: TournamentService) {}
 
   ngOnInit(): void {
-    this.tournamentService.getActiveTournament().subscribe(
+    this.tournamentService.tournament.subscribe(
       tournament => this.tournament = tournament,
       err => console.error(`error getting active tournament: ${err}`)
     )

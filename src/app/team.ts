@@ -1,6 +1,7 @@
 export interface Team {
-    id: number;
-    name: string;
-    primaryColor: string;
-    accentColor: string;
+  id: string;
+  name: string;
+  primaryColor: string;
+  accentColor: string;
+  active: boolean;
 }

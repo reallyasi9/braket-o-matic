@@ -8,13 +8,6 @@
 </button>
 <ng-template #notLoggedIn>
   <button mat-flat-button [disabled]="dialogOpen" (click)="openDialog()">
-    <mat-progress-spinner
-      *ngIf="dialogOpen; else dialogClosed"
-      class="inline-spinner"
-      mode="indeterminate"
-      diameter="18"
-      color="accent"
-    ></mat-progress-spinner
-    ><ng-template #dialogClosed>Log in</ng-template>
+    Log in
   </button>
 </ng-template>
