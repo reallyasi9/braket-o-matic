@@ -1,40 +1,16 @@
 <mat-horizontal-stepper linear>
   <mat-step label="Set tournament rules">
     <form>
-      <mat-form-field>
-        <mat-label>Tournament name</mat-label>
-        <input matInput type="text" name="name" placeholder="e.g. NCAAW 1982" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Start date</mat-label>
-        <input matInput type="date" name="startDate" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Start time</mat-label>
-        <input matInput type="time" name="startTime" />
-      </mat-form-field>
-      <mat-list>
-        <mat-list-item *ngFor="let value of roundValues; index as i">
-          <mat-form-field>
-            <mat-label>Round {{ i }} value</mat-label>
-            <input
-              matInput
-              type="number"
-              [ngModelOptions]="{ standalone: true }"
-              [(ngModel)]="roundValues[i]"
-            />
-          </mat-form-field>
-        </mat-list-item>
-        <button type="button" mat-button (click)="addRound()">Add round</button>
-        <button
-          type="button"
-          *ngIf="roundValues.length > 0"
-          mat-button
-          (click)="deleteRound()"
-        >
-          Delete round
-        </button>
-      </mat-list>
+      <app-tournament-editor [tournament]="tournament"></app-tournament-editor>
+      <button type="button" mat-button (click)="addRound()">Add round</button>
+      <button
+        type="button"
+        [disabled]="tournament.roundValues.length <= 1"
+        mat-button
+        (click)="deleteRound()"
+      >
+        Delete round
+      </button>
     </form>
     <div>
       <button mat-button matStepperNext>Next</button>
