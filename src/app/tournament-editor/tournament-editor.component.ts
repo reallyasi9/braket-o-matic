@@ -45,4 +45,8 @@ export class TournamentEditorComponent implements OnInit {
     this.tournament.payouts.pop();
   }
 
+  updateDateTime(x: any) {
+    console.log(x);
+  }
+
 }
