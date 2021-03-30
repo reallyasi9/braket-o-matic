@@ -1,38 +1,38 @@
 div.tournament-grid {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 45px 47px 1fr;
-    row-gap: 12px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 45px 47px 1fr;
+  row-gap: 12px;
 }
 
 mat-form-field.name {
-    grid-column: 1 / span 2;
-    grid-row: 1 / span 1;
-    width: 100%;
+  grid-column: 1 / span 2;
+  grid-row: 1 / span 1;
+  width: 100%;
 }
 
 mat-form-field.date {
-    grid-column: 1 / span 1;
-    grid-row: 2 / span 1;
-    width: 100%;
+  grid-column: 1 / span 1;
+  grid-row: 2 / span 1;
+  width: 80%;
 }
 
 mat-form-field.time {
-    grid-column: 2 / span 1;
-    grid-row: 2 / span 1;
-    width: 100%;
+  grid-column: 2 / span 1;
+  grid-row: 2 / span 1;
+  width: 80%;
 }
 
 mat-list.rounds {
-    grid-column: 1 / span 1;
-    grid-row: 3 / span 1;
+  grid-column: 1 / span 1;
+  grid-row: 3 / span 1;
 }
 
 mat-list.payouts {
-    grid-column: 2 / span 1;
-    grid-row: 3 / span 1;
+  grid-column: 2 / span 1;
+  grid-row: 3 / span 1;
 }
 
 button.action {
-    display: inline-block;
+  display: inline-block;
 }
