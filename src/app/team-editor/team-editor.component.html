@@ -1,4 +1,4 @@
-<div *ngIf="!!team" class="team-grid">
+<mat-card *ngIf="!!team" class="team-grid">
   <mat-form-field>
     <mat-label>ID</mat-label>
     <input matInput disabled value="{{ team.id }}" />
@@ -33,4 +33,4 @@
   <!-- <mat-checkbox class="active" [checked]="team.active"
     >Active (not eliminated)</mat-checkbox
   > -->
-</div>
+  </mat-card>

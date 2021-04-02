@@ -9,10 +9,10 @@
   </mat-step>
   <mat-step label="Add teams">
     <form class="team-step">
-      <mat-list-item *ngFor="let team of teams; index as i">
+      <div class="team-item" *ngFor="let team of teams; index as i">
         <app-team-editor [team]="team"></app-team-editor>
         <button mat-icon-button type="button" (click)="deleteTeam(team)"><mat-icon>delete</mat-icon></button>
-      </mat-list-item>
+      </div>
       <button mat-button type="button" [disabled]="noMoreTeams()" (click)="addTeam()">Add team</button>
       <span class="action-buttons">
         <button mat-button matStepperPrevious>Back</button>
