@@ -91,4 +91,9 @@ export class TournamentStepperComponent implements OnInit {
       this.games.length >= this.teams.length - 1
     );
   }
+
+  makeFirestoreID(id: string) : string {
+    const firestoreID = id.replace(/\W+/, "-");
+    return firestoreID;
+  }
 }

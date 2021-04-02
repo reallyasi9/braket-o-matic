@@ -64,11 +64,13 @@ export function generateTeam(id?: string): Team {
     '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0');
   const accent =
     '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0');
+  const seed = Math.ceil(Math.random() * 16);
   return {
     id: teamId,
     name: (prefix + ' ' + state + ' ' + suffix).trim(),
     primaryColor: primary,
     accentColor: accent,
     active: true,
+    seed: seed,
   };
 }

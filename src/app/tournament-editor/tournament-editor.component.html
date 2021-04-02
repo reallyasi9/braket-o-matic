@@ -1,7 +1,7 @@
 <mat-card *ngIf="!!tournament">
   <mat-card-header>
-    <mat-card-title>{{ tournament.name }}</mat-card-title>
-    <mat-card-subtitle>ID: {{ tournament.id }}</mat-card-subtitle>
+    <mat-card-title>{{ tournament.name.length > 0 ? tournament.name : "(name not set)" }}</mat-card-title>
+    <mat-card-subtitle>ID: {{ tournament.id.length > 0 ? tournament.id : "(id not set)" }}</mat-card-subtitle>
   </mat-card-header>
   <div class="tournament-grid">
     <mat-form-field class="name">

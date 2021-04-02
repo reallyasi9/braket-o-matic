@@ -12,4 +12,6 @@ export interface Game {
   topScore: number;
   bottomScore: number;
   winner?: number;
+  topSeeded: boolean;
+  bottomSeeded: boolean;
 }

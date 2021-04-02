@@ -4,4 +4,5 @@ export interface Team {
   primaryColor: string;
   accentColor: string;
   active: boolean;
+  seed: number;
 }
