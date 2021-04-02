@@ -28,7 +28,7 @@
     "firebaseui": "^4.8.0",
     "firebaseui-angular": "^5.1.2",
     "ngx-auth-firebaseui": "^5.2.0",
-    "rxjs": "~6.6.0",
+    "rxjs": "~6.6.7",
     "seedrandom": "^3.0.5",
     "tslib": "^2.0.0",
     "uuid": "^8.3.2",
