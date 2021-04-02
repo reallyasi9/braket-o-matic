@@ -1,9 +1,9 @@
-mat-card.team-grid {
+div.team-grid {
   min-width: 200px;
   max-width: 600px;
   width: 100%;
   display: grid;
-  grid-template-columns: [id] 5% [name] 1fr [color1] 12.5% [color2] 12.5%;
+  grid-template-columns: [seed] 10% [name] 1fr [color1] 12.5% [color2] 12.5%;
   grid-template-rows: 1fr;
   column-gap: 4px;
   align-items: end;

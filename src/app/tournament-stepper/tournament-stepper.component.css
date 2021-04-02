@@ -15,6 +15,7 @@ div.team-item {
     grid-auto-rows: auto;
     grid-template-columns: 1fr auto;
     align-items: center;
+    margin-top: 16px;
 }
 
 span.action-buttons {
