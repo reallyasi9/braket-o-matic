@@ -1,4 +1,16 @@
-.tournament-step {
-    min-width: 600px;
-    max-width: 1200px;
+form.tournament-step {
+    min-width: 400px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+form.team-step {
+    min-width: 400px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+span.action-buttons {
+    display: flex;
+    justify-content: flex-end;
 }
