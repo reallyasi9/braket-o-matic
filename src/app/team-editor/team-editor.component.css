@@ -1,30 +1,11 @@
-.team-card {
+mat-card.team-grid {
   min-width: 200px;
   max-width: 600px;
-  width: 100%;
-}
-
-.team-form {
-  width: 100%;
-}
-
-div.team-grid {
   width: 100%;
   display: grid;
   grid-template-columns: [id] 5% [name] 1fr [color1] 12.5% [color2] 12.5%;
   grid-template-rows: 1fr;
   column-gap: 4px;
   align-items: end;
-}
-
-button.delete-button {
-  padding: 0px;
-}
-
-span.button-spacer {
-  flex: 1 1 auto;
-}
-
-mat-checkbox.active {
-  padding-bottom: 17.5px;
+  margin-top: 16px;
 }
