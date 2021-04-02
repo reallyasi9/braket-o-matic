@@ -18,6 +18,20 @@ div.team-item {
     margin-top: 16px;
 }
 
+form.game-step {
+    min-width: 600px;
+    max-width: 600px;
+    margin: 16px auto;
+}
+
+div.game-item {
+    display: grid;
+    grid-auto-rows: auto;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    margin-top: 16px;
+}
+
 span.action-buttons {
     display: flex;
     justify-content: flex-end;
