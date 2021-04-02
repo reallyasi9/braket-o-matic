@@ -2,23 +2,23 @@
   <mat-step label="Set tournament rules">
     <form class="tournament-step">
       <app-tournament-editor [(tournament)]="tournament"></app-tournament-editor>
+      <span class="action-buttons">
+        <button mat-button matStepperNext>Next</button>
+      </span>
     </form>
-    <div>
-      <button mat-button matStepperNext>Next</button>
-    </div>
   </mat-step>
   <mat-step label="Add teams">
-    <form>
+    <form class="team-step">
       <mat-list-item *ngFor="let team of teams; index as i">
         <app-team-editor [team]="team"></app-team-editor>
         <button mat-icon-button type="button" (click)="deleteTeam(team)"><mat-icon>delete</mat-icon></button>
       </mat-list-item>
       <button mat-button type="button" [disabled]="noMoreTeams()" (click)="addTeam()">Add team</button>
+      <span class="action-buttons">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </span>
     </form>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button matStepperNext>Next</button>
-    </div>
   </mat-step>
   <mat-step label="Configure games">
     <form>
@@ -27,16 +27,16 @@
         <button mat-icon-button type="button" (click)="deleteGame(game)"><mat-icon>delete</mat-icon></button>
       </mat-list-item>
       <button mat-button type="button" [disabled]="noMoreGames()" (click)="addGame()">Add game</button>
+      <span class="action-buttons">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </span>
     </form>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button matStepperNext>Next</button>
-    </div>
   </mat-step>
   <mat-step label="Save and activate">
-    <div>
+    <span class="action-buttons">
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button>Save and activate</button>
-    </div>
+    </span>
   </mat-step>
 </mat-horizontal-stepper>
