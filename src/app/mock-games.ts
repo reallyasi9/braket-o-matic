@@ -26,7 +26,5 @@ export function generateGame(id: string, top?: DocumentReference<Team>, bottom?:
     topScore: Math.floor(Math.random() * 100),
     bottomScore: Math.floor(Math.random() * 100),
     winner: winner,
-    topSeeded: true,
-    bottomSeeded: true,
   };
 }

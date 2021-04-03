@@ -36,8 +36,15 @@ export class TournamentStepperComponent implements OnInit {
       topTeam,
       bottomTeam,
     ]; // two teams
-    const game = generateGame("1");
-    this.games = [generateGame("1")];
+    const game : Game = {
+      id: "",
+      round: 0,
+      clockSeconds: 20*60,
+      period: "Pregame",
+      topScore: 0,
+      bottomScore: 0,
+    }
+    this.games = [game];
   }
 
   addRound(): void {
