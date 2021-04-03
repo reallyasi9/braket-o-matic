@@ -23,7 +23,7 @@
   <mat-step label="Configure games">
     <form class="game-step">
       <div class="game-item" *ngFor="let game of games; index as i">
-        <app-game-editor [game]="game" [teams]="teams"></app-game-editor>
+        <app-game-editor [game]="game" [teams]="teams" [numRounds]="tournament.roundValues.length"></app-game-editor>
         <button mat-icon-button type="button" (click)="deleteGame(game)"><mat-icon>delete</mat-icon></button>
       </div>
       <button mat-button type="button" [disabled]="noMoreGames()" (click)="addGame()">Add game</button>

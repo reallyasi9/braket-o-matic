@@ -1,0 +1,22 @@
+mat-card.game {
+  width: 500px;
+  margin-top: 16px;
+}
+
+div.metadata-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: [round] 10% [date] 20% [time] 20% [period] 20% [remain] 25%;
+  grid-template-rows: 1fr;
+  column-gap: 4px;
+  align-items: end;
+}
+
+div.team-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: [team] 1fr [score] 25%;
+  grid-template-rows: 1fr;
+  column-gap: 4px;
+  align-items: end;
+}
