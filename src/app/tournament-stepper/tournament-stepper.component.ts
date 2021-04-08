@@ -37,7 +37,7 @@ export class TournamentStepperComponent implements OnInit {
       bottomTeam,
     ]; // two teams
     const game : Game = {
-      id: "",
+      id: "1",
       round: 0,
       clockSeconds: 20*60,
       period: "Pregame",
@@ -88,6 +88,8 @@ export class TournamentStepperComponent implements OnInit {
   }
 
   deleteGame(game: Game): void {
+    this.connectGames("none", game, false);
+    delete this.cartilage[game.id];
     this.games = this.games.filter((g) => g !== game);
   }
 
@@ -103,4 +105,26 @@ export class TournamentStepperComponent implements OnInit {
     const firestoreID = id.replace(/\W+/, "-");
     return firestoreID;
   }
+
+  connectGames(from: Game|string, to: Game|string, bottom: boolean) {
+    console.log(to);
+    if (typeof(from) != "string") {
+      from = from.id;
+    }
+    if (typeof(to) != "string") {
+      to = to.id;
+    }
+    if (from == "none") {
+      Object.keys(this.cartilage).some(key => {
+        if (this.cartilage[key].to === to) {
+          delete this.cartilage[key];
+          return true;
+        }
+        return false;
+      })
+    } else {
+      this.cartilage[from] = {to: to, bottom: bottom};
+    }
+  }
+
 }
