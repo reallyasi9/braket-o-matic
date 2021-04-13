@@ -10,6 +10,12 @@ interface TournamentStepperCartilage {
   to: string,
   bottom: boolean,
 }
+
+interface GridLocation {
+  game: string,
+  row: number,
+  col: number,
+}
 @Component({
   selector: 'app-tournament-stepper',
   templateUrl: './tournament-stepper.component.html',
@@ -20,6 +26,7 @@ export class TournamentStepperComponent implements OnInit {
   teams: Team[] = [];
   games: Game[] = [];
   cartilage: TournamentStepperCartilage[] = [];
+  posisionts: GridLocation[] = [];
 
   constructor() {
     this.tournament = {
@@ -141,5 +148,13 @@ export class TournamentStepperComponent implements OnInit {
       return "none";
     }
     return game;
+  }
+
+  saveAndActivate() {
+    console.log(this.tournament);
+    console.log(this.teams);
+    console.log(this.games);
+    console.log(this.cartilage);
+    console.log(this.posisionts);
   }
 }
