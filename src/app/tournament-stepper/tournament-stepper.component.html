@@ -39,7 +39,7 @@
             <mat-label>Top team play-in game</mat-label>
             <mat-select
               name="topPlayIn"
-              [ngModel]=""
+              [ngModel]="getPlayInGame(game, false)"
               (ngModelChange)="connectGames($event, game, false)"
             >
               <mat-option value="none">(none)</mat-option>
@@ -55,7 +55,7 @@
             <mat-label>Bottom team play-in game</mat-label>
             <mat-select
               name="bottomPlayIn"
-              [ngModel]=""
+              [ngModel]="getPlayInGame(game, true)"
               (ngModelChange)="connectGames($event, game, true)"
             >
               <mat-option value="none">(none)</mat-option>

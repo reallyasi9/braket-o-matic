@@ -5,6 +5,11 @@ import { generateTeam } from '../mock-teams';
 import { Team } from '../team';
 import { Tournament } from '../tournament';
 
+interface TournamentStepperCartilage {
+  from: string,
+  to: string,
+  bottom: boolean,
+}
 @Component({
   selector: 'app-tournament-stepper',
   templateUrl: './tournament-stepper.component.html',
@@ -14,7 +19,7 @@ export class TournamentStepperComponent implements OnInit {
   tournament: Tournament;
   teams: Team[] = [];
   games: Game[] = [];
-  cartilage: { [from: string]: { to: string; bottom: boolean } } = {};
+  cartilage: TournamentStepperCartilage[] = [];
 
   constructor() {
     this.tournament = {
@@ -83,13 +88,19 @@ export class TournamentStepperComponent implements OnInit {
       (max, game) => (parseInt(game.id) > max ? parseInt(game.id) : max),
       -1
     ) + 1;
-    const game = generateGame(id.toString());
+    const game = {
+      id: id.toString(),
+      round: 0,
+      clockSeconds: 1200,
+      period: "Pregame",
+      topScore: 0,
+      bottomScore: 0,
+    };
     this.games.push(game);
   }
 
   deleteGame(game: Game): void {
-    this.connectGames("none", game, false);
-    delete this.cartilage[game.id];
+    this.cartilage = this.cartilage.filter((c) => c.from !== game.id && c.to !== game.id);
     this.games = this.games.filter((g) => g !== game);
   }
 
@@ -107,7 +118,6 @@ export class TournamentStepperComponent implements OnInit {
   }
 
   connectGames(from: Game|string, to: Game|string, bottom: boolean) {
-    console.log(to);
     if (typeof(from) != "string") {
       from = from.id;
     }
@@ -115,16 +125,21 @@ export class TournamentStepperComponent implements OnInit {
       to = to.id;
     }
     if (from == "none") {
-      Object.keys(this.cartilage).some(key => {
-        if (this.cartilage[key].to === to) {
-          delete this.cartilage[key];
-          return true;
-        }
-        return false;
-      })
+      this.cartilage = this.cartilage.filter((c) => c.to !== to)
     } else {
-      this.cartilage[from] = {to: to, bottom: bottom};
+      this.cartilage.push({from: from, to: to, bottom: bottom});
     }
   }
 
+  getPlayInGame(to: Game, bottom: boolean): Game|string {
+    const result = this.cartilage.find((c) => c.to == to.id && c.bottom == bottom);
+    if (!result) {
+      return "none";
+    }
+    const game = this.games.find((g) => g.id == result.from);
+    if (!game) {
+      return "none";
+    }
+    return game;
+  }
 }
