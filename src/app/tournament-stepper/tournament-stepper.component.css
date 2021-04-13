@@ -19,8 +19,8 @@ div.team-item {
 }
 
 form.game-step {
-    min-width: 600px;
-    max-width: 600px;
+    min-width: 800px;
+    max-width: 800px;
     margin: 16px auto;
 }
 
@@ -30,6 +30,10 @@ div.game-item {
     grid-template-columns: auto 1fr auto;
     align-items: center;
     margin-top: 16px;
+}
+
+mat-card.cartilage-grid {
+    align-self: end;
 }
 
 span.action-buttons {

@@ -6,7 +6,7 @@ mat-card.game {
 div.metadata-grid {
   width: 100%;
   display: grid;
-  grid-template-columns: [round] 10% [date] 20% [time] 20% [period] 20% [remain] 25%;
+  grid-template-columns: [game] 7% [round] 7% [date] 20% [time] 20% [period] 20% [remain] 20%;
   grid-template-rows: 1fr;
   column-gap: 4px;
   align-items: end;
