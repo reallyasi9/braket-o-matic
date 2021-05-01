@@ -24,7 +24,7 @@
     "@angular/platform-browser": "~11.2.8",
     "@angular/platform-browser-dynamic": "~11.2.8",
     "@angular/router": "^11.2.12",
-    "firebase": "^8.3.2",
+    "firebase": "^8.4.3",
     "firebaseui": "^4.8.0",
     "firebaseui-angular": "^5.1.2",
     "ngx-auth-firebaseui": "^5.2.0",
