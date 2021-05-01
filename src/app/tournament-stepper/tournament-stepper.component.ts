@@ -19,7 +19,7 @@ interface GridLocation {
 @Component({
   selector: 'app-tournament-stepper',
   templateUrl: './tournament-stepper.component.html',
-  styleUrls: ['./tournament-stepper.component.css'],
+  styleUrls: ['./tournament-stepper.component.scss'],
 })
 export class TournamentStepperComponent implements OnInit {
   tournament: Tournament;
