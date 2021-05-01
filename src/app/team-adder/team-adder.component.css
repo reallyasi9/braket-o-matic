@@ -1,0 +1,59 @@
+mat-card.team-adder {
+  width: 200px;
+  height: 324px;
+  margin: 16px;
+}
+
+mat-card.new-team-card {
+  border-style: dashed;
+  border-width: 3px;
+  border-color: lightgray;
+  color: darkgrey;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+mat-icon.add-team-icon {
+  font-size: 100px;
+  height: 100px;
+  width: 100px;
+}
+
+span.add-team-text {
+  font-size: large;
+}
+
+div.team-grid {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+  align-items: flex-end;
+}
+
+mat-form-field.seed-form {
+  width: 30px;
+  margin-right: 6px;
+}
+
+mat-form-field.name-form {
+  width: 164px;
+}
+
+mat-form-field.color-form {
+  width: 97px;
+}
+
+mat-form-field.color-form-1 {
+  margin-right: 6px;
+}
+
+div.filler {
+  flex: 1 0 auto;
+}
+
+button.delete-team {
+  width: auto;
+}

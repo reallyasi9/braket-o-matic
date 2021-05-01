@@ -3,20 +3,8 @@
     <div class="step-title">Without teams, there are no games.</div>
     <div class="step-subtitle">Add all the teams that are playing in the tournament.</div>
     <form class="team-step">
-      <div class="team-item" *ngFor="let team of teams; index as i">
-        <app-team-editor [team]="team"></app-team-editor>
-        <button mat-icon-button type="button" (click)="deleteTeam(team)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-      <button
-        mat-button
-        type="button"
-        [disabled]="noMoreTeams()"
-        (click)="addTeam()"
-      >
-        Add team
-      </button>
+      <app-team-adder *ngFor="let team of teams; index as i" [team]="team" (deleteRequest)="deleteTeam($event)"></app-team-adder>
+      <app-team-adder (addRequest)="addTeam()"></app-team-adder>
       <span class="action-buttons">
         <!-- <button mat-button matStepperPrevious>Back</button> -->
         <button mat-button matStepperNext>Next</button>
