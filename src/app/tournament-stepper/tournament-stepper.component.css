@@ -1,0 +1,42 @@
+form.tournament-step {
+    min-width: 400px;
+    max-width: 800px;
+    margin: 16px auto;
+}
+
+form.team-step {
+    min-width: 400px;
+    max-width: 600px;
+    margin: 16px auto;
+}
+
+div.team-item {
+    display: grid;
+    grid-auto-rows: auto;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    margin-top: 16px;
+}
+
+form.game-step {
+    min-width: 800px;
+    max-width: 800px;
+    margin: 16px auto;
+}
+
+div.game-item {
+    display: grid;
+    grid-auto-rows: auto;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    margin-top: 16px;
+}
+
+mat-card.cartilage-grid {
+    align-self: end;
+}
+
+span.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+}

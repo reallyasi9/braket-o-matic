@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
@@ -33,6 +34,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TournamentStepperComponent } from './tournament-stepper/tournament-stepper.component';
 import { FormsModule } from '@angular/forms';
 import { GameEditorComponent } from './game-editor/game-editor.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,8 @@ import { GameEditorComponent } from './game-editor/game-editor.component';
     MatSelectModule,
     MatSlideToggleModule,
     MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     AppRoutingModule,
   ],
   providers: [

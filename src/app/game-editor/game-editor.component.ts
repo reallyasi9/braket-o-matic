@@ -11,8 +11,7 @@ export class GameEditorComponent implements OnInit {
 
   @Input() game? : Game;
   @Input() teams : Team[] = [];
-  topPlayIn : boolean = false;
-  bottomPlayIn : boolean = false;
+  @Input() numRounds : number = 0;
 
   constructor() { }
 

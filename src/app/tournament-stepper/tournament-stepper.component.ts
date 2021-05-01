@@ -5,6 +5,17 @@ import { generateTeam } from '../mock-teams';
 import { Team } from '../team';
 import { Tournament } from '../tournament';
 
+interface TournamentStepperCartilage {
+  from: string,
+  to: string,
+  bottom: boolean,
+}
+
+interface GridLocation {
+  game: string,
+  row: number,
+  col: number,
+}
 @Component({
   selector: 'app-tournament-stepper',
   templateUrl: './tournament-stepper.component.html',
@@ -14,7 +25,8 @@ export class TournamentStepperComponent implements OnInit {
   tournament: Tournament;
   teams: Team[] = [];
   games: Game[] = [];
-  cartilage: { [from: string]: { to: string; bottom: boolean } } = {};
+  cartilage: TournamentStepperCartilage[] = [];
+  posisionts: GridLocation[] = [];
 
   constructor() {
     this.tournament = {
@@ -23,6 +35,7 @@ export class TournamentStepperComponent implements OnInit {
       startDate: new Date(),
       complete: false,
       roundValues: [1],
+      payouts: [-1],
       cartilage: {},
       gridLocation: {},
     }
@@ -35,8 +48,15 @@ export class TournamentStepperComponent implements OnInit {
       topTeam,
       bottomTeam,
     ]; // two teams
-    const game = generateGame("1");
-    this.games = [generateGame("1")];
+    const game : Game = {
+      id: "1",
+      round: 0,
+      clockSeconds: 20*60,
+      period: "Pregame",
+      topScore: 0,
+      bottomScore: 0,
+    }
+    this.games = [game];
   }
 
   addRound(): void {
@@ -75,11 +95,19 @@ export class TournamentStepperComponent implements OnInit {
       (max, game) => (parseInt(game.id) > max ? parseInt(game.id) : max),
       -1
     ) + 1;
-    const game = generateGame(id.toString());
+    const game = {
+      id: id.toString(),
+      round: 0,
+      clockSeconds: 1200,
+      period: "Pregame",
+      topScore: 0,
+      bottomScore: 0,
+    };
     this.games.push(game);
   }
 
   deleteGame(game: Game): void {
+    this.cartilage = this.cartilage.filter((c) => c.from !== game.id && c.to !== game.id);
     this.games = this.games.filter((g) => g !== game);
   }
 
@@ -89,5 +117,44 @@ export class TournamentStepperComponent implements OnInit {
       this.teams.length == 0 ||
       this.games.length >= this.teams.length - 1
     );
+  }
+
+  makeFirestoreID(id: string) : string {
+    const firestoreID = id.replace(/\W+/, "-");
+    return firestoreID;
+  }
+
+  connectGames(from: Game|string, to: Game|string, bottom: boolean) {
+    if (typeof(from) != "string") {
+      from = from.id;
+    }
+    if (typeof(to) != "string") {
+      to = to.id;
+    }
+    if (from == "none") {
+      this.cartilage = this.cartilage.filter((c) => c.to !== to)
+    } else {
+      this.cartilage.push({from: from, to: to, bottom: bottom});
+    }
+  }
+
+  getPlayInGame(to: Game, bottom: boolean): Game|string {
+    const result = this.cartilage.find((c) => c.to == to.id && c.bottom == bottom);
+    if (!result) {
+      return "none";
+    }
+    const game = this.games.find((g) => g.id == result.from);
+    if (!game) {
+      return "none";
+    }
+    return game;
+  }
+
+  saveAndActivate() {
+    console.log(this.tournament);
+    console.log(this.teams);
+    console.log(this.games);
+    console.log(this.cartilage);
+    console.log(this.posisionts);
   }
 }
