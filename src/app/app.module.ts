@@ -35,6 +35,7 @@ import { TournamentStepperComponent } from './tournament-stepper/tournament-step
 import { FormsModule } from '@angular/forms';
 import { GameEditorComponent } from './game-editor/game-editor.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { TeamAdderComponent } from './team-adder/team-adder.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     TournamentEditorComponent,
     TournamentStepperComponent,
     GameEditorComponent,
+    TeamAdderComponent,
   ],
   imports: [
     BrowserModule,
