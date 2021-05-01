@@ -1,36 +1,51 @@
-<div *ngIf="!!team" class="team-grid">
-  <mat-form-field>
-    <mat-label>ID</mat-label>
-    <input matInput disabled value="{{ team.id }}" />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input
-      type="text"
-      matInput
-      placeholder="e.g. Michigan"
-      value="{{ team.name }}"
-    />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Primary color</mat-label>
-    <input
-      type="color"
-      matInput
-      placeholder="e.g. #123456"
-      value="{{ team.primaryColor }}"
-    />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Accent color</mat-label>
-    <input
-      type="color"
-      matInput
-      placeholder="e.g. #abcdef"
-      value="{{ team.accentColor }}"
-    />
-  </mat-form-field>
-  <!-- <mat-checkbox class="active" [checked]="team.active"
-    >Active (not eliminated)</mat-checkbox
-  > -->
-</div>
+<mat-card *ngIf="!!team">
+  <mat-card-header>
+    <mat-card-title>{{
+      "#" + team.seed + " " + (team.name.length > 0 ? team.name : "(name not set)")
+    }}</mat-card-title>
+    <mat-card-subtitle
+      >ID:
+      {{ team.id.length > 0 ? team.id : "(id not set)" }}</mat-card-subtitle
+    >
+  </mat-card-header>
+  <div class="team-grid">
+    <mat-form-field>
+      <mat-label>Seed</mat-label>
+      <input
+        type="number"
+        matInput
+        [(ngModel)]="team.seed"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="e.g. Michigan"
+        [(ngModel)]="team.name"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Primary color</mat-label>
+      <input
+        type="color"
+        matInput
+        placeholder="e.g. #123456"
+        [(ngModel)]="team.primaryColor"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Accent color</mat-label>
+      <input
+        type="color"
+        matInput
+        placeholder="e.g. #abcdef"
+        [(ngModel)]="team.accentColor"
+      />
+    </mat-form-field>
+    <mat-checkbox class="active" [(ngModel)]="team.active"
+      >Active (not eliminated)</mat-checkbox
+    >
+  </div>
+</mat-card>

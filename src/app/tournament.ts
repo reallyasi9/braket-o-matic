@@ -7,6 +7,7 @@ export interface Tournament {
   startDate: Date;
   complete: boolean;
   roundValues: number[];
+  payouts: number[];
   cartilage: { [from: string]: { to: string; bottom: boolean } };
   gridLocation: { [id: string]: { col: number; row: number } };
 }
