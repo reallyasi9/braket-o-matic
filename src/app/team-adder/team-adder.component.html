@@ -26,6 +26,7 @@
         mat-flat-button
         class="delete-team"
         (click)="delete()"
+        [disabled]="!deletable"
       >
         <mat-icon
           aria-hidden="false"
