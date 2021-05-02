@@ -9,6 +9,7 @@ import { Team } from '../team';
 })
 export class TeamAdderComponent implements OnInit {
   @Input() team: Team | undefined;
+  @Input() deletable: boolean = false;
   // @Output() teamChange = new EventEmitter<Team>();
   @Output() deleteRequest = new EventEmitter<Team>();
   @Output() addRequest = new EventEmitter();
@@ -19,7 +20,7 @@ export class TeamAdderComponent implements OnInit {
   }
 
   delete() {
-    !!this.team && this.deleteRequest.emit(this.team);
+    !!this.team && this.deletable && this.deleteRequest.emit(this.team);
   }
 
   add() {

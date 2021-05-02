@@ -36,6 +36,10 @@ import { FormsModule } from '@angular/forms';
 import { GameEditorComponent } from './game-editor/game-editor.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { TeamAdderComponent } from './team-adder/team-adder.component';
+import {
+  MatSnackBarModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -73,6 +77,7 @@ import { TeamAdderComponent } from './team-adder/team-adder.component';
     MatSlideToggleModule,
     MatRadioModule,
     MatDatepickerModule,
+    MatSnackBarModule,
     MatNativeDateModule,
     AppRoutingModule,
   ],
@@ -85,6 +90,7 @@ import { TeamAdderComponent } from './team-adder/team-adder.component';
       provide: USE_FIRESTORE_EMULATOR,
       useValue: !environment.production ? ['localhost', 8080] : undefined,
     },
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
   ],
   bootstrap: [AppComponent],
 })
