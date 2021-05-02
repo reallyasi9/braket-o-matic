@@ -3,13 +3,13 @@
     <div class="step-title">Without teams, there are no games.</div>
     <div class="step-subtitle">Add all the teams that are playing in the tournament.</div>
     <form class="team-step">
-      <app-team-adder *ngFor="let team of teams; index as i" [team]="team" (deleteRequest)="deleteTeam($event)"></app-team-adder>
+      <app-team-adder *ngFor="let team of teams; index as i" [team]="team" [deletable]="teams.length > 2" (deleteRequest)="deleteTeam($event)"></app-team-adder>
       <app-team-adder (addRequest)="addTeam()"></app-team-adder>
-      <span class="action-buttons">
-        <!-- <button mat-button matStepperPrevious>Back</button> -->
-        <button mat-button matStepperNext>Next</button>
-      </span>
     </form>
+    <span class="action-buttons">
+      <!-- <button mat-button matStepperPrevious>Back</button> -->
+      <button mat-button matStepperNext>Next</button>
+    </span>
   </mat-step>
   <mat-step label="Configure games">
     <div class="step-title">Without games, there is no bracket.</div>
