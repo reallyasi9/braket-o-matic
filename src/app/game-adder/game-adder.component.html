@@ -1,0 +1,25 @@
+<mat-card *ngIf="!!game" class="game-adder">
+  <mat-form-field class="top-team">
+    <mat-label>Select team</mat-label>
+    <mat-select name="topTeam" [(ngModel)]="game.topTeam">
+      <mat-option value="undetermined">(undetermined)</mat-option>
+      <mat-option *ngFor="let team of teams" [value]="team">{{
+        team.name
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <span class="or">or</span>
+  <button mat-flat-button (click)="add(false)">Add play-in game</button>
+
+  <mat-form-field class="bottom-team">
+    <mat-label>Select team</mat-label>
+    <mat-select name="bottomTeam" [(ngModel)]="game.bottomTeam">
+      <mat-option value="undetermined">(undetermined)</mat-option>
+      <mat-option *ngFor="let team of teams" [value]="team">{{
+        team.name
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <span class="or">or</span>
+  <button mat-flat-button (click)="add(true)">Add play-in game</button>
+</mat-card>
