@@ -34,6 +34,7 @@ export class TournamentStepperComponent implements OnInit {
     gridLocation: {},
   };
   teams: Team[] = [];
+  teamsRemaining: Team[] = [];
   games: Game[] = [];
   cartilage: TournamentStepperCartilage[] = [];
   posisionts: GridLocation[] = [];
@@ -44,6 +45,7 @@ export class TournamentStepperComponent implements OnInit {
     const topTeam = generateTeam('1');
     const bottomTeam = generateTeam('2');
     this.teams = [topTeam, bottomTeam]; // two teams
+    this.teamsRemaining = [topTeam, bottomTeam];
     const game: Game = {
       id: '1',
       round: 0,
@@ -74,6 +76,7 @@ export class TournamentStepperComponent implements OnInit {
       ) + 1;
     const team = generateTeam(id.toString());
     this.teams.push(team);
+    this.teamsRemaining.push(team);
   }
 
   deleteTeam(team: Team): void {
@@ -82,6 +85,7 @@ export class TournamentStepperComponent implements OnInit {
       return;
     }
     this.teams = this.teams.filter((t) => t !== team);
+    this.teamsRemaining = this.teamsRemaining.filter((t) => t !== team);
   }
 
   noMoreTeams(): boolean {
