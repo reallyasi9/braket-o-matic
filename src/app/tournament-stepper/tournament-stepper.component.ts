@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Game } from '../game';
 import { generateGame } from '../mock-games';
-import { generateTeam } from '../mock-teams';
-import { Team } from '../team';
+import { randomColors, randomTeamName } from '../mock-teams';
+import { Team } from '../team-adder/team-adder.component';
 import { Tournament } from '../tournament';
 
 interface TournamentStepperCartilage {
@@ -16,6 +16,16 @@ interface GridLocation {
   game: string;
   row: number;
   col: number;
+}
+
+function generateTeam(): Team {
+  const colors = randomColors();
+  return {
+      name: randomTeamName(),
+      seed: undefined,
+      primaryColor: colors[0],
+      accentColor: colors[1],
+    };
 }
 @Component({
   selector: 'app-tournament-stepper',
@@ -42,8 +52,8 @@ export class TournamentStepperComponent implements OnInit {
   constructor(private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
-    const topTeam = generateTeam('1');
-    const bottomTeam = generateTeam('2');
+    const topTeam = generateTeam();
+    const bottomTeam = generateTeam();
     this.teams = [topTeam, bottomTeam]; // two teams
     this.teamsRemaining = [topTeam, bottomTeam];
     const game: Game = {
@@ -69,12 +79,7 @@ export class TournamentStepperComponent implements OnInit {
   }
 
   addTeam(): void {
-    const id =
-      this.teams.reduce(
-        (max, team) => (parseInt(team.id) > max ? parseInt(team.id) : max),
-        -1
-      ) + 1;
-    const team = generateTeam(id.toString());
+    const team = generateTeam();
     this.teams.push(team);
     this.teamsRemaining.push(team);
   }
