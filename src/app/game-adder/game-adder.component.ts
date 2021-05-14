@@ -1,6 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Game } from '../game';
 import { Team } from '../team-adder/team-adder.component';
+
+export interface Game {
+  topTeam: Team | undefined;
+  bottomTeam: Team | undefined;
+  topPlayInGame: Game | undefined;
+  bottomPlayInGame: Game | undefined;
+}
 
 @Component({
   selector: 'app-game-adder',
