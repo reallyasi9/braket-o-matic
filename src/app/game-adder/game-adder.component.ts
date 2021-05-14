@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Game } from '../game';
-import { Team } from '../team';
+import { Team } from '../team-adder/team-adder.component';
 
 @Component({
   selector: 'app-game-adder',

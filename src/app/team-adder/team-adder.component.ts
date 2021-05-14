@@ -1,7 +1,12 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { generateTeam } from '../mock-teams';
-import { Team } from '../team';
 
+export class Team {
+  name: string | undefined;
+  seed: number | undefined;
+  primaryColor: string = "ffffff";
+  accentColor: string = "000000";
+}
 @Component({
   selector: 'app-team-adder',
   templateUrl: './team-adder.component.html',
