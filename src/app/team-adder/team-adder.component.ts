@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { generateTeam } from '../mock-teams';
 
 export interface Team {
-  name: string | undefined;
+  name: string;
   seed: number | undefined;
   primaryColor: string;
   accentColor: string;
