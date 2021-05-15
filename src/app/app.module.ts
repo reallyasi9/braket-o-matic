@@ -41,6 +41,7 @@ import {
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
 import { GameAdderComponent } from './game-adder/game-adder.component';
+import { OrderByPipe } from './utilities';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { GameAdderComponent } from './game-adder/game-adder.component';
     GameEditorComponent,
     TeamAdderComponent,
     GameAdderComponent,
+    OrderByPipe,
   ],
   imports: [
     BrowserModule,

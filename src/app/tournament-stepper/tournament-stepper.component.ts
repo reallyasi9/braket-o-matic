@@ -4,6 +4,7 @@ import { Game } from '../game-adder/game-adder.component';
 import { randomColors, randomTeamName } from '../mock-teams';
 import { Team } from '../team-adder/team-adder.component';
 import { Tournament } from '../tournament';
+import { sortBy } from '../utilities';
 
 interface GridLocation {
   game: Game;
@@ -20,6 +21,7 @@ function generateTeam(): Team {
     accentColor: colors[1],
   };
 }
+
 @Component({
   selector: 'app-tournament-stepper',
   templateUrl: './tournament-stepper.component.html',
@@ -53,6 +55,8 @@ export class TournamentStepperComponent implements OnInit {
       bottomTeam: undefined,
       topPlayInGame: undefined,
       bottomPlayInGame: undefined,
+      round: 0,
+      gameInRound: 0,
     };
     this.games = [game];
   }
@@ -61,6 +65,7 @@ export class TournamentStepperComponent implements OnInit {
     const team = generateTeam();
     this.teams.push(team);
     this.teamsRemaining.push(team);
+    this.teamsRemaining = sortBy(this.teamsRemaining, "name", "desc");
   }
 
   deleteTeam(team: Team): void {
@@ -74,12 +79,15 @@ export class TournamentStepperComponent implements OnInit {
 
   addGame(from: Game, bottom: boolean): void {
     if (this.noMoreGames()) {
-      this._snackBar.open('Add more teams before adding a play-in game.', 'Close');
+      this._snackBar.open(
+        'Add more teams before adding a play-in game.',
+        'Close'
+      );
       return;
     }
     var insertIndex = this.games.indexOf(from);
     if (insertIndex < 0) {
-      this._snackBar.open('Error finding play-in target.', 'Close')
+      this._snackBar.open('Error finding play-in target.', 'Close');
       return;
     }
     const game: Game = {
@@ -87,14 +95,18 @@ export class TournamentStepperComponent implements OnInit {
       bottomTeam: undefined,
       topPlayInGame: undefined,
       bottomPlayInGame: undefined,
+      round: from.round + 1,
+      gameInRound: from.gameInRound * 2 + (bottom ? 1 : 0),
     };
     if (bottom) {
       from.bottomPlayInGame = game;
+      from.bottomTeam = undefined;
     } else {
       from.topPlayInGame = game;
+      from.topTeam = undefined;
     }
     if (!bottom) {
-      insertIndex -= 1;
+      insertIndex -= 2;
     }
     this.games.splice(insertIndex, 0, game);
   }

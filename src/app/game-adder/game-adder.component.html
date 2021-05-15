@@ -1,8 +1,19 @@
 <mat-card *ngIf="!!game" class="game-adder">
+  <mat-card-header>
+    <mat-card-title *ngIf="championship else notChampionship"
+        >Championship game</mat-card-title
+        >
+      <ng-template #notChampionship
+        ><mat-card-title>Round {{ game.round }} game {{ game.gameInRound }}</mat-card-title></ng-template
+      >
+  </mat-card-header>
   <mat-form-field class="top-team">
     <mat-label>Select team</mat-label>
-    <mat-select name="topTeam" [(ngModel)]="game.topTeam">
-      <mat-option value="undetermined">(undetermined)</mat-option>
+    <mat-select
+      name="topTeam"
+      [(ngModel)]="game.topTeam"
+      [disabled]="!!game.topPlayInGame"
+    >
       <mat-option *ngFor="let team of teams" [value]="team">{{
         team.name
       }}</mat-option>
@@ -13,8 +24,11 @@
 
   <mat-form-field class="bottom-team">
     <mat-label>Select team</mat-label>
-    <mat-select name="bottomTeam" [(ngModel)]="game.bottomTeam">
-      <mat-option value="undetermined">(undetermined)</mat-option>
+    <mat-select
+      name="bottomTeam"
+      [(ngModel)]="game.bottomTeam"
+      [disabled]="!!game.bottomPlayInGame"
+    >
       <mat-option *ngFor="let team of teams" [value]="team">{{
         team.name
       }}</mat-option>
