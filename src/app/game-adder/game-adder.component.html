@@ -1,11 +1,8 @@
-<mat-card *ngIf="!!game" class="game-adder">
+<mat-card *ngIf="!!game" [ngClass]="{'game-adder': true, 'championship': !game.nextGame}">
   <mat-card-header>
-    <mat-card-title *ngIf="championship else notChampionship"
-        >Championship game</mat-card-title
+    <mat-card-title
+        >{{ game.name() }} <span class="play-in-title">({{ game.nextName() }})</span></mat-card-title
         >
-      <ng-template #notChampionship
-        ><mat-card-title>Round {{ game.round }} game {{ game.gameInRound }}</mat-card-title></ng-template
-      >
   </mat-card-header>
   <mat-form-field class="top-team">
     <mat-label>Select team</mat-label>

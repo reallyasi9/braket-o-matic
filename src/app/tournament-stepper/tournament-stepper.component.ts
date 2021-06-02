@@ -50,14 +50,7 @@ export class TournamentStepperComponent implements OnInit {
     const bottomTeam = generateTeam();
     this.teams = [topTeam, bottomTeam]; // two teams
     this.teamsRemaining = [topTeam, bottomTeam];
-    const game: Game = {
-      topTeam: undefined,
-      bottomTeam: undefined,
-      topPlayInGame: undefined,
-      bottomPlayInGame: undefined,
-      round: 0,
-      gameInRound: 0,
-    };
+    const game = new Game();
     this.games = [game];
   }
 
@@ -90,25 +83,23 @@ export class TournamentStepperComponent implements OnInit {
       this._snackBar.open('Error finding play-in target.', 'Close');
       return;
     }
-    const game: Game = {
-      topTeam: undefined,
-      bottomTeam: undefined,
-      topPlayInGame: undefined,
-      bottomPlayInGame: undefined,
-      round: from.round + 1,
-      gameInRound: from.gameInRound * 2 + (bottom ? 1 : 0),
-    };
+
+    const game = new Game();
+    game.round = from.round + 1;
+    game.gameInRound = from.gameInRound * 2 + (bottom ? 1 : 0);
+    game.nextGame = from;
+    game.nextBottom = bottom;
     if (bottom) {
       from.bottomPlayInGame = game;
       from.bottomTeam = undefined;
+      insertIndex++;
     } else {
       from.topPlayInGame = game;
       from.topTeam = undefined;
     }
-    if (!bottom) {
-      insertIndex -= 2;
-    }
     this.games.splice(insertIndex, 0, game);
+    // reset games array to get the order right in UI
+    this.games = [...this.games];
   }
 
   // selectTeam(team: Team): void {

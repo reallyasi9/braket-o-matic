@@ -1,14 +1,36 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Team } from '../team-adder/team-adder.component';
-import { sortBy } from '../utilities';
 
-export interface Game {
+export class Game {
   topTeam: Team | undefined;
   bottomTeam: Team | undefined;
   topPlayInGame: Game | undefined;
   bottomPlayInGame: Game | undefined;
   round: number;
   gameInRound: number;
+  nextGame: Game | undefined;
+  nextBottom: boolean;
+
+  constructor() {
+    this.round = 0;
+    this.gameInRound = 0;
+    this.nextBottom = false;
+  }
+
+  name(): string {
+    if (!this.nextGame) {
+      return "Championship";
+    }
+    return "Round " + this.round.toString() + " Game " + this.gameInRound.toString();
+  }
+
+  nextName(): string {
+    if (!this.nextGame) {
+      return "Final game";
+    }
+    const slot = this.nextBottom ? "1" : "0";
+    return "Play-in for " + this.nextGame.name() + " Slot " + slot;
+  }
 }
 
 @Component({
@@ -18,28 +40,19 @@ export interface Game {
 })
 export class GameAdderComponent implements OnInit {
 
-  @Input() game: Game;
-  @Input() championship: boolean = false;
+  @Input() game: Game = new Game();
   @Input() teams: Team[] = [];
   @Output() deleteRequest = new EventEmitter<Game>();
   @Output() addRequest = new EventEmitter<boolean>();
 
   constructor() {
-    this.game = {
-      topTeam: undefined,
-      bottomTeam: undefined,
-      topPlayInGame: undefined,
-      bottomPlayInGame: undefined,
-      round: 0,
-      gameInRound: 0,
-    }
   }
 
   ngOnInit(): void {
   }
 
   delete() {
-    !this.championship && this.deleteRequest.emit(this.game);
+    !!this.game.nextGame && this.deleteRequest.emit(this.game);
   }
 
   add(bottom: boolean) {
