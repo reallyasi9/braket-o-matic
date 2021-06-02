@@ -28,7 +28,6 @@
       <app-game-adder
         *ngFor="let game of games; index as i"
         [game]="game"
-        [championship]="i == 0"
         [teams]="teamsRemaining | orderBy: 'name':'desc'"
         (addRequest)="addGame(game, $event)"
         (deleteRequest)="deleteGame($event)"
