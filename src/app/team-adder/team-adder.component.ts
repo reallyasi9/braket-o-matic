@@ -1,16 +1,32 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { generateTeam } from '../mock-teams';
+import { generateTeam, randomColors } from '../mock-teams';
 
-export interface Team {
+export class Team {
   name: string;
   seed: number | undefined;
   primaryColor: string;
   accentColor: string;
+
+  constructor() {
+    const colors = randomColors();
+    this.name = 'unnamed team';
+    this.primaryColor = colors[0];
+    this.accentColor = colors[1];
+  }
+
+  nameWithSeed(): string {
+    var n = this.name;
+    if (!!this.seed) {
+      n = '#' + this.seed.toString() + ' ' + n;
+    }
+    return n;
+  }
 }
+
 @Component({
   selector: 'app-team-adder',
   templateUrl: './team-adder.component.html',
-  styleUrls: ['./team-adder.component.css']
+  styleUrls: ['./team-adder.component.css'],
 })
 export class TeamAdderComponent implements OnInit {
   @Input() team: Team | undefined;
@@ -19,10 +35,9 @@ export class TeamAdderComponent implements OnInit {
   @Output() deleteRequest = new EventEmitter<Team>();
   @Output() addRequest = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   delete() {
     !!this.team && this.deletable && this.deleteRequest.emit(this.team);
@@ -31,5 +46,4 @@ export class TeamAdderComponent implements OnInit {
   add() {
     !this.team && this.addRequest.emit();
   }
-
 }

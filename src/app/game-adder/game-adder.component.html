@@ -1,36 +1,48 @@
-<mat-card *ngIf="!!game" [ngClass]="{'game-adder': true, 'championship': !game.nextGame}">
+<mat-card
+  *ngIf="!!game"
+  [ngClass]="{ 'game-adder': true, championship: !game.nextGame }"
+>
   <mat-card-header>
     <mat-card-title
-        >{{ game.name() }} <span class="play-in-title">({{ game.nextName() }})</span></mat-card-title
-        >
+      >{{ game.name() }}
+      <span class="play-in-title">({{ game.nextName() }})</span></mat-card-title
+    >
   </mat-card-header>
+  <button mat-button (click)="add(false)" [disabled]="!!game.topPlayInGame">
+    Play-in<mat-icon aria-hidden="false" aria-label="Right arrow"
+      >arrow_right_alt</mat-icon
+    >
+  </button>
+  <span class="or" [hidden]="!!game.topPlayInGame">or</span>
   <mat-form-field class="top-team">
-    <mat-label>Select team</mat-label>
-    <mat-select
-      name="topTeam"
-      [(ngModel)]="game.topTeam"
-      [disabled]="!!game.topPlayInGame"
-    >
+    <mat-label>{{
+      !!game.topPlayInGame
+        ? game.topPlayInGame.name() + " winner"
+        : "Select team"
+    }}</mat-label>
+    <mat-select name="topTeam" [(ngModel)]="game.topTeam" (valueChange)="update(false)">
       <mat-option *ngFor="let team of teams" [value]="team">{{
-        team.name
+        team.nameWithSeed()
       }}</mat-option>
     </mat-select>
   </mat-form-field>
-  <span class="or">or</span>
-  <button mat-flat-button (click)="add(false)">Add play-in game</button>
 
-  <mat-form-field class="bottom-team">
-    <mat-label>Select team</mat-label>
-    <mat-select
-      name="bottomTeam"
-      [(ngModel)]="game.bottomTeam"
-      [disabled]="!!game.bottomPlayInGame"
+  <button mat-button (click)="add(true)" [disabled]="!!game.bottomPlayInGame">
+    Play-in<mat-icon aria-hidden="false" aria-label="Right arrow"
+      >arrow_right_alt</mat-icon
     >
+  </button>
+  <span class="or" [hidden]="!!game.bottomPlayInGame">or</span>
+  <mat-form-field class="bottom-team">
+    <mat-label>{{
+      !!game.bottomPlayInGame
+        ? game.bottomPlayInGame.name() + " winner"
+        : "Select team"
+    }}</mat-label>
+    <mat-select name="bottomTeam" [(ngModel)]="game.bottomTeam" (valueChange)="update(true)">
       <mat-option *ngFor="let team of teams" [value]="team">{{
-        team.name
+        team.nameWithSeed()
       }}</mat-option>
     </mat-select>
   </mat-form-field>
-  <span class="or">or</span>
-  <button mat-flat-button (click)="add(true)">Add play-in game</button>
 </mat-card>
