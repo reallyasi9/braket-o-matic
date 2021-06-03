@@ -51,12 +51,36 @@ export class GameAdderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  delete() {
-    !!this.game.nextGame && this.deleteRequest.emit(this.game);
+  add(bottom: boolean): void {
+    if ((bottom && !!this.game.bottomPlayInGame) || (!bottom && !!this.game.topPlayInGame)) {
+      return;
+    }
+    this.teams.length >= 2 && this.addRequest.emit(bottom);
   }
 
-  add(bottom: boolean) {
-    this.teams.length >= 2 && this.addRequest.emit(bottom);
+  update(bottom: boolean): boolean {
+    const deleteGames: Game[] = [];
+    const game = bottom ? this.game.bottomPlayInGame : this.game.topPlayInGame;
+    if (!!game) {
+      const checkGames: Game[] = [game];
+      var check;
+      while (check = checkGames.pop()) {
+        if (check.topPlayInGame) {
+          checkGames.push(check.topPlayInGame);
+        }
+        if (check.bottomPlayInGame) {
+          checkGames.push(check.bottomPlayInGame);
+        }
+        deleteGames.push(check);
+      }
+      deleteGames.forEach((g: Game) => this.deleteRequest.emit(g));
+    }
+    if (bottom && !!this.game.bottomPlayInGame) {
+      this.game.bottomPlayInGame = undefined;
+    } else if (!bottom && !!this.game.topPlayInGame) {
+      this.game.topPlayInGame = undefined;
+    }
+    return true;
   }
 
 }

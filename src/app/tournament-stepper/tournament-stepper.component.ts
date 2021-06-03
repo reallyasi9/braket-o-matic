@@ -14,12 +14,9 @@ interface GridLocation {
 
 function generateTeam(): Team {
   const colors = randomColors();
-  return {
-    name: randomTeamName(),
-    seed: undefined,
-    primaryColor: colors[0],
-    accentColor: colors[1],
-  };
+  const team = new Team();
+  team.name = randomTeamName();
+  return team;
 }
 
 @Component({
