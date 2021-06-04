@@ -2,16 +2,12 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { generateTeam, randomColors } from '../mock-teams';
 
 export class Team {
-  name: string;
+  name: string = "unnamed team";
   seed: number | undefined;
-  primaryColor: string;
-  accentColor: string;
+  primaryColor: string = "#000000";
+  accentColor: string = "#ffffff";
 
   constructor() {
-    const colors = randomColors();
-    this.name = 'unnamed team';
-    this.primaryColor = colors[0];
-    this.accentColor = colors[1];
   }
 
   nameWithSeed(): string {

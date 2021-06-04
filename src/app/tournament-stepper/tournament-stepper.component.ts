@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { max } from 'rxjs/operators';
 import { Game } from '../game-adder/game-adder.component';
 import { randomColors, randomTeamName } from '../mock-teams';
 import { Team } from '../team-adder/team-adder.component';
@@ -13,9 +14,11 @@ interface GridLocation {
 }
 
 function generateTeam(): Team {
-  const colors = randomColors();
   const team = new Team();
   team.name = randomTeamName();
+  const colors = randomColors();
+  team.primaryColor = colors[0];
+  team.accentColor = colors[1];
   return team;
 }
 
@@ -38,7 +41,7 @@ export class TournamentStepperComponent implements OnInit {
   teams: Team[] = [];
   teamsRemaining: Team[] = [];
   games: Game[] = [];
-  positions: GridLocation[] = [];
+  roundValues: number[] = [1];
 
   constructor(private _snackBar: MatSnackBar) {}
 
@@ -83,6 +86,9 @@ export class TournamentStepperComponent implements OnInit {
 
     const game = new Game();
     game.round = from.round + 1;
+    while (this.roundValues.length <= game.round) {
+      this.roundValues.unshift(2**this.roundValues.length);
+    }
     game.gameInRound = from.gameInRound * 2 + (bottom ? 1 : 0);
     game.nextGame = from;
     game.nextBottom = bottom;
@@ -95,8 +101,6 @@ export class TournamentStepperComponent implements OnInit {
       from.topTeam = undefined;
     }
     this.games.splice(insertIndex, 0, game);
-    // reset games array to get the order right in UI
-    this.games = [...this.games];
   }
 
   // selectTeam(team: Team): void {
@@ -104,7 +108,12 @@ export class TournamentStepperComponent implements OnInit {
   // }
 
   deleteGame(game: Game): void {
-    this.games = this.games.filter((g) => g !== game);
+    this.games = this.games.filter(g => g !== game);
+    const rounds = this.games.map(g => g.round);
+    const nRoundsRemaining = Math.max(...rounds) + 1;
+    while (this.roundValues.length > nRoundsRemaining) {
+      this.roundValues.pop();
+    }
   }
 
   noMoreGames(): boolean {
@@ -115,6 +124,6 @@ export class TournamentStepperComponent implements OnInit {
     console.log(this.tournament);
     console.log(this.teams);
     console.log(this.games);
-    console.log(this.positions);
+    console.log(this.roundValues);
   }
 }

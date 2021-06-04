@@ -42,6 +42,7 @@ import {
 } from '@angular/material/snack-bar';
 import { GameAdderComponent } from './game-adder/game-adder.component';
 import { OrderByPipe } from './utilities';
+import { TournamentAdderComponent } from './tournament-adder/tournament-adder.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { OrderByPipe } from './utilities';
     TeamAdderComponent,
     GameAdderComponent,
     OrderByPipe,
+    TournamentAdderComponent,
   ],
   imports: [
     BrowserModule,
