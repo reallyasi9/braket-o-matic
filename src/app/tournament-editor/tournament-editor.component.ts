@@ -16,21 +16,6 @@ export class TournamentEditorComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  addRound(): void {
-    if (!this.tournament) {
-      return;
-    }
-    const nRounds = this.tournament.roundValues.length;
-    this.tournament.roundValues.push(2**nRounds);
-  }
-
-  deleteRound(): void {
-    if (!this.tournament || this.tournament.roundValues.length <= 1) {
-      return;
-    }
-    this.tournament.roundValues.pop();
-  }
-
   addPayout(): void {
     if (!this.tournament) {
       return;

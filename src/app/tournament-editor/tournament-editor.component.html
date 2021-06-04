@@ -55,18 +55,6 @@
           />
         </mat-form-field>
       </mat-list-item>
-      <button mat-button class="action" type="button" (click)="addRound()">
-        Add round
-      </button>
-      <button
-        mat-button
-        class="action"
-        type="button"
-        [disabled]="tournament.roundValues.length <= 1"
-        (click)="deleteRound()"
-      >
-        Delete round
-      </button>
     </mat-list>
     <mat-list class="payouts">
       <div mat-subheader>Payout values</div>
