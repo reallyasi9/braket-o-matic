@@ -1,13 +1,29 @@
+// @import "~@angular/material/theming";
+// @include mat-core();
+
+div.step-title {
+  // color: mat-color($primary, 500) !important;
+  font-size: x-large;
+}
+
+div.step-subtitle {
+  // color: mat-color($primary, 500) !important;
+  font-size: large;
+  font-weight: 200;
+}
+
 form.tournament-step {
     min-width: 400px;
-    max-width: 800px;
+    // max-width: 800px;
     margin: 16px auto;
 }
 
 form.team-step {
-    min-width: 400px;
-    max-width: 600px;
+    min-width: 300px;
+    // max-width: 600px;
     margin: 16px auto;
+    display: flex;
+    flex-flow: row wrap;
 }
 
 div.team-item {

@@ -1,90 +1,53 @@
 <mat-horizontal-stepper linear>
-  <mat-step label="Set tournament rules">
+  <mat-step label="Add teams">
+    <div class="step-title">Without teams, there are no games.</div>
+    <div class="step-subtitle">
+      Add all the teams that are playing in the tournament.
+    </div>
+    <form class="team-step">
+      <app-team-adder
+        *ngFor="let team of teams; index as i"
+        [team]="team"
+        [deletable]="teams.length > 2"
+        (deleteRequest)="deleteTeam($event)"
+      ></app-team-adder>
+      <app-team-adder (addRequest)="addTeam()"></app-team-adder>
+    </form>
+    <span class="action-buttons">
+      <!-- <button mat-button matStepperPrevious>Back</button> -->
+      <button mat-button matStepperNext>Next <mat-icon></mat-icon></button>
+    </span>
+  </mat-step>
+  <mat-step label="Configure games">
+    <div class="step-title">Without games, there is no bracket.</div>
+    <div class="step-subtitle">
+      Add all the games in the tournament, starting with the championship game
+      and branching out using the "play in" buttons as necessary.
+    </div>
+    <form class="game-step">
+      <app-game-adder
+        *ngFor="let game of games; index as i"
+        [game]="game"
+        [teams]="teamsRemaining | orderBy: 'name':'desc'"
+        (addRequest)="addGame(game, $event)"
+        (deleteRequest)="deleteGame($event)"
+      ></app-game-adder>
+    </form>
+    <span class="action-buttons">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </span>
+  </mat-step>
+  <mat-step label="Set bracket rules">
+    <div class="step-title">Rules define the bracket.</div>
+    <div class="step-subtitle">
+      Specify the points per correct pick and the payout values so pickers know
+      how to win.
+    </div>
     <form class="tournament-step">
       <app-tournament-editor
         [(tournament)]="tournament"
       ></app-tournament-editor>
-      <span class="action-buttons">
-        <button mat-button matStepperNext>Next</button>
-      </span>
-    </form>
-  </mat-step>
-  <mat-step label="Add teams">
-    <form class="team-step">
-      <div class="team-item" *ngFor="let team of teams; index as i">
-        <app-team-editor [team]="team"></app-team-editor>
-        <button mat-icon-button type="button" (click)="deleteTeam(team)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-      <button
-        mat-button
-        type="button"
-        [disabled]="noMoreTeams()"
-        (click)="addTeam()"
-      >
-        Add team
-      </button>
-      <span class="action-buttons">
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </span>
-    </form>
-  </mat-step>
-  <mat-step label="Configure games">
-    <form class="game-step">
-      <div class="game-item" *ngFor="let game of games; index as i">
-        <mat-card class="cartilage-grid">
-          <mat-form-field>
-            <mat-label>Top team play-in game</mat-label>
-            <mat-select
-              name="topPlayIn"
-              [ngModel]="getPlayInGame(game, false)"
-              (ngModelChange)="connectGames($event, game, false)"
-            >
-              <mat-option value="none">(none)</mat-option>
-              <ng-container *ngFor="let otherGame of games">
-                <mat-option *ngIf="game !== otherGame" [value]="otherGame"
-                  >Round {{ otherGame.round }} game
-                  {{ otherGame.id }}</mat-option
-                >
-              </ng-container>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Bottom team play-in game</mat-label>
-            <mat-select
-              name="bottomPlayIn"
-              [ngModel]="getPlayInGame(game, true)"
-              (ngModelChange)="connectGames($event, game, true)"
-            >
-              <mat-option value="none">(none)</mat-option>
-              <ng-container *ngFor="let otherGame of games">
-                <mat-option *ngIf="game !== otherGame" [value]="otherGame"
-                  >Round {{ otherGame.round }} game
-                  {{ otherGame.id }}</mat-option
-                >
-              </ng-container>
-            </mat-select>
-          </mat-form-field>
-        </mat-card>
-        <app-game-editor
-          [game]="game"
-          [teams]="teams"
-          [numRounds]="tournament.roundValues.length"
-        ></app-game-editor>
-        <button mat-icon-button type="button" (click)="deleteGame(game)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-      <button
-        mat-button
-        type="button"
-        [disabled]="noMoreGames()"
-        (click)="addGame()"
-      >
-        Add game
-      </button>
       <span class="action-buttons">
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button matStepperNext>Next</button>

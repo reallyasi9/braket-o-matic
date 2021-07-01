@@ -1,160 +1,129 @@
 import { Component, OnInit } from '@angular/core';
-import { Game } from '../game';
-import { generateGame } from '../mock-games';
-import { generateTeam } from '../mock-teams';
-import { Team } from '../team';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { max } from 'rxjs/operators';
+import { Game } from '../game-adder/game-adder.component';
+import { randomColors, randomTeamName } from '../mock-teams';
+import { Team } from '../team-adder/team-adder.component';
 import { Tournament } from '../tournament';
-
-interface TournamentStepperCartilage {
-  from: string,
-  to: string,
-  bottom: boolean,
-}
+import { sortBy } from '../utilities';
 
 interface GridLocation {
-  game: string,
-  row: number,
-  col: number,
+  game: Game;
+  row: number;
+  col: number;
 }
+
+function generateTeam(): Team {
+  const team = new Team();
+  team.name = randomTeamName();
+  const colors = randomColors();
+  team.primaryColor = colors[0];
+  team.accentColor = colors[1];
+  return team;
+}
+
 @Component({
   selector: 'app-tournament-stepper',
   templateUrl: './tournament-stepper.component.html',
-  styleUrls: ['./tournament-stepper.component.css'],
+  styleUrls: ['./tournament-stepper.component.scss'],
 })
 export class TournamentStepperComponent implements OnInit {
-  tournament: Tournament;
+  tournament: Tournament = {
+    id: '',
+    name: '',
+    startDate: new Date(),
+    complete: false,
+    roundValues: [1],
+    payouts: [-1],
+    cartilage: {},
+    gridLocation: {},
+  };
   teams: Team[] = [];
+  teamsRemaining: Team[] = [];
   games: Game[] = [];
-  cartilage: TournamentStepperCartilage[] = [];
-  posisionts: GridLocation[] = [];
+  roundValues: number[] = [1];
 
-  constructor() {
-    this.tournament = {
-      id: "",
-      name: "",
-      startDate: new Date(),
-      complete: false,
-      roundValues: [1],
-      payouts: [-1],
-      cartilage: {},
-      gridLocation: {},
-    }
-  }
+  constructor(private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
-    const topTeam = generateTeam("1");
-    const bottomTeam = generateTeam("2");
-    this.teams = [
-      topTeam,
-      bottomTeam,
-    ]; // two teams
-    const game : Game = {
-      id: "1",
-      round: 0,
-      clockSeconds: 20*60,
-      period: "Pregame",
-      topScore: 0,
-      bottomScore: 0,
-    }
+    const topTeam = generateTeam();
+    const bottomTeam = generateTeam();
+    this.teams = [topTeam, bottomTeam]; // two teams
+    this.teamsRemaining = [topTeam, bottomTeam];
+    const game = new Game();
     this.games = [game];
   }
 
-  addRound(): void {
-    const value = 2 ** this.tournament.roundValues.length;
-    this.tournament.roundValues.push(value);
-  }
-
-  deleteRound(): void {
-    if (this.tournament.roundValues.length > 1) {
-      this.tournament.roundValues.pop();
-    }
-  }
-
   addTeam(): void {
-    const id = this.teams.reduce(
-      (max, team) => (parseInt(team.id) > max ? parseInt(team.id) : max),
-      -1
-    ) + 1;
-    const team = generateTeam(id.toString());
+    const team = generateTeam();
     this.teams.push(team);
+    this.teamsRemaining.push(team);
+    this.teamsRemaining = sortBy(this.teamsRemaining, "name", "desc");
   }
 
   deleteTeam(team: Team): void {
+    if (this.teams.length <= 2) {
+      this._snackBar.open('Tournaments must have at least two teams.', 'Close');
+      return;
+    }
     this.teams = this.teams.filter((t) => t !== team);
+    this.teamsRemaining = this.teamsRemaining.filter((t) => t !== team);
   }
 
-  noMoreTeams(): boolean {
-    return (
-      this.tournament.roundValues.length == 0 ||
-      this.teams.length >= 2 ** this.tournament.roundValues.length
-    );
+  addGame(from: Game, bottom: boolean): void {
+    if (this.noMoreGames()) {
+      this._snackBar.open(
+        'Add more teams before adding a play-in game.',
+        'Close'
+      );
+      return;
+    }
+    var insertIndex = this.games.indexOf(from);
+    if (insertIndex < 0) {
+      this._snackBar.open('Error finding play-in target.', 'Close');
+      return;
+    }
+
+    const game = new Game();
+    game.round = from.round + 1;
+    while (this.roundValues.length <= game.round) {
+      this.roundValues.unshift(2**this.roundValues.length);
+    }
+    game.gameInRound = from.gameInRound * 2 + (bottom ? 1 : 0);
+    game.nextGame = from;
+    game.nextBottom = bottom;
+    if (bottom) {
+      from.bottomPlayInGame = game;
+      from.bottomTeam = undefined;
+      insertIndex++;
+    } else {
+      from.topPlayInGame = game;
+      from.topTeam = undefined;
+    }
+    this.games.splice(insertIndex, 0, game);
   }
 
-  addGame(): void {
-    const id = this.games.reduce(
-      (max, game) => (parseInt(game.id) > max ? parseInt(game.id) : max),
-      -1
-    ) + 1;
-    const game = {
-      id: id.toString(),
-      round: 0,
-      clockSeconds: 1200,
-      period: "Pregame",
-      topScore: 0,
-      bottomScore: 0,
-    };
-    this.games.push(game);
-  }
+  // selectTeam(team: Team): void {
+  //   this.teamsRemaining = this.teamsRemaining.filter((t) => t !== team);
+  // }
 
   deleteGame(game: Game): void {
-    this.cartilage = this.cartilage.filter((c) => c.from !== game.id && c.to !== game.id);
-    this.games = this.games.filter((g) => g !== game);
+    this.games = this.games.filter(g => g !== game);
+    const rounds = this.games.map(g => g.round);
+    const nRoundsRemaining = Math.max(...rounds) + 1;
+    while (this.roundValues.length > nRoundsRemaining) {
+      this.roundValues.pop();
+    }
   }
 
   noMoreGames(): boolean {
-    return (
-      this.tournament.roundValues.length == 0 ||
-      this.teams.length == 0 ||
-      this.games.length >= this.teams.length - 1
-    );
-  }
-
-  makeFirestoreID(id: string) : string {
-    const firestoreID = id.replace(/\W+/, "-");
-    return firestoreID;
-  }
-
-  connectGames(from: Game|string, to: Game|string, bottom: boolean) {
-    if (typeof(from) != "string") {
-      from = from.id;
-    }
-    if (typeof(to) != "string") {
-      to = to.id;
-    }
-    if (from == "none") {
-      this.cartilage = this.cartilage.filter((c) => c.to !== to)
-    } else {
-      this.cartilage.push({from: from, to: to, bottom: bottom});
-    }
-  }
-
-  getPlayInGame(to: Game, bottom: boolean): Game|string {
-    const result = this.cartilage.find((c) => c.to == to.id && c.bottom == bottom);
-    if (!result) {
-      return "none";
-    }
-    const game = this.games.find((g) => g.id == result.from);
-    if (!game) {
-      return "none";
-    }
-    return game;
+    return this.games.length >= this.teams.length - 1;
   }
 
   saveAndActivate() {
     console.log(this.tournament);
     console.log(this.teams);
     console.log(this.games);
-    console.log(this.cartilage);
-    console.log(this.posisionts);
+    console.log(this.roundValues);
   }
 }

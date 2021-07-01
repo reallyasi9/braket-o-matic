@@ -35,6 +35,14 @@ import { TournamentStepperComponent } from './tournament-stepper/tournament-step
 import { FormsModule } from '@angular/forms';
 import { GameEditorComponent } from './game-editor/game-editor.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { TeamAdderComponent } from './team-adder/team-adder.component';
+import {
+  MatSnackBarModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+} from '@angular/material/snack-bar';
+import { GameAdderComponent } from './game-adder/game-adder.component';
+import { OrderByPipe } from './utilities';
+import { TournamentAdderComponent } from './tournament-adder/tournament-adder.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +59,10 @@ import { MatNativeDateModule } from '@angular/material/core';
     TournamentEditorComponent,
     TournamentStepperComponent,
     GameEditorComponent,
+    TeamAdderComponent,
+    GameAdderComponent,
+    OrderByPipe,
+    TournamentAdderComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +83,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSlideToggleModule,
     MatRadioModule,
     MatDatepickerModule,
+    MatSnackBarModule,
     MatNativeDateModule,
     AppRoutingModule,
   ],
@@ -83,6 +96,7 @@ import { MatNativeDateModule } from '@angular/material/core';
       provide: USE_FIRESTORE_EMULATOR,
       useValue: !environment.production ? ['localhost', 8080] : undefined,
     },
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
   ],
   bootstrap: [AppComponent],
 })
