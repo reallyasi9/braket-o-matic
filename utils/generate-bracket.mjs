@@ -1,15 +1,13 @@
-import { JSDOM } from "jsdom";
+import JSDOM from 'jsdom';
+import { select } from 'd3';
+import { writeFileSync } from 'fs';
 
-import * as d3 from "d3";
-import * as fs from "fs";
-import { SystemJsNgModuleLoader } from "@angular/core";
-
-const dom = new JSDOM('<!DOCTYPE html><body></body>');
+const dom = new JSDOM.JSDOM('<!DOCTYPE html><body></body>');
 
 const canvasHeight = 1080;
 const canvasWidth = 1920;
 
-let body = d3.select(dom.window.document.querySelector('body'));
+let body = select(dom.window.document.querySelector('body'));
 let svg = body.append('svg')
     .attr('width', canvasWidth)
     .attr('height', canvasHeight)
@@ -78,4 +76,4 @@ for (let col = 0; col < 4; col++) {
 
 }
 
-fs.writeFileSync('out.svg', body.html());
+writeFileSync('out.svg', body.html());
