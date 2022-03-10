@@ -19,7 +19,7 @@
     "@angular/fire": "^6",
     "@angular/flex-layout": ">11.0.0-beta",
     "@angular/forms": "^11",
-    "@angular/material": "^11",
+    "@angular/material": "^13",
     "@angular/platform-browser": "^11",
     "@angular/platform-browser-dynamic": "^11",
     "@angular/router": "^11",
