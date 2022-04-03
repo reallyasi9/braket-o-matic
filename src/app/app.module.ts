@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
-import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/auth';
-import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/firestore';
+import { AngularFireModule} from '@angular/fire/compat';
+import { AngularFireAuthModule, USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/compat/auth';
+import { AngularFirestoreModule, USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/compat/firestore';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
@@ -13,7 +14,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -68,7 +68,10 @@ import { TournamentAdderComponent } from './tournament-adder/tournament-adder.co
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
-    NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig),
+    // NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
