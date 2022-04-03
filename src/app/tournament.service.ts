@@ -4,7 +4,7 @@ import {
   AngularFirestoreCollection,
   AngularFirestoreDocument,
   DocumentReference,
-} from '@angular/fire/firestore';
+} from '@angular/fire/compat/firestore';
 import { from, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
