@@ -26,7 +26,7 @@
     "ansi-html-community": "^0.0.8",
     "firebase": "^8",
     "firebaseui": "^4",
-    "firebaseui-angular": "^5",
+    "firebaseui-angular": "^6",
     "ngx-auth-firebaseui": "^5",
     "picocolors": "^1.0.0",
     "rxjs": "^6",
