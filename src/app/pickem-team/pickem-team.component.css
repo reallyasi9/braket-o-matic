@@ -1,16 +1,17 @@
 .name {
-  font-size: 9pt;
-  background-color: none;
-  color: #000000;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: left;
-  height: 100%;
-  max-width: 140px;
-  cursor: pointer;
-}
-
-.picked {
-  font-weight: 800;
-}
+    font-size: 9pt;
+    background-color: none;
+    color: #000000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    height: 100%;
+    max-width: 140px;
+    cursor: pointer;
+  }
+  
+  .picked {
+    font-weight: 800;
+  }
+  

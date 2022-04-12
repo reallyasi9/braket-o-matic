@@ -1,9 +1,10 @@
 <div *ngIf="!!tournament" class="container">
-  <div
-    *ngFor="let item of tournament.games | keyvalue"
-    class="game"
-    [ngStyle]="gridLocation(item.key)"
-  >
-    <app-game [game]="item.value"></app-game>
+    <div
+      *ngFor="let item of tournament.games | keyvalue"
+      class="game"
+      [ngStyle]="gridLocation(item.key)"
+    >
+      <app-game [game]="item.value"></app-game>
+    </div>
   </div>
-</div>
+  
