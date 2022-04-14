@@ -25,7 +25,7 @@ function generateTeam(): Team {
 @Component({
   selector: 'app-tournament-stepper',
   templateUrl: './tournament-stepper.component.html',
-  styleUrls: ['./tournament-stepper.component.scss'],
+  styleUrls: ['./tournament-stepper.component.css'],
 })
 export class TournamentStepperComponent implements OnInit {
   tournament: Tournament = {

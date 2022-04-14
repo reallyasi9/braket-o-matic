@@ -9,7 +9,7 @@ import {
   // canActivate,
   customClaims,
   // redirectUnauthorizedTo,
-} from '@angular/fire/auth-guard';
+} from '@angular/fire/compat/auth-guard';
 import { pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TournamentEditorComponent } from './tournament-editor/tournament-editor.component';
