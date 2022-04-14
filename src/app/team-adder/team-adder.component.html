@@ -1,51 +1,52 @@
 <ng-template [ngIf]="!!this.team" [ngIfElse]="teamDoesNotExist">
-  <mat-card class="team-adder">
-    <div class="team-grid">
-      <div class="team-info">
-        <mat-form-field class="seed-form">
-          <mat-label>Seed</mat-label>
-          <input type="number" matInput [(ngModel)]="team.seed" />
-        </mat-form-field>
-        <mat-form-field class="name-form">
-          <mat-label>Name</mat-label>
-          <input type="text" matInput [(ngModel)]="team.name" />
-        </mat-form-field>
+    <mat-card class="team-adder">
+      <div class="team-grid">
+        <div class="team-info">
+          <mat-form-field class="seed-form">
+            <mat-label>Seed</mat-label>
+            <input type="number" matInput [(ngModel)]="team.seed" />
+          </mat-form-field>
+          <mat-form-field class="name-form">
+            <mat-label>Name</mat-label>
+            <input type="text" matInput [(ngModel)]="team.name" />
+          </mat-form-field>
+        </div>
+        <div class="team-colors">
+          <mat-form-field class="color-form color-form-1">
+            <mat-label>Primary color</mat-label>
+            <input type="color" matInput [(ngModel)]="team.primaryColor" />
+          </mat-form-field>
+          <mat-form-field class="color-form">
+            <mat-label>Accent color</mat-label>
+            <input type="color" matInput [(ngModel)]="team.accentColor" />
+          </mat-form-field>
+        </div>
+        <div class="filler"></div>
+        <button
+          mat-flat-button
+          class="delete-team"
+          (click)="delete()"
+          [disabled]="!deletable"
+        >
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Trash can icon"
+            class="delete-team-icon"
+            >delete</mat-icon
+          ><span class="delete-team-text">Delete team</span>
+        </button>
       </div>
-      <div class="team-colors">
-        <mat-form-field class="color-form color-form-1">
-          <mat-label>Primary color</mat-label>
-          <input type="color" matInput [(ngModel)]="team.primaryColor" />
-        </mat-form-field>
-        <mat-form-field class="color-form">
-          <mat-label>Accent color</mat-label>
-          <input type="color" matInput [(ngModel)]="team.accentColor" />
-        </mat-form-field>
-      </div>
-      <div class="filler"></div>
-      <button
-        mat-flat-button
-        class="delete-team"
-        (click)="delete()"
-        [disabled]="!deletable"
+    </mat-card>
+  </ng-template>
+  <ng-template #teamDoesNotExist>
+    <mat-card class="team-adder new-team-card mat-elevation-z0" (click)="add()">
+      <mat-icon
+        class="add-team-icon"
+        aria-hidden="false"
+        aria-label="Encircled plus icon"
+        >add_circle_outline</mat-icon
       >
-        <mat-icon
-          aria-hidden="false"
-          aria-label="Trash can icon"
-          class="delete-team-icon"
-          >delete</mat-icon
-        ><span class="delete-team-text">Delete team</span>
-      </button>
-    </div>
-  </mat-card>
-</ng-template>
-<ng-template #teamDoesNotExist>
-  <mat-card class="team-adder new-team-card mat-elevation-z0" (click)="add()">
-    <mat-icon
-      class="add-team-icon"
-      aria-hidden="false"
-      aria-label="Encircled plus icon"
-      >add_circle_outline</mat-icon
-    >
-    <span class="add-team-text">Add team</span>
-  </mat-card>
-</ng-template>
+      <span class="add-team-text">Add team</span>
+    </mat-card>
+  </ng-template>
+  

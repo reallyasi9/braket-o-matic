@@ -1,86 +1,87 @@
 <mat-card *ngIf="!!tournament">
-  <mat-card-header>
-    <mat-card-title>{{ tournament.name.length > 0 ? tournament.name : "(name not set)" }}</mat-card-title>
-    <mat-card-subtitle>ID: {{ tournament.id.length > 0 ? tournament.id : "(id not set)" }}</mat-card-subtitle>
-  </mat-card-header>
-  <div class="tournament-grid">
-    <mat-form-field class="name">
-      <mat-label>Name</mat-label>
-      <input
-        matInput
-        class="name"
-        type="text"
-        placeholder="e.g. NCAAW 2035"
-        [(ngModel)]="tournament.name"
-      />
-    </mat-form-field>
-    <mat-form-field class="date">
-      <mat-label>Start date</mat-label>
-      <input
-        matInput
-        [matDatepicker]="startDatePicker"
-        [ngModel]="tournament.startDate"
-        (ngModelChange)="tournament.startDate.setDate($event)"
-      />
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="startDatePicker"
-      ></mat-datepicker-toggle>
-      <mat-datepicker #startDatePicker>
-        <mat-datepicker-actions>
-          <button mat-button matDatepickerCancel>Cancel</button>
-          <button mat-button matDatepickerApply>Apply</button>
-        </mat-datepicker-actions>
-      </mat-datepicker>
-    </mat-form-field>
-    <mat-form-field class="time">
-      <mat-label>Start time</mat-label>
-      <input
-        matInput
-        type="time"
-        (ngModelChange)="tournament.startDate.setTime($event)"
-        [ngModel]="tournament.startDate | date: 'HH:mm'"
-      />
-    </mat-form-field>
-    <mat-list class="rounds">
-      <div mat-subheader>Round values</div>
-      <mat-list-item *ngFor="let value of tournament.roundValues; index as i">
-        <mat-form-field>
-          <mat-label>Round {{ i }} value</mat-label>
-          <input
-            matInput
-            type="number"
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="tournament.roundValues[i]"
-          />
-        </mat-form-field>
-      </mat-list-item>
-    </mat-list>
-    <mat-list class="payouts">
-      <div mat-subheader>Payout values</div>
-      <mat-list-item *ngFor="let payout of tournament.payouts; index as i">
-        <mat-form-field>
-          <mat-label>Payout {{ i }}</mat-label>
-          <input
-            matInput
-            type="number"
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="tournament.payouts[i]"
-          />
-        </mat-form-field>
-      </mat-list-item>
-      <button mat-button class="action" type="button" (click)="addPayout()">
-        Add payout
-      </button>
-      <button
-        mat-button
-        class="action"
-        type="button"
-        [disabled]="tournament.payouts.length <= 1"
-        (click)="deletePayout()"
-      >
-        Delete payout
-      </button>
-    </mat-list>
-  </div>
-</mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ tournament.name.length > 0 ? tournament.name : "(name not set)" }}</mat-card-title>
+      <mat-card-subtitle>ID: {{ tournament.id.length > 0 ? tournament.id : "(id not set)" }}</mat-card-subtitle>
+    </mat-card-header>
+    <div class="tournament-grid">
+      <mat-form-field class="name">
+        <mat-label>Name</mat-label>
+        <input
+          matInput
+          class="name"
+          type="text"
+          placeholder="e.g. NCAAW 2035"
+          [(ngModel)]="tournament.name"
+        />
+      </mat-form-field>
+      <mat-form-field class="date">
+        <mat-label>Start date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="startDatePicker"
+          [ngModel]="tournament.startDate"
+          (ngModelChange)="tournament.startDate.setDate($event)"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="startDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-button matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="time">
+        <mat-label>Start time</mat-label>
+        <input
+          matInput
+          type="time"
+          (ngModelChange)="tournament.startDate.setTime($event)"
+          [ngModel]="tournament.startDate | date: 'HH:mm'"
+        />
+      </mat-form-field>
+      <mat-list class="rounds">
+        <div mat-subheader>Round values</div>
+        <mat-list-item *ngFor="let value of tournament.roundValues; index as i">
+          <mat-form-field>
+            <mat-label>Round {{ i }} value</mat-label>
+            <input
+              matInput
+              type="number"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="tournament.roundValues[i]"
+            />
+          </mat-form-field>
+        </mat-list-item>
+      </mat-list>
+      <mat-list class="payouts">
+        <div mat-subheader>Payout values</div>
+        <mat-list-item *ngFor="let payout of tournament.payouts; index as i">
+          <mat-form-field>
+            <mat-label>Payout {{ i }}</mat-label>
+            <input
+              matInput
+              type="number"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="tournament.payouts[i]"
+            />
+          </mat-form-field>
+        </mat-list-item>
+        <button mat-button class="action" type="button" (click)="addPayout()">
+          Add payout
+        </button>
+        <button
+          mat-button
+          class="action"
+          type="button"
+          [disabled]="tournament.payouts.length <= 1"
+          (click)="deletePayout()"
+        >
+          Delete payout
+        </button>
+      </mat-list>
+    </div>
+  </mat-card>
+  
