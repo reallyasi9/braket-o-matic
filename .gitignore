@@ -42,6 +42,7 @@ testem.log
 Thumbs.db
 
 *.log
+
 firebase.store/
 firebase.json
 firebase-data/
