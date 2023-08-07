@@ -4,7 +4,6 @@ import { AngularFireAuthModule, USE_EMULATOR as USE_AUTH_EMULATOR } from '@angul
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/compat/firestore'
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { firebase, firebaseui, FirebaseUIModule } from 'firebaseui-angular';
 import { environment } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -45,19 +44,6 @@ import {
   MAT_LEGACY_SNACK_BAR_DEFAULT_OPTIONS as MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/legacy-snack-bar';
 
-const firebaseUiAuthConfig: firebaseui.auth.Config = {
-  signInFlow: 'redirect',
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    {
-      requireDisplayName: true,
-      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID
-    }
-  ],
-  tosUrl: "tos",
-  privacyPolicyUrl: "privacy",
-  credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO
-};
 
 @NgModule({
   declarations: [
@@ -83,7 +69,6 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    FirebaseUIModule.forRoot(firebaseUiAuthConfig),
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
