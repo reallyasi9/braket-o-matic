@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { max } from 'rxjs/operators';
 import { Game } from '../game-adder/game-adder.component';
 import { randomColors, randomTeamName } from '../mock-teams';
