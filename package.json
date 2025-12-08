@@ -13,7 +13,7 @@
     "@angular/animations": "^16.1.8",
     "@angular/common": "^16.1.8",
     "@angular/compiler": "^19.1.4",
-    "@angular/core": "^16.1.8",
+    "@angular/core": "^21.0.3",
     "@angular/fire": "^18.0.1",
     "@angular/forms": "^16.1.8",
     "@angular/material": "^19.1.2",
